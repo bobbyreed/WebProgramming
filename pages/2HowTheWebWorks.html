@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Web Works - CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        h1 {
+            color: #764ba2;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 25px 0 15px 0;
+        }
+        
+        ul {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-left: 30px;
+            color: #333;
+        }
+        
+        li {
+            margin: 15px 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        li:nth-child(1) { animation-delay: 0.1s; }
+        li:nth-child(2) { animation-delay: 0.2s; }
+        li:nth-child(3) { animation-delay: 0.3s; }
+        li:nth-child(4) { animation-delay: 0.4s; }
+        li:nth-child(5) { animation-delay: 0.5s; }
+        li:nth-child(6) { animation-delay: 0.6s; }
+        li:nth-child(7) { animation-delay: 0.7s; }
+        li:nth-child(8) { animation-delay: 0.8s; }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+        
+        .emoji {
+            font-size: 2em;
+            margin: 0 10px;
+        }
+        
+        .arrow {
+            font-size: 1.5em;
+            color: #667eea;
+            margin: 0 20px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+        
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            color: #764ba2;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #999;
+            font-size: 1.2em;
+        }
+        
+        .center {
+            text-align: center;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .icon-list {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .icon-list li::before {
+            content: "🔹 ";
+            color: #667eea;
+        }
+        
+        p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin: 20px 0;
+        }
+        
+        .big-text {
+            font-size: 1.6em;
+            text-align: center;
+            color: #764ba2;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <span class="slide-number">1/20</span>
+            <h1>How the Web Works</h1>
+            <p class="big-text">CSCI 4513 - Web Programming</p>
+            <p class="center" style="font-size: 1.4em; margin-top: 40px;">Class 2 - Thursday</p>
+            <div class="diagram">
+                <span class="emoji">🌐</span>
+                <span class="arrow">→</span>
+                <span class="emoji">💻</span>
+                <span class="arrow">→</span>
+                <span class="emoji">🚀</span>
+            </div>
+            <p class="center" style="margin-top: 40px;">Today's Journey: From Networks to Websites</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <span class="slide-number">2/20</span>
+            <h2>Today's Learning Objectives</h2>
+            <ul>
+                <li>Understand what the Internet actually is</li>
+                <li>Learn how data travels (packets & protocols)</li>
+                <li>Distinguish web pages, servers, browsers & search engines</li>
+                <li>Understand client-server architecture</li>
+                <li>Demystify IP addresses and DNS</li>
+                <li>Trace what happens when you search Google</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: What is a Network? -->
+        <div class="slide">
+            <span class="slide-number">3/20</span>
+            <h2>Let's Start Simple: What's a Network?</h2>
+            <div class="diagram">
+                <p style="font-size: 1.5em;">
+                    <span class="emoji">💻</span>
+                    <span class="arrow">↔</span>
+                    <span class="emoji">💻</span>
+                    <span class="arrow">↔</span>
+                    <span class="emoji">💻</span>
+                </p>
+            </div>
+            <p><strong>Network:</strong> Two or more computers connected together to share resources</p>
+            <ul class="icon-list">
+                <li>Your home WiFi = a network</li>
+                <li>OCU campus network = a bigger network</li>
+                <li>Networks can connect to other networks...</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: What is the Internet? -->
+        <div class="slide">
+            <span class="slide-number">4/20</span>
+            <h2>The Internet: A Network of Networks</h2>
+            <div class="diagram">
+                <p style="font-size: 1.3em;">
+                    <span class="emoji">🏠</span> Local Network
+                    <span class="arrow">→</span>
+                    <span class="emoji">🏢</span> ISP Network
+                    <span class="arrow">→</span>
+                    <span class="emoji">🌍</span> Global Internet
+                </p>
+            </div>
+            <p><strong>The Internet is NOT:</strong></p>
+            <ul>
+                <li>❌ A single computer or location</li>
+                <li>❌ Owned by any one company</li>
+                <li>❌ The same as the World Wide Web</li>
+            </ul>
+            <p><strong>The Internet IS:</strong></p>
+            <ul>
+                <li>✅ A global system of interconnected networks</li>
+                <li>✅ The infrastructure that carries data</li>
+                <li>✅ Like the highway system for information</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Key Players -->
+        <div class="slide">
+            <span class="slide-number">5/20</span>
+            <h2>Key Players in Internet Infrastructure</h2>
+            <div class="two-column">
+                <div>
+                    <h3>🏢 ISP (Internet Service Provider)</h3>
+                    <ul>
+                        <li>Cox, AT&T, etc.</li>
+                        <li>Connects you to the internet</li>
+                        <li>Assigns you an IP address</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>📡 Router</h3>
+                    <ul>
+                        <li>Directs traffic between networks</li>
+                        <li>Your home router + ISP routers</li>
+                        <li>Finds best path for data</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: How Data Travels - Packets -->
+        <div class="slide">
+            <span class="slide-number">6/20</span>
+            <h2>Packets: How Data Actually Travels</h2>
+            <div class="diagram">
+                <p>Think of it like shipping a book page by page:</p>
+                <p style="font-size: 1.3em;">
+                    📖 Large File → 📄📄📄📄 Packets → 📖 Reassembled
+                </p>
+            </div>
+            <ul>
+                <li><strong>Breaking Down:</strong> Data splits into small chunks (packets)</li>
+                <li><strong>Each packet contains:</strong>
+                    <ul>
+                        <li>Source address (where from)</li>
+                        <li>Destination address (where to)</li>
+                        <li>Piece of the data</li>
+                        <li>Sequence number (for reassembly)</li>
+                    </ul>
+                </li>
+                <li><strong>Why packets?</strong> Efficiency, reliability, multiple routes</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: IP Addresses -->
+        <div class="slide">
+            <span class="slide-number">7/20</span>
+            <h2>IP Addresses: The Internet's Phone Numbers</h2>
+            <div class="code">
+                IPv4: 192.168.1.1
+                IPv6: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+            </div>
+            <ul>
+                <li><strong>Every device</strong> on the internet needs a unique IP address</li>
+                <li><strong>IPv4:</strong> 4 numbers (0-255), running out of addresses!</li>
+                <li><strong>IPv6:</strong> Much longer, enough for trillions of devices</li>
+                <li><strong>Your IP right now:</strong> Check whatismyipaddress.com</li>
+            </ul>
+            <p class="center" style="margin-top: 30px;">
+                <em>But wait... who remembers IP addresses? 🤔</em>
+            </p>
+        </div>
+
+        <!-- Slide 8: DNS -->
+        <div class="slide">
+            <span class="slide-number">8/20</span>
+            <h2>DNS: The Internet's Phone Book</h2>
+            <div class="diagram">
+                <p style="font-size: 1.4em;">
+                    "google.com" 
+                    <span class="arrow">→</span>
+                    DNS Server
+                    <span class="arrow">→</span>
+                    "142.250.80.46"
+                </p>
+            </div>
+            <p><strong>Domain Name System (DNS)</strong> translates human-friendly names to IP addresses</p>
+            <ol>
+                <li>You type: www.okcu.edu</li>
+                <li>Your computer asks DNS: "What's the IP for okcu.edu?"</li>
+                <li>DNS responds: "It's 104.16.20.146"</li>
+                <li>Your computer connects to that IP</li>
+            </ol>
+        </div>
+
+        <!-- Slide 9: Client vs Server -->
+        <div class="slide">
+            <span class="slide-number">9/20</span>
+            <h2>Client-Server Model</h2>
+            <div class="two-column">
+                <div style="text-align: center;">
+                    <p style="font-size: 3em;">💻</p>
+                    <h3>Client</h3>
+                    <ul>
+                        <li>Requests information</li>
+                        <li>Your web browser</li>
+                        <li>Mobile apps</li>
+                        <li>"Customer" at restaurant</li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 3em;">🖥️</p>
+                    <h3>Server</h3>
+                    <ul>
+                        <li>Provides information</li>
+                        <li>Hosts websites</li>
+                        <li>Stores data</li>
+                        <li>"Waiter/Kitchen" at restaurant</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="diagram" style="margin-top: 30px;">
+                <p>Client: "Give me the homepage" → Server: "Here's the HTML, CSS, and images"</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Web Components -->
+        <div class="slide">
+            <span class="slide-number">10/20</span>
+            <h2>Don't Confuse These!</h2>
+            <div style="display: grid; gap: 20px;">
+                <div>
+                    <h3>🌐 Web Browser</h3>
+                    <p>Software to access websites (Chrome, Firefox, Safari)</p>
+                </div>
+                <div>
+                    <h3>🔍 Search Engine</h3>
+                    <p>Website that finds other websites (Google, Bing, DuckDuckGo)</p>
+                </div>
+                <div>
+                    <h3>📄 Web Page</h3>
+                    <p>A single document (this slide, if it were online)</p>
+                </div>
+                <div>
+                    <h3>🏢 Web Server</h3>
+                    <p>Computer that hosts and serves web pages</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: The Journey of a Google Search -->
+        <div class="slide">
+            <span class="slide-number">11/20</span>
+            <h2>What Happens When You Google Something?</h2>
+            <p class="center">Let's trace the journey step by step...</p>
+            <div class="diagram">
+                <p style="font-size: 2em;">🤔 → 💻 → 🌐 → 🔍 → 📊</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Step 1-2 -->
+        <div class="slide">
+            <span class="slide-number">12/20</span>
+            <h2>The Google Search Journey: Steps 1-2</h2>
+            <h3>1️⃣ You type "google.com" in your browser</h3>
+            <ul>
+                <li>Browser checks its cache: "Have I been here recently?"</li>
+                <li>If not, needs to find Google's IP address</li>
+            </ul>
+            <h3>2️⃣ DNS Lookup</h3>
+            <ul>
+                <li>Browser asks OS: "What's the IP for google.com?"</li>
+                <li>OS checks with DNS server (usually your ISP's)</li>
+                <li>DNS returns: "142.250.80.46"</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Step 3-4 -->
+        <div class="slide">
+            <span class="slide-number">13/20</span>
+            <h2>The Google Search Journey: Steps 3-4</h2>
+            <h3>3️⃣ Establishing Connection</h3>
+            <ul>
+                <li>Your browser sends request to Google's IP</li>
+                <li>Request travels through multiple routers</li>
+                <li>May take different paths (packet routing)</li>
+            </ul>
+            <h3>4️⃣ Google's Server Responds</h3>
+            <ul>
+                <li>Receives your request</li>
+                <li>Sends back HTML, CSS, JavaScript</li>
+                <li>Your browser renders the search page</li>
+            </ul>
+        </div>
+
+        <!-- Slide 14: Step 5-6 -->
+        <div class="slide">
+            <span class="slide-number">14/20</span>
+            <h2>The Google Search Journey: Steps 5-6</h2>
+            <h3>5️⃣ You type your search and hit Enter</h3>
+            <ul>
+                <li>Browser sends your query to Google</li>
+                <li>Encrypted for security (HTTPS)</li>
+                <li>Includes cookies, location data, etc.</li>
+            </ul>
+            <h3>6️⃣ Google Processes & Returns Results</h3>
+            <ul>
+                <li>Searches billions of indexed pages</li>
+                <li>Ranks by relevance</li>
+                <li>Sends back results page</li>
+                <li>All in ~0.5 seconds! 🚀</li>
+            </ul>
+        </div>
+
+        <!-- Slide 15: HTTPS and Security -->
+        <div class="slide">
+            <span class="slide-number">15/20</span>
+            <h2>Quick Note: HTTPS (The Padlock 🔒)</h2>
+            <div class="two-column">
+                <div>
+                    <h3>HTTP</h3>
+                    <ul>
+                        <li>Unencrypted</li>
+                        <li>Like sending postcards</li>
+                        <li>Anyone can read</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>HTTPS</h3>
+                    <ul>
+                        <li>Encrypted (secure)</li>
+                        <li>Like sealed envelopes</li>
+                        <li>Only recipient can read</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="center" style="margin-top: 30px; font-size: 1.3em;">
+                <strong>Always look for the padlock when entering passwords or payment info!</strong>
+            </p>
+        </div>
+
+        <!-- Slide 16: Check Your Browser -->
+        <div class="slide">
+            <span class="slide-number">16/20</span>
+            <h2>Activity: Know Your Tools</h2>
+            <p class="big-text">What browser are you using right now?</p>
+            <div class="diagram">
+                <p>Visit: <strong>whatismybrowser.com</strong></p>
+            </div>
+            <p>Why does this matter for web development?</p>
+            <ul>
+                <li>Different browsers render pages slightly differently</li>
+                <li>Some features work in one browser but not another</li>
+                <li>You'll need to test your sites in multiple browsers</li>
+                <li>Chrome DevTools vs Firefox Developer Edition</li>
+            </ul>
+        </div>
+
+        <!-- Slide 17: Internet vs Web -->
+        <div class="slide">
+            <span class="slide-number">17/20</span>
+            <h2>Internet vs. World Wide Web</h2>
+            <div class="two-column">
+                <div>
+                    <h3>🌍 Internet</h3>
+                    <ul>
+                        <li>The infrastructure</li>
+                        <li>Physical networks</li>
+                        <li>Existed since 1960s</li>
+                        <li>Email, FTP, gaming, etc.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🕸️ World Wide Web</h3>
+                    <ul>
+                        <li>One service on the internet</li>
+                        <li>Web pages with links</li>
+                        <li>Created 1989 (Tim Berners-Lee)</li>
+                        <li>HTTP/HTTPS protocol</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="center" style="margin-top: 30px;">
+                <em>The Web runs ON the Internet, like cars on a highway</em>
+            </p>
+        </div>
+
+        <!-- Slide 18: Quick Review -->
+        <div class="slide">
+            <span class="slide-number">18/20</span>
+            <h2>Quick Review: Can You Answer These?</h2>
+            <ul class="icon-list">
+                <li>What's the difference between a client and server?</li>
+                <li>What are packets?</li>
+                <li>Why do we need DNS?</li>
+                <li>What's an IP address?</li>
+                <li>Browser vs. Search Engine - what's the difference?</li>
+                <li>What happens when you search on Google?</li>
+            </ul>
+            <p class="center" style="margin-top: 40px; font-size: 1.3em;">
+                <strong>Understanding these concepts = Speaking the language of the web!</strong>
+            </p>
+        </div>
+
+        <!-- Slide 19: Next Steps -->
+        <div class="slide">
+            <span class="slide-number">19/20</span>
+            <h3>Environment Setup</h3>
+            <ul>
+                <li>Linux/WSL</li>
+                <li>Git/GitHub</li>
+                <li>CLI Expectations for this class</li>
+            </ul>
+            <h3>Homework Reminder:</h3>
+            <ul>
+                <li>Complete Odin Project Foundations - Introduction</li>
+                <li>Set up Discord and GitHub accounts</li>
+                <li>Be ready to discuss what you learned!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 20: Resources -->
+        <div class="slide">
+            <span class="slide-number">20/20</span>
+            <h3>Environment Setup</h3>
+            <ul>
+                <li>Linux/WSL</li>
+                <li>Git/GitHub</li>
+                <li>CLI Expectations for this class</li>
+            </ul>
+            <h3>Required Resources (from Odin Project):</h3>
+            <ul>
+                <li>BBC's "How does the internet work?"</li>
+                <li>Mozilla's internet articles</li>
+                <li>"How the Internet Works in 5 Minutes" video</li>
+            </ul>
+            <p class="center" style="margin-top: 40px;">
+                <strong>Questions? Let's discuss! 🤔</strong>
+            </p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="previousSlide()">← Previous</button>
+        <button onclick="nextSlide()">Next →</button>
+        <button onclick="toggleFullscreen()">Fullscreen</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Reset animations for list items
+            const listItems = slides[currentSlide].querySelectorAll('li');
+            listItems.forEach(li => {
+                li.style.animation = 'none';
+                setTimeout(() => {
+                    li.style.animation = '';
+                }, 10);
+            });
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (e.key === 'f') {
+                toggleFullscreen();
+            } else if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
+            }
+        }
+    </script>
+</body>
+</html>
