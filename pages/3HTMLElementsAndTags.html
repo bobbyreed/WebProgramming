@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Foundations - Elements and Tags</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 90vw;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        h1 {
+            color: #764ba2;
+            font-size: 3em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 20px 0;
+        }
+        
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            margin-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+        }
+        
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            font-size: 1.2em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .code-example .tag {
+            color: #ff79c6;
+        }
+        
+        .code-example .content {
+            color: #50fa7b;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        .visual-example {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+        
+        .activity-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .activity-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .activity-box p {
+            color: white;
+        }
+        
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .comparison-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 4px solid #667eea;
+        }
+        
+        .comparison-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        
+        .timer {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Class 3 - HTML Foundations</div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>HTML Foundations</h1>
+            <h2>Elements and Tags <span class="emoji">🏗️</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 4513 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 2, Class 3</p>
+            <p style="margin-top: auto; font-style: italic;">Today we start building! 🚀</p>
+        </div>
+        
+        <!-- Slide 2: Quick Recap -->
+        <div class="slide">
+            <h1>Quick Recap</h1>
+            <h3>Where we've been:</h3>
+            <ul>
+                <li>✅ Set up our development environment</li>
+                <li>✅ Learned Git & GitHub basics</li>
+                <li>✅ Understood how the web works</li>
+            </ul>
+            <h3 style="margin-top: 40px;">Where we're going:</h3>
+            <ul>
+                <li><span class="highlight">Today: HTML Elements & Tags</span></li>
+                <li>Thursday: HTML Boilerplate</li>
+                <li>Building real web pages!</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 3: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 Understand what HTML tags are</li>
+                <li>🎯 Learn how HTML elements work</li>
+                <li>🎯 Explore void elements</li>
+                <li>🎯 See HTML, CSS, and JavaScript working together</li>
+                <li>🎯 Practice adding elements to your one-page website</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 4: The Web Trinity -->
+        <div class="slide">
+            <h1>The Web Development Trinity</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>HTML 📝</h3>
+                    <p><strong>Structure & Content</strong></p>
+                    <p>The skeleton and raw data of your webpage</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Text, links, images, buttons</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>CSS 🎨</h3>
+                    <p><strong>Style & Presentation</strong></p>
+                    <p>Makes everything look beautiful</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Colors, fonts, layouts, animations</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>JavaScript ⚡</h3>
+                    <p><strong>Behavior & Logic</strong></p>
+                    <p>Makes your webpage interactive</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Click events, calculations, dynamic content</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Not Programming Languages -->
+        <div class="slide">
+            <h1>Quick Note: "Programming" Languages?</h1>
+            <p style="font-size: 1.4em;">Many resources call HTML and CSS "programming languages"...</p>
+            <p style="font-size: 1.4em; margin-top: 30px;"><span class="highlight">But technically, they're not!</span></p>
+            <ul style="margin-top: 30px;">
+                <li><strong>HTML & CSS:</strong> Markup and styling languages (presentation only)</li>
+                <li><strong>JavaScript:</strong> Actual programming language (logic and behavior)</li>
+            </ul>
+            <p style="margin-top: 40px; font-style: italic;">Don't worry - you still need all three to build amazing websites!</p>
+        </div>
+        
+        <!-- Slide 6: What are HTML Tags? -->
+        <div class="slide">
+            <h1>HTML Tags: The Building Blocks</h1>
+            <p style="font-size: 1.4em;">Tags are keywords wrapped in angle brackets:</p>
+            <div class="code-example">
+                <span class="tag">&lt;p&gt;</span> <span class="comment">← Opening tag</span><br>
+                <span class="tag">&lt;/p&gt;</span> <span class="comment">← Closing tag</span>
+            </div>
+            <h3>Key Points:</h3>
+            <ul>
+                <li>Opening tags: <code>&lt;tagname&gt;</code></li>
+                <li>Closing tags: <code>&lt;/tagname&gt;</code> (note the forward slash!)</li>
+                <li>Tags tell the browser what type of content follows</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 7: HTML Elements -->
+        <div class="slide">
+            <h1>HTML Elements: Content + Tags</h1>
+            <p style="font-size: 1.4em;">An element = opening tag + content + closing tag</p>
+            <div class="code-example">
+                <span class="tag">&lt;p&gt;</span><span class="content">This is a paragraph!</span><span class="tag">&lt;/p&gt;</span>
+            </div>
+            <h3>Anatomy of an Element:</h3>
+            <ul>
+                <li>🏷️ <strong>Opening tag:</strong> <code>&lt;p&gt;</code></li>
+                <li>📝 <strong>Content:</strong> This is a paragraph!</li>
+                <li>🏷️ <strong>Closing tag:</strong> <code>&lt;/p&gt;</code></li>
+            </ul>
+            <p style="margin-top: 30px;"><em>Think of elements as containers for your content!</em></p>
+        </div>
+        
+        <!-- Slide 8: Common HTML Elements -->
+        <div class="slide">
+            <h1>Common HTML Elements</h1>
+            <div class="code-example">
+                <span class="tag">&lt;h1&gt;</span><span class="content">Main Heading</span><span class="tag">&lt;/h1&gt;</span><br>
+                <span class="tag">&lt;h2&gt;</span><span class="content">Subheading</span><span class="tag">&lt;/h2&gt;</span><br>
+                <span class="tag">&lt;p&gt;</span><span class="content">A paragraph of text</span><span class="tag">&lt;/p&gt;</span><br>
+                <span class="tag">&lt;a&gt;</span><span class="content">A link</span><span class="tag">&lt;/a&gt;</span><br>
+                <span class="tag">&lt;div&gt;</span><span class="content">A container</span><span class="tag">&lt;/div&gt;</span><br>
+                <span class="tag">&lt;span&gt;</span><span class="content">Inline text</span><span class="tag">&lt;/span&gt;</span><br>
+                <span class="tag">&lt;ul&gt;</span><span class="content">Unordered list</span><span class="tag">&lt;/ul&gt;</span><br>
+                <span class="tag">&lt;li&gt;</span><span class="content">List item</span><span class="tag">&lt;/li&gt;</span>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Activity Time -->
+        <div class="slide">
+            <h1>Let's Try It! <span class="emoji">💻</span></h1>
+            <div class="activity-box">
+                <h3>5-Minute Activity</h3>
+                <p>Open your one-page website in VS Code</p>
+                <p>Try adding these elements:</p>
+                <ul>
+                    <li>A heading with &lt;h2&gt;</li>
+                    <li>A paragraph with &lt;p&gt;</li>
+                    <li>A link with &lt;a&gt;</li>
+                </ul>
+            </div>
+            <p style="margin-top: 30px;">Remember: Save your file and refresh your browser to see changes!</p>
+        </div>
+        
+        <!-- Slide 10: Void Elements -->
+        <div class="slide">
+            <h1>Void Elements: The Exceptions</h1>
+            <p style="font-size: 1.4em;">Some elements don't have closing tags!</p>
+            <div class="code-example">
+                <span class="tag">&lt;br&gt;</span> <span class="comment">← Line break</span><br>
+                <span class="tag">&lt;img&gt;</span> <span class="comment">← Image</span><br>
+                <span class="tag">&lt;hr&gt;</span> <span class="comment">← Horizontal rule</span><br>
+                <span class="tag">&lt;input&gt;</span> <span class="comment">← Form input</span>
+            </div>
+            <h3>Why no closing tag?</h3>
+            <p>They don't contain content - they ARE the content!</p>
+        </div>
+        
+        <!-- Slide 11: Self-Closing Tags -->
+        <div class="slide">
+            <h1>Note on Self-Closing Tags</h1>
+            <p style="font-size: 1.4em;">You might see this in older code:</p>
+            <div class="code-example">
+                <span class="tag">&lt;br /&gt;</span><br>
+                <span class="tag">&lt;img /&gt;</span><br>
+                <span class="tag">&lt;hr /&gt;</span>
+            </div>
+            <p style="margin-top: 30px;"><span class="highlight">Modern HTML discourages this!</span></p>
+            <p>Just use: <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;hr&gt;</code></p>
+            <p style="margin-top: 20px; font-style: italic;">Browsers will understand both, but keep it modern!</p>
+        </div>
+        
+        <!-- Slide 12: Semantic HTML Preview -->
+        <div class="slide">
+            <h1>Why Does the Right Tag Matter?</h1>
+            <h2>Semantic HTML</h2>
+            <ul style="font-size: 1.3em;">
+                <li>🔍 <strong>SEO:</strong> Search engines understand your content better</li>
+                <li>♿ <strong>Accessibility:</strong> Screen readers can navigate properly</li>
+                <li>👥 <strong>Maintainability:</strong> Other developers understand your code</li>
+            </ul>
+            <div class="visual-example" style="margin-top: 40px;">
+                <p>Use <code>&lt;h1&gt;</code> for main headings, not <code>&lt;p style="font-size:2em"&gt;</code></p>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Live Demo -->
+        <div class="slide">
+            <h1>Live Coding Demo <span class="emoji">🎬</span></h1>
+            <h3>Let's build together!</h3>
+            <ul style="font-size: 1.3em;">
+                <li>Creating different heading levels</li>
+                <li>Adding paragraphs and line breaks</li>
+                <li>Working with void elements</li>
+                <li>Nesting elements properly</li>
+            </ul>
+            <div class="activity-box" style="margin-top: 40px;">
+                <h3>Follow Along!</h3>
+                <p>Open your one-page website and code with me</p>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Common Mistakes -->
+        <div class="slide">
+            <h1>Common Beginner Mistakes</h1>
+            <h3>❌ Forgetting closing tags</h3>
+            <div class="code-example">
+                <span class="tag">&lt;p&gt;</span><span class="content">This won't work properly</span>
+            </div>
+            <h3>❌ Incorrect nesting</h3>
+            <div class="code-example">
+                <span class="tag">&lt;p&gt;</span><span class="tag">&lt;strong&gt;</span><span class="content">Wrong!</span><span class="tag">&lt;/p&gt;</span><span class="tag">&lt;/strong&gt;</span>
+            </div>
+            <h3>✅ Correct nesting</h3>
+            <div class="code-example">
+                <span class="tag">&lt;p&gt;</span><span class="tag">&lt;strong&gt;</span><span class="content">Right!</span><span class="tag">&lt;/strong&gt;</span><span class="tag">&lt;/p&gt;</span>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Practice Time -->
+        <div class="slide">
+            <h1>Practice Time! <span class="emoji">🏋️</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Challenge</h3>
+                <p>Add to your one-page website:</p>
+                <ul>
+                    <li>At least 3 different heading levels (h1, h2, h3)</li>
+                    <li>Multiple paragraphs</li>
+                    <li>A horizontal rule (&lt;hr&gt;)</li>
+                    <li>Some bold (&lt;strong&gt;) and italic (&lt;em&gt;) text</li>
+                </ul>
+            </div>
+            <p style="margin-top: 30px;">I'll walk around to help - raise your hand if you get stuck!</p>
+        </div>
+        
+        <!-- Slide 16: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Assignment 📚</h1>
+            <h2>Due: Before Next Class (Thursday)</h2>
+            <div class="visual-example">
+                <h3>Add to your one-page website:</h3>
+                <ul style="text-align: left;">
+                    <li>✅ One <strong>void tag</strong> (br, hr, img, etc.)</li>
+                    <li>✅ Three additional tags you haven't used before</li>
+                </ul>
+            </div>
+            <h3 style="margin-top: 30px;">Submission:</h3>
+            <ol>
+                <li>Make your changes</li>
+                <li>Commit with a meaningful message</li>
+                <li>Push to GitHub</li>
+                <li>Submit the link to your commit on D2L</li>
+            </ol>
+        </div>
+        
+        <!-- Slide 17: Resources -->
+        <div class="slide">
+            <h1>Resources for Practice</h1>
+            <h3>Required:</h3>
+            <ul>
+                <li>📺 Watch: Kevin Powell's "What is HTML?" video</li>
+                <li>📖 Read: HTML vs CSS vs JavaScript article</li>
+            </ul>
+            <h3 style="margin-top: 30px;">Recommended:</h3>
+            <ul>
+                <li>🔖 Bookmark: DevDocs.io (API documentation)</li>
+                <li>📺 Optional: Don't Fear the Internet's HTML video</li>
+            </ul>
+            <p style="margin-top: 40px; font-style: italic;">All links are in The Odin Project!</p>
+        </div>
+        
+        <!-- Slide 18: Q&A -->
+        <div class="slide">
+            <h1>Questions? <span class="emoji">🤔</span></h1>
+            <h2>Let's Review:</h2>
+            <ul style="font-size: 1.3em;">
+                <li>What's the difference between a tag and an element?</li>
+                <li>What makes void elements special?</li>
+                <li>Why use semantic HTML?</li>
+            </ul>
+            <div class="activity-box" style="margin-top: 50px;">
+                <h3>Your Questions?</h3>
+                <p>Now's the time - no question is too simple!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Next Class Preview -->
+        <div class="slide">
+            <h1>Next Class Preview</h1>
+            <h2>Thursday: HTML Boilerplate</h2>
+            <ul style="font-size: 1.3em;">
+                <li>The complete structure of an HTML document</li>
+                <li>&lt;!DOCTYPE&gt;, &lt;html&gt;, &lt;head&gt;, &lt;body&gt;</li>
+                <li>Meta tags and document setup</li>
+                <li>W3 HTML Validator</li>
+            </ul>
+            <p style="margin-top: 50px; font-size: 1.4em;">
+                <strong>Remember:</strong> Complete your homework before Thursday!
+            </p>
+        </div>
+        
+        <!-- Slide 20: Closing -->
+        <div class="slide">
+            <h1>Great Work Today! <span class="emoji">🎉</span></h1>
+            <h2>You've Started Building the Web!</h2>
+            <p style="font-size: 1.4em; margin-top: 40px;">Keep experimenting with HTML tags</p>
+            <p style="font-size: 1.4em;">Don't be afraid to try new things</p>
+            <p style="font-size: 1.4em;">Google is your friend!</p>
+            <div class="visual-example" style="margin-top: 50px;">
+                <p style="font-size: 1.3em;">See you Thursday at 9:30 AM! 👋</p>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            }
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
