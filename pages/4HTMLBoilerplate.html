@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +27,7 @@
             max-width: 1000px;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
 
@@ -46,6 +47,7 @@
                 opacity: 0;
                 transform: translateX(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -73,7 +75,8 @@
             margin-bottom: 15px;
         }
 
-        p, li {
+        p,
+        li {
             font-size: 1.2em;
             line-height: 1.6;
             margin-bottom: 15px;
@@ -146,7 +149,7 @@
         button:hover {
             background: #764ba2;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         button:disabled {
@@ -208,6 +211,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="presentation-container">
         <!-- Slide 1: Title -->
@@ -262,7 +266,8 @@
                 <li>Sets up important metadata for search engines and accessibility</li>
             </ul>
             <div class="warning">
-                <strong>Without proper boilerplate:</strong> Your page might render incorrectly, have encoding issues, or be inaccessible to screen readers!
+                <strong>Without proper boilerplate:</strong> Your page might render incorrectly, have encoding issues,
+                or be inaccessible to screen readers!
             </div>
         </div>
 
@@ -278,9 +283,11 @@
                 </ol>
             </div>
             <div class="tip">
-                <strong>Pro Tip:</strong> Always name your homepage <code>index.html</code> - web servers look for this file by default!
+                <strong>Pro Tip:</strong> Always name your homepage <code>index.html</code> - web servers look for this
+                file by default!
             </div>
-            <p><strong>File Extensions Matter!</strong> The <code>.html</code> extension tells the computer this is an HTML file.</p>
+            <p><strong>File Extensions Matter!</strong> The <code>.html</code> extension tells the computer this is an
+                HTML file.</p>
         </div>
 
         <!-- Slide 6: DOCTYPE -->
@@ -461,7 +468,8 @@
                 </li>
             </ol>
             <div class="tip">
-                <strong>Refresh Tip:</strong> Use <code>Ctrl+R</code> (Windows) or <code>Cmd+R</code> (Mac) to reload after changes!
+                <strong>Refresh Tip:</strong> Use <code>Ctrl+R</code> (Windows) or <code>Cmd+R</code> (Mac) to reload
+                after changes!
             </div>
         </div>
 
@@ -481,7 +489,8 @@
                 <strong>But wait!</strong> Don't rely on this shortcut yet!
                 <p>Build muscle memory by typing it out manually first. You won't always have VS Code!</p>
             </div>
-            <p><strong>Note:</strong> VS Code adds viewport meta tag - we'll learn about this when we cover responsive design!</p>
+            <p><strong>Note:</strong> VS Code adds viewport meta tag - we'll learn about this when we cover responsive
+                design!</p>
         </div>
 
         <!-- Slide 16: Practice Time -->
@@ -545,19 +554,32 @@
         <!-- Slide 19: Homework Preview -->
         <div class="slide">
             <h1>Homework Assignment <span class="emoji">📝</span></h1>
-            <h2>Due Before Next Class:</h2>
+            <h2>Due Before Next Class (Tuesday):</h2>
             <div class="activity">
-                <h3>Your Tasks:</h3>
+                <h3>Part 1: Video & Practice</h3>
                 <ol>
                     <li>Watch: <strong>"HTML and CSS for Beginners Part 2: Building your first web page!"</strong></li>
-                    <li>Create a complete HTML page with proper boilerplate</li>
-                    <li>Run your page through the W3 HTML Validator</li>
-                    <li>Submit a screenshot of validation results to D2L</li>
+                    <li>Follow along and create your own HTML page with proper boilerplate</li>
+                </ol>
+            </div>
+            <div class="activity" style="margin-top: 20px;">
+                <h3>Part 2: Validation</h3>
+                <ol>
+                    <li>Run your website through the <strong>W3 HTML Validator</strong></li>
+                    <li>Take a screenshot of your validation results</li>
+                    <li>Submit screenshot to D2L discussion as a <strong>new topic</strong></li>
+                </ol>
+            </div>
+            <div class="activity" style="margin-top: 20px;">
+                <h3>Part 3: Peer Review</h3>
+                <ol>
+                    <li>Respond to <strong>2 other student posts</strong></li>
+                    <li>Compare and contrast their results with your own</li>
+                    <li>Offer helpful feedback if they have errors!</li>
                 </ol>
             </div>
             <div class="warning">
-                <strong>Important:</strong> Green checkmark = Full credit! 
-                <p>Fix any errors before submitting!</p>
+                <strong>Grading:</strong> Green checkmark in validator + thoughtful peer responses = Full credit!
             </div>
         </div>
 
@@ -575,7 +597,8 @@
                 <p><strong>Next Class:</strong> Working with Text - Headings, Paragraphs, and More!</p>
             </div>
             <div class="tip">
-                <strong>Practice Challenge:</strong> Write the boilerplate 5 times before next class - aim for under 30 seconds!
+                <strong>Practice Challenge:</strong> Write the boilerplate 5 times before next class - aim for under 30
+                seconds!
             </div>
         </div>
 
@@ -613,9 +636,9 @@
             slides[currentSlide].classList.remove('active');
             currentSlide = (n + totalSlides) % totalSlides;
             slides[currentSlide].classList.add('active');
-            
+
             document.getElementById('currentSlide').textContent = currentSlide + 1;
-            
+
             // Update button states
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
@@ -623,7 +646,6 @@
 
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
-            
         }
 
         // Keyboard navigation
@@ -636,4 +658,5 @@
         showSlide(0);
     </script>
 </body>
+
 </html>
