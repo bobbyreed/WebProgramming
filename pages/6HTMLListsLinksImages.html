@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Foundations - Lists, Links, and Images</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90vw;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            font-size: 1.1em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .code-example .tag {
+            color: #ff79c6;
+        }
+
+        .code-example .attribute {
+            color: #50fa7b;
+        }
+
+        .code-example .value {
+            color: #f1fa8c;
+        }
+
+        .code-example .content {
+            color: #f8f8f2;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .visual-example {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .activity-box p,
+        .activity-box li {
+            color: white;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 4px solid #667eea;
+        }
+
+        .comparison-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .timer {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .icon-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .icon-list li::before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Class 6 - Lists, Links & Images</div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>HTML Foundations</h1>
+            <h2>Lists, Links, and Images <span class="emoji">📝🔗🖼️</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 4513 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 3, Class 6</p>
+            <p style="margin-top: auto; font-style: italic;">Building the backbone of the web! 🕸️</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>📝 Master unordered and ordered lists</li>
+                <li>🔗 Create links to other pages and websites</li>
+                <li>🔒 Understand link security considerations</li>
+                <li>🧭 Navigate absolute vs relative paths</li>
+                <li>🖼️ Embed images in your pages</li>
+                <li>♿ Add accessibility with alt attributes</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Quick Recap -->
+        <div class="slide">
+            <h1>Quick Recap</h1>
+            <h3>Where we've been:</h3>
+            <ul>
+                <li>✅ HTML elements and tags</li>
+                <li>✅ HTML boilerplate structure</li>
+                <li>✅ Working with text</li>
+            </ul>
+            <h3 style="margin-top: 40px;">Where we're going:</h3>
+            <ul>
+                <li><span class="highlight">Today: Lists, Links, and Images</span></li>
+                <li>Next: CSS Foundations begin!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Lists Introduction -->
+        <div class="slide">
+            <h1>Lists Are Everywhere! <span class="emoji">📋</span></h1>
+            <h3>Real-world examples:</h3>
+            <ul>
+                <li>Navigation menus</li>
+                <li>Shopping carts</li>
+                <li>Social media feeds</li>
+                <li>Comment sections</li>
+                <li>Step-by-step instructions</li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 1.4em;">HTML gives us two main types of lists...</p>
+        </div>
+
+        <!-- Slide 5: Unordered Lists -->
+        <div class="slide">
+            <h1>Unordered Lists <span class="emoji">•</span></h1>
+            <p style="font-size: 1.4em;">When order doesn't matter!</p>
+            <div class="code-example">
+                <span class="tag">&lt;ul&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Coffee</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Tea</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Milk</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                <span class="tag">&lt;/ul&gt;</span>
+            </div>
+            <div class="visual-example">
+                <p><strong>Result:</strong></p>
+                <ul>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Ordered Lists -->
+        <div class="slide">
+            <h1>Ordered Lists <span class="emoji">1️⃣</span></h1>
+            <p style="font-size: 1.4em;">When sequence matters!</p>
+            <div class="code-example">
+                <span class="tag">&lt;ol&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Preheat oven to 350°F</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Mix ingredients</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Bake for 30 minutes</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                <span class="tag">&lt;/ol&gt;</span>
+            </div>
+            <div class="visual-example">
+                <p><strong>Result:</strong></p>
+                <ol>
+                    <li>Preheat oven to 350°F</li>
+                    <li>Mix ingredients</li>
+                    <li>Bake for 30 minutes</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 7: Nested Lists -->
+        <div class="slide">
+            <h1>Nesting Lists <span class="emoji">🪆</span></h1>
+            <p>Lists can contain other lists!</p>
+            <div class="code-example">
+                <span class="tag">&lt;ul&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Frontend</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;ul&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span
+                    class="content">HTML</span><span class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span
+                    class="content">CSS</span><span class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span
+                    class="content">JavaScript</span><span class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/ul&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;/li&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span><span class="content">Backend</span><span
+                    class="tag">&lt;/li&gt;</span><br>
+                <span class="tag">&lt;/ul&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: List Practice Activity -->
+        <div class="slide">
+            <h1>Quick Practice: Lists <span class="emoji">✏️</span></h1>
+            <div class="activity-box">
+                <h3>5-Minute Challenge</h3>
+                <p>Create these lists in your one-page website:</p>
+                <ol>
+                    <li>An unordered list of your 3 favorite foods</li>
+                    <li>An ordered list of your morning routine (3-4 steps)</li>
+                </ol>
+            </div>
+            <div class="tip">
+                <strong>Remember:</strong> <code>&lt;ul&gt;</code> for unordered, <code>&lt;ol&gt;</code> for ordered,
+                <code>&lt;li&gt;</code> for each item!
+            </div>
+        </div>
+
+        <!-- Slide 9: Links Introduction -->
+        <div class="slide">
+            <h1>Links: The Web's Superpower! <span class="emoji">🔗</span></h1>
+            <h2>Why is it called the "web"?</h2>
+            <p style="font-size: 1.4em;">Because pages link together like a spider's web!</p>
+            <div class="visual-example">
+                <p style="font-size: 1.3em;">Links connect:</p>
+                <ul>
+                    <li>Pages within your site</li>
+                    <li>Your site to other websites</li>
+                    <li>Content to downloads</li>
+                    <li>Users to resources</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Anchor Element -->
+        <div class="slide">
+            <h1>The Anchor Element <span class="emoji">⚓</span></h1>
+            <p style="font-size: 1.4em;">Creating links with <code>&lt;a&gt;</code></p>
+            <div class="code-example">
+                <span class="tag">&lt;a&gt;</span><span class="content">Click me!</span><span
+                    class="tag">&lt;/a&gt;</span>
+            </div>
+            <div class="warning">
+                <strong>Problem:</strong> This link doesn't go anywhere! 😕
+            </div>
+            <p style="margin-top: 30px;">We need the <span class="highlight">href attribute</span>!</p>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"https://google.com"</span><span class="tag">&gt;</span><span class="content">Go to
+                    Google</span><span class="tag">&lt;/a&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 11: Absolute vs Relative Links -->
+        <div class="slide">
+            <h1>Two Types of Links</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>🌍 Absolute Links</h3>
+                    <p>Full web addresses to external sites</p>
+                    <div class="code-example" style="font-size: 0.9em;">
+                        <span class="value">https://www.google.com</span>
+                    </div>
+                    <ul>
+                        <li>Include protocol (https://)</li>
+                        <li>Include domain name</li>
+                        <li>Link to other websites</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>📁 Relative Links</h3>
+                    <p>Paths to files in your own site</p>
+                    <div class="code-example" style="font-size: 0.9em;">
+                        <span class="value">about.html</span><br>
+                        <span class="value">pages/contact.html</span>
+                    </div>
+                    <ul>
+                        <li>No protocol or domain</li>
+                        <li>Start from current location</li>
+                        <li>Link within your site</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Absolute Links Example -->
+        <div class="slide">
+            <h1>Absolute Links in Action</h1>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"https://www.theodinproject.com"</span><span class="tag">&gt;</span><br>
+                &nbsp;&nbsp;<span class="content">Visit The Odin Project</span><br>
+                <span class="tag">&lt;/a&gt;</span>
+            </div>
+            <h3>Anatomy of an absolute URL:</h3>
+            <div class="visual-example">
+                <p style="font-size: 1.4em; font-family: monospace;">
+                    <span style="color: #667eea;">https://</span><span
+                        style="color: #764ba2;">www.theodinproject.com</span><span style="color: #ff6b6b;">/about</span>
+                </p>
+                <ul class="icon-list">
+                    <li><span style="color: #667eea;">Protocol</span> (https://)</li>
+                    <li><span style="color: #764ba2;">Domain</span> (www.theodinproject.com)</li>
+                    <li><span style="color: #ff6b6b;">Path</span> (/about)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: Relative Links Example -->
+        <div class="slide">
+            <h1>Relative Links: Navigation Within Your Site</h1>
+            <h3>File Structure Example:</h3>
+            <div class="code-example">
+                📁 my-website/<br>
+                &nbsp;&nbsp;📄 index.html<br>
+                &nbsp;&nbsp;📄 about.html<br>
+                &nbsp;&nbsp;📁 pages/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;📄 contact.html
+            </div>
+            <h3>From index.html:</h3>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"about.html"</span><span class="tag">&gt;</span><span
+                    class="content">About</span><span class="tag">&lt;/a&gt;</span><br>
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"pages/contact.html"</span><span class="tag">&gt;</span><span
+                    class="content">Contact</span><span class="tag">&lt;/a&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 14: Directory Navigation -->
+        <div class="slide">
+            <h1>Navigating Directories <span class="emoji">🧭</span></h1>
+            <div class="visual-example">
+                <h3>Special Path Symbols:</h3>
+                <ul>
+                    <li><code>./</code> = Current directory (optional)</li>
+                    <li><code>../</code> = Parent directory (go up one level)</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                <span class="comment">/* From pages/contact.html back to index.html */</span><br>
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"../index.html"</span><span class="tag">&gt;</span><span
+                    class="content">Home</span><span class="tag">&lt;/a&gt;</span><br><br>
+                <span class="comment">/* Same as just "about.html" */</span><br>
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"./about.html"</span><span class="tag">&gt;</span><span
+                    class="content">About</span><span class="tag">&lt;/a&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 15: Opening in New Tab -->
+        <div class="slide">
+            <h1>Opening Links in New Tabs <span class="emoji">🗂️</span></h1>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"https://google.com"</span> <span class="attribute">target</span>=<span
+                    class="value">"_blank"</span><span class="tag">&gt;</span><br>
+                &nbsp;&nbsp;<span class="content">Open in new tab</span><br>
+                <span class="tag">&lt;/a&gt;</span>
+            </div>
+            <div class="warning">
+                <h3>⚠️ Security Risk!</h3>
+                <p>New tab can access your page with JavaScript (tabnabbing attack)</p>
+            </div>
+            <h3>The secure way:</h3>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"https://google.com"</span><br>
+                &nbsp;&nbsp;&nbsp;<span class="attribute">target</span>=<span class="value">"_blank"</span><br>
+                &nbsp;&nbsp;&nbsp;<span class="attribute">rel</span>=<span class="value">"noopener
+                    noreferrer"</span><span class="tag">&gt;</span><br>
+                &nbsp;&nbsp;<span class="content">Safe external link</span><br>
+                <span class="tag">&lt;/a&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 16: Link Security Explained -->
+        <div class="slide">
+            <h1>Understanding rel Attributes <span class="emoji">🔒</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>noopener</h3>
+                    <p>Prevents new page from accessing your page</p>
+                    <ul>
+                        <li>Blocks window.opener</li>
+                        <li>Prevents tabnabbing</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>noreferrer</h3>
+                    <p>Hides where the user came from</p>
+                    <ul>
+                        <li>Privacy protection</li>
+                        <li>Includes noopener behavior</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip">
+                <strong>Best Practice:</strong> Always use <code>rel="noopener noreferrer"</code> with
+                <code>target="_blank"</code>
+            </div>
+        </div>
+
+        <!-- Slide 17: Link Practice -->
+        <div class="slide">
+            <h1>Practice: Creating Links <span class="emoji">🔗</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Activity</h3>
+                <p>Add to your one-page website:</p>
+                <ol>
+                    <li>A link to your favorite website (absolute, opens in new tab)</li>
+                    <li>Create an about.html page and link to it (relative)</li>
+                    <li>A navigation list with at least 3 links</li>
+                </ol>
+            </div>
+            <div class="tip">
+                <strong>Hint:</strong> Combine lists and links for navigation!
+            </div>
+        </div>
+
+        <!-- Slide 18: Images Introduction -->
+        <div class="slide">
+            <h1>Adding Images to the Web <span class="emoji">🖼️</span></h1>
+            <p style="font-size: 1.4em;">A picture is worth a thousand words!</p>
+            <h3>Images are used for:</h3>
+            <ul>
+                <li>Visual content and photos</li>
+                <li>Logos and branding</li>
+                <li>Icons and buttons</li>
+                <li>Diagrams and infographics</li>
+                <li>Background decoration</li>
+            </ul>
+            <p style="margin-top: 30px;">Let's learn the <code>&lt;img&gt;</code> element!</p>
+        </div>
+
+        <!-- Slide 19: The Image Element -->
+        <div class="slide">
+            <h1>The Image Element <span class="emoji">📸</span></h1>
+            <div class="code-example">
+                <span class="tag">&lt;img </span><span class="attribute">src</span>=<span
+                    class="value">"photo.jpg"</span><span class="tag">&gt;</span>
+            </div>
+            <h3>Important: It's a void element!</h3>
+            <ul>
+                <li>No closing tag needed</li>
+                <li>No content inside</li>
+                <li>All info comes from attributes</li>
+            </ul>
+            <div class="warning">
+                <strong>Wrong:</strong> <code>&lt;img&gt;&lt;/img&gt;</code><br>
+                <strong>Right:</strong> <code>&lt;img&gt;</code>
+            </div>
+        </div>
+
+        <!-- Slide 20: Image Sources -->
+        <div class="slide">
+            <h1>Image src Attribute</h1>
+            <p>Just like links, images can use absolute or relative paths!</p>
+            <div class="code-example">
+                <span class="comment">/* Absolute path (from another website) */</span><br>
+                <span class="tag">&lt;img </span><span class="attribute">src</span>=<span
+                    class="value">"https://picsum.photos/200"</span><span class="tag">&gt;</span><br><br>
+                <span class="comment">/* Relative path (from your project) */</span><br>
+                <span class="tag">&lt;img </span><span class="attribute">src</span>=<span
+                    class="value">"images/logo.png"</span><span class="tag">&gt;</span><br><br>
+                <span class="comment">/* Parent directory */</span><br>
+                <span class="tag">&lt;img </span><span class="attribute">src</span>=<span
+                    class="value">"../images/banner.jpg"</span><span class="tag">&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 21: Alt Attribute -->
+        <div class="slide">
+            <h1>The Critical alt Attribute <span class="emoji">♿</span></h1>
+            <div class="code-example">
+                <span class="tag">&lt;img </span><br>
+                &nbsp;&nbsp;<span class="attribute">src</span>=<span class="value">"dog.jpg"</span><br>
+                &nbsp;&nbsp;<span class="attribute">alt</span>=<span class="value">"A golden retriever playing in the
+                    park"</span><span class="tag">&gt;</span>
+            </div>
+            <h3>Why alt text matters:</h3>
+            <ul>
+                <li>🔍 SEO - Search engines read it</li>
+                <li>♿ Accessibility - Screen readers use it</li>
+                <li>🔌 Fallback - Shows when image fails to load</li>
+                <li>📱 Low bandwidth - Users can read before image loads</li>
+            </ul>
+            <div class="tip">
+                <strong>Best Practice:</strong> ALWAYS include descriptive alt text!
+            </div>
+        </div>
+
+        <!-- Slide 22: Image Dimensions -->
+        <div class="slide">
+            <h1>Setting Image Dimensions</h1>
+            <div class="code-example">
+                <span class="tag">&lt;img </span><br>
+                &nbsp;&nbsp;<span class="attribute">src</span>=<span class="value">"photo.jpg"</span><br>
+                &nbsp;&nbsp;<span class="attribute">alt</span>=<span class="value">"Sunset over mountains"</span><br>
+                &nbsp;&nbsp;<span class="attribute">width</span>=<span class="value">"600"</span><br>
+                &nbsp;&nbsp;<span class="attribute">height</span>=<span class="value">"400"</span><span
+                    class="tag">&gt;</span>
+            </div>
+            <h3>Why specify dimensions?</h3>
+            <ul>
+                <li>Prevents layout shift while loading</li>
+                <li>Improves page performance</li>
+                <li>Better user experience</li>
+            </ul>
+            <div class="warning">
+                <strong>Note:</strong> Values are in pixels, no unit needed!
+            </div>
+        </div>
+
+        <!-- Slide 23: Image Formats -->
+        <div class="slide">
+            <h1>Common Image Formats</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>📷 JPEG/JPG</h3>
+                    <ul>
+                        <li>Best for photos</li>
+                        <li>Good compression</li>
+                        <li>No transparency</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>🎨 PNG</h3>
+                    <ul>
+                        <li>Supports transparency</li>
+                        <li>Good for logos/graphics</li>
+                        <li>Larger file sizes</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="comparison-table" style="margin-top: 20px;">
+                <div class="comparison-card">
+                    <h3>✨ GIF</h3>
+                    <ul>
+                        <li>Supports animation</li>
+                        <li>Limited colors (256)</li>
+                        <li>Simple graphics</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>🎯 SVG</h3>
+                    <ul>
+                        <li>Vector graphics</li>
+                        <li>Scalable without quality loss</li>
+                        <li>Perfect for icons/logos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Image Best Practices -->
+        <div class="slide">
+            <h1>Image Best Practices <span class="emoji">✨</span></h1>
+            <h3>Optimization Tips:</h3>
+            <ul>
+                <li>📐 Resize images to needed dimensions</li>
+                <li>🗜️ Compress images (TinyPNG, Squoosh)</li>
+                <li>📝 Use descriptive filenames</li>
+                <li>🎯 Choose the right format</li>
+                <li>⚖️ Balance quality vs file size</li>
+            </ul>
+            <div class="tip">
+                <strong>Pro Tip:</strong> Large images slow down your site! Aim for under 200KB per image.
+            </div>
+        </div>
+
+        <!-- Slide 25: Copyright Considerations -->
+        <div class="slide">
+            <h1>Image Copyright <span class="emoji">⚖️</span></h1>
+            <h3>Using Images Legally:</h3>
+            <ul>
+                <li>❌ Don't just grab any image from Google</li>
+                <li>✅ Use royalty-free image sites</li>
+                <li>✅ Check Creative Commons licenses</li>
+                <li>✅ Give attribution when required</li>
+            </ul>
+            <h3>Free Image Resources:</h3>
+            <ul class="icon-list">
+                <li>Unsplash.com</li>
+                <li>Pexels.com</li>
+                <li>Pixabay.com</li>
+                <li>Picsum.photos (for placeholders)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 26: Combined Example -->
+        <div class="slide">
+            <h1>Bringing It All Together</h1>
+            <p>Creating an image that's also a link!</p>
+            <div class="code-example">
+                <span class="tag">&lt;a </span><span class="attribute">href</span>=<span
+                    class="value">"https://okcu.edu"</span><span class="tag">&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;img </span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">src</span>=<span
+                    class="value">"okcu-logo.png"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">alt</span>=<span class="value">"Oklahoma City
+                    University"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">width</span>=<span class="value">"200"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="attribute">height</span>=<span class="value">"100"</span><span
+                    class="tag">&gt;</span><br>
+                <span class="tag">&lt;/a&gt;</span>
+            </div>
+            <p style="margin-top: 20px;">This creates a clickable logo!</p>
+        </div>
+
+        <!-- Slide 27: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Assignment <span class="emoji">📚</span></h1>
+            <h2>Due: Before Next Class</h2>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p><strong>Add a list of images that are links to your one-page website</strong></p>
+                <p>Requirements:</p>
+                <ul>
+                    <li>Create an unordered list</li>
+                    <li>Include at least 3 list items</li>
+                    <li>Each item contains an image wrapped in a link</li>
+                    <li>Images should have proper alt text</li>
+                    <li>Links should go to relevant external sites</li>
+                </ul>
+            </div>
+            <div class="tip">
+                <strong>Example:</strong> A list of your favorite websites with their logos!
+            </div>
+        </div>
+
+        <!-- Slide 28: Practice Challenge -->
+        <div class="slide">
+            <h1>Final Practice Challenge <span class="emoji">🏆</span></h1>
+            <div class="activity-box">
+                <h3>15-Minute Challenge</h3>
+                <p>Create a simple photo gallery:</p>
+                <ol>
+                    <li>Create a new page called gallery.html</li>
+                    <li>Add proper HTML boilerplate</li>
+                    <li>Create an unordered list</li>
+                    <li>Add 3 images (use picsum.photos for placeholders)</li>
+                    <li>Make each image a link to a different website</li>
+                    <li>Add a link back to your index.html</li>
+                </ol>
+            </div>
+            <p style="margin-top: 20px;">I'll walk around to help!</p>
+        </div>
+
+        <!-- Slide 29: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h3>Lists:</h3>
+            <ul>
+                <li>Use <code>&lt;ul&gt;</code> when order doesn't matter</li>
+                <li>Use <code>&lt;ol&gt;</code> when sequence is important</li>
+                <li>Always wrap items in <code>&lt;li&gt;</code></li>
+            </ul>
+            <h3>Links:</h3>
+            <ul>
+                <li>Absolute for external sites, relative for internal</li>
+                <li>Always use security attributes for new tabs</li>
+                <li>Navigation lists are a common pattern</li>
+            </ul>
+            <h3>Images:</h3>
+            <ul>
+                <li>Always include alt text</li>
+                <li>Specify dimensions to prevent layout shift</li>
+                <li>Optimize for web performance</li>
+            </ul>
+        </div>
+
+        <!-- Slide 30: Q&A -->
+        <div class="slide">
+            <h1>Questions? <span class="emoji">🤔</span></h1>
+            <h2>Let's Review!</h2>
+            <div class="visual-example">
+                <p style="font-size: 1.3em;">Common questions:</p>
+                <ul>
+                    <li>When to use absolute vs relative links?</li>
+                    <li>What makes a good alt text?</li>
+                    <li>How to organize images in your project?</li>
+                    <li>Best practices for link security?</li>
+                </ul>
+            </div>
+            <div class="tip" style="margin-top: 40px;">
+                <p><strong>Next Class:</strong> We start CSS! Get ready to make things beautiful! 🎨</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+
+</html>

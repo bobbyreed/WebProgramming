@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Good Commits & Recipe Project - CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90vw;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.6em;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-size: 1.2em;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            font-size: 1.1em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .code-example .comment {
+            color: #6272a4;
+        }
+
+        .code-example .good {
+            color: #50fa7b;
+        }
+
+        .code-example .bad {
+            color: #ff5555;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-card.bad {
+            background: #ffe5e5;
+            border-left: 4px solid #ff5555;
+        }
+
+        .comparison-card.good {
+            background: #e5ffe5;
+            border-left: 4px solid #50fa7b;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .activity-box p,
+        .activity-box li {
+            color: white;
+        }
+
+        .tip-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 100;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin: 0 8px;
+        }
+
+        .demo-box {
+            background: #f0f4f8;
+            border: 2px dashed #667eea;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .timer-display {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            color: #666;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: none;
+        }
+
+        .workflow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            font-size: 1.3em;
+        }
+
+        .workflow-step {
+            background: #f0f4f8;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .arrow {
+            color: #667eea;
+            font-size: 1.5em;
+        }
+
+        .recipe-requirements {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .recipe-requirements h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .recipe-requirements ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .recipe-requirements li:before {
+            content: "✅ ";
+            margin-right: 8px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .comparison-box,
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="timer-display" id="timer">
+            <span id="timer-text">Work Time: 20:00</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Writing Good Commits</h1>
+            <h2>& Recipe Project Work Session <span class="emoji">👨‍💻</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 4513 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 4, Class 7</p>
+            <p style="margin-top: auto; font-style: italic;">Today: Learn to document your code journey + Build your
+                Recipe Project!</p>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <h1>Today's Agenda <span class="emoji">📋</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Part 1: Git Commits (20 min)</h3>
+                    <ul>
+                        <li>Why commit messages matter</li>
+                        <li>Bad vs. good commits</li>
+                        <li>Commit message structure</li>
+                        <li>When to commit</li>
+                        <li>Best practices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Part 2: Recipe Project (25 min)</h3>
+                    <ul>
+                        <li>Project requirements review</li>
+                        <li>Live demo setup</li>
+                        <li>Work session</li>
+                        <li>Q&A and troubleshooting</li>
+                        <li>Submission guidelines</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Recipe Project due Thursday evening!
+            </div>
+        </div>
+
+        <!-- Slide 3: Why Commit Messages Matter -->
+        <div class="slide">
+            <h1>Why Commit Messages Matter <span class="emoji">🎯</span></h1>
+            <h2>Your Future Self Will Thank You!</h2>
+            <ul style="font-size: 1.3em;">
+                <li><strong>Job Applications:</strong> Employers WILL look at your commit history on GitHub</li>
+                <li><strong>Team Collaboration:</strong> Other developers need to understand your changes</li>
+                <li><strong>Bug Tracking:</strong> Find when and why bugs were introduced</li>
+                <li><strong>Code Review:</strong> Understand the context of changes</li>
+                <li><strong>Future You:</strong> Remember why you made changes 6 months ago</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Real Talk:</strong> Good commit messages are one of the easiest ways to stand out as a junior
+                developer!
+            </div>
+        </div>
+
+        <!-- Slide 4: Bad Commits Examples -->
+        <div class="slide">
+            <h1>Bad Commit Messages <span class="emoji">❌</span></h1>
+            <h2>What NOT to Do</h2>
+            <div class="code-example">
+                <span class="bad">fix bug</span><br>
+                <span class="bad">update</span><br>
+                <span class="bad">asdfasdf</span><br>
+                <span class="bad">stuff</span><br>
+                <span class="bad">Friday changes</span><br>
+                <span class="bad">FINALLY WORKS!!!</span><br>
+                <span class="bad">idk why this works but it does</span>
+            </div>
+            <h3>Problems with these:</h3>
+            <ul>
+                <li>No context about WHAT was fixed or changed</li>
+                <li>No explanation of WHY the change was made</li>
+                <li>Impossible to understand without reading the code</li>
+                <li>Unprofessional (employers will see this!)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Good Commits Structure -->
+        <div class="slide">
+            <h1>Anatomy of a Good Commit <span class="emoji">✅</span></h1>
+            <div class="code-example">
+                <span class="good">Add missing link and alt text to company logo</span><br>
+                <br>
+                <span class="good">Screen readers won't read images to users with disabilities</span><br>
+                <span class="good">without this information. This improves accessibility and</span><br>
+                <span class="good">ensures WCAG 2.1 compliance.</span>
+            </div>
+            <h3>Two Parts:</h3>
+            <ol>
+                <li><strong>Subject Line (50-72 chars):</strong> WHAT you did</li>
+                <li><strong>Body (optional):</strong> WHY you did it and HOW it solves the problem</li>
+            </ol>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Leave a blank line between subject and body!
+            </div>
+        </div>
+
+        <!-- Slide 6: Comparison -->
+        <div class="slide">
+            <h1>Bad vs. Good: Side by Side</h1>
+            <div class="comparison-box">
+                <div class="comparison-card bad">
+                    <h3>❌ Bad</h3>
+                    <div class="code-example">
+                        <span class="bad">fixed navbar</span>
+                    </div>
+                    <p>What was wrong? What was fixed? Why?</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Good</h3>
+                    <div class="code-example">
+                        <span class="good">Fix navbar collapse on mobile devices</span><br><br>
+                        <span class="good">The hamburger menu wasn't toggling due to</span><br>
+                        <span class="good">missing data-toggle attribute.</span>
+                    </div>
+                    <p>Clear, specific, and explains the issue!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: When to Commit -->
+        <div class="slide">
+            <h1>When Should You Commit? <span class="emoji">⏰</span></h1>
+            <h2>Think of Commits as Save Points in a Video Game!</h2>
+            <h3>Commit When You:</h3>
+            <ul style="font-size: 1.3em;">
+                <li>✅ Complete a feature (even a small one)</li>
+                <li>✅ Fix a bug</li>
+                <li>✅ Add a new file or component</li>
+                <li>✅ Make a meaningful change that works</li>
+                <li>✅ Before trying something experimental</li>
+                <li>✅ End of a work session (with working code)</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Warning:</strong> Don't commit broken code! If you must, use a branch or add "WIP" (Work In
+                Progress) to your message.
+            </div>
+        </div>
+
+        <!-- Slide 8: The 7 Rules -->
+        <div class="slide">
+            <h1>The 7 Rules of Great Commit Messages</h1>
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li><strong>Separate subject from body with a blank line</strong></li>
+                <li><strong>Limit subject line to 50-72 characters</strong></li>
+                <li><strong>Capitalize the subject line</strong></li>
+                <li><strong>Don't end subject line with a period</strong></li>
+                <li><strong>Use imperative mood</strong> ("Add feature" not "Added feature")</li>
+                <li><strong>Wrap body at 72 characters</strong></li>
+                <li><strong>Use body to explain what and why, not how</strong></li>
+            </ol>
+            <div class="tip-box">
+                <strong>Test:</strong> Your subject should complete: "If applied, this commit will..."
+            </div>
+        </div>
+
+        <!-- Slide 9: Multi-line Commits -->
+        <div class="slide">
+            <h1>Creating Multi-line Commits <span class="emoji">📝</span></h1>
+            <h2>Beyond git commit -m</h2>
+            <div class="workflow-diagram">
+                <div class="workflow-step">git commit</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">VS Code Opens</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">Write Message</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">Save & Close</div>
+            </div>
+            <div class="code-example">
+                <span class="comment"># In terminal:</span><br>
+                git add .<br>
+                git commit<br><br>
+                <span class="comment"># VS Code opens, write:</span><br>
+                Add recipe page navigation menu<br>
+                <br>
+                The navigation helps users quickly jump between<br>
+                different recipe sections without scrolling.
+            </div>
+        </div>
+
+        <!-- Slide 10: Practice Exercise -->
+        <div class="slide">
+            <h1>Quick Practice <span class="emoji">✍️</span></h1>
+            <div class="activity-box">
+                <h3>Fix These Commit Messages!</h3>
+                <p>Rewrite these bad commits:</p>
+                <ol>
+                    <li>"css changes"</li>
+                    <li>"oops"</li>
+                    <li>"FINALLY!!!!"</li>
+                </ol>
+            </div>
+            <h3>Possible Improvements:</h3>
+            <ul>
+                <li>"Update CSS grid layout for recipe cards"</li>
+                <li>"Revert accidental deletion of index.html"</li>
+                <li>"Fix image path issue preventing recipe photos from loading"</li>
+            </ul>
+        </div>
+
+        <!-- Slide 11: Recipe Project Intro -->
+        <div class="slide">
+            <h1>Recipe Project Time! <span class="emoji">🍳</span></h1>
+            <h2>Let's Build Something Delicious</h2>
+            <div class="demo-box">
+                <p style="font-size: 1.4em;">Due: Tomorrow (Thursday) Evening</p>
+                <p style="font-size: 1.2em;">Submit via GitHub link on D2L</p>
+            </div>
+            <div class="tip-box">
+                <strong>Today's Goal:</strong> Get your basic structure complete so you can polish at home!
+            </div>
+        </div>
+
+        <!-- Slide 12: Project Requirements -->
+        <div class="slide">
+            <h1>Recipe Project Requirements</h1>
+            <div class="recipe-requirements">
+                <h3>Project Structure:</h3>
+                <ul>
+                    <li>Main index page listing all recipes</li>
+                    <li>At least 3 separate recipe pages</li>
+                    <li>Proper file organization</li>
+                    <li>Links between all pages</li>
+                </ul>
+            </div>
+            <div class="recipe-requirements">
+                <h3>Each Recipe Page Must Include:</h3>
+                <ul>
+                    <li>Recipe title (h1)</li>
+                    <li>Image of the dish</li>
+                    <li>Description paragraph</li>
+                    <li>Ingredients list (unordered list)</li>
+                    <li>Steps (ordered list)</li>
+                    <li>Link back to main page</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: File Structure -->
+        <div class="slide">
+            <h1>Recommended File Structure</h1>
+            <div class="code-example">
+                odin-recipes/<br>
+                ├── index.html<br>
+                ├── recipes/<br>
+                │ ├── lasagna.html<br>
+                │ ├── pizza.html<br>
+                │ └── tacos.html<br>
+                └── images/<br>
+                ├── lasagna.jpg<br>
+                ├── pizza.jpg<br>
+                └── tacos.jpg
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Keep your images in a separate folder for organization!
+            </div>
+        </div>
+
+        <!-- Slide 14: Live Demo Setup -->
+        <div class="slide">
+            <h1>Let's Build Together! <span class="emoji">🚀</span></h1>
+            <h2>5-Minute Speed Run: Project Setup</h2>
+            <div class="code-example">
+                <span class="comment"># Step 1: Create project directory</span><br>
+                mkdir odin-recipes<br>
+                cd odin-recipes<br><br>
+                <span class="comment"># Step 2: Initialize Git</span><br>
+                git init<br><br>
+                <span class="comment"># Step 3: Create structure</span><br>
+                touch index.html<br>
+                mkdir recipes images<br><br>
+                <span class="comment"># Step 4: Create on GitHub and connect</span><br>
+                <span class="comment"># (We'll do this together!)</span>
+            </div>
+        </div>
+
+        <!-- Slide 15: Index Page Template -->
+        <div class="slide">
+            <h1>Index Page Starter Template</h1>
+            <div class="code-example">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html lang="en"&gt;<br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                &nbsp;&nbsp;&lt;title&gt;Odin Recipes&lt;/title&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;h1&gt;Odin Recipes&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&lt;ul&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a href="recipes/lasagna.html"&gt;Lasagna&lt;/a&gt;&lt;/li&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a href="recipes/pizza.html"&gt;Pizza&lt;/a&gt;&lt;/li&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a href="recipes/tacos.html"&gt;Tacos&lt;/a&gt;&lt;/li&gt;<br>
+                &nbsp;&nbsp;&lt;/ul&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+        </div>
+
+        <!-- Slide 16: Recipe Page Template -->
+        <div class="slide">
+            <h1>Recipe Page Template</h1>
+            <div class="code-example" style="font-size: 0.95em;">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html lang="en"&gt;<br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                &nbsp;&nbsp;&lt;title&gt;Lasagna Recipe&lt;/title&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;h1&gt;World's Best Lasagna&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&lt;img src="../images/lasagna.jpg" alt="Delicious lasagna"&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;Description&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;p&gt;This lasagna recipe is amazing...&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;Ingredients&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;ul&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;1 pound ground beef&lt;/li&gt;<br>
+                &nbsp;&nbsp;&lt;/ul&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;Steps&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;ol&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Brown the ground beef&lt;/li&gt;<br>
+                &nbsp;&nbsp;&lt;/ol&gt;<br>
+                &nbsp;&nbsp;&lt;a href="../index.html"&gt;Back to recipes&lt;/a&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+        </div>
+
+        <!-- Slide 17: Git Workflow for Project -->
+        <div class="slide">
+            <h1>Git Workflow for Your Project</h1>
+            <div class="workflow-diagram">
+                <div class="workflow-step">Create Files</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">git add</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">git commit</div>
+                <span class="arrow">→</span>
+                <div class="workflow-step">git push</div>
+            </div>
+            <h3>Suggested Commits:</h3>
+            <ol>
+                <li>"Initial commit with project structure"</li>
+                <li>"Add index page with recipe links"</li>
+                <li>"Add lasagna recipe page"</li>
+                <li>"Add pizza recipe page"</li>
+                <li>"Add tacos recipe page"</li>
+                <li>"Add images for all recipes"</li>
+            </ol>
+            <div class="tip-box">
+                <strong>Remember:</strong> Each commit should be a working version of your site!
+            </div>
+        </div>
+
+        <!-- Slide 18: Common Issues -->
+        <div class="slide">
+            <h1>Common Issues & Solutions <span class="emoji">🔧</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Issue: Broken Images</h3>
+                    <p><strong>Check:</strong></p>
+                    <ul>
+                        <li>File path (../ to go up a directory)</li>
+                        <li>File extension (.jpg vs .jpeg)</li>
+                        <li>Case sensitivity (Image.jpg ≠ image.jpg)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Issue: Links Not Working</h3>
+                    <p><strong>Check:</strong></p>
+                    <ul>
+                        <li>Relative paths</li>
+                        <li>File names match exactly</li>
+                        <li>.html extension included</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Testing Tip:</strong> Click every link and verify every image loads before submitting!
+            </div>
+        </div>
+
+        <!-- Slide 19: Work Session -->
+        <div class="slide">
+            <h1>Work Session Time! <span class="emoji">💪</span></h1>
+            <h2>20 Minutes to Build</h2>
+            <div class="activity-box">
+                <h3>Your Mission:</h3>
+                <ul>
+                    <li>Set up your project structure</li>
+                    <li>Create your index.html</li>
+                    <li>Start at least one recipe page</li>
+                    <li>Make meaningful commits along the way!</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <p style="font-size: 1.3em;">I'll be walking around to help!</p>
+                <p>Raise your hand if you get stuck 🙋</p>
+            </div>
+            <button onclick="startTimer()" style="margin-top: 20px;">Start 20-Minute Timer</button>
+        </div>
+
+        <!-- Slide 20: Submission Checklist -->
+        <div class="slide">
+            <h1>Before You Submit <span class="emoji">✔️</span></h1>
+            <div class="recipe-requirements">
+                <h3>Final Checklist:</h3>
+                <ul>
+                    <li>Main index page with links to all recipes</li>
+                    <li>At least 3 recipe pages</li>
+                    <li>Each recipe has: title, image, description, ingredients, steps</li>
+                    <li>All links work (test them!)</li>
+                    <li>All images display properly</li>
+                    <li>Proper HTML structure (DOCTYPE, head, body)</li>
+                    <li>Meaningful commit history</li>
+                    <li>Pushed to GitHub</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <strong>Submit on D2L:</strong> Your GitHub repository link by tomorrow evening!
+            </div>
+        </div>
+
+        <!-- Slide 21: Tips for Success -->
+        <div class="slide">
+            <h1>Pro Tips for Success <span class="emoji">🌟</span></h1>
+            <ul style="font-size: 1.3em;">
+                <li><strong>Start Simple:</strong> Get basic structure working first, then add details</li>
+                <li><strong>Test Often:</strong> Check your site in the browser after each major change</li>
+                <li><strong>Commit Frequently:</strong> Show your progress with good commit messages</li>
+                <li><strong>Use Real Recipes:</strong> Makes it more fun and personal!</li>
+                <li><strong>Ask for Help:</strong> That's what I'm here for!</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Extra Credit Idea:</strong> Add a home/back button on each recipe page, or add nutrition
+                information!
+            </div>
+        </div>
+
+        <!-- Slide 22: Next Class Preview -->
+        <div class="slide">
+            <h1>What's Next? <span class="emoji">🔮</span></h1>
+            <h2>Thursday: Project Q&A + CSS Introduction</h2>
+            <ul>
+                <li>Quick project troubleshooting session</li>
+                <li>Introduction to CSS</li>
+                <li>How to add style to your recipes!</li>
+                <li>Project submission deadline (evening)</li>
+            </ul>
+            <div class="demo-box">
+                <p style="font-size: 1.3em;">Your recipes are about to get stylish! 🎨</p>
+            </div>
+        </div>
+
+        <!-- Slide 23: Summary -->
+        <div class="slide">
+            <h1>Today's Takeaways <span class="emoji">📚</span></h1>
+            <h2>Git Commits:</h2>
+            <ul>
+                <li>Write clear subject lines (what) and bodies (why)</li>
+                <li>Commit early and often</li>
+                <li>Use imperative mood</li>
+                <li>Your commit history tells a story</li>
+            </ul>
+            <h2>Recipe Project:</h2>
+            <ul>
+                <li>Structure is key: organize your files</li>
+                <li>Test all links and images</li>
+                <li>Make meaningful commits as you work</li>
+                <li>Due tomorrow evening!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 24: Closing -->
+        <div class="slide">
+            <h1>Let's Build! <span class="emoji">🚀</span></h1>
+            <div class="demo-box">
+                <h2>Use Remaining Time Wisely</h2>
+                <p style="font-size: 1.3em;">Work on your Recipe Project</p>
+                <p style="font-size: 1.3em;">Ask questions</p>
+                <p style="font-size: 1.3em;">Help your classmates</p>
+            </div>
+            <div class="activity-box" style="margin-top: 40px;">
+                <h3>Remember:</h3>
+                <p>Good commits today = impressed employers tomorrow!</p>
+                <p>Recipe Project due Thursday evening on D2L</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">24</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let timerInterval = null;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer');
+            const timerText = document.getElementById('timer-text');
+            timerDisplay.style.display = 'block';
+
+            let timeLeft = 20 * 60; // 20 minutes in seconds
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerText.textContent = `Work Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerText.textContent = "Time's up!";
+                    alert("20 minutes are up! Let's wrap up and discuss any questions.");
+                }
+
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+
+</html>
