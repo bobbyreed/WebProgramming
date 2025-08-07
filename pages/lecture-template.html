@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture Title - CSCI 4513</title>
+    
+    <!-- Shared Presentation Styles -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    
+    <!-- Lecture-Specific Styles (if needed) -->
+    <style>
+        /* Add any lecture-specific styles here */
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Optional timer display for activities -->
+        <div class="timer-display" id="timer-display" style="display: none;">
+            <span id="timer-text">Time: 0:00</span>
+        </div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Lecture Main Title</h1>
+            <h2>Subtitle <span class="emoji">📚</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 4513 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week X, Class Y</p>
+            <p style="margin-top: auto; font-style: italic;">Inspiring tagline here!</p>
+        </div>
+        
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 First learning objective</li>
+                <li>🎯 Second learning objective</li>
+                <li>🎯 Third learning objective</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 3: Content Example -->
+        <div class="slide">
+            <h1>Content Title</h1>
+            <p>Regular paragraph text goes here.</p>
+            
+            <!-- Code Example -->
+            <div class="code-example">
+                <span class="tag">&lt;div&gt;</span>
+                <span class="content">Content</span>
+                <span class="tag">&lt;/div&gt;</span>
+            </div>
+            
+            <!-- Tip Box -->
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Helpful information here.
+            </div>
+        </div>
+        
+        <!-- Slide 4: Activity -->
+        <div class="slide">
+            <h1>Practice Activity <span class="emoji">💻</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Challenge</h3>
+                <p>Activity description:</p>
+                <ol>
+                    <li>First step</li>
+                    <li>Second step</li>
+                    <li>Third step</li>
+                </ol>
+            </div>
+            <!-- Timer button with data attribute -->
+            <button data-timer="10">Start 10-Minute Timer</button>
+        </div>
+        
+        <!-- Slide 5: Comparison -->
+        <div class="slide">
+            <h1>Comparing Approaches</h1>
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>✅ Good Practice</h3>
+                    <p>Description of good practice</p>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>❌ Bad Practice</h3>
+                    <p>Description of bad practice</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Final Slide: Summary -->
+        <div class="slide">
+            <h1>Today's Takeaways <span class="emoji">🎓</span></h1>
+            <h2>You Can Now:</h2>
+            <ul>
+                <li>✅ First accomplishment</li>
+                <li>✅ Second accomplishment</li>
+                <li>✅ Third accomplishment</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Next Class:</strong> Preview of next topic</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">6</span>
+            </span>
+            <button id="nextBtn">Next →</button>
+        </div>
+    </div>
+    
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    
+    <!-- Lecture-Specific JavaScript (if needed) -->
+    <script>
+        // Add any lecture-specific JavaScript here
+        // You can listen for slide change events:
+        document.addEventListener('slidechange', (e) => {
+            console.log(`Slide ${e.detail.currentSlide + 1} of ${e.detail.totalSlides}`);
+        });
+        
+        // You can also programmatically control slides:
+        // window.presentation.goToSlide(3); // Go to slide 4 (0-indexed)
+    </script>
+</body>
+</html>
