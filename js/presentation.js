@@ -9,6 +9,7 @@ class PresentationController {
         this.slides = document.querySelectorAll('.slide');
         this.totalSlides = this.slides.length;
         this.timerInterval = null;
+        this.currentTheme = localStorage.getItem('theme') || 'light';
 
         this.init();
     }

@@ -1,71 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Programming - CSCI 4513</title>
     <style>
+        /* OCU Brand Colors */
+        :root {
+            --ocu-black: #000000;
+            --ocu-true-blue: #00669b;
+            --ocu-white: #ffffff;
+            --ocu-dark-blue: #043d5d;
+            --ocu-cyan: #009edb;
+            --ocu-light-blue: #9ddcf9;
+            --ocu-green: #70bf54;
+            --ocu-light-green: #afd46c;
+            --ocu-yellow: #ffc222;
+
+            /* Light mode (default) */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #000000;
+            --text-secondary: #043d5d;
+            --text-muted: #666666;
+            --card-bg: #ffffff;
+            --gradient-start: #00669b;
+            --gradient-end: #009edb;
+            --shadow: rgba(0, 102, 155, 0.2);
+            --link-color: #00669b;
+            --link-hover: #043d5d;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ddcf9;
+            --text-muted: #aaaaaa;
+            --card-bg: #1a1a1a;
+            --gradient-start: #043d5d;
+            --gradient-end: #00669b;
+            --shadow: rgba(0, 158, 219, 0.3);
+            --link-color: #009edb;
+            --link-hover: #9ddcf9;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
-        
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle-label {
+            color: var(--text-primary);
+            font-size: 0.9em;
+            user-select: none;
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--ocu-light-blue);
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .theme-slider:before {
+            position: absolute;
+            content: "☀️";
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        input:checked+.theme-slider {
+            background-color: var(--ocu-dark-blue);
+        }
+
+        input:checked+.theme-slider:before {
+            transform: translateX(30px);
+            content: "🌙";
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
-            background: white;
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px var(--shadow);
             margin-bottom: 40px;
             text-align: center;
         }
-        
+
         h1 {
-            color: #764ba2;
+            color: var(--ocu-true-blue);
             font-size: 3em;
             margin-bottom: 15px;
         }
-        
+
+        [data-theme="dark"] h1 {
+            color: var(--ocu-cyan);
+        }
+
         .subtitle {
-            color: #667eea;
+            color: var(--text-secondary);
             font-size: 1.5em;
             margin-bottom: 10px;
         }
-        
+
         .meta-info {
-            color: #666;
+            color: var(--text-muted);
             font-size: 1.1em;
         }
-        
+
         .lectures-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
-        
+
         .lecture-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px var(--shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-        
+
         .lecture-card::before {
             content: '';
             position: absolute;
@@ -73,51 +189,55 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, var(--ocu-true-blue) 0%, var(--ocu-cyan) 100%);
         }
-        
+
         .lecture-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 40px var(--shadow);
         }
-        
+
         .lecture-number {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ocu-true-blue) 0%, var(--ocu-cyan) 100%);
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 0.9em;
             margin-bottom: 15px;
         }
-        
+
         .lecture-card h3 {
-            color: #333;
+            color: var(--text-primary);
             font-size: 1.4em;
             margin-bottom: 10px;
         }
-        
+
         .lecture-card p {
-            color: #666;
+            color: var(--text-secondary);
             margin-bottom: 20px;
             line-height: 1.6;
         }
-        
+
         .lecture-card a {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ocu-true-blue) 0%, var(--ocu-cyan) 100%);
             color: white;
             text-decoration: none;
             padding: 12px 25px;
             border-radius: 25px;
             transition: all 0.3s ease;
         }
-        
+
+        [data-theme="dark"] .lecture-card a {
+            background: linear-gradient(135deg, var(--ocu-dark-blue) 0%, var(--ocu-true-blue) 100%);
+        }
+
         .lecture-card a:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px var(--shadow);
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 3px 10px;
@@ -125,76 +245,105 @@
             font-size: 0.85em;
             margin-left: 10px;
         }
-        
+
         .status-ready {
-            background: #d4edda;
-            color: #155724;
+            background: var(--ocu-light-green);
+            color: var(--ocu-dark-blue);
         }
-        
+
         .status-coming {
-            background: #fff3cd;
-            color: #856404;
+            background: var(--ocu-yellow);
+            color: var(--ocu-dark-blue);
         }
-        
+
         .info-section {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px var(--shadow);
             margin-bottom: 40px;
         }
-        
+
         .info-section h2 {
-            color: #764ba2;
+            color: var(--ocu-true-blue);
             margin-bottom: 20px;
             font-size: 1.8em;
         }
-        
+
+        [data-theme="dark"] .info-section h2 {
+            color: var(--ocu-cyan);
+        }
+
         .info-section ul {
             list-style-position: inside;
-            color: #666;
+            color: var(--text-primary);
             line-height: 1.8;
         }
-        
+
         .info-section li {
             margin-bottom: 10px;
         }
-        
+
+        .info-section a {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+
+        .info-section a:hover {
+            color: var(--link-hover);
+        }
+
         footer {
             text-align: center;
             color: white;
             padding: 20px;
             font-size: 1.1em;
         }
-        
+
         footer a {
             color: white;
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
             }
-            
+
             .subtitle {
                 font-size: 1.2em;
             }
-            
+
             .lectures-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
             }
         }
     </style>
 </head>
+
 <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Light</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-checkbox">
+            <span class="theme-slider"></span>
+        </label>
+        <span class="theme-toggle-label">Dark</span>
+    </div>
+
     <div class="container">
         <header>
             <h1>Web Programming</h1>
             <p class="subtitle">CSCI 4513 - Undergraduate Course</p>
             <p class="meta-info">Fall 2025 | Instructor: bobby reed</p>
         </header>
-        
+
         <div class="info-section">
             <h2>📚 Course Overview</h2>
             <ul>
@@ -204,32 +353,35 @@
                 <li>Building strong fundamentals for web development</li>
             </ul>
         </div>
-        
+
         <div class="lectures-grid">
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 2</span>
                 <h3>How the Web Works</h3>
-                <p>Understanding the internet, DNS, packets, client-server architecture, and what happens when you search Google.</p>
+                <p>Understanding the internet, DNS, packets, client-server architecture, and what happens when you
+                    search Google.</p>
                 <a href="./pages/2HowTheWebWorks.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 3</span>
                 <h3>HTML Elements and Tags</h3>
-                <p>Learning the building blocks of HTML - elements, tags, void elements, and how to structure content.</p>
+                <p>Learning the building blocks of HTML - elements, tags, void elements, and how to structure content.
+                </p>
                 <a href="./pages/3HTMLElementsAndTags.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 4</span>
                 <h3>HTML Boilerplate</h3>
-                <p>Understanding the essential structure every HTML document needs, including DOCTYPE, head, and body elements.</p>
+                <p>Understanding the essential structure every HTML document needs, including DOCTYPE, head, and body
+                    elements.</p>
                 <a href="./pages/4HTMLBoilerplate.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 5</span>
                 <h3>Working with Text</h3>
@@ -237,23 +389,25 @@
                 <a href="./pages/5HTMLWorkingWithText.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 6</span>
                 <h3>Lists, Links, and Images</h3>
-                <p>Building navigation with lists, creating links between pages, and embedding images with proper accessibility.</p>
+                <p>Building navigation with lists, creating links between pages, and embedding images with proper
+                    accessibility.</p>
                 <a href="./pages/6HTMLListsLinksImages.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 7</span>
                 <h3>Writing Good Commits</h3>
-                <p>Best practices for Git commit messages, version control workflow, and Recipe Project work session.</p>
+                <p>Best practices for Git commit messages, version control workflow, and Recipe Project work session.
+                </p>
                 <a href="./pages/7WritingGoodCommits.html">View Lecture</a>
                 <span class="status-badge status-ready">Ready</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 8</span>
                 <h3>CSS Foundations</h3>
@@ -261,7 +415,7 @@
                 <a href="#">View Lecture</a>
                 <span class="status-badge status-coming">Coming Soon</span>
             </div>
-            
+
             <div class="lecture-card">
                 <span class="lecture-number">Lecture 9</span>
                 <h3>The Cascade</h3>
@@ -270,19 +424,36 @@
                 <span class="status-badge status-coming">Coming Soon</span>
             </div>
         </div>
-        
+
         <div class="info-section">
             <h2>🛠️ Resources</h2>
             <ul>
                 <li><a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a></li>
                 <li>Office Hours: Mon/Wed 9-11 AM | Tue/Thu 1-2:30 PM</li>
+                <li>Email: <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></li>
             </ul>
         </div>
-        
+
         <footer>
             <p>&copy; 2025 bobby reed | Oklahoma City University</p>
             <p>Contact: <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></p>
         </footer>
     </div>
+
+    <script>
+        // Theme toggle functionality
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        const themeCheckbox = document.getElementById('theme-checkbox');
+        themeCheckbox.checked = currentTheme === 'dark';
+
+        themeCheckbox.addEventListener('change', function () {
+            const theme = this.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+    </script>
 </body>
+
 </html>
