@@ -1,0 +1,347 @@
+/* ===================================
+   PRESENTATION FRAMEWORK CSS
+   Shared styles for all lecture slides
+   =================================== */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Presentation Container */
+.presentation-container {
+    width: 90vw;
+    height: 90vh;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slide Styles */
+.slide {
+    width: 100%;
+    height: 100%;
+    padding: 60px;
+    display: none;
+    flex-direction: column;
+    animation: slideIn 0.5s ease-in-out;
+    overflow-y: auto;
+}
+
+.slide.active {
+    display: flex;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Typography */
+h1 {
+    color: #764ba2;
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 20px;
+}
+
+h2 {
+    color: #667eea;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    margin-top: 30px;
+}
+
+h3 {
+    color: #764ba2;
+    font-size: 1.6em;
+    margin: 20px 0;
+}
+
+p, li {
+    font-size: 1.2em;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+ul, ol {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 12px;
+}
+
+/* Code Examples */
+.code-example {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    margin: 20px 0;
+    font-size: 1.1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.code-example .tag {
+    color: #ff79c6;
+}
+
+.code-example .attribute {
+    color: #50fa7b;
+}
+
+.code-example .value {
+    color: #f1fa8c;
+}
+
+.code-example .content {
+    color: #f8f8f2;
+}
+
+.code-example .comment {
+    color: #6272a4;
+}
+
+.code-example .good {
+    color: #50fa7b;
+}
+
+.code-example .bad {
+    color: #ff5555;
+}
+
+/* Utility Classes */
+.highlight {
+    background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+}
+
+.emoji {
+    font-size: 1.3em;
+    margin: 0 8px;
+}
+
+/* Box Components */
+.activity-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activity-box h3 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.activity-box p,
+.activity-box li {
+    color: white;
+}
+
+.visual-example {
+    background: #f8f9fa;
+    border: 2px dashed #667eea;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.tip-box, .tip {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.warning-box, .warning {
+    background: #fff3cd;
+    border-left: 4px solid #ff9800;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.demo-box {
+    background: #f0f4f8;
+    border: 2px dashed #667eea;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 25px 0;
+    text-align: center;
+}
+
+/* Layout Utilities */
+.comparison-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.comparison-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    border-top: 4px solid #667eea;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-card.bad {
+    background: #ffe5e5;
+    border-left: 4px solid #ff5555;
+}
+
+.comparison-card.good {
+    background: #e5ffe5;
+    border-left: 4px solid #50fa7b;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 30px 0;
+}
+
+/* Navigation Controls */
+.navigation {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    z-index: 100;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.slide-counter {
+    font-size: 1.1em;
+    color: #666;
+    font-weight: bold;
+}
+
+/* Timer Display */
+.timer-display {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 1.2em;
+    color: #666;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+/* Inline Code */
+code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: #d63384;
+}
+
+/* Special List Styles */
+.icon-list {
+    list-style: none;
+    margin-left: 0;
+}
+
+.icon-list li::before {
+    content: "→ ";
+    color: #667eea;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .presentation-container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .slide {
+        padding: 30px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    h2 {
+        font-size: 1.6em;
+    }
+    
+    .comparison-table,
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .navigation {
+        bottom: 20px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+}
