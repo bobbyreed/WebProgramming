@@ -95,9 +95,9 @@
 </head>
 
 <body>
-    <div class="presentation">
+    <div class="presentation-container presentation">
         <!-- Slide 1: Title -->
-        <div class="slide active">
+        <div class=" slide active">
             <span class="slide-number">1/20</span>
             <h1>How the Web Works</h1>
             <p class="big-text">CSCI 4513 - Web Programming</p>
@@ -511,9 +511,8 @@
     </div>
 
     <div class="controls">
-        <button onclick="previousSlide()">← Previous</button>
-        <button onclick="nextSlide()">Next →</button>
-        <button onclick="toggleFullscreen()">Fullscreen</button>
+        <button id="prevBtn">← Previous</button>
+        <button id="nextBtn">Next →</button>
     </div>
 
     <script src="../js/presentation.js"></script>
