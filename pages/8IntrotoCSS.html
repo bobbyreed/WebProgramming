@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Foundations - Intro to CSS</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Class 8 - CSS Intro</div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>CSS Foundations</h1>
+            <h2>Introduction to CSS <span class="emoji">🎨</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 4513 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 4, Class 8</p>
+            <p style="margin-top: auto; font-style: italic;">Time to make the web beautiful! ✨</p>
+        </div>
+
+        <!-- Slide 2: Important Reminder -->
+        <div class="slide">
+            <h1>⚠️ IMPORTANT REMINDER ⚠️</h1>
+            <div class="warning-box" style="font-size: 1.4em;">
+                <h2>Recipe Project Due TONIGHT!</h2>
+                <p>Submit your GitHub link on D2L by end of day</p>
+                <ul>
+                    <li>At least 3 recipe pages</li>
+                    <li>Proper HTML structure</li>
+                    <li>All links working</li>
+                    <li>Images displaying correctly</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <p><strong>Quick Q&A:</strong> Any last-minute Recipe Project questions before we dive into CSS?</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Where We've Been -->
+        <div class="slide">
+            <h1>The Journey So Far <span class="emoji">🗺️</span></h1>
+            <h3>What we've built:</h3>
+            <ul>
+                <li>✅ HTML structure and elements</li>
+                <li>✅ Lists, links, and images</li>
+                <li>✅ Complete Recipe Project (almost!)</li>
+            </ul>
+            <h3 style="margin-top: 40px;">The problem:</h3>
+            <p style="font-size: 1.4em;">Our websites work but... they look like they're from 1995! 😅</p>
+            <div class="demo-box">
+                <p><strong>Today's Solution:</strong> CSS - Making HTML look amazing!</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 Understand what CSS is and why we need it</li>
+                <li>🎯 Learn CSS syntax and rules</li>
+                <li>🎯 Master different types of selectors</li>
+                <li>🎯 Apply basic styling properties</li>
+                <li>🎯 Connect CSS to HTML (3 methods)</li>
+                <li>🎯 Complete hands-on exercises</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: What is CSS? -->
+        <div class="slide">
+            <h1>What is CSS? <span class="emoji">🤔</span></h1>
+            <h2>Cascading Style Sheets</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>HTML (Structure)</h3>
+                    <p>The skeleton 🦴</p>
+                    <ul>
+                        <li>Content</li>
+                        <li>Headings</li>
+                        <li>Paragraphs</li>
+                        <li>Links</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>CSS (Style)</h3>
+                    <p>The skin & clothes 👗</p>
+                    <ul>
+                        <li>Colors</li>
+                        <li>Fonts</li>
+                        <li>Spacing</li>
+                        <li>Layout</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 1.3em;">CSS describes <strong>how</strong> HTML elements should be displayed</p>
+        </div>
+
+        <!-- Slide 6: Why CSS? -->
+        <div class="slide">
+            <h1>Life Without CSS vs With CSS</h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>Without CSS 😢</h3>
+                    <ul>
+                        <li>Plain black text</li>
+                        <li>Times New Roman everywhere</li>
+                        <li>Blue underlined links</li>
+                        <li>No layout control</li>
+                        <li>Looks like 1990s web</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>With CSS 🎉</h3>
+                    <ul>
+                        <li>Beautiful colors</li>
+                        <li>Custom fonts</li>
+                        <li>Styled buttons</li>
+                        <li>Professional layouts</li>
+                        <li>Modern, responsive design</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <p><strong>Fun Fact:</strong> CSS Zen Garden shows the same HTML with different CSS - mind-blowing!</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: CSS Syntax -->
+        <div class="slide">
+            <h1>CSS Basic Syntax <span class="emoji">📝</span></h1>
+            <div class="code-example">
+                <span class="comment">/* This is a CSS rule */</span><br>
+                <span style="color: #ff79c6;">selector</span> {<br>
+                &nbsp;&nbsp;<span style="color: #50fa7b;">property</span>: <span style="color: #f1fa8c;">value</span>;<br>
+                &nbsp;&nbsp;<span style="color: #50fa7b;">property</span>: <span style="color: #f1fa8c;">value</span>;<br>
+                }
+            </div>
+            <h3>Real Example:</h3>
+            <div class="code-example">
+                <span style="color: #ff79c6;">p</span> {<br>
+                &nbsp;&nbsp;<span style="color: #50fa7b;">color</span>: <span style="color: #f1fa8c;">red</span>;<br>
+                &nbsp;&nbsp;<span style="color: #50fa7b;">font-size</span>: <span style="color: #f1fa8c;">16px</span>;<br>
+                }
+            </div>
+            <ul>
+                <li><strong>Selector:</strong> What to style (p = all paragraphs)</li>
+                <li><strong>Property:</strong> What aspect to change (color, size)</li>
+                <li><strong>Value:</strong> What to change it to (red, 16px)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Important Syntax Rules -->
+        <div class="slide">
+            <h1>CSS Syntax Rules <span class="emoji">⚠️</span></h1>
+            <h3>Remember These!</h3>
+            <ul style="font-size: 1.3em;">
+                <li>Properties and values separated by <code>:</code> (colon)</li>
+                <li>Each declaration ends with <code>;</code> (semicolon)</li>
+                <li>Declarations wrapped in <code>{ }</code> (curly braces)</li>
+                <li>CSS is case-insensitive but use lowercase</li>
+                <li>Whitespace doesn't matter (but use it for readability!)</li>
+            </ul>
+            <div class="code-example">
+                <span class="comment">/* Good - clean and readable */</span><br>
+                h1 {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                &nbsp;&nbsp;font-size: 24px;<br>
+                }<br><br>
+                <span class="comment">/* Also valid but harder to read */</span><br>
+                h1{color:blue;font-size:24px;}
+            </div>
+        </div>
+
+        <!-- Slide 9: Universal Selector -->
+        <div class="slide">
+            <h1>Universal Selector <span class="emoji">*️⃣</span></h1>
+            <p style="font-size: 1.4em;">Selects EVERYTHING on the page!</p>
+            <div class="code-example">
+                * {<br>
+                &nbsp;&nbsp;color: purple;<br>
+                &nbsp;&nbsp;margin: 0;<br>
+                }
+            </div>
+            <h3>When to use:</h3>
+            <ul>
+                <li>Resetting default browser styles</li>
+                <li>Applying a style to absolutely everything</li>
+                <li>Use sparingly - it's very powerful!</li>
+            </ul>
+            <div class="warning-box">
+                <p><strong>Warning:</strong> The universal selector can slow down your page if overused!</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Type Selectors -->
+        <div class="slide">
+            <h1>Type Selectors <span class="emoji">🏷️</span></h1>
+            <p style="font-size: 1.4em;">Select all elements of a specific HTML type</p>
+            <div class="code-example">
+                <span class="comment">/* Selects ALL paragraphs */</span><br>
+                p {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }<br><br>
+                <span class="comment">/* Selects ALL h1 headings */</span><br>
+                h1 {<br>
+                &nbsp;&nbsp;font-size: 32px;<br>
+                }<br><br>
+                <span class="comment">/* Selects ALL divs */</span><br>
+                div {<br>
+                &nbsp;&nbsp;background-color: gray;<br>
+                }
+            </div>
+            <div class="tip-box">
+                <p><strong>Note:</strong> Type selector = just the HTML tag name, no brackets!</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Class Selectors -->
+        <div class="slide">
+            <h1>Class Selectors <span class="emoji">🎯</span></h1>
+            <p style="font-size: 1.4em;">Target elements with a specific class attribute</p>
+            <div class="code-example">
+                <span class="comment">/* HTML */</span><br>
+                &lt;p class="<span style="color: #f1fa8c;">highlight</span>"&gt;Important text&lt;/p&gt;<br>
+                &lt;p&gt;Normal text&lt;/p&gt;<br>
+                &lt;p class="<span style="color: #f1fa8c;">highlight</span>"&gt;Also important&lt;/p&gt;<br><br>
+                <span class="comment">/* CSS - note the period! */</span><br>
+                .<span style="color: #ff79c6;">highlight</span> {<br>
+                &nbsp;&nbsp;background-color: yellow;<br>
+                }
+            </div>
+            <h3>Key Points:</h3>
+            <ul>
+                <li>Start with a period <code>.</code></li>
+                <li>Can reuse on multiple elements</li>
+                <li>Elements can have multiple classes</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: Multiple Classes -->
+        <div class="slide">
+            <h1>Multiple Classes on One Element</h1>
+            <div class="code-example">
+                <span class="comment">/* HTML - space-separated classes */</span><br>
+                &lt;p class="<span style="color: #f1fa8c;">alert-text severe-alert</span>"&gt;Warning!&lt;/p&gt;<br><br>
+                <span class="comment">/* CSS */</span><br>
+                .alert-text {<br>
+                &nbsp;&nbsp;color: red;<br>
+                }<br><br>
+                .severe-alert {<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }
+            </div>
+            <p style="margin-top: 20px;">This paragraph gets BOTH styles applied!</p>
+            <div class="tip-box">
+                <p><strong>Pro Tip:</strong> Use hyphens for multi-word class names (not spaces!)</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: ID Selectors -->
+        <div class="slide">
+            <h1>ID Selectors <span class="emoji">🆔</span></h1>
+            <p style="font-size: 1.4em;">Target ONE specific element</p>
+            <div class="code-example">
+                <span class="comment">/* HTML */</span><br>
+                &lt;div id="<span style="color: #f1fa8c;">header</span>"&gt;Site Header&lt;/div&gt;<br>
+                &lt;div id="<span style="color: #f1fa8c;">footer</span>"&gt;Site Footer&lt;/div&gt;<br><br>
+                <span class="comment">/* CSS - note the hashtag! */</span><br>
+                #<span style="color: #ff79c6;">header</span> {<br>
+                &nbsp;&nbsp;background-color: navy;<br>
+                }<br><br>
+                #<span style="color: #ff79c6;">footer</span> {<br>
+                &nbsp;&nbsp;background-color: gray;<br>
+                }
+            </div>
+            <div class="warning-box">
+                <p><strong>Remember:</strong> IDs must be unique! Only ONE element per ID on a page!</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Class vs ID -->
+        <div class="slide">
+            <h1>Class vs ID: When to Use Which?</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Classes (.)</h3>
+                    <ul>
+                        <li>Can use on multiple elements</li>
+                        <li>For reusable styles</li>
+                        <li>Most common choice</li>
+                        <li>Example: .button, .card, .highlight</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>IDs (#)</h3>
+                    <ul>
+                        <li>Only one per page</li>
+                        <li>For unique elements</li>
+                        <li>Use sparingly</li>
+                        <li>Example: #header, #main-nav, #footer</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <p><strong>Best Practice:</strong> Default to classes. Use IDs only when truly needed!</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Grouping Selectors -->
+        <div class="slide">
+            <h1>Grouping Selectors <span class="emoji">👥</span></h1>
+            <p style="font-size: 1.4em;">Apply same styles to multiple selectors</p>
+            <div class="code-example">
+                <span class="comment">/* Instead of repeating... */</span><br>
+                h1 { color: blue; }<br>
+                h2 { color: blue; }<br>
+                h3 { color: blue; }<br><br>
+                <span class="comment">/* Group with commas! */</span><br>
+                h1, h2, h3 {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }
+            </div>
+            <div class="tip-box">
+                <p><strong>Benefits:</strong> Less repetition, easier to maintain, cleaner code!</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Chaining Selectors -->
+        <div class="slide">
+            <h1>Chaining Selectors <span class="emoji">⛓️</span></h1>
+            <p style="font-size: 1.4em;">Target elements that match ALL specified criteria</p>
+            <div class="code-example">
+                <span class="comment">/* HTML */</span><br>
+                &lt;p class="highlight"&gt;Text 1&lt;/p&gt;<br>
+                &lt;p class="highlight warning"&gt;Text 2&lt;/p&gt;<br><br>
+                <span class="comment">/* CSS - NO SPACE between selectors */</span><br>
+                .highlight.warning {<br>
+                &nbsp;&nbsp;background-color: orange;<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }
+            </div>
+            <p>Only "Text 2" gets the orange background (has BOTH classes)</p>
+            <div class="warning-box">
+                <p><strong>Remember:</strong> No space = chaining, Space = descendant (we'll learn next!)</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Descendant Combinator -->
+        <div class="slide">
+            <h1>Descendant Combinator <span class="emoji">👨‍👧</span></h1>
+            <p style="font-size: 1.4em;">Select elements nested inside other elements</p>
+            <div class="code-example">
+                <span class="comment">/* HTML */</span><br>
+                &lt;div class="container"&gt;<br>
+                &nbsp;&nbsp;&lt;p&gt;This paragraph is inside&lt;/p&gt;<br>
+                &lt;/div&gt;<br>
+                &lt;p&gt;This paragraph is outside&lt;/p&gt;<br><br>
+                <span class="comment">/* CSS - SPACE between selectors */</span><br>
+                .container p {<br>
+                &nbsp;&nbsp;color: red;<br>
+                }
+            </div>
+            <p>Only the paragraph INSIDE .container turns red!</p>
+            <div class="tip-box">
+                <p><strong>Think:</strong> "Find all p elements that are descendants of .container"</p>
+            </div>
+        </div>
+
+        <!-- Slide 18: Quick Practice -->
+        <div class="slide">
+            <h1>Quick Selector Practice <span class="emoji">🧠</span></h1>
+            <h3>What would these select?</h3>
+            <div class="code-example">
+                1. p<br>
+                2. .warning<br>
+                3. #header<br>
+                4. div p<br>
+                5. .alert.urgent<br>
+                6. h1, h2, h3
+            </div>
+            <details style="margin-top: 20px;">
+                <summary style="cursor: pointer; font-size: 1.2em;">Click for Answers</summary>
+                <ol>
+                    <li>All paragraph elements</li>
+                    <li>Elements with class "warning"</li>
+                    <li>Element with id "header"</li>
+                    <li>Paragraphs inside divs</li>
+                    <li>Elements with BOTH alert AND urgent classes</li>
+                    <li>All h1, h2, and h3 elements</li>
+                </ol>
+            </details>
+        </div>
+
+        <!-- Slide 19: Color Properties -->
+        <div class="slide">
+            <h1>Color Properties <span class="emoji">🎨</span></h1>
+            <div class="code-example">
+                p {<br>
+                &nbsp;&nbsp;<span class="comment">/* Text color */</span><br>
+                &nbsp;&nbsp;color: red;<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">/* Background color */</span><br>
+                &nbsp;&nbsp;background-color: yellow;<br>
+                }
+            </div>
+            <h3>Color Values:</h3>
+            <div class="code-example">
+                <span class="comment">/* Named colors */</span><br>
+                color: red;<br><br>
+                <span class="comment">/* Hex codes */</span><br>
+                color: #FF0000;<br><br>
+                <span class="comment">/* RGB */</span><br>
+                color: rgb(255, 0, 0);<br><br>
+                <span class="comment">/* HSL */</span><br>
+                color: hsl(0, 100%, 50%);
+            </div>
+        </div>
+
+        <!-- Slide 20: Typography Properties -->
+        <div class="slide">
+            <h1>Typography Basics <span class="emoji">📝</span></h1>
+            <div class="code-example">
+                p {<br>
+                &nbsp;&nbsp;<span class="comment">/* Font family with fallbacks */</span><br>
+                &nbsp;&nbsp;font-family: "Helvetica", Arial, sans-serif;<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">/* Size (no space before unit!) */</span><br>
+                &nbsp;&nbsp;font-size: 16px;<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">/* Weight (boldness) */</span><br>
+                &nbsp;&nbsp;font-weight: bold; <span class="comment">/* or 700 */</span><br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">/* Alignment */</span><br>
+                &nbsp;&nbsp;text-align: center;<br>
+                }
+            </div>
+            <div class="tip-box">
+                <p><strong>Pro Tip:</strong> Always include fallback fonts in case the first isn't available!</p>
+            </div>
+        </div>
+
+        <!-- Slide 21: Image Sizing -->
+        <div class="slide">
+            <h1>Image Dimensions <span class="emoji">📐</span></h1>
+            <div class="code-example">
+                img {<br>
+                &nbsp;&nbsp;<span class="comment">/* Maintain aspect ratio */</span><br>
+                &nbsp;&nbsp;width: 300px;<br>
+                &nbsp;&nbsp;height: auto;<br>
+                }<br><br>
+                <span class="comment">/* Or set both explicitly */</span><br>
+                img {<br>
+                &nbsp;&nbsp;width: 300px;<br>
+                &nbsp;&nbsp;height: 200px;<br>
+                }
+            </div>
+            <div class="warning-box">
+                <p><strong>Important:</strong> Setting both width and height can distort images! Use 'auto' for one dimension to maintain proportions.</p>
+            </div>
+        </div>
+
+        <!-- Slide 22: Three Ways to Add CSS -->
+        <div class="slide">
+            <h1>Three Ways to Add CSS to HTML</h1>
+            <ol style="font-size: 1.4em;">
+                <li>🔗 <strong>External CSS</strong> (Recommended!)</li>
+                <li>📄 <strong>Internal CSS</strong> (Sometimes useful)</li>
+                <li>🏷️ <strong>Inline CSS</strong> (Avoid if possible)</li>
+            </ol>
+            <p style="margin-top: 40px;">Let's explore each method...</p>
+        </div>
+
+        <!-- Slide 23: External CSS -->
+        <div class="slide">
+            <h1>External CSS <span class="emoji">🔗</span></h1>
+            <p style="font-size: 1.4em;">The BEST method - CSS in a separate file!</p>
+            <div class="code-example">
+                <span class="comment">&lt;!-- index.html --&gt;</span><br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;link rel="stylesheet" href="styles.css"&gt;<br>
+                &lt;/head&gt;
+            </div>
+            <div class="code-example">
+                <span class="comment">/* styles.css */</span><br>
+                p {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }
+            </div>
+            <h3>✅ Advantages:</h3>
+            <ul>
+                <li>Keeps HTML and CSS separate</li>
+                <li>One CSS file can style many HTML pages</li>
+                <li>Easier to maintain</li>
+            </ul>
+        </div>
+
+        <!-- Slide 24: Internal CSS -->
+        <div class="slide">
+            <h1>Internal CSS <span class="emoji">📄</span></h1>
+            <p style="font-size: 1.4em;">CSS inside the HTML file's &lt;head&gt;</p>
+            <div class="code-example">
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;style&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;p {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: blue;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&lt;/style&gt;<br>
+                &lt;/head&gt;
+            </div>
+            <h3>When to use:</h3>
+            <ul>
+                <li>Single page needs unique styles</li>
+                <li>Quick testing/prototyping</li>
+                <li>Small, one-page projects</li>
+            </ul>
+            <div class="warning-box">
+                <p><strong>Downside:</strong> Can't reuse styles across multiple pages</p>
+            </div>
+        </div>
+
+        <!-- Slide 25: Inline CSS -->
+        <div class="slide">
+            <h1>Inline CSS <span class="emoji">🏷️</span></h1>
+            <p style="font-size: 1.4em;">CSS directly on HTML elements</p>
+            <div class="code-example">
+                &lt;p style="color: blue; font-size: 16px;"&gt;Text&lt;/p&gt;
+            </div>
+            <h3>❌ Problems:</h3>
+            <ul>
+                <li>Mixes presentation with content</li>
+                <li>Can't reuse styles</li>
+                <li>Makes HTML messy</li>
+                <li>Overrides other CSS (specificity issues)</li>
+            </ul>
+            <div class="warning-box">
+                <p><strong>Best Practice:</strong> Avoid inline CSS except for quick testing!</p>
+            </div>
+        </div>
+
+        <!-- Slide 26: Practice Time! -->
+        <div class="slide">
+            <h1>Let's Practice! <span class="emoji">💻</span></h1>
+            <h2>Exercise Time</h2>
+            <div class="activity-box">
+                <h3>We'll work through exercises from The Odin Project:</h3>
+                <ol>
+                    <li>01-css-methods</li>
+                    <li>02-class-id-selectors</li>
+                    <li>03-grouping-selectors</li>
+                    <li>04-chaining-selectors</li>
+                    <li>05-descendant-combinator</li>
+                </ol>
+            </div>
+            <p style="margin-top: 30px;">We'll do these together - follow along!</p>
+            <div class="tip-box">
+                <p><strong>Note:</strong> We might not finish all today - that's okay! We'll continue next class.</p>
+            </div>
+        </div>
+
+        <!-- Slide 27: Exercise Setup -->
+        <div class="slide">
+            <h1>Setting Up the Exercises</h1>
+            <div class="code-example">
+                <span class="comment"># Clone the repository</span><br>
+                git clone https://github.com/TheOdinProject/css-exercises.git<br><br>
+                <span class="comment"># Navigate to the CSS foundations</span><br>
+                cd css-exercises/foundations/intro-to-css<br><br>
+                <span class="comment"># Open in VS Code</span><br>
+                code .
+            </div>
+            <div class="activity-box">
+                <h3>For Each Exercise:</h3>
+                <ol>
+                    <li>Read the README file</li>
+                    <li>Open index.html in browser</li>
+                    <li>Edit the CSS file</li>
+                    <li>Refresh browser to see changes</li>
+                    <li>Compare with solution when done</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 28: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h3>CSS Fundamentals:</h3>
+            <ul>
+                <li>CSS = Cascading Style Sheets (makes HTML pretty!)</li>
+                <li>Basic syntax: selector { property: value; }</li>
+                <li>Multiple types of selectors (type, class, ID)</li>
+                <li>Can combine selectors (grouping, chaining, descendant)</li>
+                <li>External CSS is the best practice</li>
+            </ul>
+            <h3 style="margin-top: 30px;">Remember:</h3>
+            <ul>
+                <li>Classes (.) are reusable</li>
+                <li>IDs (#) are unique</li>
+                <li>Practice makes perfect!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 29: Homework -->
+        <div class="slide">
+            <h1>Homework <span class="emoji">📚</span></h1>
+            <div class="activity-box">
+                <h3>For Next Class:</h3>
+                <ol>
+                    <li><strong>TONIGHT:</strong> Submit Recipe Project on D2L!</li>
+                    <li>Finish any CSS exercises we didn't complete</li>
+                    <li>Read about CSS Cascade and Specificity</li>
+                    <li>Try adding some basic CSS to your Recipe Project (optional)</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <p><strong>Next Class:</strong> The Cascade - How CSS decides which styles win!</p>
+            </div>
+        </div>
+
+        <!-- Slide 30: Closing -->
+        <div class="slide">
+            <h1>CSS is Your Creative Superpower! <span class="emoji">🚀</span></h1>
+            <h2>You Can Now:</h2>
+            <ul style="font-size: 1.3em;">
+                <li>✅ Write CSS rules</li>
+                <li>✅ Select elements multiple ways</li>
+                <li>✅ Apply colors and typography</li>
+                <li>✅ Link CSS to HTML</li>
+            </ul>
+            <div class="demo-box" style="margin-top: 40px;">
+                <p style="font-size: 1.3em;">Your websites are about to get a MAJOR upgrade! 🎨</p>
+                <p style="margin-top: 20px;"><strong>Don't forget:</strong> Recipe Project due TONIGHT!</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+</body>
+
+</html>
