@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Programming - CSCI 3403</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="./styles/auth.css">
     <style>
         /* OCU Brand Colors */
         :root {
@@ -335,7 +336,36 @@
         </label>
         <span class="theme-toggle-label">Dark</span>
     </div>
+    <!--Auth-->
+<div id="auth-section" class="auth-container">
+    <div class="auth-form">
+        <input type="text" id="student-id" placeholder="Student ID" />
+        <input type="password" id="class-pin" placeholder="Class PIN" />
+        <button onclick="handleLogin()">Login</button>
+    </div>
+</div>
+
+<div id="user-info" style="display: none;"></div>
+
+<script>
+async function handleLogin() {
+    const studentId = document.getElementById('student-id').value;
+    const pin = document.getElementById('class-pin').value;
     
+    if (!studentId || !pin) {
+        alert('Please enter both Student ID and PIN');
+        return;
+    }
+    
+    const success = await auth.authenticate(studentId, pin);
+    if (success) {
+        alert('Welcome to CSCI 3403!');
+        location.reload();
+    } else {
+        alert('Invalid credentials');
+    }
+}
+</script>
     <div class="container">
         <header>
             <h1>Web Programming</h1>
@@ -452,8 +482,20 @@
                 <li><a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a></li>
                 <li>Office Hours: Mon/Wed 9-11 AM | Tue/Thu 1-2:30 PM</li>
                 <li>Email: <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></li>
-            </ul>
+            </ul><br>
+            <a href="./pages/leaderboard.html" style="
+                        background: linear-gradient(135deg, #FFD700, #FFA500);
+                        color: #333;
+                        padding: 10px 20px;
+                        border-radius: 25px;
+                        text-decoration: none;
+                        font-weight: bold;
+                        margin-left: 33%;
+                    ">
+                        🏆 Leaderboard
+                    </a>
         </div>
+        
         
         <footer>
             <p>&copy; 2025 bobby reed | Oklahoma City University</p>
@@ -474,6 +516,28 @@
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('ocuTheme', theme);
         });
+        
+        // Check for authentication
+        function checkLectureAccess() {
+        const authData = localStorage.getItem('csci3403_auth');
+        
+        if (!authData) {
+            // Not authenticated - disable all lecture links
+            document.querySelectorAll('.lecture-card a').forEach(link => {
+                link.style.pointerEvents = 'none';
+                link.style.opacity = '0.5';
+                link.textContent = 'Login Required';
+            });
+        } else {
+            // Authenticated - lectures available
+            console.log('User authenticated - lectures available');
+        }
+    }
+    
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', checkLectureAccess);
     </script>
+    
+    <script src="./js/auth.js"></script>
 </body>
 </html>
