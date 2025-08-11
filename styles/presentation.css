@@ -191,6 +191,11 @@ input:checked + .theme-slider:before {
     }
 }
 
+.home a{
+    color:white;
+    text-decoration: none;
+}
+
 /* Typography */
 h1 {
     color: var(--ocu-true-blue);
