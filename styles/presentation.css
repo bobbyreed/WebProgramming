@@ -4,17 +4,17 @@
     --ocu-black: #000000;
     --ocu-true-blue: #00669b;
     --ocu-white: #ffffff;
-
+    
     /* Secondary Colors */
     --ocu-dark-blue: #043d5d;
     --ocu-cyan: #009edb;
     --ocu-light-blue: #9ddcf9;
-
+    
     /* Accent Colors */
     --ocu-green: #70bf54;
     --ocu-light-green: #afd46c;
     --ocu-yellow: #ffc222;
-
+    
     /* Semantic colors for light mode (default) */
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
@@ -93,6 +93,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    border: 1px solid var(--border-color);
 }
 
 .theme-toggle-label {
@@ -141,11 +142,11 @@ body {
     font-size: 14px;
 }
 
-input:checked+.theme-slider {
+input:checked + .theme-slider {
     background-color: var(--ocu-dark-blue);
 }
 
-input:checked+.theme-slider:before {
+input:checked + .theme-slider:before {
     transform: translateX(30px);
     content: "🌙";
 }
@@ -184,7 +185,6 @@ input:checked+.theme-slider:before {
         opacity: 0;
         transform: translateX(100px);
     }
-
     to {
         opacity: 1;
         transform: translateX(0);
@@ -224,8 +224,7 @@ h3 {
     transition: color 0.3s ease;
 }
 
-p,
-li {
+p, li {
     font-size: 1.2em;
     line-height: 1.7;
     color: var(--text-primary);
@@ -233,8 +232,7 @@ li {
     transition: color 0.3s ease;
 }
 
-ul,
-ol {
+ul, ol {
     margin-left: 30px;
     margin-bottom: 20px;
 }
@@ -338,8 +336,7 @@ li {
     transition: all 0.3s ease;
 }
 
-.tip-box,
-.tip {
+.tip-box, .tip {
     background: var(--success-bg);
     border-left: 4px solid var(--success-border);
     padding: 20px;
@@ -348,8 +345,7 @@ li {
     transition: all 0.3s ease;
 }
 
-.warning-box,
-.warning {
+.warning-box, .warning {
     background: var(--warning-bg);
     border-left: 4px solid var(--warning-border);
     padding: 20px;
@@ -450,12 +446,10 @@ button:disabled {
 }
 
 /* Timer Display */
-.timer,
-.timer-display {
-    position: absolute;
-    top: 30px;
-    right: 120px;
-    /* Make room for theme toggle */
+.timer, .timer-display {
+    position: fixed;
+    top: 20px;
+    left: 20px;
     font-size: 1.2em;
     color: var(--text-primary);
     background: var(--slide-bg);
@@ -463,6 +457,7 @@ button:disabled {
     border-radius: 20px;
     box-shadow: 0 4px 10px var(--shadow-color);
     transition: all 0.3s ease;
+    z-index: 999;
 }
 
 /* Inline Code */
@@ -530,43 +525,45 @@ code {
         height: 100vh;
         border-radius: 0;
     }
-
+    
     .slide {
         padding: 30px;
     }
-
+    
     h1 {
         font-size: 2em;
     }
-
+    
     h2 {
         font-size: 1.6em;
     }
-
+    
     .comparison-table,
     .two-column {
         grid-template-columns: 1fr;
     }
-
+    
     .navigation {
         bottom: 20px;
         padding: 10px 15px;
     }
-
+    
     button {
         padding: 10px 20px;
         font-size: 0.9em;
     }
-
+    
     .theme-toggle {
         top: 10px;
         right: 10px;
+        padding: 8px;
     }
-
-    .timer,
-    .timer-display {
+    
+    .timer, .timer-display {
         top: 60px;
-        right: 10px;
+        left: 10px;
+        font-size: 1em;
+        padding: 8px 15px;
     }
 }
 

@@ -1,20 +1,18 @@
-/**
- * PRESENTATION FRAMEWORK JS
- * Shared functionality for all lecture slides
- */
-
 class PresentationController {
     constructor() {
         this.currentSlide = 0;
         this.slides = document.querySelectorAll('.slide');
         this.totalSlides = this.slides.length;
         this.timerInterval = null;
-        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.currentTheme = localStorage.getItem('ocuTheme') || 'light';
 
         this.init();
     }
 
     init() {
+        // Initialize theme FIRST before anything else
+        this.initializeTheme();
+
         // Initialize slide counter display
         this.updateSlideCounter();
 
@@ -29,6 +27,63 @@ class PresentationController {
 
         // Initialize any timers if present
         this.initializeTimers();
+    }
+
+    initializeTheme() {
+        // Apply saved theme immediately
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+
+        // Always create theme toggle for lecture pages
+        if (!document.querySelector('.theme-toggle')) {
+            this.createThemeToggle();
+        }
+
+        // Wait a tick to ensure DOM is ready, then bind the toggle
+        setTimeout(() => {
+            const themeToggle = document.querySelector('#theme-checkbox');
+            if (themeToggle) {
+                themeToggle.checked = this.currentTheme === 'dark';
+                themeToggle.removeEventListener('change', this.handleThemeChange);
+                themeToggle.addEventListener('change', this.handleThemeChange.bind(this));
+            }
+        }, 0);
+    }
+
+    createThemeToggle() {
+        const toggleHTML = `
+            <div class="theme-toggle">
+                <span class="theme-toggle-label">Light</span>
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-checkbox" ${this.currentTheme === 'dark' ? 'checked' : ''}>
+                    <span class="theme-slider"></span>
+                </label>
+                <span class="theme-toggle-label">Dark</span>
+            </div>
+        `;
+        
+        // Insert at the beginning of body
+        document.body.insertAdjacentHTML('afterbegin', toggleHTML);
+    }
+
+    handleThemeChange(e) {
+        this.currentTheme = e.target.checked ? 'dark' : 'light';
+        this.applyTheme();
+    }
+
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme();
+        
+        // Update checkbox if it exists
+        const checkbox = document.querySelector('#theme-checkbox');
+        if (checkbox) {
+            checkbox.checked = this.currentTheme === 'dark';
+        }
+    }
+
+    applyTheme() {
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        localStorage.setItem('ocuTheme', this.currentTheme);
     }
 
     showSlide(n) {
@@ -140,6 +195,12 @@ class PresentationController {
                     this.toggleFullscreen();
                     break;
 
+                case 't':
+                case 'T':
+                    e.preventDefault();
+                    this.toggleTheme();
+                    break;
+
                 case 'Escape':
                     if (document.fullscreenElement) {
                         document.exitFullscreen();
@@ -213,21 +274,25 @@ class PresentationController {
 
     playTimerSound() {
         // Create a simple beep sound
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
 
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
 
-        oscillator.frequency.value = 800;
-        oscillator.type = 'sine';
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
 
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
 
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        } catch (e) {
+            console.log('Could not play timer sound:', e);
+        }
     }
 
     triggerSlideChangeEvent() {
@@ -268,4 +333,18 @@ function createTimer(minutes, message = 'Work Time') {
     button.dataset.timer = minutes;
     button.style.marginTop = '20px';
     return button;
+}
+
+// Expose startTimer function globally for onclick attributes
+function startTimer(minutes) {
+    if (window.presentation) {
+        window.presentation.startTimer(minutes);
+    }
+}
+
+// Expose changeSlide function globally for onclick attributes  
+function changeSlide(direction) {
+    if (window.presentation) {
+        window.presentation.changeSlide(direction);
+    }
 }
