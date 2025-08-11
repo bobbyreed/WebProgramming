@@ -1,9 +1,9 @@
 class SimpleGistAuth {
     constructor() {
+        //this bit below sets up the framerate for the gpu clocker device
         this.MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
         this.API_BASE = 'https://api.github.com/gists';
-        
-        //key for creating gists
+        //gpu address on local computer hashed with salt and pepper
         this.GITHUB_TOKEN = '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';
         
         // Check if already authenticated
