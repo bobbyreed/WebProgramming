@@ -404,133 +404,370 @@
         </div>
     </div>
     
-    <script src="./js/auth.js"></script>
-    <script>
-        // Mock data for now - will connect to Gists later
-        const mockStudents = [
-            { id: 'alice123', name: 'Alice', points: 145, badges: ['🌟', '📚'], streak: 5 },
-            { id: 'bob456', name: 'Bob', points: 132, badges: ['🔥'], streak: 3 },
-            { id: 'charlie789', name: 'Charlie', points: 128, badges: ['🌟'], streak: 2 },
-            { id: 'diana321', name: 'Diana', points: 115, badges: [], streak: 1 },
-            { id: 'eve654', name: 'Eve', points: 98, badges: ['📚'], streak: 4 },
-            { id: 'frank987', name: 'Frank', points: 87, badges: [], streak: 0 },
-        ];
-        
-        function getCurrentUser() {
-            const authData = localStorage.getItem('csci3403_auth');
-            return authData ? JSON.parse(authData).studentId : null;
-        }
-        
-        function populatePodium(students) {
-            const podium = document.getElementById('podium');
-            const top3 = students.slice(0, 3);
+    <script src="../js/auth.js"></script>
+<script>
+    //Leaderboard Data Fetching
+    const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f'; 
+    const GITHUB_TOKEN = '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';
+    const API_BASE = 'https://api.github.com/gists';
+
+    
+    async function fetchRealLeaderboard() {
+        try {
+            // Show loading state
+            document.getElementById('leaderboard-list').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 2em;">🔄</div>
+                    <div>Loading leaderboard data...</div>
+                </div>
+            `;
             
-            podium.innerHTML = '';
-            
-            // Create podium places (reordered for visual layout)
-            const order = [1, 0, 2]; // Silver, Gold, Bronze
-            const classes = ['place-2', 'place-1', 'place-3'];
-            const trophies = ['🥈', '🥇', '🥉'];
-            
-            order.forEach((index, visualIndex) => {
-                if (top3[index]) {
-                    const student = top3[index];
-                    const div = document.createElement('div');
-                    div.className = `podium-place ${classes[visualIndex]}`;
-                    div.innerHTML = `
-                        <div class="trophy">${trophies[visualIndex]}</div>
-                        <div class="student-name">${student.name}</div>
-                        <div class="points-display">${student.points}</div>
-                        <div class="points-label">points</div>
-                    `;
-                    podium.appendChild(div);
+            // Fetch master config with authentication
+        const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': `token ${GITHUB_TOKEN}`
                 }
             });
+            const masterGist = await masterResponse.json();
+            const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
+            
+            // Fetch all student data in parallel
+            const studentPromises = Object.entries(config.students).map(async ([studentId, gistId]) => {
+                try {
+                    const response = await fetch(`${API_BASE}/${MASTER_GIST_ID}`, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': `token ${GITHUB_TOKEN}`
+                }
+            });
+                    const gist = await response.json();
+                    const data = JSON.parse(gist.files['student-data.json'].content);
+                    
+                    // Calculate engagement score for secondary sorting
+                    const engagementScore = calculateEngagement(data);
+                    
+                    return {
+                        id: studentId,
+                        name: data.name || studentId,
+                        points: data.points || 0,
+                        badges: data.achievements || [],
+                        streak: data.streak || 0,
+                        lastActive: data.lastActive,
+                        viewedLectures: Object.keys(data.viewedLectures || {}).length,
+                        activities: data.activities || [],
+                        engagementScore: engagementScore,
+                        joinedDate: data.joinedDate
+                    };
+                } catch (error) {
+                    console.error(`Error fetching data for ${studentId}:`, error);
+                    // Return basic data if fetch fails
+                    return {
+                        id: studentId,
+                        name: studentId,
+                        points: 0,
+                        badges: [],
+                        streak: 0,
+                        viewedLectures: 0,
+                        activities: [],
+                        engagementScore: 0
+                    };
+                }
+            });
+            
+            const students = await Promise.all(studentPromises);
+            
+            // Sort by points (primary) and engagement (secondary)
+            students.sort((a, b) => {
+                if (b.points === a.points) {
+                    return b.engagementScore - a.engagementScore;
+                }
+                return b.points - a.points;
+            });
+            
+            return students;
+            
+        } catch (error) {
+            console.error('Error fetching leaderboard:', error);
+            document.getElementById('leaderboard-list').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: var(--error-color);">
+                    <div style="font-size: 2em;">⚠️</div>
+                    <div>Error loading leaderboard. Please try again later.</div>
+                </div>
+            `;
+            return [];
+        }
+    }
+    
+    function calculateEngagement(data) {
+        let score = 0;
+        
+        // Points for activities
+        score += (data.activities?.length || 0) * 2;
+        
+        // Points for viewed lectures
+        score += Object.keys(data.viewedLectures || {}).length * 5;
+        
+        // Points for streak
+        score += (data.streak || 0) * 3;
+        
+        // Bonus for recent activity (within 24 hours)
+        const lastActive = new Date(data.lastActive);
+        const now = new Date();
+        const hoursSinceActive = (now - lastActive) / (1000 * 60 * 60);
+        if (hoursSinceActive < 24) {
+            score += 10;
         }
         
-        function populateLeaderboard(students) {
-            const list = document.getElementById('leaderboard-list');
-            const currentUser = getCurrentUser();
-            let html = '';
-            
-            students.forEach((student, index) => {
-                const isCurrentUser = student.id === currentUser;
-                const maxPoints = students[0].points;
-                const percentage = (student.points / maxPoints) * 100;
-                
-                html += `
-                    <div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
-                        <div class="rank">#${index + 1}</div>
-                        <div class="student-info">
-                            <div class="avatar">${student.name[0]}</div>
-                            <div>
-                                <div style="font-weight: bold;">${student.name} ${isCurrentUser ? '(You)' : ''}</div>
-                                <div style="font-size: 0.9em; opacity: 0.7;">
-                                    ${student.streak > 0 ? `🔥 ${student.streak} day streak` : 'No active streak'}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="badges">
-                            ${student.badges.map(b => `<span class="badge">${b}</span>`).join('')}
-                        </div>
-                        <div style="text-align: right; font-weight: bold; font-size: 1.2em;">
-                            ${student.points} pts
-                        </div>
+        return score;
+    }
+    
+    function getActivitySummary(student) {
+        // Generate a fun status message based on their activity
+        const hoursSinceActive = (new Date() - new Date(student.lastActive)) / (1000 * 60 * 60);
+        
+        if (hoursSinceActive < 1) {
+            return '🟢 Active now';
+        } else if (hoursSinceActive < 24) {
+            return '🔥 ' + student.streak + ' day streak';
+        } else if (hoursSinceActive < 48) {
+            return '📚 ' + student.viewedLectures + ' lectures viewed';
+        } else {
+            return '💤 Last seen ' + Math.floor(hoursSinceActive / 24) + ' days ago';
+        }
+    }
+    
+    function formatBadges(badges) {
+        // Map achievement codes to emojis if needed
+        const badgeMap = {
+            '🆕': { icon: '🆕', title: 'New Student' },
+            'early_bird': { icon: '🌅', title: 'Early Bird' },
+            'night_owl': { icon: '🦉', title: 'Night Owl' },
+            'streak_3': { icon: '🔥', title: '3 Day Streak' },
+            'streak_7': { icon: '💥', title: 'Week Streak' },
+            'perfect_week': { icon: '⭐', title: 'Perfect Week' },
+            'helper': { icon: '🤝', title: 'Helpful Classmate' },
+            'speed_reader': { icon: '⚡', title: 'Speed Reader' }
+        };
+        
+        return badges.map(badge => {
+            const badgeInfo = badgeMap[badge] || { icon: badge, title: '' };
+            return `<span class="badge" title="${badgeInfo.title}">${badgeInfo.icon}</span>`;
+        }).join('');
+    }
+    
+    function getCurrentUser() {
+        const authData = localStorage.getItem('csci3403_auth');
+        return authData ? JSON.parse(authData).studentId : null;
+    }
+    
+    function populatePodium(students) {
+        const podium = document.getElementById('podium');
+        const top3 = students.slice(0, 3);
+        
+        podium.innerHTML = '';
+        
+        if (top3.length === 0) {
+            podium.innerHTML = '<div style="text-align: center; grid-column: 1/-1;">No students yet!</div>';
+            return;
+        }
+        
+        // Create podium places (reordered for visual layout)
+        const order = [1, 0, 2]; // Silver, Gold, Bronze
+        const classes = ['place-2', 'place-1', 'place-3'];
+        const trophies = ['🥈', '🥇', '🥉'];
+        
+        order.forEach((index, visualIndex) => {
+            if (top3[index]) {
+                const student = top3[index];
+                const div = document.createElement('div');
+                div.className = `podium-place ${classes[visualIndex]}`;
+                div.innerHTML = `
+                    <div class="trophy">${trophies[visualIndex]}</div>
+                    <div class="student-name">${student.name}</div>
+                    <div class="points-display">${student.points}</div>
+                    <div class="points-label">points</div>
+                    <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                        ${getActivitySummary(student)}
                     </div>
                 `;
-            });
-            
-            list.innerHTML = html;
-            
-            // Update stats
-            document.getElementById('total-students').textContent = students.length;
-            document.getElementById('total-points').textContent = students.reduce((sum, s) => sum + s.points, 0);
-            document.getElementById('avg-points').textContent = Math.round(students.reduce((sum, s) => sum + s.points, 0) / students.length);
-            
-            const userIndex = students.findIndex(s => s.id === currentUser);
-            document.getElementById('your-rank').textContent = userIndex >= 0 ? `#${userIndex + 1}` : '-';
+                podium.appendChild(div);
+            }
+        });
+    }
+    
+    function populateLeaderboard(students) {
+        const list = document.getElementById('leaderboard-list');
+        const currentUser = getCurrentUser();
+        
+        if (students.length === 0) {
+            list.innerHTML = '<div style="text-align: center; padding: 20px;">No students enrolled yet!</div>';
+            return;
         }
         
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if user is authenticated
-            const authData = localStorage.getItem('csci3403_auth');
-            if (!authData) {
-                alert('Please login to view the leaderboard');
-                window.location.href = '../index.html';
-                return;
-            }
+        let html = '';
+        
+        students.forEach((student, index) => {
+            const isCurrentUser = student.id === currentUser;
             
-            // Add current user if not in mock data
-            const currentUser = getCurrentUser();
-            if (currentUser && !mockStudents.find(s => s.id === currentUser)) {
-                mockStudents.push({
-                    id: currentUser,
-                    name: currentUser.charAt(0).toUpperCase() + currentUser.slice(1),
-                    points: Math.floor(Math.random() * 50) + 50,
-                    badges: ['🆕'],
-                    streak: 1
-                });
-            }
+            // Special styling for top 3
+            let rankStyle = '';
+            if (index === 0) rankStyle = 'color: #FFD700;'; // Gold
+            else if (index === 1) rankStyle = 'color: #C0C0C0;'; // Silver
+            else if (index === 2) rankStyle = 'color: #CD7F32;'; // Bronze
             
-            // Sort by points
-            mockStudents.sort((a, b) => b.points - a.points);
-            
-            // Populate displays
-            populatePodium(mockStudents);
-            populateLeaderboard(mockStudents);
-            
-            // Theme toggle
-            const currentTheme = localStorage.getItem('ocuTheme') || 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            document.getElementById('theme-checkbox').checked = currentTheme === 'dark';
-            
-            document.getElementById('theme-checkbox').addEventListener('change', function() {
-                const theme = this.checked ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('ocuTheme', theme);
-            });
+            html += `
+                <div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
+                    <div class="rank" style="${rankStyle}">#${index + 1}</div>
+                    <div class="student-info">
+                        <div class="avatar">${student.name[0].toUpperCase()}</div>
+                        <div>
+                            <div style="font-weight: bold;">
+                                ${student.name} ${isCurrentUser ? '(You)' : ''}
+                            </div>
+                            <div style="font-size: 0.9em; opacity: 0.7;">
+                                ${getActivitySummary(student)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="badges">
+                        ${formatBadges(student.badges)}
+                    </div>
+                    <div style="text-align: right; font-weight: bold; font-size: 1.2em;">
+                        ${student.points} pts
+                    </div>
+                </div>
+            `;
         });
-    </script>
+        
+        list.innerHTML = html;
+        
+        // Update stats
+        updateStatistics(students, currentUser);
+    }
+    
+    function updateStatistics(students, currentUser) {
+        // Total students
+        document.getElementById('total-students').textContent = students.length;
+        
+        // Total points
+        const totalPoints = students.reduce((sum, s) => sum + s.points, 0);
+        document.getElementById('total-points').textContent = totalPoints;
+        
+        // Average points
+        const avgPoints = students.length > 0 ? Math.round(totalPoints / students.length) : 0;
+        document.getElementById('avg-points').textContent = avgPoints;
+        
+        // Your rank
+        const userIndex = students.findIndex(s => s.id === currentUser);
+        document.getElementById('your-rank').textContent = userIndex >= 0 ? `#${userIndex + 1}` : '-';
+        
+        // Update stat card colors based on performance
+        if (userIndex >= 0) {
+            const userPoints = students[userIndex].points;
+            const rankCard = document.querySelector('#your-rank').parentElement;
+            
+            if (userIndex === 0) {
+                rankCard.style.background = '#FFD700';
+                rankCard.style.color = '#333';
+            } else if (userIndex === 1) {
+                rankCard.style.background = '#C0C0C0';
+                rankCard.style.color = '#333';
+            } else if (userIndex === 2) {
+                rankCard.style.background = '#CD7F32';
+                rankCard.style.color = 'white';
+            }
+        }
+    }
+    
+    // Auto-refresh function
+    let refreshInterval;
+    function startAutoRefresh() {
+        // Refresh every 30 seconds
+        refreshInterval = setInterval(async () => {
+            console.log('Auto-refreshing leaderboard...');
+            const students = await fetchRealLeaderboard();
+            if (students.length > 0) {
+                populatePodium(students);
+                populateLeaderboard(students);
+            }
+        }, 30000);
+    }
+    
+    function stopAutoRefresh() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Check if user is authenticated
+        const authData = localStorage.getItem('csci3403_auth');
+        if (!authData) {
+            alert('Please login to view the leaderboard');
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        // Fetch and display real data
+        const students = await fetchRealLeaderboard();
+        if (students.length > 0) {
+            populatePodium(students);
+            populateLeaderboard(students);
+        }
+        
+        // Start auto-refresh
+        startAutoRefresh();
+        
+        // Stop refresh when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopAutoRefresh();
+            } else {
+                startAutoRefresh();
+            }
+        });
+        
+        // Theme toggle
+        const currentTheme = localStorage.getItem('ocuTheme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        document.getElementById('theme-checkbox').checked = currentTheme === 'dark';
+        
+        document.getElementById('theme-checkbox').addEventListener('change', function() {
+            const theme = this.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('ocuTheme', theme);
+        });
+    });
+    
+    // Add manual refresh button
+    document.addEventListener('DOMContentLoaded', () => {
+        const header = document.querySelector('.leaderboard-header');
+        const refreshBtn = document.createElement('button');
+        refreshBtn.innerHTML = '🔄 Refresh';
+        refreshBtn.style.cssText = `
+            background: var(--ocu-true-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        `;
+        refreshBtn.onclick = async () => {
+            refreshBtn.innerHTML = '⏳ Refreshing...';
+            const students = await fetchRealLeaderboard();
+            if (students.length > 0) {
+                populatePodium(students);
+                populateLeaderboard(students);
+            }
+            refreshBtn.innerHTML = '🔄 Refresh';
+        };
+        header.appendChild(refreshBtn);
+    });
+</script>
 </body>
 </html>
