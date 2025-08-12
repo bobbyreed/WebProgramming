@@ -3,114 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Foundations - Introduction to Flexbox</title>
+    <title>CSS Foundations - Introduction to Flexbox - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow: hidden;
-        }
-
-        .presentation-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .slide {
-            display: none;
-            width: 90%;
-            max-width: 1200px;
-            height: 85vh;
-            background: white;
-            border-radius: 20px;
-            padding: 60px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            overflow-y: auto;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .slide.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        h1 {
-            color: #764ba2;
-            font-size: 3em;
-            margin-bottom: 30px;
-            text-align: center;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 20px;
-        }
-
-        h2 {
-            color: #667eea;
-            font-size: 2.2em;
-            margin: 30px 0 20px;
-        }
-
-        h3 {
-            color: #764ba2;
-            font-size: 1.6em;
-            margin: 20px 0 15px;
-        }
-
-        p, li {
-            font-size: 1.2em;
-            line-height: 1.8;
-            color: #333;
-            margin: 15px 0;
-        }
-
-        ul {
-            margin-left: 30px;
-        }
-
-        .code-example {
-            background: #f4f4f4;
-            border-left: 4px solid #667eea;
+        /* Flexbox demo styles */
+        .flex-container-demo {
+            background: var(--bg-accent);
+            border: 2px dashed var(--border-color);
             padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-        }
-
-        .demo-container {
-            background: #f9f9f9;
-            border: 2px solid #ddd;
-            padding: 30px;
-            margin: 30px 0;
             border-radius: 10px;
+            margin: 20px 0;
         }
-
+        
         .flex-demo {
             display: flex;
             gap: 10px;
             margin: 20px 0;
         }
-
+        
         .flex-item {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--ocu-true-blue), var(--ocu-cyan));
             color: white;
             padding: 20px;
             text-align: center;
@@ -118,167 +35,147 @@
             border-radius: 8px;
             font-weight: bold;
         }
-
-        .navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
+        
+        .no-flex-demo {
+            margin: 20px 0;
         }
-
-        button {
-            background: white;
-            color: #764ba2;
-            border: 2px solid #764ba2;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #764ba2;
+        
+        .no-flex-demo > div {
+            background: linear-gradient(135deg, var(--ocu-true-blue), var(--ocu-cyan));
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .slide-number {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #999;
-            font-size: 1.2em;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .important-box {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            border-left: 5px solid #f39c12;
             padding: 20px;
-            margin: 30px 0;
-            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
         }
-
-        .center-content {
+        
+        .axis-diagram {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            text-align: center;
-        }
-
-        .icon {
-            font-size: 4em;
+            height: 200px;
+            background: var(--bg-accent);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            position: relative;
             margin: 20px 0;
         }
-
-        .comparison-table {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .comparison-card {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-        }
-
-        .comparison-card h4 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
-
-        .live-demo {
-            background: #2d3436;
-            color: #74b9ff;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .demo-controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .demo-button {
-            background: #74b9ff;
-            color: #2d3436;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        
+        .axis-arrow {
+            position: absolute;
+            font-size: 2em;
+            color: var(--ocu-true-blue);
             font-weight: bold;
         }
-
-        .demo-button:hover {
-            background: #0984e3;
+        
+        .main-axis {
+            top: 50%;
+            right: 20px;
+        }
+        
+        .cross-axis {
+            bottom: 20px;
+            left: 50%;
+        }
+        
+        .nested-flex {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #2d3436;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .nested-card {
+            background: #636e72;
+            padding: 20px;
+            flex: 1;
+            border-radius: 10px;
+        }
+        
+        .nested-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .nested-inner > div {
+            background: #b2bec3;
+            padding: 10px;
+            border-radius: 5px;
+            color: #2d3436;
+        }
+        
+        .pattern-example {
+            background: var(--bg-accent);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        
+        .homework-reminder {
+            background: linear-gradient(135deg, #ff6b6b, #ff8787);
             color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .homework-reminder h2 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+        
+        .homework-reminder p {
+            color: white;
+            font-size: 1.3em;
         }
     </style>
 </head>
 <body>
     <div class="presentation-container">
-        <!-- Slide 1: Title Slide -->
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 13 - Introduction to Flexbox
+                <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Title -->
         <div class="slide active">
-            <div class="center-content">
-                <div class="icon">🎯</div>
-                <h1>CSS Foundations</h1>
-                <h2>Introduction to Flexbox</h2>
-                <p style="font-size: 1.5em; margin-top: 30px;">Day 13</p>
-                <p style="margin-top: 20px; color: #666;">The modern way to layout web pages</p>
-            </div>
-            <span class="slide-number">1 / 20</span>
+            <h1>CSS Foundations</h1>
+            <h2>Introduction to Flexbox <span class="emoji">🎯</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Day 13</p>
+            <p style="margin-top: auto; font-style: italic;">The modern way to layout web pages!</p>
         </div>
 
         <!-- Slide 2: Agenda -->
         <div class="slide">
-            <h1>Today's Agenda</h1>
-            <ul>
-                <li>📚 What is Flexbox and why it matters</li>
-                <li>🏗️ Flex containers vs. flex items</li>
-                <li>🎨 Basic flexbox properties</li>
-                <li>📐 Creating layouts with flexbox</li>
-                <li>🔄 How items flex (grow & shrink)</li>
-                <li>🏰 Building complex layouts</li>
-                <li>💻 Hands-on practice</li>
-                <li>🚀 What's next</li>
+            <h1>Today's Agenda <span class="emoji">📚</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>What is Flexbox and why it matters</li>
+                <li>Flex containers vs. flex items</li>
+                <li>Basic flexbox properties</li>
+                <li>Creating layouts with flexbox</li>
+                <li>How items flex (grow & shrink preview)</li>
+                <li>Building complex layouts</li>
+                <li>Hands-on practice</li>
             </ul>
-            <div class="important-box">
-                <p><strong>⏱️ Duration:</strong> 40-50 minutes</p>
-                <p><strong>🎯 Goal:</strong> Master the fundamentals of Flexbox positioning</p>
+            <div class="tip-box">
+                <strong>Goal:</strong> Master the fundamentals of Flexbox positioning
             </div>
-            <span class="slide-number">2 / 20</span>
         </div>
 
         <!-- Slide 3: Why Flexbox? -->
         <div class="slide">
-            <h1>Why Flexbox?</h1>
+            <h1>Why Flexbox? <span class="emoji">🤔</span></h1>
             <h2>A Brief History</h2>
             <p>Before Flexbox, positioning elements was challenging:</p>
             <ul>
@@ -287,7 +184,7 @@
                 <li>Positioning (absolute/relative confusion)</li>
                 <li>Inline-block (whitespace issues)</li>
             </ul>
-            <div class="important-box">
+            <div class="activity-box">
                 <h3>🎉 Enter Flexbox (2009-2012)</h3>
                 <p>Flexbox revolutionized CSS layouts by providing:</p>
                 <ul>
@@ -297,42 +194,12 @@
                     <li>Intuitive alignment control</li>
                 </ul>
             </div>
-            <span class="slide-number">3 / 20</span>
         </div>
 
-        <!-- Slide 4: What is Flexbox? -->
-        <div class="slide">
-            <h1>What is Flexbox?</h1>
-            <p style="font-size: 1.4em; text-align: center; margin: 30px 0;">
-                <span class="highlight">Flexible Box Layout</span> = A one-dimensional layout method
-            </p>
-            <div class="comparison-table">
-                <div class="comparison-card">
-                    <h4>✅ What Flexbox IS</h4>
-                    <ul>
-                        <li>A way to arrange items in rows OR columns</li>
-                        <li>Items that grow/shrink based on available space</li>
-                        <li>Perfect for component layouts</li>
-                        <li>Great for navigation bars, cards, etc.</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h4>❌ What Flexbox ISN'T</h4>
-                    <ul>
-                        <li>Not for complex 2D layouts (use Grid)</li>
-                        <li>Not a replacement for all positioning</li>
-                        <li>Not always the best solution</li>
-                        <li>Not supported in IE9 and below</li>
-                    </ul>
-                </div>
-            </div>
-            <span class="slide-number">4 / 20</span>
-        </div>
-
-        <!-- Slide 5: Developer Tools Reminder -->
+        <!-- Slide 4: Developer Tools Reminder -->
         <div class="slide">
             <h1>🛠️ Quick Reminder: Developer Tools</h1>
-            <div class="important-box">
+            <div class="warning-box">
                 <h3>⚠️ Before we dive in...</h3>
                 <p>Flexbox can get complex! Your browser's DevTools are <strong>CRUCIAL</strong> for debugging.</p>
             </div>
@@ -344,64 +211,98 @@
                 <li>🎨 <strong>Computed Styles:</strong> See actual applied values</li>
                 <li>✏️ <strong>Live Editing:</strong> Test changes in real-time</li>
             </ul>
-            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
+            <div class="tip-box">
                 <strong>Pro Tip:</strong> If something isn't working, inspect it FIRST! 🔍
-            </p>
-            <span class="slide-number">5 / 20</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: What is Flexbox? -->
+        <div class="slide">
+            <h1>What is Flexbox?</h1>
+            <h2 style="text-align: center;">Flexible Box Layout = A one-dimensional layout method</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>✅ What Flexbox IS</h3>
+                    <ul>
+                        <li>A way to arrange items in rows OR columns</li>
+                        <li>Items that grow/shrink based on available space</li>
+                        <li>Perfect for component layouts</li>
+                        <li>Great for navigation bars, cards, etc.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>❌ What Flexbox ISN'T</h3>
+                    <ul>
+                        <li>Not for complex 2D layouts (use Grid)</li>
+                        <li>Not a replacement for all positioning</li>
+                        <li>Not always the best solution</li>
+                        <li>Not supported in IE9 and below</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- Slide 6: The Basic Concept -->
         <div class="slide">
             <h1>The Basic Concept</h1>
             <h2>Two Key Players</h2>
-            <div class="demo-container">
-                <h3>1️⃣ Flex Container (Parent)</h3>
-                <div class="code-example">
-                    .container {<br>
-                    &nbsp;&nbsp;display: flex;<br>
-                    }
-                </div>
-                <h3>2️⃣ Flex Items (Children)</h3>
-                <p>Any direct children automatically become flex items!</p>
+            
+            <h3>1️⃣ Flex Container (Parent)</h3>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                }
+            </div>
+            
+            <h3>2️⃣ Flex Items (Children)</h3>
+            <p>Any direct children automatically become flex items!</p>
+            
+            <div class="flex-container-demo">
                 <div class="flex-demo">
                     <div class="flex-item">Item 1</div>
                     <div class="flex-item">Item 2</div>
                     <div class="flex-item">Item 3</div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+            
+            <div class="warning-box">
                 <strong>Remember:</strong> Only DIRECT children become flex items
-            </p>
-            <span class="slide-number">6 / 20</span>
+            </div>
         </div>
 
-        <!-- Slide 7: Live Demo - Before and After -->
+        <!-- Slide 7: Before and After -->
         <div class="slide">
-            <h1>Let's See It In Action!</h1>
-            <h2>Before Flexbox:</h2>
-            <div class="demo-container">
-                <div style="background: #74b9ff; padding: 20px; margin: 10px 0; border-radius: 8px;">Div 1</div>
-                <div style="background: #a29bfe; padding: 20px; margin: 10px 0; border-radius: 8px;">Div 2</div>
-                <div style="background: #fd79a8; padding: 20px; margin: 10px 0; border-radius: 8px;">Div 3</div>
-            </div>
-            <h2>After Adding display: flex:</h2>
-            <div class="demo-container">
-                <div class="flex-demo">
-                    <div style="background: #74b9ff; padding: 20px; flex: 1; border-radius: 8px;">Div 1</div>
-                    <div style="background: #a29bfe; padding: 20px; flex: 1; border-radius: 8px;">Div 2</div>
-                    <div style="background: #fd79a8; padding: 20px; flex: 1; border-radius: 8px;">Div 3</div>
+            <h1>Let's See It In Action! <span class="emoji">✨</span></h1>
+            
+            <h2>Before Flexbox (Normal Flow):</h2>
+            <div class="flex-container-demo">
+                <div class="no-flex-demo">
+                    <div>Div 1</div>
+                    <div>Div 2</div>
+                    <div>Div 3</div>
                 </div>
             </div>
-            <p style="text-align: center;">✨ Magic! Items now sit side-by-side and share space equally!</p>
-            <span class="slide-number">7 / 20</span>
+            
+            <h2>After Adding display: flex:</h2>
+            <div class="flex-container-demo">
+                <div class="flex-demo">
+                    <div class="flex-item">Div 1</div>
+                    <div class="flex-item">Div 2</div>
+                    <div class="flex-item">Div 3</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                ✨ <strong>Magic!</strong> Items now sit side-by-side and share space equally!
+            </div>
         </div>
 
-        <!-- Slide 8: Container vs Items -->
+        <!-- Slide 8: Container vs Items Properties -->
         <div class="slide">
             <h1>Container vs. Items Properties</h1>
             <div class="comparison-table">
                 <div class="comparison-card">
-                    <h4>📦 Container Properties</h4>
+                    <h3>📦 Container Properties</h3>
                     <p>Applied to parent with display: flex</p>
                     <ul>
                         <li><strong>flex-direction</strong> (row, column)</li>
@@ -412,7 +313,7 @@
                     </ul>
                 </div>
                 <div class="comparison-card">
-                    <h4>📦 Item Properties</h4>
+                    <h3>📦 Item Properties</h3>
                     <p>Applied to flex items (children)</p>
                     <ul>
                         <li><strong>flex-grow</strong> (growth factor)</li>
@@ -423,43 +324,45 @@
                     </ul>
                 </div>
             </div>
-            <div class="important-box">
-                <p>🎯 <strong>Key Insight:</strong> Understanding which properties go where is crucial!</p>
+            <div class="tip-box">
+                🎯 <strong>Key Insight:</strong> Understanding which properties go where is crucial!
             </div>
-            <span class="slide-number">8 / 20</span>
         </div>
 
-        <!-- Slide 9: Main Axis vs Cross Axis -->
+        <!-- Slide 9: Main and Cross Axis -->
         <div class="slide">
             <h1>Understanding Axes</h1>
             <h2>Main Axis & Cross Axis</h2>
-            <div class="demo-container">
-                <h3>flex-direction: row (default)</h3>
-                <p>➡️ Main axis = horizontal | ⬇️ Cross axis = vertical</p>
-                <div class="flex-demo">
+            
+            <h3>flex-direction: row (default)</h3>
+            <div class="axis-diagram">
+                <div class="flex-demo" style="width: 80%;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+                <span class="axis-arrow main-axis">→ Main</span>
+                <span class="axis-arrow cross-axis">↓ Cross</span>
+            </div>
+            
+            <h3>flex-direction: column</h3>
+            <div class="axis-diagram">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 80%;">
                     <div class="flex-item">1</div>
                     <div class="flex-item">2</div>
                     <div class="flex-item">3</div>
                 </div>
             </div>
-            <div class="demo-container">
-                <h3>flex-direction: column</h3>
-                <p>⬇️ Main axis = vertical | ➡️ Cross axis = horizontal</p>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div class="flex-item">1</div>
-                    <div class="flex-item">2</div>
-                    <div class="flex-item">3</div>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 20px;">
+            
+            <div class="tip-box">
                 <strong>Remember:</strong> justify-content works on MAIN axis, align-items on CROSS axis
-            </p>
-            <span class="slide-number">9 / 20</span>
+            </div>
         </div>
 
         <!-- Slide 10: Common Patterns -->
         <div class="slide">
             <h1>Common Flexbox Patterns</h1>
+            
             <h2>1. Perfect Centering</h2>
             <div class="code-example">
                 .container {<br>
@@ -468,6 +371,7 @@
                 &nbsp;&nbsp;align-items: center;<br>
                 }
             </div>
+            
             <h2>2. Navigation Bar</h2>
             <div class="code-example">
                 .nav {<br>
@@ -476,6 +380,7 @@
                 &nbsp;&nbsp;align-items: center;<br>
                 }
             </div>
+            
             <h2>3. Card Layout</h2>
             <div class="code-example">
                 .card-container {<br>
@@ -484,63 +389,64 @@
                 &nbsp;&nbsp;gap: 20px;<br>
                 }
             </div>
-            <span class="slide-number">10 / 20</span>
         </div>
 
         <!-- Slide 11: Nesting Flex Containers -->
         <div class="slide">
             <h1>Nesting Flex Containers</h1>
-            <div class="important-box">
-                <p>🔑 <strong>Key Concept:</strong> Any element can be BOTH a flex container AND a flex item!</p>
+            <div class="tip-box">
+                🔑 <strong>Key Concept:</strong> Any element can be BOTH a flex container AND a flex item!
             </div>
+            
             <h2>Real-World Example: Card Component</h2>
-            <div class="demo-container" style="background: #2d3436; color: white;">
-                <div style="display: flex; gap: 20px;">
-                    <div style="background: #636e72; padding: 20px; flex: 1; border-radius: 10px;">
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="background: #b2bec3; padding: 10px; border-radius: 5px; color: #2d3436;">Header</div>
-                            <div style="background: #dfe6e9; padding: 20px; flex-grow: 1; border-radius: 5px; color: #2d3436;">Content</div>
-                            <div style="background: #b2bec3; padding: 10px; border-radius: 5px; color: #2d3436;">Footer</div>
-                        </div>
+            <div class="nested-flex">
+                <div class="nested-card">
+                    <div class="nested-inner">
+                        <div>Header</div>
+                        <div style="flex-grow: 1;">Content Area</div>
+                        <div>Footer</div>
                     </div>
-                    <div style="background: #636e72; padding: 20px; flex: 1; border-radius: 10px;">
-                        <p style="text-align: center;">Another Card</p>
-                    </div>
+                </div>
+                <div class="nested-card">
+                    <p style="text-align: center; color: white;">Another Card</p>
                 </div>
             </div>
             <p>This creates complex, responsive layouts with just flexbox!</p>
-            <span class="slide-number">11 / 20</span>
         </div>
 
-        <!-- Slide 12: Flex Grow and Shrink Preview -->
+        <!-- Slide 12: Preview of Growing and Shrinking -->
         <div class="slide">
             <h1>How Items Flex</h1>
             <h2>The Magic of Growing and Shrinking</h2>
-            <div class="demo-container">
-                <h3>Equal Distribution (flex: 1)</h3>
+            
+            <h3>Equal Distribution (flex: 1)</h3>
+            <div class="flex-container-demo">
                 <div class="flex-demo">
                     <div class="flex-item">flex: 1</div>
                     <div class="flex-item">flex: 1</div>
                     <div class="flex-item">flex: 1</div>
                 </div>
-                <h3>Different Ratios</h3>
-                <div style="display: flex; gap: 10px; margin: 20px 0;">
+            </div>
+            
+            <h3>Different Ratios</h3>
+            <div class="flex-container-demo">
+                <div style="display: flex; gap: 10px;">
                     <div class="flex-item" style="flex: 2;">flex: 2</div>
                     <div class="flex-item" style="flex: 1;">flex: 1</div>
                     <div class="flex-item" style="flex: 1;">flex: 1</div>
                 </div>
             </div>
-            <div class="important-box">
-                <p>📚 <strong>Next Class:</strong> We'll dive deep into flex-grow, flex-shrink, and flex-basis!</p>
+            
+            <div class="activity-box">
+                📚 <strong>Next Class:</strong> We'll dive deep into flex-grow, flex-shrink, and flex-basis!
             </div>
-            <span class="slide-number">12 / 20</span>
         </div>
 
         <!-- Slide 13: Common Gotchas -->
         <div class="slide">
             <h1>⚠️ Common Flexbox Gotchas</h1>
             <h2>Watch Out For These!</h2>
-            <ul>
+            <ul style="font-size: 1.2em;">
                 <li>
                     <strong>1. Margin Collapse Doesn't Happen</strong>
                     <p>Vertical margins don't collapse in flex containers</p>
@@ -562,15 +468,15 @@
                     <p>Grandchildren need their own flex container</p>
                 </li>
             </ul>
-            <span class="slide-number">13 / 20</span>
         </div>
 
         <!-- Slide 14: Practice Exercise -->
         <div class="slide">
             <h1>💻 Let's Practice!</h1>
             <h2>Challenge: Build a Header Component</h2>
-            <div class="demo-container">
-                <p><strong>Requirements:</strong></p>
+            
+            <div class="activity-box">
+                <h3>Requirements:</h3>
                 <ul>
                     <li>Logo on the left</li>
                     <li>Navigation links in the center</li>
@@ -579,6 +485,7 @@
                     <li>Responsive spacing</li>
                 </ul>
             </div>
+            
             <h3>Starter Code:</h3>
             <div class="code-example">
                 &lt;header class="header"&gt;<br>
@@ -591,8 +498,8 @@
                 &nbsp;&nbsp;&lt;button&gt;Login&lt;/button&gt;<br>
                 &lt;/header&gt;
             </div>
-            <p style="text-align: center; margin-top: 20px;">⏱️ Take 5 minutes to try this!</p>
-            <span class="slide-number">14 / 20</span>
+            
+            <p style="text-align: center; margin-top: 20px; font-size: 1.2em;">⏱️ Take 5 minutes to try this!</p>
         </div>
 
         <!-- Slide 15: Solution -->
@@ -615,8 +522,9 @@
                 &nbsp;&nbsp;text-decoration: none;<br>
                 }
             </div>
+            
             <h2>Result:</h2>
-            <div class="demo-container" style="background: #333; color: white; padding: 1rem 2rem;">
+            <div class="pattern-example" style="background: #333; color: white;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div style="font-weight: bold; font-size: 1.5em;">Logo</div>
                     <nav style="display: flex; gap: 2rem;">
@@ -624,10 +532,9 @@
                         <a href="#" style="color: white; text-decoration: none;">About</a>
                         <a href="#" style="color: white; text-decoration: none;">Contact</a>
                     </nav>
-                    <button style="padding: 8px 20px; border-radius: 5px; border: none; background: #667eea; color: white; font-weight: bold;">Login</button>
+                    <button style="padding: 8px 20px; border-radius: 5px; border: none; background: var(--ocu-true-blue); color: white; font-weight: bold;">Login</button>
                 </div>
             </div>
-            <span class="slide-number">15 / 20</span>
         </div>
 
         <!-- Slide 16: Real-World Examples -->
@@ -636,7 +543,7 @@
             <h2>Real-World Applications</h2>
             <div class="comparison-table">
                 <div class="comparison-card">
-                    <h4>🎨 UI Components</h4>
+                    <h3>🎨 UI Components</h3>
                     <ul>
                         <li>Navigation bars</li>
                         <li>Card layouts</li>
@@ -646,7 +553,7 @@
                     </ul>
                 </div>
                 <div class="comparison-card">
-                    <h4>📱 Responsive Design</h4>
+                    <h3>📱 Responsive Design</h3>
                     <ul>
                         <li>Mobile-first layouts</li>
                         <li>Flexible sidebars</li>
@@ -656,19 +563,16 @@
                     </ul>
                 </div>
             </div>
-            <div class="important-box">
-                <p style="text-align: center; font-size: 1.2em;">
-                    🎯 <strong>Fun Fact:</strong> Most modern websites use Flexbox in 70%+ of their layout code!
-                </p>
+            <div class="tip-box">
+                🎯 <strong>Fun Fact:</strong> Most modern websites use Flexbox in 70%+ of their layout code!
             </div>
-            <span class="slide-number">16 / 20</span>
         </div>
 
         <!-- Slide 17: Resources -->
         <div class="slide">
             <h1>📚 Resources</h1>
             <h2>Continue Learning</h2>
-            <ul>
+            <ul style="font-size: 1.2em;">
                 <li>
                     <strong>🎮 Interactive Games:</strong>
                     <ul>
@@ -698,45 +602,42 @@
                     </ul>
                 </li>
             </ul>
-            <span class="slide-number">17 / 20</span>
         </div>
 
         <!-- Slide 18: Key Takeaways -->
         <div class="slide">
             <h1>🎯 Key Takeaways</h1>
-            <div class="important-box">
+            <div class="activity-box">
                 <h3>Remember These Core Concepts:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>✅ <strong>display: flex</strong> creates a flex container</li>
+                    <li>✅ Direct children become <strong>flex items</strong></li>
+                    <li>✅ Items flow in <strong>main axis</strong> direction</li>
+                    <li>✅ <strong>justify-content</strong> = main axis alignment</li>
+                    <li>✅ <strong>align-items</strong> = cross axis alignment</li>
+                    <li>✅ Items can <strong>grow</strong> and <strong>shrink</strong></li>
+                    <li>✅ Containers can be <strong>nested</strong></li>
+                    <li>✅ Use <strong>DevTools</strong> for debugging!</li>
+                </ul>
             </div>
-            <ul style="font-size: 1.3em; line-height: 2;">
-                <li>✅ <strong>display: flex</strong> creates a flex container</li>
-                <li>✅ Direct children become <strong>flex items</strong></li>
-                <li>✅ Items flow in <strong>main axis</strong> direction</li>
-                <li>✅ <strong>justify-content</strong> = main axis alignment</li>
-                <li>✅ <strong>align-items</strong> = cross axis alignment</li>
-                <li>✅ Items can <strong>grow</strong> and <strong>shrink</strong></li>
-                <li>✅ Containers can be <strong>nested</strong></li>
-                <li>✅ Use <strong>DevTools</strong> for debugging!</li>
-            </ul>
-            <p style="text-align: center; margin-top: 30px; font-size: 1.2em;">
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
                 💪 You now have the foundation to build modern layouts!
             </p>
-            <span class="slide-number">18 / 20</span>
         </div>
 
         <!-- Slide 19: Homework -->
         <div class="slide">
             <h1>📝 Before Next Class</h1>
-            <div class="important-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
-                <h2 style="color: white;">⚠️ IMPORTANT HOMEWORK</h2>
-                <p style="font-size: 1.3em; margin: 20px 0;">
-                    Complete the next section of The Odin Project:
-                </p>
-                <h3 style="color: white; text-align: center; font-size: 1.8em;">
+            <div class="homework-reminder">
+                <h2>⚠️ IMPORTANT HOMEWORK</h2>
+                <p>Complete the next section of The Odin Project:</p>
+                <h2 style="font-size: 2.2em; margin: 20px 0;">
                     "Flexbox - Growing and Shrinking"
-                </h3>
+                </h2>
             </div>
+            
             <h2>This section covers:</h2>
-            <ul>
+            <ul style="font-size: 1.2em;">
                 <li>📏 The <strong>flex shorthand</strong> property</li>
                 <li>📈 <strong>flex-grow</strong> in detail</li>
                 <li>📉 <strong>flex-shrink</strong> in detail</li>
@@ -744,67 +645,82 @@
                 <li>🎯 Auto margins trick</li>
                 <li>💡 Advanced use cases</li>
             </ul>
-            <p style="text-align: center; margin-top: 30px; font-size: 1.2em;">
-                💻 Practice with the examples - we'll build on this next class!
-            </p>
-            <span class="slide-number">19 / 20</span>
+            
+            <div class="tip-box">
+                💻 <strong>Practice with the examples</strong> - we'll build on this next class!
+            </div>
         </div>
 
         <!-- Slide 20: Thank You -->
         <div class="slide">
-            <div class="center-content">
-                <div class="icon">🚀</div>
-                <h1>Great Work Today!</h1>
-                <p style="font-size: 1.5em; margin: 30px 0;">
-                    You've taken your first steps into modern CSS layouts!
+            <h1>Great Work Today! <span class="emoji">🚀</span></h1>
+            <p style="font-size: 1.5em; margin: 30px 0; text-align: center;">
+                You've taken your first steps into modern CSS layouts!
+            </p>
+            
+            <div class="activity-box">
+                <p style="font-size: 1.3em;">
+                    <strong>Remember:</strong> Flexbox will become one of your most-used tools.
                 </p>
-                <div class="important-box">
-                    <p style="font-size: 1.2em;">
-                        <strong>Remember:</strong> Flexbox will become one of your most-used tools.
-                        <br>Practice, experiment, and don't forget to inspect! 🔍
-                    </p>
-                </div>
-                <p style="margin-top: 40px; font-size: 1.3em;">
-                    <strong>Next Class:</strong> Deep dive into Growing & Shrinking
+                <p style="font-size: 1.2em; margin-top: 15px;">
+                    Practice, experiment, and don't forget to inspect! 🔍
                 </p>
-                <p style="margin-top: 20px;">Questions?</p>
             </div>
-            <span class="slide-number">20 / 20</span>
+            
+            <p style="margin-top: 40px; font-size: 1.3em; text-align: center;">
+                <strong>Next Class:</strong> Deep dive into Growing & Shrinking
+            </p>
+            
+            <p style="margin-top: 30px; text-align: center; font-size: 1.2em;">Questions?</p>
         </div>
     </div>
 
+    <!-- Navigation -->
     <div class="navigation">
         <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
+        </span>
         <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
     </div>
 
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
     <script>
+        // Global changeSlide function for onclick handlers
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
 
-        function showSlide(n) {
+        function changeSlide(direction) {
+            // Hide current slide
             slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
             slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
             
             // Update button states
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
         }
-
-        function changeSlide(direction) {
-            showSlide(currentSlide + direction);
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') changeSlide(-1);
-            if (e.key === 'ArrowRight') changeSlide(1);
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update total slides count
+            document.getElementById('totalSlides').textContent = totalSlides;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
         });
-
-        // Initialize
-        showSlide(0);
     </script>
 </body>
 </html>
