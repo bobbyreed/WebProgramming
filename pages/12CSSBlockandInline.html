@@ -3,180 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Foundations: Block and Inline</title>
+    <title>CSS Foundations - Block and Inline</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .presentation-container {
-            width: 90%;
-            max-width: 1000px;
-            height: 600px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-        
+        /* Ensure slides are properly hidden/shown */
         .slide {
-            display: none;
-            padding: 60px;
-            height: 100%;
-            overflow-y: auto;
-            animation: slideIn 0.5s ease-in-out;
+            display: none !important;
         }
         
         .slide.active {
-            display: block;
+            display: flex !important;
         }
         
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 15px;
-        }
-        
-        h2 {
-            color: #764ba2;
-            font-size: 2em;
-            margin-bottom: 25px;
-        }
-        
-        h3 {
-            color: #667eea;
-            font-size: 1.5em;
-            margin: 25px 0 15px;
-        }
-        
-        p, li {
-            font-size: 1.2em;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        ul {
-            margin-left: 30px;
-            margin-bottom: 20px;
-        }
-        
-        .code-example {
-            background: #f7f7f7;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 1em;
-            overflow-x: auto;
-        }
-        
-        .demo-box {
-            border: 2px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            background: #f9fafb;
-        }
-        
+        /* Block/Inline Demo Styles */
         .block-demo {
-            background: #e0e7ff;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #667eea;
+            background: var(--ocu-light-blue);
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid var(--ocu-true-blue);
+            border-radius: 8px;
+        }
+        
+        [data-theme="dark"] .block-demo {
+            background: var(--ocu-dark-blue);
+            border-color: var(--ocu-cyan);
         }
         
         .inline-demo {
             background: #fce7f3;
             padding: 5px 10px;
             border: 1px solid #ec4899;
+            border-radius: 4px;
+        }
+        
+        [data-theme="dark"] .inline-demo {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
         }
         
         .inline-block-demo {
             display: inline-block;
-            background: #ddd6fe;
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #8b5cf6;
-        }
-        
-        .navigation {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        
-        .nav-button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+            background: var(--ocu-green);
+            padding: 15px;
+            margin: 10px;
+            border: 2px solid var(--ocu-dark-blue);
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-button:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-        }
-        
-        .nav-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .slide-number {
-            background: #667eea;
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
         }
         
-        .highlight {
-            background: #fef3c7;
-            padding: 2px 6px;
-            border-radius: 3px;
+        [data-theme="dark"] .inline-block-demo {
+            background: var(--ocu-light-green);
+            color: var(--ocu-black);
+            border-color: var(--ocu-cyan);
         }
         
-        .title-slide {
+        /* Visual Example Box */
+        .display-example {
+            background: var(--bg-accent);
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--slide-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        
+        th {
+            background: var(--ocu-true-blue);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        [data-theme="dark"] th {
+            background: var(--ocu-dark-blue);
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* Quick Quiz Box */
+        .quiz-box {
+            background: var(--bg-accent);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .quiz-answers {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--success-bg);
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+        
+        /* Title Slide Styles */
+        .slide.title-slide {
             text-align: center;
+        }
+        
+        .slide.title-slide.active {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
         
         .title-slide h1 {
@@ -186,57 +131,52 @@
         }
         
         .subtitle {
-            color: #764ba2;
-            font-size: 1.5em;
-            margin-bottom: 40px;
+            color: var(--ocu-dark-blue);
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+        
+        [data-theme="dark"] .subtitle {
+            color: var(--ocu-cyan);
         }
         
         .meta-info {
-            color: #666;
-            font-size: 1.1em;
-        }
-        
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            color: var(--text-muted);
+            font-size: 1.2em;
             margin-top: 20px;
         }
         
+        /* Emphasis Text */
         .emphasis {
-            color: #667eea;
+            color: var(--ocu-true-blue);
             font-weight: bold;
         }
         
-        .warning {
-            background: #fee2e2;
-            border-left: 4px solid #ef4444;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .tip {
-            background: #f0fdf4;
-            border-left: 4px solid #22c55e;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
+        [data-theme="dark"] .emphasis {
+            color: var(--ocu-cyan);
         }
     </style>
 </head>
 <body>
     <div class="presentation-container">
+        <!-- Timer/Header -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 12 - Block and Inline
+                <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
             <h1>CSS Foundations</h1>
             <p class="subtitle">Block and Inline Elements</p>
+            <p style="font-size: 1.3em;">CSCI 3403 - Web Programming</p>
             <p class="meta-info">Day 12 - Understanding Display Types</p>
         </div>
 
         <!-- Slide 2: Agenda -->
         <div class="slide">
-            <h1>Today's Agenda</h1>
+            <h1>Today's Agenda <span class="emoji">📋</span></h1>
             <ul>
                 <li>Review: The Box Model</li>
                 <li>Understanding Normal Flow</li>
@@ -251,7 +191,7 @@
 
         <!-- Slide 3: Learning Objectives -->
         <div class="slide">
-            <h1>Learning Objectives</h1>
+            <h1>Learning Objectives <span class="emoji">🎯</span></h1>
             <p>By the end of this lesson, you will:</p>
             <ul>
                 <li>Understand what "Normal Flow" means in CSS</li>
@@ -269,9 +209,11 @@
             <ul>
                 <li>Every element is a rectangular box</li>
                 <li>Box consists of: Content, Padding, Border, Margin</li>
-                <li><span class="highlight">box-sizing</span> property changes calculation</li>
+                <li><code>box-sizing</code> property changes calculation</li>
             </ul>
-            <p class="emphasis">Today: How boxes interact with each other!</p>
+            <div class="tip-box">
+                <strong>Today:</strong> How boxes interact with each other!
+            </div>
         </div>
 
         <!-- Slide 5: Normal Flow -->
@@ -285,7 +227,7 @@
                 <li>Inline elements flow horizontally</li>
                 <li>No overlapping (unless positioned)</li>
             </ul>
-            <div class="tip">
+            <div class="tip-box">
                 <strong>Think of it as:</strong> How elements "naturally" arrange themselves on the page
             </div>
         </div>
@@ -307,7 +249,7 @@ display: flex;  /* Coming next lesson! */
 
         <!-- Slide 7: Block Elements Introduction -->
         <div class="slide">
-            <h1>Block Elements</h1>
+            <h1>Block Elements <span class="emoji">📦</span></h1>
             <h3>Characteristics:</h3>
             <ul>
                 <li>Start on a <span class="emphasis">new line</span></li>
@@ -354,7 +296,7 @@ display: block;
         <!-- Slide 9: Block Elements Visual -->
         <div class="slide">
             <h1>Block Elements Visualization</h1>
-            <div class="demo-box">
+            <div class="display-example">
                 <div class="block-demo">&lt;div&gt; Block element 1 &lt;/div&gt;</div>
                 <div class="block-demo">&lt;p&gt; Block element 2 &lt;/p&gt;</div>
                 <div class="block-demo">&lt;h3&gt; Block element 3 &lt;/h3&gt;</div>
@@ -369,7 +311,7 @@ display: block;
 
         <!-- Slide 10: Inline Elements Introduction -->
         <div class="slide">
-            <h1>Inline Elements</h1>
+            <h1>Inline Elements <span class="emoji">➡️</span></h1>
             <h3>Characteristics:</h3>
             <ul>
                 <li>Do NOT start on a new line</li>
@@ -403,7 +345,7 @@ display: inline;
         <!-- Slide 12: Inline Elements Visual -->
         <div class="slide">
             <h1>Inline Elements Visualization</h1>
-            <div class="demo-box">
+            <div class="display-example">
                 <p>This is a paragraph with <span class="inline-demo">an inline span</span> and 
                 <span class="inline-demo">another span</span> that flow with the text. 
                 Here's <a href="#" class="inline-demo">a link</a> too!</p>
@@ -419,40 +361,40 @@ display: inline;
         <!-- Slide 13: Block vs Inline Comparison -->
         <div class="slide">
             <h1>Block vs Inline: Key Differences</h1>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr style="background: #f0f0f0;">
-                    <th style="padding: 10px; text-align: left;">Property</th>
-                    <th style="padding: 10px; text-align: left;">Block</th>
-                    <th style="padding: 10px; text-align: left;">Inline</th>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Block</th>
+                    <th>Inline</th>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Line breaks</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Yes (before & after)</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">No</td>
+                    <td>Line breaks</td>
+                    <td>Yes (before & after)</td>
+                    <td>No</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Width</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">100% by default</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Content-based</td>
+                    <td>Width</td>
+                    <td>100% by default</td>
+                    <td>Content-based</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Can set width/height?</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Yes</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">No</td>
+                    <td>Can set width/height?</td>
+                    <td>Yes</td>
+                    <td>No</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Margin/Padding</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">All sides work</td>
-                    <td style="padding: 10px; border-top: 1px solid #ddd;">Horizontal only*</td>
+                    <td>Margin/Padding</td>
+                    <td>All sides work</td>
+                    <td>Horizontal only*</td>
                 </tr>
             </table>
-            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">*Vertical padding/margin on inline elements can cause overlap issues</p>
+            <p style="font-size: 0.9em; color: var(--text-muted); margin-top: 10px;">*Vertical padding/margin on inline elements can cause overlap issues</p>
         </div>
 
         <!-- Slide 14: Inline Padding/Margin Warning -->
         <div class="slide">
             <h1>⚠️ Inline Elements: Padding & Margin</h1>
-            <div class="warning">
+            <div class="warning-box">
                 <strong>Important:</strong> Vertical padding and margin on inline elements don't push other elements away!
             </div>
             <div class="code-example">
@@ -462,12 +404,14 @@ span {
     margin: 20px 10px;   /* Vertical margin often ignored */
 }
             </div>
-            <p class="tip"><strong>Best Practice:</strong> Avoid vertical spacing on inline elements. Use inline-block if needed!</p>
+            <div class="tip-box">
+                <strong>Best Practice:</strong> Avoid vertical spacing on inline elements. Use inline-block if needed!
+            </div>
         </div>
 
         <!-- Slide 15: Inline-Block Introduction -->
         <div class="slide">
-            <h1>Inline-Block: The Middle Ground</h1>
+            <h1>Inline-Block: The Middle Ground <span class="emoji">🎯</span></h1>
             <p>Combines features of both block and inline elements!</p>
             <h3>Characteristics:</h3>
             <ul>
@@ -483,7 +427,7 @@ display: inline-block;
         <!-- Slide 16: Inline-Block Visual -->
         <div class="slide">
             <h1>Inline-Block Example</h1>
-            <div class="demo-box">
+            <div class="display-example">
                 <div class="inline-block-demo">Box 1</div>
                 <div class="inline-block-demo">Box 2</div>
                 <div class="inline-block-demo">Box 3</div>
@@ -503,7 +447,7 @@ display: inline-block;
         <!-- Slide 17: Display Comparison -->
         <div class="slide">
             <h1>All Three Display Types</h1>
-            <div class="demo-box">
+            <div class="display-example">
                 <div class="block-demo">Block: Takes full width</div>
                 <span class="inline-demo">Inline: Flows</span>
                 <span class="inline-demo">with text</span>
@@ -571,7 +515,7 @@ display: inline-block;
                     </ul>
                 </div>
             </div>
-            <div class="tip">
+            <div class="tip-box">
                 <strong>Remember:</strong> Use semantic HTML first! Only use div/span when no semantic element applies.
             </div>
         </div>
@@ -634,12 +578,14 @@ div.inline-div {
     display: none;
 }
             </div>
-            <p class="warning"><strong>Note:</strong> Changing display doesn't change semantic meaning!</p>
+            <div class="warning-box">
+                <strong>Note:</strong> Changing display doesn't change semantic meaning!
+            </div>
         </div>
 
         <!-- Slide 24: Common Gotchas -->
         <div class="slide">
-            <h1>Common Gotchas 🤔</h1>
+            <h1>Common Gotchas <span class="emoji">🤔</span></h1>
             <ul>
                 <li><strong>Inline element vertical spacing:</strong> Use inline-block instead</li>
                 <li><strong>Mysterious gaps between inline-blocks:</strong> HTML whitespace causes this</li>
@@ -651,7 +597,7 @@ div.inline-div {
 
         <!-- Slide 25: Quick Quiz -->
         <div class="slide">
-            <h1>Quick Check! 🎯</h1>
+            <h1>Quick Check! <span class="emoji">🎯</span></h1>
             <p>What display type would you use for:</p>
             <ol>
                 <li>A navigation bar with horizontal links?</li>
@@ -660,8 +606,8 @@ div.inline-div {
                 <li>Creating a grid of cards?</li>
                 <li>Adding an icon next to text?</li>
             </ol>
-            <div style="margin-top: 30px; padding: 20px; background: #f0f0f0; border-radius: 8px;">
-                <p style="font-size: 0.9em;"><strong>Answers:</strong> 1) inline-block, 2) block, 3) inline, 4) inline-block (or flex next week!), 5) inline</p>
+            <div class="quiz-answers">
+                <p><strong>Answers:</strong> 1) inline-block, 2) block, 3) inline, 4) inline-block (or flex next week!), 5) inline</p>
             </div>
         </div>
 
@@ -696,7 +642,7 @@ div.inline-div {
 
         <!-- Slide 28: Homework -->
         <div class="slide">
-            <h1>Homework Assignment 📚</h1>
+            <h1>Homework Assignment <span class="emoji">📚</span></h1>
             <h3>Part 1: CSS Exercises</h3>
             <p>Complete from The Odin Project repository:</p>
             <ul>
@@ -715,7 +661,7 @@ div.inline-div {
 
         <!-- Slide 29: Summary -->
         <div class="slide">
-            <h1>Key Takeaways</h1>
+            <h1>Key Takeaways <span class="emoji">✅</span></h1>
             <ul>
                 <li>✅ Block elements create new lines and take full width</li>
                 <li>✅ Inline elements flow with content</li>
@@ -734,14 +680,20 @@ div.inline-div {
             <p class="meta-info">Remember: The best way to learn CSS is by doing</p>
         </div>
 
-        <!-- Navigation -->
+        <!-- Navigation Controls -->
         <div class="navigation">
-            <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
-            <span class="slide-number" id="slideNumber">1 / 30</span>
-            <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next</button>
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
         </div>
     </div>
 
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    
+    <!-- Additional slide functionality -->
     <script>
         let currentSlide = 1;
         const totalSlides = 30;
@@ -757,7 +709,7 @@ div.inline-div {
             
             slides[currentSlide - 1].classList.add('active');
             
-            document.getElementById('slideNumber').textContent = currentSlide + ' / ' + totalSlides;
+            document.getElementById('currentSlide').textContent = currentSlide;
             
             // Update button states
             document.getElementById('prevBtn').disabled = currentSlide === 1;
