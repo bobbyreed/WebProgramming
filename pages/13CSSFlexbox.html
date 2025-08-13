@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Foundations - Introduction to Flexbox - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        /* Flexbox demo styles */
+        .flex-container-demo {
+            background: var(--bg-accent);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .flex-item {
+            background: linear-gradient(135deg, var(--ocu-true-blue), var(--ocu-cyan));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .no-flex-demo {
+            margin: 20px 0;
+        }
+        
+        .no-flex-demo > div {
+            background: linear-gradient(135deg, var(--ocu-true-blue), var(--ocu-cyan));
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .axis-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            background: var(--bg-accent);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .axis-arrow {
+            position: absolute;
+            font-size: 2em;
+            color: var(--ocu-true-blue);
+            font-weight: bold;
+        }
+        
+        .main-axis {
+            top: 50%;
+            right: 20px;
+        }
+        
+        .cross-axis {
+            bottom: 20px;
+            left: 50%;
+        }
+        
+        .nested-flex {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #2d3436;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .nested-card {
+            background: #636e72;
+            padding: 20px;
+            flex: 1;
+            border-radius: 10px;
+        }
+        
+        .nested-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .nested-inner > div {
+            background: #b2bec3;
+            padding: 10px;
+            border-radius: 5px;
+            color: #2d3436;
+        }
+        
+        .pattern-example {
+            background: var(--bg-accent);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        
+        .homework-reminder {
+            background: linear-gradient(135deg, #ff6b6b, #ff8787);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .homework-reminder h2 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+        
+        .homework-reminder p {
+            color: white;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 13 - Introduction to Flexbox
+                <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>CSS Foundations</h1>
+            <h2>Introduction to Flexbox <span class="emoji">🎯</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Day 13</p>
+            <p style="margin-top: auto; font-style: italic;">The modern way to layout web pages!</p>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <h1>Today's Agenda <span class="emoji">📚</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>What is Flexbox and why it matters</li>
+                <li>Flex containers vs. flex items</li>
+                <li>Basic flexbox properties</li>
+                <li>Creating layouts with flexbox</li>
+                <li>How items flex (grow & shrink preview)</li>
+                <li>Building complex layouts</li>
+                <li>Hands-on practice</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Goal:</strong> Master the fundamentals of Flexbox positioning
+            </div>
+        </div>
+
+        <!-- Slide 3: Why Flexbox? -->
+        <div class="slide">
+            <h1>Why Flexbox? <span class="emoji">🤔</span></h1>
+            <h2>A Brief History</h2>
+            <p>Before Flexbox, positioning elements was challenging:</p>
+            <ul>
+                <li>Tables for layout (semantic nightmare! 😱)</li>
+                <li>Floats (clearing issues, complex)</li>
+                <li>Positioning (absolute/relative confusion)</li>
+                <li>Inline-block (whitespace issues)</li>
+            </ul>
+            <div class="activity-box">
+                <h3>🎉 Enter Flexbox (2009-2012)</h3>
+                <p>Flexbox revolutionized CSS layouts by providing:</p>
+                <ul>
+                    <li>Easy horizontal and vertical centering</li>
+                    <li>Dynamic sizing and spacing</li>
+                    <li>Responsive design without media queries</li>
+                    <li>Intuitive alignment control</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Developer Tools Reminder -->
+        <div class="slide">
+            <h1>🛠️ Quick Reminder: Developer Tools</h1>
+            <div class="warning-box">
+                <h3>⚠️ Before we dive in...</h3>
+                <p>Flexbox can get complex! Your browser's DevTools are <strong>CRUCIAL</strong> for debugging.</p>
+            </div>
+            <h2>Essential DevTools Features for Flexbox:</h2>
+            <ul>
+                <li>🔍 <strong>Inspect Element:</strong> Right-click → Inspect</li>
+                <li>📦 <strong>Flexbox Inspector:</strong> Look for the "flex" badge in Elements panel</li>
+                <li>📐 <strong>Layout Tab:</strong> Shows flex container and item properties</li>
+                <li>🎨 <strong>Computed Styles:</strong> See actual applied values</li>
+                <li>✏️ <strong>Live Editing:</strong> Test changes in real-time</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> If something isn't working, inspect it FIRST! 🔍
+            </div>
+        </div>
+
+        <!-- Slide 5: What is Flexbox? -->
+        <div class="slide">
+            <h1>What is Flexbox?</h1>
+            <h2 style="text-align: center;">Flexible Box Layout = A one-dimensional layout method</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>✅ What Flexbox IS</h3>
+                    <ul>
+                        <li>A way to arrange items in rows OR columns</li>
+                        <li>Items that grow/shrink based on available space</li>
+                        <li>Perfect for component layouts</li>
+                        <li>Great for navigation bars, cards, etc.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>❌ What Flexbox ISN'T</h3>
+                    <ul>
+                        <li>Not for complex 2D layouts (use Grid)</li>
+                        <li>Not a replacement for all positioning</li>
+                        <li>Not always the best solution</li>
+                        <li>Not supported in IE9 and below</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Basic Concept -->
+        <div class="slide">
+            <h1>The Basic Concept</h1>
+            <h2>Two Key Players</h2>
+            
+            <h3>1️⃣ Flex Container (Parent)</h3>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                }
+            </div>
+            
+            <h3>2️⃣ Flex Items (Children)</h3>
+            <p>Any direct children automatically become flex items!</p>
+            
+            <div class="flex-container-demo">
+                <div class="flex-demo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <strong>Remember:</strong> Only DIRECT children become flex items
+            </div>
+        </div>
+
+        <!-- Slide 7: Before and After -->
+        <div class="slide">
+            <h1>Let's See It In Action! <span class="emoji">✨</span></h1>
+            
+            <h2>Before Flexbox (Normal Flow):</h2>
+            <div class="flex-container-demo">
+                <div class="no-flex-demo">
+                    <div>Div 1</div>
+                    <div>Div 2</div>
+                    <div>Div 3</div>
+                </div>
+            </div>
+            
+            <h2>After Adding display: flex:</h2>
+            <div class="flex-container-demo">
+                <div class="flex-demo">
+                    <div class="flex-item">Div 1</div>
+                    <div class="flex-item">Div 2</div>
+                    <div class="flex-item">Div 3</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                ✨ <strong>Magic!</strong> Items now sit side-by-side and share space equally!
+            </div>
+        </div>
+
+        <!-- Slide 8: Container vs Items Properties -->
+        <div class="slide">
+            <h1>Container vs. Items Properties</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>📦 Container Properties</h3>
+                    <p>Applied to parent with display: flex</p>
+                    <ul>
+                        <li><strong>flex-direction</strong> (row, column)</li>
+                        <li><strong>justify-content</strong> (main axis)</li>
+                        <li><strong>align-items</strong> (cross axis)</li>
+                        <li><strong>flex-wrap</strong> (wrap, nowrap)</li>
+                        <li><strong>gap</strong> (spacing between items)</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>📦 Item Properties</h3>
+                    <p>Applied to flex items (children)</p>
+                    <ul>
+                        <li><strong>flex-grow</strong> (growth factor)</li>
+                        <li><strong>flex-shrink</strong> (shrink factor)</li>
+                        <li><strong>flex-basis</strong> (initial size)</li>
+                        <li><strong>align-self</strong> (individual alignment)</li>
+                        <li><strong>order</strong> (visual order)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                🎯 <strong>Key Insight:</strong> Understanding which properties go where is crucial!
+            </div>
+        </div>
+
+        <!-- Slide 9: Main and Cross Axis -->
+        <div class="slide">
+            <h1>Understanding Axes</h1>
+            <h2>Main Axis & Cross Axis</h2>
+            
+            <h3>flex-direction: row (default)</h3>
+            <div class="axis-diagram">
+                <div class="flex-demo" style="width: 80%;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+                <span class="axis-arrow main-axis">→ Main</span>
+                <span class="axis-arrow cross-axis">↓ Cross</span>
+            </div>
+            
+            <h3>flex-direction: column</h3>
+            <div class="axis-diagram">
+                <div style="display: flex; flex-direction: column; gap: 10px; height: 80%;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Remember:</strong> justify-content works on MAIN axis, align-items on CROSS axis
+            </div>
+        </div>
+
+        <!-- Slide 10: Common Patterns -->
+        <div class="slide">
+            <h1>Common Flexbox Patterns</h1>
+            
+            <h2>1. Perfect Centering</h2>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;justify-content: center;<br>
+                &nbsp;&nbsp;align-items: center;<br>
+                }
+            </div>
+            
+            <h2>2. Navigation Bar</h2>
+            <div class="code-example">
+                .nav {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;justify-content: space-between;<br>
+                &nbsp;&nbsp;align-items: center;<br>
+                }
+            </div>
+            
+            <h2>3. Card Layout</h2>
+            <div class="code-example">
+                .card-container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;flex-wrap: wrap;<br>
+                &nbsp;&nbsp;gap: 20px;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 11: Nesting Flex Containers -->
+        <div class="slide">
+            <h1>Nesting Flex Containers</h1>
+            <div class="tip-box">
+                🔑 <strong>Key Concept:</strong> Any element can be BOTH a flex container AND a flex item!
+            </div>
+            
+            <h2>Real-World Example: Card Component</h2>
+            <div class="nested-flex">
+                <div class="nested-card">
+                    <div class="nested-inner">
+                        <div>Header</div>
+                        <div style="flex-grow: 1;">Content Area</div>
+                        <div>Footer</div>
+                    </div>
+                </div>
+                <div class="nested-card">
+                    <p style="text-align: center; color: white;">Another Card</p>
+                </div>
+            </div>
+            <p>This creates complex, responsive layouts with just flexbox!</p>
+        </div>
+
+        <!-- Slide 12: Preview of Growing and Shrinking -->
+        <div class="slide">
+            <h1>How Items Flex</h1>
+            <h2>The Magic of Growing and Shrinking</h2>
+            
+            <h3>Equal Distribution (flex: 1)</h3>
+            <div class="flex-container-demo">
+                <div class="flex-demo">
+                    <div class="flex-item">flex: 1</div>
+                    <div class="flex-item">flex: 1</div>
+                    <div class="flex-item">flex: 1</div>
+                </div>
+            </div>
+            
+            <h3>Different Ratios</h3>
+            <div class="flex-container-demo">
+                <div style="display: flex; gap: 10px;">
+                    <div class="flex-item" style="flex: 2;">flex: 2</div>
+                    <div class="flex-item" style="flex: 1;">flex: 1</div>
+                    <div class="flex-item" style="flex: 1;">flex: 1</div>
+                </div>
+            </div>
+            
+            <div class="activity-box">
+                📚 <strong>Next Class:</strong> We'll dive deep into flex-grow, flex-shrink, and flex-basis!
+            </div>
+        </div>
+
+        <!-- Slide 13: Common Gotchas -->
+        <div class="slide">
+            <h1>⚠️ Common Flexbox Gotchas</h1>
+            <h2>Watch Out For These!</h2>
+            <ul style="font-size: 1.2em;">
+                <li>
+                    <strong>1. Margin Collapse Doesn't Happen</strong>
+                    <p>Vertical margins don't collapse in flex containers</p>
+                </li>
+                <li>
+                    <strong>2. Some Properties Don't Work on Flex Items</strong>
+                    <p>float, clear, vertical-align have no effect</p>
+                </li>
+                <li>
+                    <strong>3. Default flex-shrink is 1</strong>
+                    <p>Items shrink by default - use flex-shrink: 0 to prevent</p>
+                </li>
+                <li>
+                    <strong>4. Min-width/height Affects Sizing</strong>
+                    <p>Content can prevent items from shrinking</p>
+                </li>
+                <li>
+                    <strong>5. Only Direct Children Are Flex Items</strong>
+                    <p>Grandchildren need their own flex container</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Slide 14: Practice Exercise -->
+        <div class="slide">
+            <h1>💻 Let's Practice!</h1>
+            <h2>Challenge: Build a Header Component</h2>
+            
+            <div class="activity-box">
+                <h3>Requirements:</h3>
+                <ul>
+                    <li>Logo on the left</li>
+                    <li>Navigation links in the center</li>
+                    <li>Login button on the right</li>
+                    <li>Everything vertically centered</li>
+                    <li>Responsive spacing</li>
+                </ul>
+            </div>
+            
+            <h3>Starter Code:</h3>
+            <div class="code-example">
+                &lt;header class="header"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="logo"&gt;Logo&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;nav class="nav"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;Home&lt;/a&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;About&lt;/a&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;Contact&lt;/a&gt;<br>
+                &nbsp;&nbsp;&lt;/nav&gt;<br>
+                &nbsp;&nbsp;&lt;button&gt;Login&lt;/button&gt;<br>
+                &lt;/header&gt;
+            </div>
+            
+            <p style="text-align: center; margin-top: 20px; font-size: 1.2em;">⏱️ Take 5 minutes to try this!</p>
+        </div>
+
+        <!-- Slide 15: Solution -->
+        <div class="slide">
+            <h1>Solution</h1>
+            <div class="code-example">
+                .header {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;justify-content: space-between;<br>
+                &nbsp;&nbsp;align-items: center;<br>
+                &nbsp;&nbsp;padding: 1rem 2rem;<br>
+                &nbsp;&nbsp;background: #333;<br>
+                }<br><br>
+                .nav {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;gap: 2rem;<br>
+                }<br><br>
+                .nav a {<br>
+                &nbsp;&nbsp;color: white;<br>
+                &nbsp;&nbsp;text-decoration: none;<br>
+                }
+            </div>
+            
+            <h2>Result:</h2>
+            <div class="pattern-example" style="background: #333; color: white;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-weight: bold; font-size: 1.5em;">Logo</div>
+                    <nav style="display: flex; gap: 2rem;">
+                        <a href="#" style="color: white; text-decoration: none;">Home</a>
+                        <a href="#" style="color: white; text-decoration: none;">About</a>
+                        <a href="#" style="color: white; text-decoration: none;">Contact</a>
+                    </nav>
+                    <button style="padding: 8px 20px; border-radius: 5px; border: none; background: var(--ocu-true-blue); color: white; font-weight: bold;">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Real-World Examples -->
+        <div class="slide">
+            <h1>Where You'll Use Flexbox</h1>
+            <h2>Real-World Applications</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>🎨 UI Components</h3>
+                    <ul>
+                        <li>Navigation bars</li>
+                        <li>Card layouts</li>
+                        <li>Toolbars</li>
+                        <li>Media objects</li>
+                        <li>Form layouts</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>📱 Responsive Design</h3>
+                    <ul>
+                        <li>Mobile-first layouts</li>
+                        <li>Flexible sidebars</li>
+                        <li>Dynamic grids</li>
+                        <li>Adaptive spacing</li>
+                        <li>Fluid typography</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                🎯 <strong>Fun Fact:</strong> Most modern websites use Flexbox in 70%+ of their layout code!
+            </div>
+        </div>
+
+        <!-- Slide 17: Resources -->
+        <div class="slide">
+            <h1>📚 Resources</h1>
+            <h2>Continue Learning</h2>
+            <ul style="font-size: 1.2em;">
+                <li>
+                    <strong>🎮 Interactive Games:</strong>
+                    <ul>
+                        <li>Flexbox Froggy (flexboxfroggy.com)</li>
+                        <li>Flexbox Defense (flexboxdefense.com)</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>📖 Documentation:</strong>
+                    <ul>
+                        <li>MDN Flexbox Guide</li>
+                        <li>CSS-Tricks: A Complete Guide to Flexbox</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>🎥 Videos:</strong>
+                    <ul>
+                        <li>Wes Bos - What the Flexbox?!</li>
+                        <li>Kevin Powell - Flexbox tutorials</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>🛠️ Tools:</strong>
+                    <ul>
+                        <li>Flexbox Cheatsheet</li>
+                        <li>Flexbox Generator</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Slide 18: Key Takeaways -->
+        <div class="slide">
+            <h1>🎯 Key Takeaways</h1>
+            <div class="activity-box">
+                <h3>Remember These Core Concepts:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>✅ <strong>display: flex</strong> creates a flex container</li>
+                    <li>✅ Direct children become <strong>flex items</strong></li>
+                    <li>✅ Items flow in <strong>main axis</strong> direction</li>
+                    <li>✅ <strong>justify-content</strong> = main axis alignment</li>
+                    <li>✅ <strong>align-items</strong> = cross axis alignment</li>
+                    <li>✅ Items can <strong>grow</strong> and <strong>shrink</strong></li>
+                    <li>✅ Containers can be <strong>nested</strong></li>
+                    <li>✅ Use <strong>DevTools</strong> for debugging!</li>
+                </ul>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
+                💪 You now have the foundation to build modern layouts!
+            </p>
+        </div>
+
+        <!-- Slide 19: Homework -->
+        <div class="slide">
+            <h1>📝 Before Next Class</h1>
+            <div class="homework-reminder">
+                <h2>⚠️ IMPORTANT HOMEWORK</h2>
+                <p>Complete the next section of The Odin Project:</p>
+                <h2 style="font-size: 2.2em; margin: 20px 0;">
+                    "Flexbox - Growing and Shrinking"
+                </h2>
+            </div>
+            
+            <h2>This section covers:</h2>
+            <ul style="font-size: 1.2em;">
+                <li>📏 The <strong>flex shorthand</strong> property</li>
+                <li>📈 <strong>flex-grow</strong> in detail</li>
+                <li>📉 <strong>flex-shrink</strong> in detail</li>
+                <li>📐 <strong>flex-basis</strong> and sizing</li>
+                <li>🎯 Auto margins trick</li>
+                <li>💡 Advanced use cases</li>
+            </ul>
+            
+            <div class="tip-box">
+                💻 <strong>Practice with the examples</strong> - we'll build on this next class!
+            </div>
+        </div>
+
+        <!-- Slide 20: Thank You -->
+        <div class="slide">
+            <h1>Great Work Today! <span class="emoji">🚀</span></h1>
+            <p style="font-size: 1.5em; margin: 30px 0; text-align: center;">
+                You've taken your first steps into modern CSS layouts!
+            </p>
+            
+            <div class="activity-box">
+                <p style="font-size: 1.3em;">
+                    <strong>Remember:</strong> Flexbox will become one of your most-used tools.
+                </p>
+                <p style="font-size: 1.2em; margin-top: 15px;">
+                    Practice, experiment, and don't forget to inspect! 🔍
+                </p>
+            </div>
+            
+            <p style="margin-top: 40px; font-size: 1.3em; text-align: center;">
+                <strong>Next Class:</strong> Deep dive into Growing & Shrinking
+            </p>
+            
+            <p style="margin-top: 30px; text-align: center; font-size: 1.2em;">Questions?</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
+        </span>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    <script>
+        // Global changeSlide function for onclick handlers
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update total slides count
+            document.getElementById('totalSlides').textContent = totalSlides;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+        });
+    </script>
+</body>
+</html>
