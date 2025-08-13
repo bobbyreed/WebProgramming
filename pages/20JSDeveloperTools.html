@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Developer Tools - Day 20</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Theme</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="theme-slider"></span>
+        </label>
+    </div>
+
+    <!-- Home Button -->
+    <div class="home">
+        <a href="../index.html">🏠 Home</a>
+    </div>
+
+    <!-- Timer Display -->
+    <div class="timer-display" id="timerDisplay">00:00</div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1 style="text-align: center; font-size: 3em;">JavaScript Developer Tools <span class="emoji">🛠️</span></h1>
+            <h2 style="text-align: center;">Day 20: Debug Like a Pro</h2>
+            <p style="text-align: center; font-size: 1.5em; margin-top: 40px;">
+                Master the tools that will save you hours of debugging time
+            </p>
+            <div class="activity-box" style="margin-top: 50px;">
+                <p style="text-align: center; font-size: 1.3em;">
+                    <strong>Today's Focus:</strong> Browser DevTools for JavaScript Development
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <h1>Today's Agenda <span class="emoji">📋</span></h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>📝 Review Homework (Exercises 01-05)</li>
+                <li>🚀 Opening DevTools (3 ways)</li>
+                <li>🔍 DOM Inspection & Manipulation</li>
+                <li>🐛 JavaScript Debugging</li>
+                <li>🎯 Breakpoints & Step-through</li>
+                <li>💻 Console Overview</li>
+                <li>📱 Device Mode & Responsive Testing</li>
+                <li>🎨 CSS DevTools Features</li>
+            </ul>
+            <div class="activity-box" style="margin-top: 30px;">
+                <p><strong>Duration:</strong> ~45 minutes</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Homework Review -->
+        <div class="slide">
+            <h1>Homework Review <span class="emoji">✅</span></h1>
+            <h2>JavaScript Exercises Setup</h2>
+            <div class="activity-box">
+                <h3>What you accomplished:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>✅ Forked and cloned the javascript-exercises repo</li>
+                    <li>✅ Installed Jest testing framework</li>
+                    <li>✅ Set up local development environment</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <p><strong>Key Command:</strong></p>
+                <code>npm test exerciseName</code>
+            </div>
+        </div>
+
+        <!-- Slide 4: Exercise 01 - Hello World -->
+        <div class="slide">
+            <h1>Exercise 01: Hello World <span class="emoji">👋</span></h1>
+            <div class="code-example">
+                function helloWorld() {<br>
+                &nbsp;&nbsp;return "Hello, World!";<br>
+                }<br><br>
+                module.exports = helloWorld;
+            </div>
+            <div class="activity-box">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>✅ Basic function syntax</li>
+                    <li>✅ Return statements</li>
+                    <li>✅ Module exports</li>
+                    <li>✅ Running Jest tests</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: Exercise 02 - Add Numbers -->
+        <div class="slide">
+            <h1>Exercise 02: Add Numbers <span class="emoji">➕</span></h1>
+            <div class="code-example">
+                function addNumbers(a, b) {<br>
+                &nbsp;&nbsp;return a + b;<br>
+                }<br><br>
+                module.exports = addNumbers;
+            </div>
+            <div class="activity-box">
+                <h3>What we learned:</h3>
+                <ul>
+                    <li>✅ Function parameters</li>
+                    <li>✅ Mathematical operations</li>
+                    <li>✅ Type coercion awareness</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Exercise 03 - Number Checker -->
+        <div class="slide">
+            <h1>Exercise 03: Number Checker <span class="emoji">🔢</span></h1>
+            <div class="code-example">
+                function numberChecker(num) {<br>
+                &nbsp;&nbsp;if (num > 0) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return "positive";<br>
+                &nbsp;&nbsp;} else if (num < 0) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return "negative";<br>
+                &nbsp;&nbsp;} else {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return "zero";<br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                module.exports = numberChecker;
+            </div>
+            <div class="activity-box">
+                <p><strong>Conditionals in action!</strong> if/else if/else chains</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Exercise 04 & 05 -->
+        <div class="slide">
+            <h1>Exercises 04 & 05 <span class="emoji">🎯</span></h1>
+            <div class="two-column">
+                <div class="project-section">
+                    <h3>04: Math Equations</h3>
+                    <ul>
+                        <li>Multiple operations</li>
+                        <li>Order of operations</li>
+                        <li>Complex calculations</li>
+                    </ul>
+                </div>
+                <div class="project-section">
+                    <h3>05: Join Strings</h3>
+                    <ul>
+                        <li>String concatenation</li>
+                        <li>Template literals</li>
+                        <li>String methods</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Common Issue:</strong> Forgetting to export the function!</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Why DevTools Matter -->
+        <div class="slide">
+            <h1>Why DevTools? <span class="emoji">🤔</span></h1>
+            <h2>Your Swiss Army Knife for Web Development</h2>
+            <div class="activity-box">
+                <h3>Essential Skills:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>🐛 Debug JavaScript without console.log spam</li>
+                    <li>🎨 Test CSS changes in real-time</li>
+                    <li>📱 Test responsive designs instantly</li>
+                    <li>⚡ Analyze performance issues</li>
+                    <li>🔍 Inspect and modify the DOM</li>
+                    <li>📊 Monitor network requests</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> DevTools can save you HOURS of development time!
+            </div>
+        </div>
+
+        <!-- Slide 9: Opening DevTools -->
+        <div class="slide">
+            <h1>Opening DevTools <span class="emoji">🚀</span></h1>
+            <h2>Three Ways to Access</h2>
+            <div class="activity-box">
+                <h3>Method 1: Chrome Menu</h3>
+                <p>Menu → More Tools → Developer Tools</p>
+                
+                <h3>Method 2: Right-Click</h3>
+                <p>Right-click anywhere → Select "Inspect"</p>
+                
+                <h3>Method 3: Keyboard Shortcuts</h3>
+                <ul>
+                    <li><strong>Windows/Linux:</strong> F12 or Ctrl + Shift + C</li>
+                    <li><strong>Mac:</strong> Opt + Cmd + C</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <p><strong>Let's try it!</strong> Open DevTools using each method</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: DevTools Panels Overview -->
+        <div class="slide">
+            <h1>DevTools Panels <span class="emoji">🎛️</span></h1>
+            <div class="two-column">
+                <div class="project-section">
+                    <h3>Essential Panels:</h3>
+                    <ul>
+                        <li><strong>Elements:</strong> HTML & CSS</li>
+                        <li><strong>Console:</strong> JavaScript REPL</li>
+                        <li><strong>Sources:</strong> Debugging</li>
+                        <li><strong>Network:</strong> HTTP requests</li>
+                    </ul>
+                </div>
+                <div class="project-section">
+                    <h3>Advanced Panels:</h3>
+                    <ul>
+                        <li><strong>Performance:</strong> Speed analysis</li>
+                        <li><strong>Memory:</strong> Memory leaks</li>
+                        <li><strong>Application:</strong> Storage</li>
+                        <li><strong>Security:</strong> HTTPS info</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="activity-box">
+                <p style="text-align: center;"><strong>Today's Focus:</strong> Elements, Console, and Sources</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Elements Panel -->
+        <div class="slide">
+            <h1>Elements Panel <span class="emoji">🏗️</span></h1>
+            <h2>Inspect and Modify the DOM</h2>
+            <div class="demo-box">
+                <h3>Key Features:</h3>
+                <ul>
+                    <li>🔍 Inspect any element (hover to highlight)</li>
+                    <li>✏️ Edit HTML in real-time</li>
+                    <li>🎨 Modify CSS properties</li>
+                    <li>📦 View box model</li>
+                    <li>🎯 View computed styles</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>Try This:</h3>
+                <ol>
+                    <li>Right-click any element → Inspect</li>
+                    <li>Double-click text to edit</li>
+                    <li>Add/remove classes</li>
+                    <li>Toggle CSS properties on/off</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 12: CSS Features -->
+        <div class="slide">
+            <h1>CSS DevTools Features <span class="emoji">🎨</span></h1>
+            <div class="activity-box">
+                <h3>Powerful CSS Tools:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>✅ Toggle CSS classes on/off</li>
+                    <li>✅ Add pseudo-states (:hover, :active, :focus)</li>
+                    <li>✅ View properties alphabetically</li>
+                    <li>✅ Edit box model visually</li>
+                    <li>✅ Copy CSS selectors</li>
+                    <li>✅ Color picker for any color value</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                /* Try editing these live! */<br>
+                .element {<br>
+                &nbsp;&nbsp;color: #007bff; /* Click color to open picker */<br>
+                &nbsp;&nbsp;padding: 10px; /* Click & drag to adjust */<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 13: Console Panel -->
+        <div class="slide">
+            <h1>Console Panel <span class="emoji">💻</span></h1>
+            <h2>Your JavaScript Playground</h2>
+            <div class="code-example">
+                // Try these in the console:<br>
+                console.log("Hello DevTools!");<br>
+                console.warn("This is a warning");<br>
+                console.error("This is an error");<br>
+                console.table([{name: "Alice", age: 25}, {name: "Bob", age: 30}]);<br>
+                console.time("Timer");<br>
+                // ... some code ...<br>
+                console.timeEnd("Timer");
+            </div>
+            <div class="activity-box">
+                <h3>Console Methods:</h3>
+                <ul>
+                    <li><code>console.log()</code> - General output</li>
+                    <li><code>console.table()</code> - Display data in table</li>
+                    <li><code>console.clear()</code> - Clear console</li>
+                    <li><code>$_</code> - Last evaluated expression</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Live DOM Manipulation -->
+        <div class="slide">
+            <h1>Live DOM Manipulation <span class="emoji">🎭</span></h1>
+            <h2>Using Console to Change the Page</h2>
+            <div class="code-example">
+                // Select elements<br>
+                document.querySelector('h1');<br>
+                document.querySelectorAll('.button');<br><br>
+                
+                // Modify elements<br>
+                document.querySelector('h1').textContent = "Changed!";<br>
+                document.querySelector('h1').style.color = "red";<br><br>
+                
+                // Add new elements<br>
+                const newDiv = document.createElement('div');<br>
+                newDiv.textContent = "I'm new!";<br>
+                document.body.appendChild(newDiv);
+            </div>
+            <div class="demo-box">
+                <p><strong>Practice:</strong> Try changing this slide's title using the console!</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: JavaScript Debugging -->
+        <div class="slide">
+            <h1>JavaScript Debugging <span class="emoji">🐛</span></h1>
+            <h2>Sources Panel - Your Debug HQ</h2>
+            <div class="activity-box">
+                <h3>Debugging Workflow:</h3>
+                <ol style="font-size: 1.2em; line-height: 2;">
+                    <li>Open Sources panel</li>
+                    <li>Find your JavaScript file</li>
+                    <li>Set breakpoints (click line numbers)</li>
+                    <li>Reload page to hit breakpoint</li>
+                    <li>Step through code line by line</li>
+                    <li>Inspect variables in Scope panel</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>No more console.log debugging!</strong> Use breakpoints instead
+            </div>
+        </div>
+
+        <!-- Slide 16: Breakpoints -->
+        <div class="slide">
+            <h1>Breakpoints <span class="emoji">🎯</span></h1>
+            <h2>Pause Your Code Where You Need It</h2>
+            <div class="two-column">
+                <div class="project-section">
+                    <h3>Types of Breakpoints:</h3>
+                    <ul>
+                        <li>Line breakpoints</li>
+                        <li>Conditional breakpoints</li>
+                        <li>DOM breakpoints</li>
+                        <li>XHR/Fetch breakpoints</li>
+                        <li>Event listener breakpoints</li>
+                    </ul>
+                </div>
+                <div class="project-section">
+                    <h3>Debug Controls:</h3>
+                    <ul>
+                        <li>▶️ Resume execution</li>
+                        <li>⤵️ Step over</li>
+                        <li>⬇️ Step into</li>
+                        <li>⬆️ Step out</li>
+                        <li>🔄 Restart</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="code-example">
+                function calculate(x, y) {<br>
+                &nbsp;&nbsp;const sum = x + y; // Set breakpoint here<br>
+                &nbsp;&nbsp;const product = x * y;<br>
+                &nbsp;&nbsp;return { sum, product };<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 17: Watch & Scope -->
+        <div class="slide">
+            <h1>Watch & Scope <span class="emoji">👁️</span></h1>
+            <h2>Monitor Variables While Debugging</h2>
+            <div class="activity-box">
+                <h3>Scope Panel Shows:</h3>
+                <ul>
+                    <li><strong>Local:</strong> Current function variables</li>
+                    <li><strong>Closure:</strong> Variables from outer functions</li>
+                    <li><strong>Global:</strong> Window object properties</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>Watch Expressions:</h3>
+                <ul>
+                    <li>Add any JavaScript expression</li>
+                    <li>Updates as you step through code</li>
+                    <li>Great for tracking specific values</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <p><strong>Example:</strong> Watch <code>x + y</code> to see sum update</p>
+            </div>
+        </div>
+
+        <!-- Slide 18: Device Mode -->
+        <div class="slide">
+            <h1>Device Mode <span class="emoji">📱</span></h1>
+            <h2>Test Responsive Designs</h2>
+            <div class="activity-box">
+                <h3>Features:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>📱 Simulate any device (iPhone, iPad, Android)</li>
+                    <li>📐 Custom viewport sizes</li>
+                    <li>🔄 Rotate orientation</li>
+                    <li>🌐 Throttle network speed</li>
+                    <li>📸 Capture screenshots</li>
+                    <li>👆 Touch event simulation</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Shortcut:</strong> Ctrl/Cmd + Shift + M to toggle device mode
+            </div>
+        </div>
+
+        <!-- Slide 19: Common Debugging Scenarios -->
+        <div class="slide">
+            <h1>Common Debugging Scenarios <span class="emoji">🔧</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Problem</h3>
+                    <p><strong>"undefined is not a function"</strong></p>
+                    <p>Check spelling and scope</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution</h3>
+                    <p><strong>Use breakpoints to inspect</strong></p>
+                    <p>Check if function exists at that point</p>
+                </div>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Problem</h3>
+                    <p><strong>"Cannot read property of null"</strong></p>
+                    <p>Element doesn't exist yet</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution</h3>
+                    <p><strong>Check DOM timing</strong></p>
+                    <p>Use DOMContentLoaded or check element exists</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Performance Tips -->
+        <div class="slide">
+            <h1>DevTools Performance Tips <span class="emoji">⚡</span></h1>
+            <div class="activity-box">
+                <h3>Quick Wins:</h3>
+                <ul style="font-size: 1.2em; line-height: 2;">
+                    <li>🔍 Use <code>console.time()</code> to measure execution time</li>
+                    <li>📊 Network tab shows slow requests</li>
+                    <li>🎨 Rendering tab shows paint flashing</li>
+                    <li>💾 Memory tab identifies leaks</li>
+                    <li>⚡ Lighthouse for overall audit</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                console.time('fetchData');<br>
+                await fetch('/api/data');<br>
+                console.timeEnd('fetchData'); // Shows: fetchData: 234.56ms
+            </div>
+        </div>
+
+        <!-- Slide 21: Practice Exercises -->
+        <div class="slide">
+            <h1>Let's Practice! <span class="emoji">💪</span></h1>
+            <h2>DevTools Challenges</h2>
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Challenge 1: DOM Inspector</h3>
+                    <ul>
+                        <li>☐ Find and change a heading's text</li>
+                        <li>☐ Add a CSS class to an element</li>
+                        <li>☐ Change background color of a div</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Challenge 2: Console</h3>
+                    <ul>
+                        <li>☐ Select all buttons on page</li>
+                        <li>☐ Count number of links</li>
+                        <li>☐ Create and append new element</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Challenge 3: Debugging</h3>
+                    <ul>
+                        <li>☐ Set a breakpoint in your JS file</li>
+                        <li>☐ Step through function execution</li>
+                        <li>☐ Watch a variable change</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Resources -->
+        <div class="slide">
+            <h1>Resources & Next Steps <span class="emoji">📚</span></h1>
+            <div class="activity-box">
+                <h3>Chrome DevTools Documentation:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>📖 <strong>View and Change CSS</strong></li>
+                    <li>📖 <strong>CSS Features Reference</strong></li>
+                    <li>📖 <strong>Get Started With Viewing And Changing The DOM</strong></li>
+                    <li>📖 <strong>Debug JavaScript</strong></li>
+                    <li>📖 <strong>Pause Your Code With Breakpoints</strong></li>
+                    <li>📖 <strong>Console Overview</strong></li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> DevTools knowledge = Faster debugging = More time for building!
+            </div>
+        </div>
+
+        <!-- Slide 23: Summary -->
+        <div class="slide">
+            <h1>You're Now a DevTools User! <span class="emoji">🎉</span></h1>
+            <h2>Key Takeaways:</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Three ways to open DevTools</li>
+                <li>✅ Inspect and modify DOM/CSS live</li>
+                <li>✅ Use Console for JavaScript testing</li>
+                <li>✅ Debug with breakpoints, not console.log</li>
+                <li>✅ Test responsive designs with Device Mode</li>
+                <li>✅ Step through code execution</li>
+            </ul>
+            <div class="activity-box" style="margin-top: 30px;">
+                <p style="font-size: 1.3em;"><strong>Next Class:</strong> Functions and Scope Deep Dive!</p>
+            </div>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 30px;">Questions?</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">23</span>
+        </span>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    <script>
+        // Global changeSlide function for onclick handlers
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update total slides count
+            document.getElementById('totalSlides').textContent = totalSlides;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
+</body>
+</html>
