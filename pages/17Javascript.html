@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Introduction - Variables and Operators - CSCI 3403</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <style>
+        /* Lecture-specific styles */
+        .js-concept {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        
+        .variable-box {
+            display: inline-block;
+            background: var(--bg-accent);
+            border: 2px solid var(--ocu-true-blue);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        [data-theme="dark"] .variable-box {
+            border-color: var(--ocu-cyan);
+        }
+        
+        .operator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .operator-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border-left: 4px solid #4fc3f7;
+        }
+        
+        .console-output::before {
+            content: "> ";
+            color: #4fc3f7;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme toggle will be automatically added by JavaScript -->
+    
+    <div class="presentation-container">
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Class 17 - JavaScript Introduction
+                <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>JavaScript Foundations</h1>
+            <h2>Variables and Operators <span class="emoji">⚡</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 9, Class 17</p>
+            <p style="margin-top: auto; font-style: italic;">Time to make our websites interactive! 🚀</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🖥️ Run JavaScript code using an HTML file</li>
+                <li>📦 Declare variables with <code>let</code> and <code>const</code></li>
+                <li>🔢 Perform number operations</li>
+                <li>📝 Work with strings</li>
+                <li>⚙️ Use logical and mathematical operators</li>
+                <li>🛠️ Use the browser console for debugging</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Where We Are -->
+        <div class="slide">
+            <h1>Our Web Development Journey <span class="emoji">🗺️</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>✅ HTML</h3>
+                    <p>Structure & Content</p>
+                    <p style="font-size: 0.9em;">We built the skeleton</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>✅ CSS</h3>
+                    <p>Style & Design</p>
+                    <p style="font-size: 0.9em;">We made it beautiful</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>⚡ JavaScript</h3>
+                    <p>Behavior & Logic</p>
+                    <p style="font-size: 0.9em;"><strong>Today: Make it interactive!</strong></p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> JavaScript is the only actual programming language of the three!
+            </div>
+        </div>
+
+        <!-- Slide 4: What is JavaScript? -->
+        <div class="slide">
+            <h1>What Can JavaScript Do? <span class="emoji">✨</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Interactive Features</h3>
+                    <ul>
+                        <li>Respond to clicks</li>
+                        <li>Validate forms</li>
+                        <li>Create animations</li>
+                        <li>Update content dynamically</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Examples You Use Daily</h3>
+                    <ul>
+                        <li>Like buttons</li>
+                        <li>Image carousels</li>
+                        <li>Shopping carts</li>
+                        <li>Real-time updates</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="js-concept">
+                JavaScript brings your webpage to life! 🎭
+            </div>
+        </div>
+
+        <!-- Slide 5: Running JavaScript -->
+        <div class="slide">
+            <h1>How to Run JavaScript Code <span class="emoji">🏃‍♂️</span></h1>
+            <h2>Method 1: Inside HTML with &lt;script&gt; tags</h2>
+            <div class="code-example">
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>My First JS<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    
+    <span class="tag">&lt;script&gt;</span>
+        <span class="comment">// Your JavaScript goes here!</span>
+        console.log("Hello, World!");
+    <span class="tag">&lt;/script&gt;</span>
+    
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+            </div>
+            <div class="tip-box">
+                <strong>VS Code Tip:</strong> Type <code>!</code> + TAB to create HTML boilerplate instantly!
+            </div>
+        </div>
+
+        <!-- Slide 6: Opening the Console -->
+        <div class="slide">
+            <h1>The Browser Console <span class="emoji">🔍</span></h1>
+            <h2>Your JavaScript Command Center</h2>
+            <div class="activity-box">
+                <h3>Let's Open It Together!</h3>
+                <ol style="font-size: 1.2em; line-height: 1.8;">
+                    <li>Right-click on any webpage</li>
+                    <li>Click "Inspect" or "Inspect Element"</li>
+                    <li>Find and click the "Console" tab</li>
+                    <li>You should see our "Hello, World!" message!</li>
+                </ol>
+            </div>
+            <div class="console-output">
+                Hello, World!
+            </div>
+            <div class="tip-box">
+                <strong>Shortcut:</strong> Press <code>F12</code> or <code>Cmd+Option+J</code> (Mac) / <code>Ctrl+Shift+J</code> (Windows)
+            </div>
+        </div>
+
+        <!-- Slide 7: External JavaScript -->
+        <div class="slide">
+            <h1>Method 2: External JavaScript Files <span class="emoji">📁</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>HTML File (index.html)</h3>
+                    <div class="code-example">
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    
+    <span class="tag">&lt;script</span> <span class="attribute">src=</span><span class="value">"script.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+    
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                </div>
+                <div>
+                    <h3>JavaScript File (script.js)</h3>
+                    <div class="code-example">
+<span class="comment">// script.js</span>
+console.log("Hello from external file!");
+
+<span class="comment">// All your JavaScript code</span>
+<span class="comment">// goes in this .js file</span>
+                    </div>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Important:</strong> The <code>.js</code> extension is required!
+            </div>
+        </div>
+
+        <!-- Slide 8: Live Preview Extension -->
+        <div class="slide">
+            <h1>VS Code Live Preview <span class="emoji">🔄</span></h1>
+            <div class="demo-box">
+                <h3>No More Manual Refreshing!</h3>
+                <p>The Live Preview extension automatically updates your browser when you save.</p>
+            </div>
+            <div class="activity-box">
+                <h3>Quick Setup:</h3>
+                <ol>
+                    <li>Install "Live Preview" extension in VS Code</li>
+                    <li>Right-click your HTML file</li>
+                    <li>Select "Show Preview"</li>
+                    <li>Edit and save - watch it update instantly!</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                Let's try it together with our Hello World example!
+            </div>
+        </div>
+
+        <!-- Slide 9: Variables Introduction -->
+        <div class="slide">
+            <h1>Variables: Storage Containers <span class="emoji">📦</span></h1>
+            <h2>Think of variables as labeled boxes for your data</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <div class="variable-box">
+                    name = "John"
+                </div>
+                <div class="variable-box">
+                    age = 25
+                </div>
+                <div class="variable-box">
+                    isStudent = true
+                </div>
+            </div>
+            <div class="code-example">
+<span class="comment">// Declaring variables with let</span>
+let name = "John";
+let age = 25;
+let isStudent = true;
+
+console.log(name);     <span class="comment">// Output: John</span>
+console.log(age);      <span class="comment">// Output: 25</span>
+console.log(isStudent); <span class="comment">// Output: true</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: let vs const -->
+        <div class="slide">
+            <h1>Two Ways to Declare Variables <span class="emoji">🔄</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>let</h3>
+                    <p>Can be changed (reassigned)</p>
+                    <div class="code-example">
+let age = 25;
+age = 26; <span class="comment">// ✅ This works!</span>
+console.log(age); <span class="comment">// 26</span>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h3>const</h3>
+                    <p>Cannot be changed (constant)</p>
+                    <div class="code-example">
+const pi = 3.14;
+pi = 3; <span class="comment">// ❌ ERROR!</span>
+<span class="comment">// TypeError: Assignment to constant variable</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Best Practice:</strong> Use <code>const</code> by default, only use <code>let</code> when you need to reassign
+            </div>
+        </div>
+
+        <!-- Slide 11: Variable Reassignment -->
+        <div class="slide">
+            <h1>Reassigning Variables <span class="emoji">♻️</span></h1>
+            <div class="code-example">
+let score = 0;
+console.log(score); <span class="comment">// Output: 0</span>
+
+score = 10;        <span class="comment">// Note: no 'let' needed here!</span>
+console.log(score); <span class="comment">// Output: 10</span>
+
+score = score + 5;
+console.log(score); <span class="comment">// Output: 15</span>
+            </div>
+            <div class="warning-box">
+                <strong>Common Mistake:</strong> Don't use <code>let</code> when reassigning!
+                <div class="code-example">
+let name = "Alice";
+let name = "Bob"; <span class="comment">// ❌ ERROR: name already declared</span>
+name = "Bob";     <span class="comment">// ✅ Correct way</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: What about var? -->
+        <div class="slide">
+            <h1>The Old Way: var <span class="emoji">👴</span></h1>
+            <div class="code-example">
+<span class="comment">// The original way (pre-2015)</span>
+var oldSchool = "I'm old!";
+
+<span class="comment">// Modern JavaScript (ES6+)</span>
+let modern = "I'm new!";
+const newest = "I'm the newest!";
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ var</h3>
+                    <ul>
+                        <li>Has confusing scoping rules</li>
+                        <li>Can cause unexpected bugs</li>
+                        <li>Outdated - avoid using!</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ let & const</h3>
+                    <ul>
+                        <li>Clear, predictable behavior</li>
+                        <li>Modern best practices</li>
+                        <li>Use these instead!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Working with Numbers -->
+        <div class="slide">
+            <h1>Numbers in JavaScript <span class="emoji">🔢</span></h1>
+            <h2>Basic Math Operations</h2>
+            <div class="operator-grid">
+                <div class="operator-card">
+                    <strong>+</strong><br>Addition<br><code>5 + 3 = 8</code>
+                </div>
+                <div class="operator-card">
+                    <strong>-</strong><br>Subtraction<br><code>10 - 4 = 6</code>
+                </div>
+                <div class="operator-card">
+                    <strong>*</strong><br>Multiplication<br><code>3 * 7 = 21</code>
+                </div>
+                <div class="operator-card">
+                    <strong>/</strong><br>Division<br><code>20 / 4 = 5</code>
+                </div>
+                <div class="operator-card">
+                    <strong>%</strong><br>Remainder<br><code>10 % 3 = 1</code>
+                </div>
+                <div class="operator-card">
+                    <strong>**</strong><br>Exponent<br><code>2 ** 3 = 8</code>
+                </div>
+            </div>
+            <div class="code-example">
+console.log(23 + 97);              <span class="comment">// 120</span>
+console.log((4 + 6 + 9) / 77);     <span class="comment">// 0.24675...</span>
+            </div>
+        </div>
+
+        <!-- Slide 14: Order of Operations -->
+        <div class="slide">
+            <h1>Order of Operations (PEMDAS) <span class="emoji">📐</span></h1>
+            <h2>JavaScript follows mathematical rules!</h2>
+            <div class="code-example">
+<span class="comment">// Parentheses first, then multiplication, then addition</span>
+console.log(2 + 3 * 4);        <span class="comment">// 14 (not 20!)</span>
+console.log((2 + 3) * 4);      <span class="comment">// 20</span>
+
+<span class="comment">// Complex expression</span>
+console.log((3 + 2) - 76 * (1 + 1));  <span class="comment">// 5 - 152 = -147</span>
+            </div>
+            <div class="demo-box">
+                <h3>PEMDAS Reminder:</h3>
+                <ol>
+                    <li><strong>P</strong>arentheses</li>
+                    <li><strong>E</strong>xponents (**)</li>
+                    <li><strong>M</strong>ultiplication (*) & <strong>D</strong>ivision (/)</li>
+                    <li><strong>A</strong>ddition (+) & <strong>S</strong>ubtraction (-)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 15: Variables with Numbers -->
+        <div class="slide">
+            <h1>Using Variables with Math <span class="emoji">🧮</span></h1>
+            <div class="code-example">
+<span class="comment">// Store numbers in variables</span>
+let apples = 5;
+let oranges = 3;
+let totalFruit = apples + oranges;
+
+console.log(totalFruit);  <span class="comment">// 8</span>
+
+<span class="comment">// Update variables with calculations</span>
+let score = 100;
+score = score + 50;      <span class="comment">// Add 50 to current score</span>
+console.log(score);       <span class="comment">// 150</span>
+
+<span class="comment">// Using const for calculations</span>
+const taxRate = 0.08;
+const price = 100;
+const total = price + (price * taxRate);
+console.log(total);       <span class="comment">// 108</span>
+            </div>
+        </div>
+
+        <!-- Slide 16: Increment and Decrement -->
+        <div class="slide">
+            <h1>Increment & Decrement <span class="emoji">➕➖</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Long Way</h3>
+                    <div class="code-example">
+let count = 0;
+count = count + 1;  <span class="comment">// Add 1</span>
+count = count - 1;  <span class="comment">// Subtract 1</span>
+                    </div>
+                </div>
+                <div>
+                    <h3>Shortcut Way</h3>
+                    <div class="code-example">
+let count = 0;
+count++;  <span class="comment">// Add 1</span>
+count--;  <span class="comment">// Subtract 1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="code-example">
+<span class="comment">// Other shortcuts</span>
+let score = 10;
+score += 5;   <span class="comment">// Same as: score = score + 5</span>
+score -= 3;   <span class="comment">// Same as: score = score - 3</span>
+score *= 2;   <span class="comment">// Same as: score = score * 2</span>
+score /= 4;   <span class="comment">// Same as: score = score / 4</span>
+            </div>
+        </div>
+
+        <!-- Slide 17: Class Exercise Introduction -->
+        <div class="slide">
+            <h1>Let's Practice! <span class="emoji">💻</span></h1>
+            <h2>Hands-On Exercises</h2>
+            <div class="activity-box">
+                <h3>We'll work through these together:</h3>
+                <ol style="font-size: 1.1em; line-height: 1.8;">
+                    <li>Add 2 numbers and log the result</li>
+                    <li>Add 6 different numbers</li>
+                    <li>Calculate expressions with parentheses</li>
+                    <li>Create and reassign variables</li>
+                    <li>Work with constants</li>
+                    <li>Build a percentage calculator</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Setup:</strong> Create a new HTML file with a &lt;script&gt; tag, or use an external .js file
+            </div>
+        </div>
+
+        <!-- Slide 18: Exercise 1 -->
+        <div class="slide">
+            <h1>Exercise 1: Basic Addition <span class="emoji">➕</span></h1>
+            <div class="activity-box">
+                <h3>Task 1: Add Two Numbers</h3>
+                <p>In your script tag, type:</p>
+                <div class="code-example">
+console.log(23 + 97);
+                </div>
+                <p>Expected output:</p>
+                <div class="console-output">120</div>
+            </div>
+            <div class="activity-box">
+                <h3>Task 2: Add Six Numbers</h3>
+                <p>Try this:</p>
+                <div class="code-example">
+console.log(10 + 20 + 30 + 5 + 15 + 20);
+                </div>
+                <p>What do you get?</p>
+            </div>
+        </div>
+
+        <!-- Slide 19: Exercise 2 -->
+        <div class="slide">
+            <h1>Exercise 2: Complex Expressions <span class="emoji">🧮</span></h1>
+            <div class="activity-box">
+                <h3>Task 3: Division with Parentheses</h3>
+                <div class="code-example">
+console.log((4 + 6 + 9) / 77);
+                </div>
+                <div class="console-output">0.24675324675324675</div>
+            </div>
+            <div class="demo-box">
+                <h3>Let's trace through it:</h3>
+                <ol>
+                    <li>(4 + 6 + 9) = 19</li>
+                    <li>19 / 77 = 0.24675...</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                What happens if you remove the parentheses? Try it!
+            </div>
+        </div>
+
+        <!-- Slide 20: Exercise 3 -->
+        <div class="slide">
+            <h1>Exercise 3: Working with Variables <span class="emoji">📦</span></h1>
+            <div class="activity-box">
+                <h3>Follow Along:</h3>
+                <div class="code-example">
+<span class="comment">// Step 1: Declare a variable</span>
+let a = 10;
+console.log(a);  <span class="comment">// Should log: 10</span>
+
+<span class="comment">// Step 2: Reassign it</span>
+a = 25;
+console.log(a);  <span class="comment">// Should log: 25</span>
+
+<span class="comment">// Step 3: Use it in math</span>
+let b = 7 * a;
+console.log(b);  <span class="comment">// Should log: ?</span>
+                </div>
+            </div>
+            <div class="tip-box">
+                What is the value of b? Calculate it mentally first, then run the code!
+            </div>
+        </div>
+
+        <!-- Slide 21: Exercise 4 -->
+        <div class="slide">
+            <h1>Exercise 4: Percentage Calculator <span class="emoji">📊</span></h1>
+            <div class="activity-box">
+                <h3>Build a Grade Calculator:</h3>
+                <div class="code-example">
+<span class="comment">// Declare constants</span>
+const max = 57;
+const actual = max - 13;
+const percentage = actual / max;
+
+console.log("Maximum points: " + max);
+console.log("Actual points: " + actual);
+console.log("Percentage: " + percentage);
+                </div>
+            </div>
+            <div class="demo-box">
+                <h3>Expected Output:</h3>
+                <div class="console-output">Maximum points: 57</div>
+                <div class="console-output">Actual points: 44</div>
+                <div class="console-output">Percentage: 0.7719298245614035</div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Common Errors -->
+        <div class="slide">
+            <h1>Common Beginner Mistakes <span class="emoji">⚠️</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Wrong</h3>
+                    <div class="code-example">
+let name = "Alice";
+let name = "Bob";    <span class="comment">// ERROR!</span>
+
+const pi = 3.14;
+pi = 3.14159;        <span class="comment">// ERROR!</span>
+
+console.log(Score);  <span class="comment">// ERROR!</span>
+<span class="comment">// (variable names are case-sensitive)</span>
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Correct</h3>
+                    <div class="code-example">
+let name = "Alice";
+name = "Bob";        <span class="comment">// Good!</span>
+
+let pi = 3.14;
+pi = 3.14159;        <span class="comment">// Good!</span>
+
+console.log(score);  <span class="comment">// Good!</span>
+<span class="comment">// (consistent case)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23: String Operations Preview -->
+        <div class="slide">
+            <h1>Quick Preview: Strings <span class="emoji">📝</span></h1>
+            <p>We can also work with text (strings)!</p>
+            <div class="code-example">
+let firstName = "John";
+let lastName = "Doe";
+let fullName = firstName + " " + lastName;
+
+console.log(fullName);  <span class="comment">// "John Doe"</span>
+
+<span class="comment">// Combining strings and numbers</span>
+let age = 25;
+let message = "I am " + age + " years old";
+console.log(message);   <span class="comment">// "I am 25 years old"</span>
+            </div>
+            <div class="tip-box">
+                We'll explore strings in detail next class!
+            </div>
+        </div>
+
+        <!-- Slide 24: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Assignment <span class="emoji">📚</span></h1>
+            <div class="activity-box">
+                <h3>Complete the Practice Exercises</h3>
+                <p>Finish all the exercises from today's lesson:</p>
+                <ol>
+                    <li>Complete any unfinished in-class exercises</li>
+                    <li>Experiment with different number combinations</li>
+                    <li>Try creating your own calculator for something useful:
+                        <ul>
+                            <li>Tip calculator</li>
+                            <li>Age in days/hours/minutes</li>
+                            <li>Pizza slice calculator</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div class="warning-box">
+                <h3>Reading Assignment:</h3>
+                <ul>
+                    <li>JavaScript.info - Variables</li>
+                    <li>MDN - JavaScript Math</li>
+                    <li>W3Schools - JavaScript Operators</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 25: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h2>You Can Now:</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Run JavaScript in the browser</li>
+                <li>✅ Use the console for debugging</li>
+                <li>✅ Declare variables with <code>let</code> and <code>const</code></li>
+                <li>✅ Perform mathematical operations</li>
+                <li>✅ Reassign variables when needed</li>
+                <li>✅ Understand operator precedence</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Next Class:</strong> Strings, conditionals, and more complex data types!</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+            </span>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+
+    <!-- Lecture-Specific JavaScript -->
+    <script>
+        // Add any lecture-specific interactions here
+        document.addEventListener('slidechange', (e) => {
+            // You could add specific behaviors for certain slides
+            if (e.detail.currentSlide === 5) {
+                console.log("Welcome to the console slide!");
+            }
+        });
+    </script>
+</body>
+
+</html>
