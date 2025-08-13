@@ -405,12 +405,11 @@
     </div>
     
     <script src="../js/auth.js"></script>
+javascript<script src="./js/auth.js"></script>
 <script>
-    //Leaderboard Data Fetching
-    const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f'; 
-    const GITHUB_TOKEN = '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';
+    // Real Leaderboard Data Fetching - NO TOKEN NEEDED FOR PUBLIC READS!
+    const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
     const API_BASE = 'https://api.github.com/gists';
-
     
     async function fetchRealLeaderboard() {
         try {
@@ -422,26 +421,43 @@
                 </div>
             `;
             
-            // Fetch master config with authentication
-        const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`, {
-                headers: {
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Authorization': `token ${GITHUB_TOKEN}`
-                }
-            });
+            // Fetch master config - NO AUTH NEEDED for public gists!
+            const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
+            
+            if (!masterResponse.ok) {
+                throw new Error(`Failed to fetch config: ${masterResponse.status}`);
+            }
+            
             const masterGist = await masterResponse.json();
+            
+            if (!masterGist.files || !masterGist.files['csci3403-config.json']) {
+                throw new Error('Config file not found');
+            }
+            
             const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
             
-            // Fetch all student data in parallel
+            if (!config.students || Object.keys(config.students).length === 0) {
+                console.log('No students enrolled yet');
+                return [];
+            }
+            
+            // Fetch all student data in parallel - NO AUTH NEEDED for public reads!
             const studentPromises = Object.entries(config.students).map(async ([studentId, gistId]) => {
                 try {
-                    const response = await fetch(`${API_BASE}/${MASTER_GIST_ID}`, {
-                headers: {
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Authorization': `token ${GITHUB_TOKEN}`
-                }
-            });
+                    const response = await fetch(`${API_BASE}/${gistId}`);
+                    
+                    if (!response.ok) {
+                        console.error(`Failed to fetch data for ${studentId}: ${response.status}`);
+                        throw new Error(`Failed to fetch student ${studentId}`);
+                    }
+                    
                     const gist = await response.json();
+                    
+                    if (!gist.files || !gist.files['student-data.json']) {
+                        console.error(`No data file for ${studentId}`);
+                        throw new Error(`No data file for ${studentId}`);
+                    }
+                    
                     const data = JSON.parse(gist.files['student-data.json'].content);
                     
                     // Calculate engagement score for secondary sorting
@@ -492,7 +508,16 @@
             document.getElementById('leaderboard-list').innerHTML = `
                 <div style="text-align: center; padding: 40px; color: var(--error-color);">
                     <div style="font-size: 2em;">⚠️</div>
-                    <div>Error loading leaderboard. Please try again later.</div>
+                    <div>Error loading leaderboard: ${error.message}</div>
+                    <button onclick="location.reload()" style="
+                        margin-top: 20px;
+                        padding: 10px 20px;
+                        background: var(--ocu-true-blue);
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    ">Retry</button>
                 </div>
             `;
             return [];
@@ -512,17 +537,23 @@
         score += (data.streak || 0) * 3;
         
         // Bonus for recent activity (within 24 hours)
-        const lastActive = new Date(data.lastActive);
-        const now = new Date();
-        const hoursSinceActive = (now - lastActive) / (1000 * 60 * 60);
-        if (hoursSinceActive < 24) {
-            score += 10;
+        if (data.lastActive) {
+            const lastActive = new Date(data.lastActive);
+            const now = new Date();
+            const hoursSinceActive = (now - lastActive) / (1000 * 60 * 60);
+            if (hoursSinceActive < 24) {
+                score += 10;
+            }
         }
         
         return score;
     }
     
     function getActivitySummary(student) {
+        if (!student.lastActive) {
+            return '🆕 New student';
+        }
+        
         // Generate a fun status message based on their activity
         const hoursSinceActive = (new Date() - new Date(student.lastActive)) / (1000 * 60 * 60);
         
@@ -664,7 +695,6 @@
         
         // Update stat card colors based on performance
         if (userIndex >= 0) {
-            const userPoints = students[userIndex].points;
             const rankCard = document.querySelector('#your-rank').parentElement;
             
             if (userIndex === 0) {
