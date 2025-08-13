@@ -1,21 +1,16 @@
 class SimpleGistAuth {
     constructor() {
-        //this bit below sets up the framerate for the gpu clocker device
+        // Master gist ID - this is PUBLIC so it's safe to have here
         this.MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
+        
+        // GitHub API base (for PUBLIC reads only)
         this.API_BASE = 'https://api.github.com/gists';
-        //gpu address on local computer hashed with salt and pepper
-        this.GITHUB_TOKEN = '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';
+        
+        // Netlify function endpoint (for PRIVATE writes)
+        this.FUNCTION_URL = '/.netlify/functions/update-points';
         
         // Check if already authenticated
         this.checkAuthStatus();
-    }
-    
-    // Helper method to get headers with auth
-    getHeaders() {
-        return {
-            'Accept': 'application/vnd.github.v3+json',
-            'Authorization': `token ${this.GITHUB_TOKEN}` // Include token in ALL requests
-        };
     }
     
     checkAuthStatus() {
@@ -32,18 +27,15 @@ class SimpleGistAuth {
     
     async authenticate(studentId, pin) {
         try {
-            // Fetch master config WITH AUTHENTICATION
-            const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`, {
-                headers: this.getHeaders() // Add auth headers!
-            });
+            // READ master config - No token needed for public gists!
+            const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
             
             if (!response.ok) {
-                throw new Error(`GitHub API error: ${response.status}`);
+                throw new Error(`Failed to fetch config: ${response.status}`);
             }
             
             const gist = await response.json();
             
-            // Better error handling
             if (!gist.files || !gist.files['csci3403-config.json']) {
                 throw new Error('Config file not found in gist');
             }
@@ -66,27 +58,24 @@ class SimpleGistAuth {
             this.currentStudent = authData;
             
             // Check if student has a gist, create if not
-            if (!config.students[studentId]) {
+            if (!config.students || !config.students[studentId]) {
                 console.log('New student! Creating gist...');
                 await this.createStudentGist(studentId);
             } else {
                 console.log('Welcome back! Loading your data...');
+                this.studentGistId = config.students[studentId];
                 await this.loadStudentGist(studentId);
             }
             
             return true;
+            
         } catch (error) {
             console.error('Authentication failed:', error);
             
-            // More helpful error messages
-            if (error.message.includes('403')) {
-                alert('GitHub API access denied. Please check that the token is set correctly in auth.js');
-            } else if (error.message.includes('404')) {
-                alert('Master gist not found. Please check the MASTER_GIST_ID in auth.js');
-            } else if (error.message === 'Invalid PIN') {
+            if (error.message === 'Invalid PIN') {
                 alert('Invalid PIN. Please try again.');
             } else {
-                alert('Authentication error: ' + error.message);
+                alert('Authentication error. Please try again.');
             }
             
             return false;
@@ -114,56 +103,59 @@ class SimpleGistAuth {
         };
         
         try {
-            // Create the student's gist
-            const response = await fetch(this.API_BASE, {
+            // CREATE gist through Netlify function (secure!)
+            const response = await fetch(this.FUNCTION_URL, {
                 method: 'POST',
-                headers: this.getHeaders(),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
-                    description: `CSCI 3403 - Student Data - ${studentId}`,
-                    public: false,
-                    files: {
-                        'student-data.json': {
-                            content: JSON.stringify(studentData, null, 2)
-                        }
-                    }
+                    action: 'createGist',
+                    studentId: studentId,
+                    updateData: studentData
                 })
             });
             
             if (!response.ok) {
-                throw new Error(`Failed to create gist: ${response.status}`);
+                throw new Error('Failed to create gist');
             }
             
             const newGist = await response.json();
+            this.studentGistId = newGist.id;
             
-            // Update master config with new student's gist ID
+            // Update master config with new student
             await this.updateMasterConfig(studentId, newGist.id);
             
             // Store locally
             localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
             this.currentProgress = studentData;
             
-            console.log('Student gist created successfully!');
-            alert('Welcome to CSCI 3403! You earned 10 points for joining!');
+            // Update UI
+            this.updatePointsDisplay(studentData.points);
+            
+            // Show welcome message
+            this.showPointsNotification(10, 'Welcome to CSCI 3403!');
+            
             return studentData;
             
         } catch (error) {
             console.error('Error creating student gist:', error);
+            
             // Fallback to local storage only
             localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
             this.currentProgress = studentData;
+            alert('Created local profile. Contact instructor if issues persist.');
             return studentData;
         }
     }
     
     async loadStudentGist(studentId) {
         try {
-            // Get the master config first WITH AUTH
-            const masterResponse = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`, {
-                headers: this.getHeaders()
-            });
+            // First, get the gist ID from master config (PUBLIC read)
+            const masterResponse = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
             
             if (!masterResponse.ok) {
-                throw new Error(`Failed to fetch master gist: ${masterResponse.status}`);
+                throw new Error('Failed to fetch master config');
             }
             
             const masterGist = await masterResponse.json();
@@ -175,77 +167,87 @@ class SimpleGistAuth {
                 return null;
             }
             
-            // Fetch the student's gist WITH AUTH
-            const response = await fetch(`${this.API_BASE}/${gistId}`, {
-                headers: this.getHeaders()
-            });
+            this.studentGistId = gistId;
+            
+            // READ student gist (public read, no token needed)
+            const response = await fetch(`${this.API_BASE}/${gistId}`);
             
             if (!response.ok) {
-                throw new Error(`Failed to fetch student gist: ${response.status}`);
+                throw new Error('Failed to fetch student data');
             }
             
             const gist = await response.json();
             const studentData = JSON.parse(gist.files['student-data.json'].content);
             
-            // Update last active
+            // Calculate streak
             const now = new Date();
             const lastActive = new Date(studentData.lastActive);
             const hoursSinceActive = (now - lastActive) / (1000 * 60 * 60);
             
-            // Check if this is a new day since last active
             if (lastActive.toDateString() !== now.toDateString() && hoursSinceActive < 48) {
                 studentData.streak = (studentData.streak || 0) + 1;
+                console.log('Streak increased to:', studentData.streak);
             } else if (hoursSinceActive > 48) {
-                studentData.streak = 1; // Reset streak
+                studentData.streak = 1;
+                console.log('Streak reset');
             }
             
+            // Update last active
             studentData.lastActive = now.toISOString();
             
-            // Store locally and in memory
+            // Store locally
             localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
             this.currentProgress = studentData;
-            this.studentGistId = gistId;
             
-            // Update UI with points
+            // Update UI
             this.updatePointsDisplay(studentData.points);
             
-            // Update the gist with new last active time and streak
+            // Update the gist with new activity time (through Netlify)
             await this.updateStudentData(studentData);
             
             return studentData;
             
         } catch (error) {
             console.error('Error loading student gist:', error);
+            
             // Fallback to local storage
             const localData = localStorage.getItem(`student_${studentId}`);
-            return localData ? JSON.parse(localData) : null;
+            if (localData) {
+                this.currentProgress = JSON.parse(localData);
+                this.updatePointsDisplay(this.currentProgress.points);
+                return this.currentProgress;
+            }
+            return null;
         }
     }
     
     async updateStudentData(updates) {
-        if (!this.currentStudent || !this.studentGistId) return;
+        if (!this.currentStudent || !this.studentGistId) {
+            console.error('No student data to update');
+            return false;
+        }
         
-        const studentData = this.currentProgress;
-        
-        // Merge updates
-        Object.assign(studentData, updates);
+        // Merge updates with current data
+        const studentData = { ...this.currentProgress, ...updates };
         studentData.lastActive = new Date().toISOString();
         
         try {
-            const response = await fetch(`${this.API_BASE}/${this.studentGistId}`, {
-                method: 'PATCH',
-                headers: this.getHeaders(),
+            // UPDATE through Netlify function (secure!)
+            const response = await fetch(this.FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
-                    files: {
-                        'student-data.json': {
-                            content: JSON.stringify(studentData, null, 2)
-                        }
-                    }
+                    action: 'updateStudent',
+                    studentId: this.currentStudent.studentId,
+                    gistId: this.studentGistId,
+                    updateData: studentData
                 })
             });
             
             if (!response.ok) {
-                throw new Error(`Failed to update gist: ${response.status}`);
+                throw new Error('Failed to update gist');
             }
             
             // Update local storage
@@ -255,23 +257,55 @@ class SimpleGistAuth {
             // Update UI
             this.updatePointsDisplay(studentData.points);
             
-            console.log('Student data updated!');
+            console.log('Student data updated successfully');
             return true;
             
         } catch (error) {
             console.error('Error updating gist:', error);
-            // Still update locally
+            
+            // Still update locally even if server fails
             localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(studentData));
+            this.currentProgress = studentData;
+            this.updatePointsDisplay(studentData.points);
+            
             return false;
+        }
+    }
+    
+    async updateMasterConfig(studentId, gistId) {
+        try {
+            // UPDATE master config through Netlify function
+            const response = await fetch(this.FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'updateMaster',
+                    studentId: studentId,
+                    gistId: gistId,
+                    masterGistId: this.MASTER_GIST_ID
+                })
+            });
+            
+            if (!response.ok) {
+                console.error('Failed to update master config');
+            } else {
+                console.log('Master config updated with new student');
+            }
+            
+        } catch (error) {
+            console.error('Error updating master config:', error);
         }
     }
     
     async awardPoints(points, reason) {
         if (!this.currentProgress) {
             console.error('No student data loaded');
-            return;
+            return false;
         }
         
+        // Create activity record
         const activity = {
             type: 'points_awarded',
             points: points,
@@ -279,22 +313,72 @@ class SimpleGistAuth {
             timestamp: new Date().toISOString()
         };
         
+        // Update points
         this.currentProgress.points += points;
+        
+        // Add activity to history
         if (!this.currentProgress.activities) {
             this.currentProgress.activities = [];
         }
         this.currentProgress.activities.push(activity);
         
+        // Save updates
+        const success = await this.updateStudentData(this.currentProgress);
+        
+        if (success) {
+            // Show notification
+            this.showPointsNotification(points, reason);
+            console.log(`Awarded ${points} points for: ${reason}`);
+        }
+        
+        return success;
+    }
+    
+    async trackLectureView(lectureNumber, lectureTitle) {
+        if (!this.currentProgress) return;
+        
+        const now = new Date().toISOString();
+        let pointsAwarded = 0;
+        
+        // Check if first time viewing this lecture
+        if (!this.currentProgress.viewedLectures[lectureNumber]) {
+            this.currentProgress.viewedLectures[lectureNumber] = {
+                title: lectureTitle,
+                firstViewed: now,
+                views: 1
+            };
+            pointsAwarded = 2; // Points for first view
+            
+            // Add activity
+            if (!this.currentProgress.activities) {
+                this.currentProgress.activities = [];
+            }
+            this.currentProgress.activities.push({
+                type: 'lecture_viewed',
+                lectureNumber: lectureNumber,
+                points: pointsAwarded,
+                timestamp: now,
+                description: `First view of Lecture ${lectureNumber}: ${lectureTitle}`
+            });
+            
+            this.currentProgress.points += pointsAwarded;
+            
+        } else {
+            // Increment view count
+            this.currentProgress.viewedLectures[lectureNumber].views++;
+            this.currentProgress.viewedLectures[lectureNumber].lastViewed = now;
+        }
+        
+        // Update gist
         await this.updateStudentData(this.currentProgress);
         
-        // Show notification
-        this.showPointsNotification(points, reason);
-        
-        console.log(`Awarded ${points} points for: ${reason}`);
+        if (pointsAwarded > 0) {
+            this.showPointsNotification(pointsAwarded, `Viewed Lecture ${lectureNumber}`);
+        }
     }
     
     showPointsNotification(points, reason) {
-        // Create a fun notification
+        // Create notification element
         const notification = document.createElement('div');
         notification.className = 'points-notification';
         notification.innerHTML = `
@@ -307,55 +391,12 @@ class SimpleGistAuth {
         setTimeout(() => notification.remove(), 3000);
     }
     
-    async updateMasterConfig(studentId, gistId) {
-        try {
-            // Get current config WITH AUTH
-            const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`, {
-                headers: this.getHeaders()
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Failed to fetch master config: ${response.status}`);
-            }
-            
-            const gist = await response.json();
-            const config = JSON.parse(gist.files['csci3403-config.json'].content);
-            
-            // Add new student
-            if (!config.students) {
-                config.students = {};
-            }
-            config.students[studentId] = gistId;
-            config.lastUpdated = new Date().toISOString();
-            
-            // Update master gist
-            const updateResponse = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`, {
-                method: 'PATCH',
-                headers: this.getHeaders(),
-                body: JSON.stringify({
-                    files: {
-                        'csci3403-config.json': {
-                            content: JSON.stringify(config, null, 2)
-                        }
-                    }
-                })
-            });
-            
-            if (!updateResponse.ok) {
-                throw new Error(`Failed to update master config: ${updateResponse.status}`);
-            }
-            
-            console.log('Master config updated with new student');
-        } catch (error) {
-            console.error('Error updating master config:', error);
-        }
-    }
-    
     updateUIForAuthenticated() {
-        // Hide login, show user info
+        // Hide login form
         const loginEl = document.getElementById('auth-section');
         if (loginEl) loginEl.style.display = 'none';
         
+        // Show user info
         const userEl = document.getElementById('user-info');
         if (userEl) {
             userEl.style.display = 'block';
@@ -382,6 +423,7 @@ class SimpleGistAuth {
     
     logout() {
         localStorage.removeItem('csci3403_auth');
+        localStorage.removeItem(`student_${this.currentStudent.studentId}`);
         location.reload();
     }
 }
@@ -392,4 +434,4 @@ document.addEventListener('DOMContentLoaded', () => {
     auth = new SimpleGistAuth();
 });
 
-console.log('Auth.js loaded successfully!');
+console.log('Auth.js loaded successfully - Netlify secure version');
