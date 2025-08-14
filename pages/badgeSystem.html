@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement Badge System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .points-display {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .points-value {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .points-label {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-reset {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .badges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge.locked {
+            opacity: 0.6;
+            filter: grayscale(0.8);
+        }
+
+        .badge.unlocked {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .badge.unlocked:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            position: relative;
+        }
+
+        .badge.locked .badge-icon {
+            background: #e0e0e0;
+        }
+
+        .badge.unlocked .badge-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        .badge-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .badge-requirement {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .badge-status {
+            font-size: 0.85em;
+            font-weight: 600;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .badge.locked .badge-status {
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .badge.unlocked .badge-status {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .unlock-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: unlockPop 0.5s ease;
+        }
+
+        @keyframes unlockPop {
+            0% { 
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .unlock-content {
+            text-align: center;
+        }
+
+        .unlock-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .unlock-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .unlock-subtitle {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Achievement System</h1>
+            <p>Earn badges as you accumulate points!</p>
+        </div>
+
+        <div class="points-display">
+            <div class="points-value" id="points">0</div>
+            <div class="points-label">Total Points</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="controls">
+                <button class="btn btn-add" onclick="addPoints(10)">+10 Points</button>
+                <button class="btn btn-add" onclick="addPoints(50)">+50 Points</button>
+                <button class="btn btn-add" onclick="addPoints(100)">+100 Points</button>
+                <button class="btn btn-reset" onclick="resetPoints()">Reset All</button>
+            </div>
+        </div>
+
+        <div class="badges-container" id="badgesContainer"></div>
+    </div>
+
+    <script>
+        // Badge definitions with milestones
+        const badges = [
+            { id: 1, name: "Starter", icon: "🌟", points: 10, color: "#4CAF50" },
+            { id: 2, name: "Rising Star", icon: "⭐", points: 50, color: "#2196F3" },
+            { id: 3, name: "Achiever", icon: "🎯", points: 100, color: "#FF9800" },
+            { id: 4, name: "Expert", icon: "💎", points: 250, color: "#9C27B0" },
+            { id: 5, name: "Master", icon: "🏅", points: 500, color: "#F44336" },
+            { id: 6, name: "Champion", icon: "🏆", points: 1000, color: "#FFD700" },
+            { id: 7, name: "Elite", icon: "👑", points: 2500, color: "#00BCD4" },
+            { id: 8, name: "Legend", icon: "🌠", points: 5000, color: "#E91E63" },
+            { id: 9, name: "Mythic", icon: "🔥", points: 10000, color: "#FF5722" },
+            { id: 10, name: "Immortal", icon: "⚡", points: 25000, color: "#795548" }
+        ];
+
+        let currentPoints = 0;
+        let unlockedBadges = new Set();
+
+        // Initialize the system
+        function init() {
+            loadProgress();
+            renderBadges();
+            updatePointsDisplay();
+        }
+
+        // Render all badges
+        function renderBadges() {
+            const container = document.getElementById('badgesContainer');
+            container.innerHTML = '';
+
+            badges.forEach(badge => {
+                const isUnlocked = unlockedBadges.has(badge.id);
+                const badgeEl = document.createElement('div');
+                badgeEl.className = `badge ${isUnlocked ? 'unlocked' : 'locked'}`;
+                badgeEl.innerHTML = `
+                    <div class="badge-icon" style="${isUnlocked ? `color: white;` : ''}">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                    <div class="badge-requirement">${badge.points.toLocaleString()} points</div>
+                    <div class="badge-status">${isUnlocked ? 'UNLOCKED' : 'LOCKED'}</div>
+                `;
+                container.appendChild(badgeEl);
+            });
+        }
+
+        // Add points and check for new badges
+        function addPoints(amount) {
+            const previousPoints = currentPoints;
+            currentPoints += amount;
+            
+            // Check for newly unlocked badges
+            const newlyUnlocked = [];
+            badges.forEach(badge => {
+                if (currentPoints >= badge.points && previousPoints < badge.points && !unlockedBadges.has(badge.id)) {
+                    unlockedBadges.add(badge.id);
+                    newlyUnlocked.push(badge);
+                }
+            });
+
+            // Show unlock animations
+            if (newlyUnlocked.length > 0) {
+                newlyUnlocked.forEach((badge, index) => {
+                    setTimeout(() => showUnlockAnimation(badge), index * 500);
+                });
+            }
+
+            updatePointsDisplay();
+            renderBadges();
+            saveProgress();
+        }
+
+        // Show unlock animation
+        function showUnlockAnimation(badge) {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            
+            const animation = document.createElement('div');
+            animation.className = 'unlock-animation';
+            animation.innerHTML = `
+                <div class="unlock-content">
+                    <div class="unlock-icon">${badge.icon}</div>
+                    <div class="unlock-title">Badge Unlocked!</div>
+                    <div class="unlock-subtitle">${badge.name}</div>
+                </div>
+            `;
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(animation);
+
+            setTimeout(() => {
+                overlay.remove();
+                animation.remove();
+            }, 2000);
+        }
+
+        // Update points display
+        function updatePointsDisplay() {
+            document.getElementById('points').textContent = currentPoints.toLocaleString();
+            
+            // Update progress bar (progress to next badge)
+            const nextBadge = badges.find(b => b.points > currentPoints);
+            if (nextBadge) {
+                const prevBadge = badges.filter(b => b.points <= currentPoints).pop();
+                const prevPoints = prevBadge ? prevBadge.points : 0;
+                const progress = ((currentPoints - prevPoints) / (nextBadge.points - prevPoints)) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+            } else {
+                document.getElementById('progressBar').style.width = '100%';
+            }
+        }
+
+        // Reset all progress
+        function resetPoints() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                currentPoints = 0;
+                unlockedBadges.clear();
+                updatePointsDisplay();
+                renderBadges();
+                saveProgress();
+            }
+        }
+
+        // Save progress (using session storage since localStorage isn't available)
+        function saveProgress() {
+            const data = {
+                points: currentPoints,
+                badges: Array.from(unlockedBadges)
+            };
+            // Store in memory for this session
+            window.achievementData = data;
+        }
+
+        // Load progress
+        function loadProgress() {
+            if (window.achievementData) {
+                currentPoints = window.achievementData.points || 0;
+                unlockedBadges = new Set(window.achievementData.badges || []);
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

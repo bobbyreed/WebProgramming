@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CSCI 3403</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <style>
+        /* OCU Brand Colors - Matching your existing style */
+        :root {
+            --ocu-black: #000000;
+            --ocu-true-blue: #00669b;
+            --ocu-white: #ffffff;
+            --ocu-dark-blue: #043d5d;
+            --ocu-cyan: #009edb;
+            --ocu-light-blue: #9ddcf9;
+            --ocu-green: #70bf54;
+            --ocu-light-green: #afd46c;
+            --ocu-yellow: #ffc222;
+            
+            /* Light mode (default) */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #000000;
+            --text-secondary: #043d5d;
+            --text-muted: #666666;
+            --card-bg: #ffffff;
+            --gradient-start: #00669b;
+            --gradient-end: #009edb;
+            --shadow: rgba(0, 102, 155, 0.2);
+            --link-color: #00669b;
+            --link-hover: #043d5d;
+            --border-color: #009edb;
+            --success-bg: #e8f7e3;
+            --success-border: #70bf54;
+            --warning-bg: #fff8e5;
+            --warning-border: #ffc222;
+            --danger-bg: #ffe8e8;
+            --danger-border: #ff5555;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ddcf9;
+            --text-muted: #aaaaaa;
+            --card-bg: #1a1a1a;
+            --gradient-start: #043d5d;
+            --gradient-end: #00669b;
+            --shadow: rgba(0, 158, 219, 0.3);
+            --link-color: #009edb;
+            --link-hover: #9ddcf9;
+            --border-color: #00669b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 20px;
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-title {
+            font-size: 2em;
+            background: linear-gradient(120deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--gradient-start);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--ocu-dark-blue);
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 968px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+        
+        .card-title {
+            font-size: 1.4em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Student List */
+        .student-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border-left: 4px solid var(--ocu-cyan);
+            transition: transform 0.2s ease;
+        }
+        
+        .student-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .student-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .student-id {
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+        
+        .student-stats {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .points-display {
+            background: linear-gradient(135deg, var(--ocu-green), var(--ocu-light-green));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .quick-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .add-points {
+            background: var(--ocu-green);
+            color: white;
+        }
+        
+        .add-points:hover {
+            background: var(--ocu-light-green);
+            transform: scale(1.05);
+        }
+        
+        .remove-points {
+            background: var(--warning-border);
+            color: white;
+        }
+        
+        .remove-points:hover {
+            background: #e6a61f;
+            transform: scale(1.05);
+        }
+        
+        /* Stats Panel */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--ocu-cyan);
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+        
+        /* Control Panel */
+        .control-section {
+            margin-bottom: 25px;
+        }
+        
+        .control-title {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            background: var(--ocu-true-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+        
+        .control-btn:hover {
+            background: var(--ocu-dark-blue);
+        }
+        
+        .control-btn.danger {
+            background: #ff5555;
+        }
+        
+        .control-btn.danger:hover {
+            background: #cc3333;
+        }
+        
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--ocu-cyan);
+            box-shadow: 0 0 0 3px rgba(0, 158, 219, 0.1);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        /* Activity Feed */
+        .activity-feed {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border-left: 3px solid var(--ocu-cyan);
+            font-size: 0.95em;
+        }
+        
+        .activity-time {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+        
+        /* Points Animation */
+        .points-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--ocu-green), var(--ocu-light-green));
+            color: white;
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000;
+            text-align: center;
+            animation: pointsPop 3s ease-out forwards;
+        }
+        
+        @keyframes pointsPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                transform: translate(-50%, -200%) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--bg-secondary);
+            border-top: 3px solid var(--ocu-cyan);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <h1 class="admin-title">🎓 Admin Panel - CSCI 3403</h1>
+        <div class="admin-controls">
+            <span id="admin-name">Prof. Reed</span>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Student Management Section -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span>👥</span> Student Management
+                </h2>
+                
+                <!-- Search Bar -->
+                <input type="text" class="search-bar" id="studentSearch" 
+                       placeholder="Search students by name or ID...">
+                
+                <!-- Student List -->
+                <div class="student-list" id="studentList">
+                    <!-- Students will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Right Panel -->
+            <div>
+                <!-- Class Statistics -->
+                <div class="card" style="margin-bottom: 30px;">
+                    <h2 class="card-title">
+                        <span>📊</span> Class Statistics
+                    </h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalStudents">0</div>
+                            <div class="stat-label">Total Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgPoints">0</div>
+                            <div class="stat-label">Average Points</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="activeToday">0</div>
+                            <div class="stat-label">Active Today</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalPoints">0</div>
+                            <div class="stat-label">Total Points</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Controls -->
+                <div class="card" style="margin-bottom: 30px;">
+                    <h2 class="card-title">
+                        <span>⚡</span> Quick Actions
+                    </h2>
+                    
+                    <div class="control-section">
+                        <div class="control-title">Bulk Actions</div>
+                        <div class="control-buttons">
+                            <button class="control-btn" onclick="bulkAddPoints()">
+                                ➕ Add Points to All
+                            </button>
+                            <button class="control-btn" onclick="awardPresent()">
+                                🎁 Award Present Students
+                            </button>
+                            <button class="control-btn" onclick="randomStudent()">
+                                🎲 Random Student
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-section">
+                        <div class="control-title">Class Management</div>
+                        <div class="control-buttons">
+                            <button class="control-btn" onclick="exportData()">
+                                📥 Export Data
+                            </button>
+                            <button class="control-btn" onclick="resetWeek()">
+                                🔄 Reset Week
+                            </button>
+                            <button class="control-btn danger" onclick="resetAll()">
+                                ⚠️ Reset All Points
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity Feed -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <span>📝</span> Recent Activity
+                    </h2>
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- Activity items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Points Modal -->
+    <div class="modal" id="pointsModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">Add Points</h3>
+            <input type="hidden" id="modalStudentId">
+            <input type="number" class="modal-input" id="pointsInput" 
+                   placeholder="Enter points amount...">
+            <input type="text" class="modal-input" id="reasonInput" 
+                   placeholder="Reason (optional)...">
+            <div class="modal-buttons">
+                <button class="control-btn" onclick="closeModal()">Cancel</button>
+                <button class="control-btn add-points" onclick="confirmPoints()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Admin Panel Gist Integration
+        class AdminGistManager {
+            constructor() {
+                // Master gist ID - PUBLIC so safe to have here
+                this.MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
+                
+                // GitHub API base (for PUBLIC reads)
+                this.API_BASE = 'https://api.github.com/gists';
+                
+                // Netlify function endpoint (for PRIVATE writes)
+                this.FUNCTION_URL = '/.netlify/functions/update-points';
+                
+                // Data storage
+                this.masterConfig = null;
+                this.students = new Map(); // studentId -> studentData
+                this.isAdmin = false;
+                
+                // Activity log
+                this.activityLog = [];
+                
+                // Initialize
+                this.init();
+            }
+            
+            async init() {
+                // Check admin authentication
+                const adminAuth = localStorage.getItem('csci3403_admin');
+                if (adminAuth) {
+                    this.isAdmin = true;
+                    await this.loadAllData();
+                } else {
+                    this.showAdminLogin();
+                }
+            }
+            
+            showAdminLogin() {
+                // Create admin login modal
+                const modal = document.createElement('div');
+                modal.className = 'modal active';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3 class="modal-title">Admin Authentication Required</h3>
+                        <input type="password" class="modal-input" id="adminPin" 
+                               placeholder="Enter admin PIN..." autocomplete="off">
+                        <div class="modal-buttons">
+                            <button class="control-btn add-points" onclick="adminManager.authenticateAdmin()">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Focus on input
+                setTimeout(() => {
+                    document.getElementById('adminPin').focus();
+                }, 100);
+                
+                // Add enter key handler
+                document.getElementById('adminPin').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.authenticateAdmin();
+                    }
+                });
+            }
+            
+            async authenticateAdmin() {
+                const pinInput = document.getElementById('adminPin');
+                const pin = pinInput.value;
+                
+                try {
+                    // Fetch master config
+                    const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch configuration');
+                    }
+                    
+                    const gist = await response.json();
+                    const config = JSON.parse(gist.files['csci3403-config.json'].content);
+                    
+                    // Check admin PIN (use classPin as fallback if adminPin not set)
+                    if (config.adminPin !== pin && config.classPin !== pin) {
+                        alert('Invalid admin PIN');
+                        pinInput.value = '';
+                        pinInput.focus();
+                        return;
+                    }
+                    
+                    // Store admin auth
+                    localStorage.setItem('csci3403_admin', 'true');
+                    this.isAdmin = true;
+                    
+                    // Remove login modal
+                    document.querySelector('.modal.active').remove();
+                    
+                    // Load all data
+                    await this.loadAllData();
+                    
+                } catch (error) {
+                    console.error('Admin authentication failed:', error);
+                    alert('Authentication error. Please try again.');
+                }
+            }
+            
+            async loadAllData() {
+                try {
+                    // Show loading spinner
+                    this.showLoading(true);
+                    
+                    // Fetch master config
+                    const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch master configuration');
+                    }
+                    
+                    const gist = await response.json();
+                    this.masterConfig = JSON.parse(gist.files['csci3403-config.json'].content);
+                    
+                    console.log(`Found ${Object.keys(this.masterConfig.students || {}).length} students`);
+                    
+                    // Load each student's data
+                    const studentPromises = [];
+                    for (const [studentId, gistId] of Object.entries(this.masterConfig.students || {})) {
+                        studentPromises.push(this.loadStudentData(studentId, gistId));
+                    }
+                    
+                    await Promise.all(studentPromises);
+                    
+                    // Update UI
+                    this.refreshUI();
+                    
+                    // Hide loading
+                    this.showLoading(false);
+                    
+                    // Log success
+                    this.logActivity(`Loaded data for ${this.students.size} students`);
+                    
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    alert('Failed to load student data. Please refresh and try again.');
+                    this.showLoading(false);
+                }
+            }
+            
+            async loadStudentData(studentId, gistId) {
+                try {
+                    const response = await fetch(`${this.API_BASE}/${gistId}`);
+                    if (!response.ok) {
+                        console.warn(`Failed to load data for student ${studentId}`);
+                        return;
+                    }
+                    
+                    const gist = await response.json();
+                    const studentData = JSON.parse(gist.files['student-data.json'].content);
+                    
+                    // Store with additional metadata
+                    this.students.set(studentId, {
+                        id: studentId,
+                        gistId: gistId,
+                        name: studentData.name || studentId, // Use studentId as fallback
+                        points: studentData.points || 0,
+                        lastActive: studentData.lastActive || new Date().toISOString(),
+                        progress: studentData.progress || {},
+                        achievements: studentData.achievements || []
+                    });
+                    
+                } catch (error) {
+                    console.error(`Error loading student ${studentId}:`, error);
+                }
+            }
+            
+            async updateStudentPoints(studentId, pointsDelta, reason = '') {
+                const student = this.students.get(studentId);
+                if (!student) {
+                    console.error(`Student ${studentId} not found`);
+                    return;
+                }
+                
+                try {
+                    // Update points
+                    student.points += pointsDelta;
+                    student.lastActive = new Date().toISOString();
+                    
+                    // Add to activity log if exists
+                    if (!student.activityLog) {
+                        student.activityLog = [];
+                    }
+                    student.activityLog.unshift({
+                        timestamp: new Date().toISOString(),
+                        points: pointsDelta,
+                        reason: reason,
+                        total: student.points
+                    });
+                    
+                    // Keep only last 50 activities
+                    if (student.activityLog.length > 50) {
+                        student.activityLog = student.activityLog.slice(0, 50);
+                    }
+                    
+                    // Prepare update data
+                    const updateData = {
+                        name: student.name,
+                        points: student.points,
+                        lastActive: student.lastActive,
+                        progress: student.progress,
+                        achievements: student.achievements,
+                        activityLog: student.activityLog
+                    };
+                    
+                    // Send update through Netlify function
+                    const response = await fetch(this.FUNCTION_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'updateStudent',
+                            studentId: studentId,
+                            gistId: student.gistId,
+                            updateData: updateData
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to update student data');
+                    }
+                    
+                    // Update local data
+                    this.students.set(studentId, student);
+                    
+                    // Update UI
+                    this.refreshUI();
+                    
+                    // Show animation
+                    this.showPointsAnimation(
+                        `${pointsDelta > 0 ? '+' : ''}${pointsDelta} points to ${student.name}!`
+                    );
+                    
+                    // Log activity
+                    this.logActivity(
+                        `${pointsDelta > 0 ? 'Added' : 'Removed'} ${Math.abs(pointsDelta)} points ${pointsDelta > 0 ? 'to' : 'from'} ${student.name}${reason ? ': ' + reason : ''}`
+                    );
+                    
+                    return true;
+                    
+                } catch (error) {
+                    console.error('Error updating student points:', error);
+                    alert('Failed to update points. Please try again.');
+                    return false;
+                }
+            }
+            
+            quickPoints(studentId, points) {
+                this.updateStudentPoints(studentId, points, 'Quick action');
+            }
+            
+            openCustomPoints(studentId, studentName) {
+                // Open modal for custom points
+                const modal = document.getElementById('pointsModal');
+                const title = document.getElementById('modalTitle');
+                
+                document.getElementById('modalStudentId').value = studentId;
+                title.textContent = `Update Points - ${studentName}`;
+                
+                modal.classList.add('active');
+                document.getElementById('pointsInput').focus();
+            }
+            
+            refreshUI() {
+                // Update student list
+                this.displayStudents();
+                
+                // Update statistics
+                this.updateStatistics();
+                
+                // Update activity feed
+                this.loadActivityFeed();
+            }
+            
+            displayStudents() {
+                const studentList = document.getElementById('studentList');
+                if (!studentList) return;
+                
+                studentList.innerHTML = '';
+                
+                // Convert to array and sort by points
+                const sortedStudents = Array.from(this.students.values())
+                    .sort((a, b) => b.points - a.points);
+                
+                sortedStudents.forEach(student => {
+                    const studentItem = this.createStudentElement(student);
+                    studentList.appendChild(studentItem);
+                });
+            }
+            
+            createStudentElement(student) {
+                const div = document.createElement('div');
+                div.className = 'student-item';
+                div.innerHTML = `
+                    <div class="student-info">
+                        <div class="student-name">${student.name}</div>
+                        <div class="student-id">ID: ${student.id}</div>
+                        <div class="student-id" style="font-size: 0.8em;">
+                            Last active: ${new Date(student.lastActive).toLocaleDateString()}
+                        </div>
+                    </div>
+                    <div class="student-stats">
+                        <div class="points-display">${student.points} pts</div>
+                        <div class="quick-actions">
+                            <button class="quick-btn add-points" 
+                                    onclick="adminManager.quickPoints('${student.id}', 5)">+5</button>
+                            <button class="quick-btn remove-points" 
+                                    onclick="adminManager.quickPoints('${student.id}', -5)">-5</button>
+                            <button class="quick-btn control-btn" style="padding: 8px;"
+                                    onclick="adminManager.openCustomPoints('${student.id}', '${student.name}')">...</button>
+                        </div>
+                    </div>
+                `;
+                return div;
+            }
+            
+            updateStatistics() {
+                const students = Array.from(this.students.values());
+                
+                // Total students
+                document.getElementById('totalStudents').textContent = students.length;
+                
+                // Total points
+                const totalPoints = students.reduce((sum, s) => sum + s.points, 0);
+                document.getElementById('totalPoints').textContent = totalPoints;
+                
+                // Average points
+                const avgPoints = students.length > 0 ? Math.round(totalPoints / students.length) : 0;
+                document.getElementById('avgPoints').textContent = avgPoints;
+                
+                // Active today
+                const today = new Date().toISOString().split('T')[0];
+                const activeToday = students.filter(s => 
+                    s.lastActive && s.lastActive.startsWith(today)
+                ).length;
+                document.getElementById('activeToday').textContent = activeToday;
+            }
+            
+            showLoading(show) {
+                let spinner = document.getElementById('loadingSpinner');
+                
+                if (show && !spinner) {
+                    spinner = document.createElement('div');
+                    spinner.id = 'loadingSpinner';
+                    spinner.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        z-index: 9999;
+                        background: white;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                    `;
+                    spinner.innerHTML = `
+                        <div class="spinner"></div>
+                        <p style="text-align: center; margin-top: 10px;">Loading student data...</p>
+                    `;
+                    document.body.appendChild(spinner);
+                } else if (!show && spinner) {
+                    spinner.remove();
+                }
+            }
+            
+            showPointsAnimation(message) {
+                const notification = document.createElement('div');
+                notification.className = 'points-notification';
+                notification.innerHTML = `
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎉</div>
+                    <div style="font-size: 1.5em;">${message}</div>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            logActivity(message) {
+                // Add to activity log
+                this.activityLog.unshift({
+                    message: message,
+                    time: new Date().toLocaleTimeString()
+                });
+                
+                // Keep only last 10
+                if (this.activityLog.length > 10) {
+                    this.activityLog.pop();
+                }
+                
+                // Update UI
+                this.loadActivityFeed();
+            }
+            
+            loadActivityFeed() {
+                const feed = document.getElementById('activityFeed');
+                if (!feed) return;
+                
+                feed.innerHTML = '';
+                
+                if (this.activityLog.length === 0) {
+                    feed.innerHTML = '<div class="activity-item">No recent activity</div>';
+                    return;
+                }
+                
+                this.activityLog.forEach(activity => {
+                    const item = document.createElement('div');
+                    item.className = 'activity-item';
+                    item.innerHTML = `
+                        ${activity.message}
+                        <div class="activity-time">${activity.time}</div>
+                    `;
+                    feed.appendChild(item);
+                });
+            }
+            
+            exportToCSV() {
+                const students = Array.from(this.students.values());
+                
+                const csvContent = "data:text/csv;charset=utf-8," 
+                    + "ID,Name,Points,Last Active\n"
+                    + students.map(s => 
+                        `${s.id},${s.name},${s.points},${s.lastActive}`
+                    ).join("\n");
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `student_points_${new Date().toISOString().split('T')[0]}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                this.logActivity('Exported student data to CSV');
+            }
+        }
+        
+        // Global variables for compatibility
+        let adminManager;
+        let currentTheme = 'light';
+        
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the admin manager
+            adminManager = new AdminGistManager();
+            window.adminManager = adminManager;
+            
+            // Setup search functionality
+            document.getElementById('studentSearch').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const students = Array.from(adminManager.students.values());
+                
+                const filtered = students.filter(s => 
+                    s.name.toLowerCase().includes(searchTerm) ||
+                    s.id.toLowerCase().includes(searchTerm)
+                );
+                
+                const studentList = document.getElementById('studentList');
+                studentList.innerHTML = '';
+                
+                filtered.sort((a, b) => b.points - a.points);
+                
+                filtered.forEach(student => {
+                    const studentItem = adminManager.createStudentElement(student);
+                    studentList.appendChild(studentItem);
+                });
+            });
+        });
+        
+        // Modal functions
+        function closeModal() {
+            document.getElementById('pointsModal').classList.remove('active');
+            document.getElementById('pointsInput').value = '';
+            document.getElementById('reasonInput').value = '';
+        }
+        
+        async function confirmPoints() {
+            const studentId = document.getElementById('modalStudentId').value;
+            const points = parseInt(document.getElementById('pointsInput').value);
+            const reason = document.getElementById('reasonInput').value;
+            
+            if (isNaN(points)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            
+            await adminManager.updateStudentPoints(studentId, points, reason);
+            closeModal();
+        }
+        
+        // Bulk actions
+        async function bulkAddPoints() {
+            const points = prompt('How many points to add to all students?');
+            if (points && !isNaN(points)) {
+                const students = Array.from(adminManager.students.values());
+                for (const student of students) {
+                    await adminManager.updateStudentPoints(student.id, parseInt(points), 'Bulk update');
+                }
+            }
+        }
+        
+        async function awardPresent() {
+            const today = new Date().toISOString().split('T')[0];
+            const students = Array.from(adminManager.students.values());
+            const presentStudents = students.filter(s => 
+                s.lastActive && s.lastActive.startsWith(today)
+            );
+            
+            for (const student of presentStudents) {
+                await adminManager.updateStudentPoints(student.id, 10, 'Attendance bonus');
+            }
+            
+            adminManager.showPointsAnimation(`+10 points to ${presentStudents.length} present students!`);
+        }
+        
+        function randomStudent() {
+            const students = Array.from(adminManager.students.values());
+            if (students.length === 0) return;
+            
+            const randomIndex = Math.floor(Math.random() * students.length);
+            const student = students[randomIndex];
+            
+            adminManager.showPointsAnimation(`🎲 Random student: ${student.name}!`);
+            
+            // Highlight in list
+            document.getElementById('studentSearch').value = student.name;
+            const event = new Event('input', { bubbles: true });
+            document.getElementById('studentSearch').dispatchEvent(event);
+        }
+        
+        // Data management
+        function exportData() {
+            adminManager.exportToCSV();
+        }
+        
+        async function resetWeek() {
+            if (confirm('Reset weekly bonus points? This will subtract 20 points from everyone.')) {
+                const students = Array.from(adminManager.students.values());
+                for (const student of students) {
+                    await adminManager.updateStudentPoints(student.id, -20, 'Weekly reset');
+                }
+            }
+        }
+        
+        async function resetAll() {
+            if (confirm('⚠️ WARNING: This will reset ALL student points to 0. Are you sure?')) {
+                if (confirm('This action cannot be undone. Please confirm again.')) {
+                    const students = Array.from(adminManager.students.values());
+                    for (const student of students) {
+                        await adminManager.updateStudentPoints(student.id, -student.points, 'FULL RESET');
+                    }
+                }
+            }
+        }
+        
+        // Theme toggle
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = currentTheme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + F for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('studentSearch').focus();
+            }
+            
+            // Escape to close modal
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
