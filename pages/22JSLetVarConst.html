@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript - Let, Var, Const - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        .scope-diagram {
+            background: var(--bg-accent);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .scope-box {
+            border: 2px dashed var(--ocu-light-blue);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: rgba(0, 117, 191, 0.05);
+        }
+        
+        .hoisting-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .variable-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--ocu-true-blue);
+        }
+        
+        .temporal-dead-zone {
+            background: linear-gradient(135deg, rgba(255, 85, 85, 0.1), rgba(255, 85, 85, 0.05));
+            border: 2px dashed #ff5555;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .emoji {
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Day 22 - Let, Var, Const
+            <button class="home"><a href="../index.html">Home</a></button>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>JavaScript Variable Declarations</h1>
+            <h2>Let, Var, and Const <span class="emoji">📦</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 11, Day 22</p>
+            <p style="margin-top: auto; font-style: italic;">ES6 brought us better ways to declare variables!</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🔍 Understand the differences between var, let, and const</li>
+                <li>🏗️ Master scope concepts (global, function, block)</li>
+                <li>⬆️ Learn how hoisting works with each declaration</li>
+                <li>♻️ Know when variables can be re-declared or updated</li>
+                <li>✅ Choose the right declaration for your use case</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Goal:</strong> After today, you'll write cleaner, more predictable JavaScript code!
+            </div>
+        </div>
+
+        <!-- Slide 3: The Journey from var to ES6 -->
+        <div class="slide">
+            <h1>A Brief History <span class="emoji">📜</span></h1>
+            <h2>Why did we need let and const?</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Pre-ES6 (Before 2015)</h3>
+                    <ul>
+                        <li>Only had <code>var</code> for variables</li>
+                        <li>Led to confusing scope issues</li>
+                        <li>Caused unexpected bugs</li>
+                        <li>Made code harder to reason about</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>ES6+ (2015 and after)</h3>
+                    <ul>
+                        <li>Introduced <code>let</code> and <code>const</code></li>
+                        <li>Block-level scoping</li>
+                        <li>More predictable behavior</li>
+                        <li>Clearer intent in code</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: The Big Picture -->
+        <div class="slide">
+            <h1>The Big Picture <span class="emoji">🖼️</span></h1>
+            <h2>Three Ways to Declare Variables</h2>
+            <div class="activity-box">
+                <table style="width: 100%; font-size: 1.2em;">
+                    <tr>
+                        <th>Declaration</th>
+                        <th>Scope</th>
+                        <th>Reassignable</th>
+                        <th>Redeclarable</th>
+                        <th>Hoisted</th>
+                    </tr>
+                    <tr>
+                        <td><code>var</code></td>
+                        <td>Function/Global</td>
+                        <td>✅ Yes</td>
+                        <td>✅ Yes</td>
+                        <td>✅ Yes (undefined)</td>
+                    </tr>
+                    <tr>
+                        <td><code>let</code></td>
+                        <td>Block</td>
+                        <td>✅ Yes</td>
+                        <td>❌ No</td>
+                        <td>⚠️ Yes (TDZ)</td>
+                    </tr>
+                    <tr>
+                        <td><code>const</code></td>
+                        <td>Block</td>
+                        <td>❌ No</td>
+                        <td>❌ No</td>
+                        <td>⚠️ Yes (TDZ)</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="margin-top: 20px; text-align: center;">Let's dive deep into each one!</p>
+        </div>
+
+        <!-- Slide 5: Understanding var -->
+        <div class="slide">
+            <h1>Understanding <code>var</code> <span class="emoji">📝</span></h1>
+            <h2>The Original Variable Declaration</h2>
+            <div class="code-example">
+                var greeting = "Hello World!";<br>
+                var count = 42;<br>
+                var isActive = true;
+            </div>
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>📍 Function-scoped or globally-scoped</li>
+                <li>♻️ Can be re-declared in the same scope</li>
+                <li>✏️ Can be updated/reassigned</li>
+                <li>⬆️ Hoisted to the top of their scope</li>
+                <li>🔧 Initialized with <code>undefined</code> when hoisted</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: var Scope - Global -->
+        <div class="slide">
+            <h1>Scope of <code>var</code> - Global <span class="emoji">🌍</span></h1>
+            <div class="code-example">
+                var globalGreeting = "Hey hi";<br><br>
+                
+                function showGreeting() {<br>
+                &nbsp;&nbsp;console.log(globalGreeting); // "Hey hi"<br>
+                }<br><br>
+                
+                console.log(globalGreeting); // "Hey hi"
+            </div>
+            <div class="scope-diagram">
+                <strong>Global Scope (Window)</strong>
+                <div class="scope-box">
+                    <code>globalGreeting</code> is available everywhere!
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Warning:</strong> Global variables can be accessed and modified from anywhere, which can lead to bugs!
+            </div>
+        </div>
+
+        <!-- Slide 7: var Scope - Function -->
+        <div class="slide">
+            <h1>Scope of <code>var</code> - Function <span class="emoji">📦</span></h1>
+            <div class="code-example">
+                function newFunction() {<br>
+                &nbsp;&nbsp;var hello = "hello";<br>
+                &nbsp;&nbsp;console.log(hello); // "hello"<br>
+                }<br><br>
+                
+                newFunction();<br>
+                console.log(hello); // ❌ Error: hello is not defined
+            </div>
+            <div class="scope-diagram">
+                <strong>Global Scope</strong>
+                <div class="scope-box">
+                    <strong>Function Scope</strong><br>
+                    <code>hello</code> only exists here!
+                </div>
+                ❌ Cannot access <code>hello</code> out here
+            </div>
+        </div>
+
+        <!-- Slide 8: var Re-declaration and Updates -->
+        <div class="slide">
+            <h1><code>var</code> Can Be Re-declared <span class="emoji">🔄</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Re-declaration ✅</h3>
+                    <div class="code-example">
+                        var greeter = "hey hi";<br>
+                        var greeter = "say Hello"; <br>
+                        console.log(greeter);<br>
+                        // "say Hello"
+                    </div>
+                </div>
+                <div>
+                    <h3>Update ✅</h3>
+                    <div class="code-example">
+                        var greeter = "hey hi";<br>
+                        greeter = "say Hello";<br>
+                        console.log(greeter);<br>
+                        // "say Hello"
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Note:</strong> Both work with <code>var</code>, but re-declaration can cause confusion!
+            </div>
+        </div>
+
+        <!-- Slide 9: Hoisting with var -->
+        <div class="slide">
+            <h1>Hoisting with <code>var</code> <span class="emoji">⬆️</span></h1>
+            <h2>Variables are moved to the top!</h2>
+            <div class="hoisting-demo">
+                <div class="variable-card">
+                    <h3>What you write:</h3>
+                    <div class="code-example">
+                        console.log(greeter);<br>
+                        var greeter = "say hello";
+                    </div>
+                </div>
+                <div class="variable-card">
+                    <h3>How JS interprets it:</h3>
+                    <div class="code-example">
+                        var greeter; // Declaration hoisted<br>
+                        console.log(greeter); // undefined<br>
+                        greeter = "say hello"; // Assignment stays
+                    </div>
+                </div>
+            </div>
+            <div class="activity-box">
+                <strong>Result:</strong> No error, but logs <code>undefined</code> instead of the value!
+            </div>
+        </div>
+
+        <!-- Slide 10: The Problem with var -->
+        <div class="slide">
+            <h1>The Problem with <code>var</code> <span class="emoji">⚠️</span></h1>
+            <div class="code-example">
+                var greeter = "hey hi";<br>
+                var times = 4;<br><br>
+                
+                if (times > 3) {<br>
+                &nbsp;&nbsp;var greeter = "say Hello instead";<br>
+                }<br><br>
+                
+                console.log(greeter); // "say Hello instead" 😱
+            </div>
+            <div class="warning-box">
+                <h3>What happened?</h3>
+                <p><code>var</code> doesn't have block scope! The <code>greeter</code> inside the if-block overwrote the outer one!</p>
+            </div>
+            <div class="tip-box">
+                <strong>This is why we needed <code>let</code> and <code>const</code>!</strong>
+            </div>
+        </div>
+
+        <!-- Slide 11: Introducing let -->
+        <div class="slide">
+            <h1>Introducing <code>let</code> <span class="emoji">🎉</span></h1>
+            <h2>The Modern Variable Declaration</h2>
+            <div class="code-example">
+                let message = "Hello";<br>
+                let count = 100;<br>
+                let isReady = false;
+            </div>
+            <h3>Key Improvements over var:</h3>
+            <ul>
+                <li>🎯 Block-scoped (respects { } boundaries)</li>
+                <li>❌ Cannot be re-declared in same scope</li>
+                <li>✅ Can be updated/reassigned</li>
+                <li>⚠️ Hoisted but not initialized (Temporal Dead Zone)</li>
+            </ul>
+            <div class="activity-box">
+                <strong>Best Practice:</strong> Use <code>let</code> when the value will change later!
+            </div>
+        </div>
+
+        <!-- Slide 12: let is Block Scoped -->
+        <div class="slide">
+            <h1><code>let</code> is Block Scoped <span class="emoji">🎯</span></h1>
+            <div class="code-example">
+                let greeting = "say Hi";<br>
+                let times = 4;<br><br>
+                
+                if (times > 3) {<br>
+                &nbsp;&nbsp;let hello = "say Hello instead";<br>
+                &nbsp;&nbsp;console.log(hello); // "say Hello instead"<br>
+                }<br><br>
+                
+                console.log(hello); // ❌ Error: hello is not defined
+            </div>
+            <div class="scope-diagram">
+                <strong>Outer Scope</strong>
+                <div class="scope-box">
+                    <strong>Block Scope (if statement)</strong><br>
+                    <code>hello</code> only exists in here!
+                </div>
+                ❌ <code>hello</code> doesn't exist out here!
+            </div>
+        </div>
+
+        <!-- Slide 13: let Cannot Be Re-declared -->
+        <div class="slide">
+            <h1><code>let</code> Cannot Be Re-declared <span class="emoji">🚫</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Re-declaration ❌</h3>
+                    <div class="code-example">
+                        let greeting = "say Hi";<br>
+                        let greeting = "say Hello";<br>
+                        // ❌ Error: Identifier 'greeting'<br>
+                        // has already been declared
+                    </div>
+                </div>
+                <div>
+                    <h3>Update ✅</h3>
+                    <div class="code-example">
+                        let greeting = "say Hi";<br>
+                        greeting = "say Hello";<br>
+                        console.log(greeting);<br>
+                        // ✅ "say Hello"
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Benefit:</strong> Prevents accidental variable name collisions!
+            </div>
+        </div>
+
+        <!-- Slide 14: let in Different Scopes -->
+        <div class="slide">
+            <h1><code>let</code> in Different Scopes <span class="emoji">📦</span></h1>
+            <div class="code-example">
+                let greeting = "say Hi";<br><br>
+                
+                if (true) {<br>
+                &nbsp;&nbsp;let greeting = "say Hello instead";<br>
+                &nbsp;&nbsp;console.log(greeting); // "say Hello instead"<br>
+                }<br><br>
+                
+                console.log(greeting); // "say Hi" ✅
+            </div>
+            <div class="activity-box">
+                <h3>Why no error?</h3>
+                <p>These are two different variables in different scopes! The inner <code>greeting</code> shadows the outer one only within the block.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Temporal Dead Zone (TDZ) -->
+        <div class="slide">
+            <h1>Temporal Dead Zone <span class="emoji">⚠️</span></h1>
+            <h2>The danger zone for let and const!</h2>
+            <div class="temporal-dead-zone">
+                <h3>What is TDZ?</h3>
+                <p>The time between entering scope and the variable declaration where the variable cannot be accessed.</p>
+            </div>
+            <div class="code-example">
+                console.log(myVar); // ✅ undefined (var)<br>
+                console.log(myLet); // ❌ ReferenceError (let)<br><br>
+                
+                var myVar = 5;<br>
+                let myLet = 10;
+            </div>
+            <div class="tip-box">
+                <strong>Why TDZ exists:</strong> Makes errors easier to catch - accessing variables before declaration is usually a mistake!
+            </div>
+        </div>
+
+        <!-- Slide 16: Introducing const -->
+        <div class="slide">
+            <h1>Introducing <code>const</code> <span class="emoji">🔒</span></h1>
+            <h2>For Values That Don't Change</h2>
+            <div class="code-example">
+                const PI = 3.14159;<br>
+                const API_KEY = "abc123xyz";<br>
+                const MAX_SIZE = 100;
+            </div>
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>🎯 Block-scoped (like let)</li>
+                <li>❌ Cannot be re-declared</li>
+                <li>❌ Cannot be reassigned</li>
+                <li>📝 Must be initialized at declaration</li>
+                <li>⚠️ Also has Temporal Dead Zone</li>
+            </ul>
+            <div class="activity-box">
+                <strong>Best Practice:</strong> Use <code>const</code> by default, switch to <code>let</code> only when needed!
+            </div>
+        </div>
+
+        <!-- Slide 17: const Rules -->
+        <div class="slide">
+            <h1><code>const</code> Rules <span class="emoji">📋</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ What You Can't Do</h3>
+                    <div class="code-example">
+                        const greeting = "Hi";<br>
+                        greeting = "Hello"; // Error!<br><br>
+                        
+                        const greeting = "Hi";<br>
+                        const greeting = "Hey"; // Error!<br><br>
+                        
+                        const name; // Error!<br>
+                        name = "John";
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ What You Must Do</h3>
+                    <div class="code-example">
+                        // Initialize at declaration<br>
+                        const greeting = "Hi";<br><br>
+                        
+                        // Use in different scopes<br>
+                        if (true) {<br>
+                        &nbsp;&nbsp;const greeting = "Hello";<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: const with Objects and Arrays -->
+        <div class="slide">
+            <h1><code>const</code> with Objects & Arrays <span class="emoji">🎨</span></h1>
+            <h2>The reference is constant, not the contents!</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Objects</h3>
+                    <div class="code-example">
+                        const person = {<br>
+                        &nbsp;&nbsp;name: "Alice",<br>
+                        &nbsp;&nbsp;age: 30<br>
+                        };<br><br>
+                        
+                        // ✅ Can modify properties<br>
+                        person.age = 31;<br>
+                        person.city = "NYC";<br><br>
+                        
+                        // ❌ Can't reassign<br>
+                        person = {}; // Error!
+                    </div>
+                </div>
+                <div>
+                    <h3>Arrays</h3>
+                    <div class="code-example">
+                        const numbers = [1, 2, 3];<br><br>
+                        
+                        // ✅ Can modify contents<br>
+                        numbers.push(4);<br>
+                        numbers[0] = 10;<br><br>
+                        
+                        // ❌ Can't reassign<br>
+                        numbers = [5, 6]; // Error!
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> <code>const</code> prevents reassignment of the variable itself, not modification of object/array contents!
+            </div>
+        </div>
+
+        <!-- Slide 19: Quick Comparison -->
+        <div class="slide">
+            <h1>Quick Comparison <span class="emoji">⚖️</span></h1>
+            <h2>When to use each declaration</h2>
+            <div class="activity-box">
+                <h3>var</h3>
+                <p>❌ <strong>Almost never!</strong> Only in legacy code or very specific cases</p>
+                
+                <h3>let</h3>
+                <p>✅ When you need to reassign the variable</p>
+                <ul>
+                    <li>Loop counters: <code>for (let i = 0; ...)</code></li>
+                    <li>Accumulator values</li>
+                    <li>Conditional assignments</li>
+                </ul>
+                
+                <h3>const</h3>
+                <p>✅ <strong>Default choice!</strong> Use unless you need to reassign</p>
+                <ul>
+                    <li>Configuration values</li>
+                    <li>DOM element references</li>
+                    <li>Imported modules</li>
+                    <li>Most variables in modern JS</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 20: Practical Examples -->
+        <div class="slide">
+            <h1>Practical Examples <span class="emoji">💻</span></h1>
+            <h2>Real-world usage patterns</h2>
+            <div class="code-example">
+                // Configuration values - use const<br>
+                const API_URL = "https://api.example.com";<br>
+                const MAX_RETRIES = 3;<br><br>
+                
+                // DOM elements - use const<br>
+                const button = document.querySelector('.btn');<br>
+                const container = document.getElementById('app');<br><br>
+                
+                // Values that change - use let<br>
+                let currentUser = null;<br>
+                let isLoading = false;<br><br>
+                
+                // Loops - use let for counters<br>
+                for (let i = 0; i < 10; i++) {<br>
+                &nbsp;&nbsp;console.log(i);<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 21: Common Pitfalls -->
+        <div class="slide">
+            <h1>Common Pitfalls <span class="emoji">🕳️</span></h1>
+            <h2>Mistakes to avoid</h2>
+            <div class="warning-box">
+                <h3>1. Using var in modern code</h3>
+                <div class="code-example">
+                    // ❌ Don't do this<br>
+                    var name = "John";<br><br>
+                    
+                    // ✅ Do this instead<br>
+                    const name = "John";
+                </div>
+            </div>
+            <div class="warning-box">
+                <h3>2. Using let when const would work</h3>
+                <div class="code-example">
+                    // ❌ Unnecessary let<br>
+                    let PI = 3.14159;<br><br>
+                    
+                    // ✅ Use const for constants<br>
+                    const PI = 3.14159;
+                </div>
+            </div>
+            <div class="warning-box">
+                <h3>3. Accessing before declaration</h3>
+                <div class="code-example">
+                    // ❌ TDZ error<br>
+                    console.log(value);<br>
+                    const value = 42;
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Best Practices -->
+        <div class="slide">
+            <h1>Best Practices <span class="emoji">✨</span></h1>
+            <h2>Modern JavaScript Guidelines</h2>
+            <div class="activity-box">
+                <h3>The Modern Approach:</h3>
+                <ol style="font-size: 1.3em; line-height: 2;">
+                    <li>🔒 Use <code>const</code> by default</li>
+                    <li>🔄 Use <code>let</code> when you need to reassign</li>
+                    <li>❌ Avoid <code>var</code> completely</li>
+                    <li>📝 Declare variables at the top of their scope</li>
+                    <li>🎯 Keep variables in the smallest scope possible</li>
+                    <li>✅ Initialize variables when you declare them</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Using <code>const</code> doesn't mean the value is immutable, it means the binding is immutable!
+            </div>
+        </div>
+
+        <!-- Slide 23: Exercise Time! -->
+        <div class="slide">
+            <h1>Let's Practice! <span class="emoji">🏋️</span></h1>
+            <h2>Refactoring Exercise</h2>
+            <div class="activity-box">
+                <h3>Refactor this code to use let and const:</h3>
+                <div class="code-example">
+                    var userAge = 25;<br>
+                    var userName = "Alice";<br>
+                    var scores = [85, 92, 78];<br>
+                    var total = 0;<br><br>
+                    
+                    for (var i = 0; i < scores.length; i++) {<br>
+                    &nbsp;&nbsp;total = total + scores[i];<br>
+                    }<br><br>
+                    
+                    var average = total / scores.length;<br>
+                    userAge = userAge + 1;
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Take 5 minutes to refactor this code!</p>
+        </div>
+
+        <!-- Slide 24: Exercise Solution -->
+        <div class="slide">
+            <h1>Exercise Solution <span class="emoji">✅</span></h1>
+            <div class="code-example">
+                let userAge = 25; // Will be reassigned<br>
+                const userName = "Alice"; // Won't change<br>
+                const scores = [85, 92, 78]; // Array ref won't change<br>
+                let total = 0; // Will accumulate<br><br>
+                
+                for (let i = 0; i < scores.length; i++) { // Loop counter<br>
+                &nbsp;&nbsp;total = total + scores[i];<br>
+                }<br><br>
+                
+                const average = total / scores.length; // Calculated once<br>
+                userAge = userAge + 1; // Reassignment works with let
+            </div>
+            <div class="tip-box">
+                <strong>Analysis:</strong> We used <code>let</code> for values that change (userAge, total, i) and <code>const</code> for everything else!
+            </div>
+        </div>
+
+        <!-- Slide 25: Summary -->
+        <div class="slide">
+            <h1>Summary <span class="emoji">📚</span></h1>
+            <h2>Key Takeaways</h2>
+            <div class="activity-box">
+                <h3>Remember:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li><strong>var:</strong> Function-scoped, avoid in modern code</li>
+                    <li><strong>let:</strong> Block-scoped, use for values that change</li>
+                    <li><strong>const:</strong> Block-scoped, use by default</li>
+                    <li><strong>Hoisting:</strong> All are hoisted, but let/const have TDZ</li>
+                    <li><strong>Best Practice:</strong> const → let → never var</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> When in doubt, start with <code>const</code>. Your IDE will tell you if you need <code>let</code>!
+            </div>
+        </div>
+
+        <!-- Slide 26: Questions & Discussion -->
+        <div class="slide">
+            <h1>Questions & Discussion <span class="emoji">💬</span></h1>
+            <h2>Let's clarify any confusion!</h2>
+            <div class="activity-box">
+                <h3>Common Questions:</h3>
+                <ul style="font-size: 1.2em; line-height: 2;">
+                    <li>When would I ever use var?</li>
+                    <li>Why can I modify const arrays/objects?</li>
+                    <li>What exactly is the Temporal Dead Zone?</li>
+                    <li>Should I refactor all my old var code?</li>
+                    <li>How does this work with function parameters?</li>
+                </ul>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Any questions about let, var, or const?</strong>
+            </p>
+        </div>
+
+        <!-- Slide 27: Next Steps -->
+        <div class="slide">
+            <h1>Next Class Preview <span class="emoji">🚀</span></h1>
+            <h2>Building on These Concepts</h2>
+            <div class="activity-box">
+                <h3>Coming Up:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>📦 Advanced scope concepts</li>
+                    <li>🔧 Functions and closures</li>
+                    <li>🎯 Arrow functions</li>
+                    <li>🔄 Array methods</li>
+                    <li>🎨 Destructuring</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Homework:</strong> Practice refactoring some var code to let/const!
+            </div>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 30px;">
+                Great work today! 🎉
+            </p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">27</span>
+        </span>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    <script>
+        // Global changeSlide function for onclick handlers
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update total slides count
+            document.getElementById('totalSlides').textContent = totalSlides;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
+</body>
+</html>
