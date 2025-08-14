@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions - Day 21</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Day 21 - JavaScript Functions
+            <button class="home"><a href="../index.html">Home</a></button>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>JavaScript Functions <span class="emoji">⚡</span></h1>
+            <h2>Reusable Code Blocks</h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 11, Day 21</p>
+            <p style="margin-top: auto; font-style: italic;">Time to level up your JavaScript! 🚀</p>
+        </div>
+
+        <!-- Slide 2: Where We Are -->
+        <div class="slide">
+            <h1>The Journey So Far <span class="emoji">📍</span></h1>
+            <h2>From Static to Dynamic</h2>
+            <div class="timeline">
+                <p>✅ HTML Structure</p>
+                <p>✅ CSS Styling</p>
+                <p>✅ JavaScript Basics</p>
+                <p>✅ Variables & Operators</p>
+                <p>📍 <strong>Functions (Today!)</strong></p>
+                <p>⏰ Loops & Arrays (Coming Soon)</p>
+            </div>
+            <div class="tip-box">
+                <strong>Today's Goal:</strong> Write reusable, organized code with functions!
+            </div>
+        </div>
+
+        <!-- Slide 3: What Are Functions? -->
+        <div class="slide">
+            <h1>What Are Functions? <span class="emoji">🎁</span></h1>
+            <h2>Reusable Code Packages</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Without Functions</h3>
+                    <ul>
+                        <li>Write same code multiple times</li>
+                        <li>Hard to maintain</li>
+                        <li>Prone to errors</li>
+                        <li>Messy and repetitive</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>With Functions</h3>
+                    <ul>
+                        <li>Write once, use many times</li>
+                        <li>Easy to update</li>
+                        <li>Less bugs</li>
+                        <li>Clean and organized</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Your First Function -->
+        <div class="slide">
+            <h1>Your First Function <span class="emoji">👋</span></h1>
+            <h2>Let's Say Hello!</h2>
+            <div class="code-example">
+                <span class="comment">// Defining a function</span><br>
+                <span class="keyword">function</span> <span class="function">sayHello</span>() {<br>
+                &nbsp;&nbsp;console.log(<span class="string">"Hello, World!"</span>);<br>
+                }<br><br>
+                <span class="comment">// Calling (using) the function</span><br>
+                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span><br>
+                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span><br>
+                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span>
+            </div>
+            <div class="activity-box">
+                <strong>Notice:</strong> We write the function once but can call it many times!
+            </div>
+        </div>
+
+        <!-- Slide 5: Function Anatomy -->
+        <div class="slide">
+            <h1>Anatomy of a Function <span class="emoji">🔬</span></h1>
+            <div class="code-example" style="font-size: 1.3em;">
+                <span class="keyword">function</span> <span class="function">functionName</span>(<span class="parameter">parameters</span>) {<br>
+                &nbsp;&nbsp;<span class="comment">// Function body</span><br>
+                &nbsp;&nbsp;<span class="comment">// Code to execute</span><br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">result</span>;<br>
+                }
+            </div>
+            <div class="visual-example">
+                <h3>Parts Explained:</h3>
+                <ul>
+                    <li><code>function</code> - Keyword to declare a function</li>
+                    <li><code>functionName</code> - What you call your function</li>
+                    <li><code>parameters</code> - Input values (optional)</li>
+                    <li><code>{...}</code> - Function body (the code)</li>
+                    <li><code>return</code> - Send a value back (optional)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Parameters vs Arguments -->
+        <div class="slide">
+            <h1>Parameters vs Arguments <span class="emoji">📥</span></h1>
+            <div class="code-example">
+                <span class="comment">// PARAMETER: placeholder in function definition</span><br>
+                <span class="keyword">function</span> <span class="function">favoriteAnimal</span>(<span class="parameter">animal</span>) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="parameter">animal</span> + <span class="string">" is my favorite animal!"</span>;<br>
+                }<br><br>
+                <span class="comment">// ARGUMENT: actual value passed when calling</span><br>
+                console.log(<span class="function">favoriteAnimal</span>(<span class="string">'Goat'</span>));<br>
+                <span class="comment">// Output: Goat is my favorite animal!</span>
+            </div>
+            <div class="tip-box">
+                <p><strong>Remember:</strong></p>
+                <p>📌 <strong>Parameter</strong> = Placeholder (in definition)</p>
+                <p>📌 <strong>Argument</strong> = Actual value (when calling)</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Visual Parameter Flow -->
+        <div class="slide">
+            <h1>How Parameters Flow <span class="emoji">🔄</span></h1>
+            <h2>Visualizing the Process</h2>
+            <div class="visual-example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
+                <div style="text-align: center;">
+                    <h3>1️⃣ Function Call</h3>
+                    <code style="font-size: 1.3em;">favoriteAnimal('Goat')</code>
+                    <p>↓</p>
+                    <h3>2️⃣ Parameter Receives Value</h3>
+                    <code style="font-size: 1.3em;">animal = 'Goat'</code>
+                    <p>↓</p>
+                    <h3>3️⃣ Function Executes</h3>
+                    <code style="font-size: 1.3em;">'Goat' + ' is my favorite animal!'</code>
+                    <p>↓</p>
+                    <h3>4️⃣ Return Value</h3>
+                    <code style="font-size: 1.3em;">'Goat is my favorite animal!'</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Multiple Parameters -->
+        <div class="slide">
+            <h1>Multiple Parameters <span class="emoji">➕</span></h1>
+            <h2>Functions Can Take Many Inputs!</h2>
+            <div class="code-example">
+                <span class="keyword">function</span> <span class="function">greetPerson</span>(<span class="parameter">firstName</span>, <span class="parameter">lastName</span>, <span class="parameter">age</span>) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${<span class="parameter">firstName</span>} ${<span class="parameter">lastName</span>}! You are ${<span class="parameter">age</span>} years old.`</span>;<br>
+                }<br><br>
+                console.log(<span class="function">greetPerson</span>(<span class="string">'John'</span>, <span class="string">'Doe'</span>, <span class="number">25</span>));<br>
+                <span class="comment">// Output: Hello, John Doe! You are 25 years old.</span>
+            </div>
+            <div class="warning-box">
+                <strong>Order Matters!</strong> Arguments must match parameter order
+            </div>
+        </div>
+
+        <!-- Slide 9: Return Values -->
+        <div class="slide">
+            <h1>Return Values <span class="emoji">📤</span></h1>
+            <h2>Getting Data Back from Functions</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Without Return</h3>
+                    <div class="code-example">
+<span class="keyword">function</span> <span class="function">add</span>(a, b) {
+  console.log(a + b);
+}
+
+<span class="keyword">let</span> result = <span class="function">add</span>(5, 3);
+console.log(result); <span class="comment">// undefined</span>
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>With Return</h3>
+                    <div class="code-example">
+<span class="keyword">function</span> <span class="function">add</span>(a, b) {
+  <span class="keyword">return</span> a + b;
+}
+
+<span class="keyword">let</span> result = <span class="function">add</span>(5, 3);
+console.log(result); <span class="comment">// 8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Return Stops Execution -->
+        <div class="slide">
+            <h1>Return Stops Execution <span class="emoji">🛑</span></h1>
+            <div class="code-example">
+                <span class="keyword">function</span> <span class="function">checkAge</span>(<span class="parameter">age</span>) {<br>
+                &nbsp;&nbsp;<span class="keyword">if</span> (<span class="parameter">age</span> < 18) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Too young!"</span>;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Welcome!"</span>;<br>
+                &nbsp;&nbsp;console.log(<span class="string">"This never runs!"</span>); <span class="comment">// Unreachable code</span><br>
+                }<br><br>
+                console.log(<span class="function">checkAge</span>(16)); <span class="comment">// "Too young!"</span><br>
+                console.log(<span class="function">checkAge</span>(21)); <span class="comment">// "Welcome!"</span>
+            </div>
+            <div class="tip-box">
+                <strong>Key Point:</strong> Nothing after a return statement executes!
+            </div>
+        </div>
+
+        <!-- Slide 11: Function Scope -->
+        <div class="slide">
+            <h1>Function Scope <span class="emoji">🔒</span></h1>
+            <h2>Variables Have Boundaries!</h2>
+            <div class="code-example">
+                <span class="keyword">let</span> globalVar = <span class="string">"I'm global!"</span>;<br><br>
+                
+                <span class="keyword">function</span> <span class="function">myFunction</span>() {<br>
+                &nbsp;&nbsp;<span class="keyword">let</span> localVar = <span class="string">"I'm local!"</span>;<br>
+                &nbsp;&nbsp;console.log(globalVar); <span class="comment">// ✅ Works!</span><br>
+                &nbsp;&nbsp;console.log(localVar);  <span class="comment">// ✅ Works!</span><br>
+                }<br><br>
+                
+                <span class="function">myFunction</span>();<br>
+                console.log(globalVar); <span class="comment">// ✅ Works!</span><br>
+                console.log(localVar);  <span class="comment">// ❌ Error! localVar is not defined</span>
+            </div>
+            <div class="visual-example">
+                <p><strong>Rule:</strong> Variables inside functions stay inside functions!</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Scope Visualization -->
+        <div class="slide">
+            <h1>Visualizing Scope <span class="emoji">🎯</span></h1>
+            <div class="scope-diagram" style="text-align: center; padding: 20px;">
+                <div style="border: 3px solid #667eea; border-radius: 15px; padding: 20px; margin: 20px;">
+                    <h3>Global Scope</h3>
+                    <p>Variables here are accessible everywhere</p>
+                    <div style="border: 3px solid #764ba2; border-radius: 10px; padding: 15px; margin: 20px;">
+                        <h3>Function Scope</h3>
+                        <p>Variables here are only accessible inside the function</p>
+                        <div style="border: 3px solid #f093fb; border-radius: 5px; padding: 10px; margin: 10px;">
+                            <h3>Block Scope (if/for)</h3>
+                            <p>Variables here are only accessible inside the block</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Function Expressions -->
+        <div class="slide">
+            <h1>Function Expressions <span class="emoji">📝</span></h1>
+            <h2>Functions as Values</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Function Declaration</h3>
+                    <div class="code-example">
+<span class="keyword">function</span> <span class="function">greet</span>() {
+  <span class="keyword">return</span> <span class="string">"Hello!"</span>;
+}
+                    </div>
+                    <p>✅ Can be called before definition (hoisting)</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>Function Expression</h3>
+                    <div class="code-example">
+<span class="keyword">const</span> greet = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="string">"Hello!"</span>;
+};
+                    </div>
+                    <p>❌ Must be defined before calling</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Arrow Functions -->
+        <div class="slide">
+            <h1>Arrow Functions <span class="emoji">➡️</span></h1>
+            <h2>Modern Function Syntax</h2>
+            <div class="code-example">
+                <span class="comment">// Traditional function</span><br>
+                <span class="keyword">function</span> <span class="function">add</span>(a, b) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> a + b;<br>
+                }<br><br>
+                
+                <span class="comment">// Arrow function (same thing!)</span><br>
+                <span class="keyword">const</span> add = (a, b) => {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> a + b;<br>
+                };<br><br>
+                
+                <span class="comment">// Even shorter (implicit return)</span><br>
+                <span class="keyword">const</span> add = (a, b) => a + b;
+            </div>
+            <div class="tip-box">
+                <strong>Note:</strong> Arrow functions are optional for now - focus on regular functions first!
+            </div>
+        </div>
+
+        <!-- Slide 15: Default Parameters -->
+        <div class="slide">
+            <h1>Default Parameters <span class="emoji">🎯</span></h1>
+            <h2>Providing Fallback Values</h2>
+            <div class="code-example">
+                <span class="comment">// Without default parameters</span><br>
+                <span class="keyword">function</span> <span class="function">greet</span>(name) {<br>
+                &nbsp;&nbsp;<span class="keyword">if</span> (!name) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;name = <span class="string">"friend"</span>;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;<br>
+                }<br><br>
+                
+                <span class="comment">// With default parameters (easier!)</span><br>
+                <span class="keyword">function</span> <span class="function">greet</span>(name = <span class="string">"friend"</span>) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;<br>
+                }<br><br>
+                
+                console.log(<span class="function">greet</span>());        <span class="comment">// "Hello, friend!"</span><br>
+                console.log(<span class="function">greet</span>(<span class="string">"Alice"</span>)); <span class="comment">// "Hello, Alice!"</span>
+            </div>
+        </div>
+
+        <!-- Slide 16: Call Stack -->
+        <div class="slide">
+            <h1>The Call Stack <span class="emoji">📚</span></h1>
+            <h2>How Functions Execute</h2>
+            <div class="code-example">
+                <span class="keyword">function</span> <span class="function">first</span>() {<br>
+                &nbsp;&nbsp;console.log(<span class="string">"First start"</span>);<br>
+                &nbsp;&nbsp;<span class="function">second</span>();<br>
+                &nbsp;&nbsp;console.log(<span class="string">"First end"</span>);<br>
+                }<br><br>
+                
+                <span class="keyword">function</span> <span class="function">second</span>() {<br>
+                &nbsp;&nbsp;console.log(<span class="string">"Second"</span>);<br>
+                }<br><br>
+                
+                <span class="function">first</span>();
+            </div>
+            <div class="visual-example">
+                <h3>Output Order:</h3>
+                <ol>
+                    <li>"First start"</li>
+                    <li>"Second"</li>
+                    <li>"First end"</li>
+                </ol>
+                <p><strong>Why?</strong> Functions pause to complete inner function calls!</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Practice Time -->
+        <div class="slide">
+            <h1>Let's Practice! <span class="emoji">💪</span></h1>
+            <h2>Your Turn to Write Functions</h2>
+            <div class="activity-box">
+                <h3>Exercise 1: add7</h3>
+                <p>Write a function that takes one number and returns that number + 7</p>
+                <div class="code-example">
+<span class="keyword">function</span> <span class="function">add7</span>(num) {
+  <span class="comment">// Your code here!</span>
+}
+
+console.log(<span class="function">add7</span>(5));  <span class="comment">// Should output: 12</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Practice Solution 1 -->
+        <div class="slide">
+            <h1>Solution: add7 <span class="emoji">✅</span></h1>
+            <div class="code-example">
+                <span class="keyword">function</span> <span class="function">add7</span>(num) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> num + 7;<br>
+                }<br><br>
+                
+                console.log(<span class="function">add7</span>(5));   <span class="comment">// 12</span><br>
+                console.log(<span class="function">add7</span>(10));  <span class="comment">// 17</span><br>
+                console.log(<span class="function">add7</span>(-3));  <span class="comment">// 4</span>
+            </div>
+            <div class="tip-box">
+                <strong>Key Points:</strong>
+                <ul>
+                    <li>Takes one parameter (num)</li>
+                    <li>Returns the result (important!)</li>
+                    <li>Works with any number</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 19: More Practice -->
+        <div class="slide">
+            <h1>More Practice! <span class="emoji">🎯</span></h1>
+            <div class="activity-box">
+                <h3>Exercise 2: multiply</h3>
+                <p>Write a function that takes 2 numbers and returns their product</p>
+                <div class="code-example">
+<span class="keyword">function</span> <span class="function">multiply</span>(a, b) {
+  <span class="comment">// Your code here!</span>
+}
+                </div>
+                <h3 style="margin-top: 30px;">Exercise 3: capitalize</h3>
+                <p>Takes a string and returns it with only first letter capitalized</p>
+                <div class="code-example">
+<span class="keyword">function</span> <span class="function">capitalize</span>(str) {
+  <span class="comment">// Hint: str[0].toUpperCase() + str.slice(1).toLowerCase()</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Solutions -->
+        <div class="slide">
+            <h1>Solutions <span class="emoji">💡</span></h1>
+            <div class="code-example">
+                <span class="comment">// multiply</span><br>
+                <span class="keyword">function</span> <span class="function">multiply</span>(a, b) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> a * b;<br>
+                }<br><br>
+                
+                <span class="comment">// capitalize</span><br>
+                <span class="keyword">function</span> <span class="function">capitalize</span>(str) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> str[0].toUpperCase() + str.slice(1).toLowerCase();<br>
+                }<br><br>
+                
+                <span class="comment">// lastLetter</span><br>
+                <span class="keyword">function</span> <span class="function">lastLetter</span>(str) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> str[str.length - 1];<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 21: Common Use Cases -->
+        <div class="slide">
+            <h1>Real World Functions <span class="emoji">🌍</span></h1>
+            <h2>Functions You'll Write Often</h2>
+            <div class="code-example">
+                <span class="comment">// Form validation</span><br>
+                <span class="keyword">function</span> <span class="function">isValidEmail</span>(email) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> email.includes(<span class="string">'@'</span>) && email.includes(<span class="string">'.'</span>);<br>
+                }<br><br>
+                
+                <span class="comment">// Format currency</span><br>
+                <span class="keyword">function</span> <span class="function">formatPrice</span>(price) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">'$'</span> + price.toFixed(2);<br>
+                }<br><br>
+                
+                <span class="comment">// Calculate age</span><br>
+                <span class="keyword">function</span> <span class="function">calculateAge</span>(birthYear) {<br>
+                &nbsp;&nbsp;<span class="keyword">const</span> currentYear = <span class="keyword">new</span> Date().getFullYear();<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> currentYear - birthYear;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 22: Best Practices -->
+        <div class="slide">
+            <h1>Function Best Practices <span class="emoji">⭐</span></h1>
+            <div class="best-practices">
+                <h3>✅ DO:</h3>
+                <ul>
+                    <li>Use descriptive names (<code>calculateTotal</code> not <code>calc</code>)</li>
+                    <li>Keep functions small and focused (one task)</li>
+                    <li>Return values instead of just console.log</li>
+                    <li>Use parameters instead of global variables</li>
+                </ul>
+                <h3 style="margin-top: 30px;">❌ DON'T:</h3>
+                <ul>
+                    <li>Make functions too complex (if > 20 lines, split it)</li>
+                    <li>Use vague names (<code>doStuff</code>, <code>thing</code>)</li>
+                    <li>Forget to return values when needed</li>
+                    <li>Modify global variables inside functions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 23: Knowledge Check -->
+        <div class="slide">
+            <h1>Knowledge Check <span class="emoji">✓</span></h1>
+            <h2>Can You Answer These?</h2>
+            <div class="quiz-box">
+                <ol style="font-size: 1.3em; line-height: 2;">
+                    <li>What are functions useful for?</li>
+                    <li>How do you invoke a function?</li>
+                    <li>What's the difference between parameters and arguments?</li>
+                    <li>What is function scope?</li>
+                    <li>What are return values?</li>
+                    <li>What happens after a return statement?</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Review:</strong> If unsure about any of these, let's discuss!
+            </div>
+        </div>
+
+        <!-- Slide 24: Homework -->
+        <div class="slide">
+            <h1>Homework <span class="emoji">📚</span></h1>
+            <h2>Due Next Class</h2>
+            <div class="homework-box">
+                <h3>Read:</h3>
+                <ul>
+                    <li>MDN Article on Functions (focus on Scope section)</li>
+                    <li>JavaScript.info - Function Basics</li>
+                    <li>Article on Return Values</li>
+                </ul>
+                <h3 style="margin-top: 30px;">Practice:</h3>
+                <ul>
+                    <li>Complete all 4 function exercises</li>
+                    <li>Try writing 3 of your own functions</li>
+                    <li>Experiment with parameters and returns</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <strong>Note:</strong> Skip the "loops" sections in readings - we'll cover those next!
+            </div>
+        </div>
+
+        <!-- Slide 25: Closing -->
+        <div class="slide">
+            <h1>Great Work Today! <span class="emoji">🎉</span></h1>
+            <h2>You Can Now Write Functions!</h2>
+            <div class="summary-box">
+                <h3>Today's Achievements:</h3>
+                <ul style="font-size: 1.3em;">
+                    <li>✅ Created reusable functions</li>
+                    <li>✅ Used parameters and arguments</li>
+                    <li>✅ Returned values from functions</li>
+                    <li>✅ Understood function scope</li>
+                    <li>✅ Practiced with real examples</li>
+                </ul>
+            </div>
+            <div class="next-class">
+                <h3>Next Class: Loops & Iteration</h3>
+                <p>We'll learn how to repeat code efficiently!</p>
+            </div>
+            <p style="font-size: 1.4em; margin-top: 40px; text-align: center;">
+                See you next time! Keep coding! 💻
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+</body>
+
+</html>
