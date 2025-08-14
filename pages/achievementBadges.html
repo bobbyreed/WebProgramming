@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement Badge System - CSCI 3403</title>
+    <style>
+        /* OCU Brand Color Variables - Matching your existing theme */
+        :root {
+            /* Primary Colors */
+            --ocu-black: #000000;
+            --ocu-true-blue: #00669b;
+            --ocu-white: #ffffff;
+            
+            /* Secondary Colors */
+            --ocu-dark-blue: #043d5d;
+            --ocu-cyan: #009edb;
+            --ocu-light-blue: #9ddcf9;
+            
+            /* Accent Colors */
+            --ocu-green: #70bf54;
+            --ocu-light-green: #afd46c;
+            --ocu-yellow: #ffc222;
+            
+            /* Theme colors for light mode */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #e8f4f9;
+            --text-primary: #000000;
+            --text-secondary: #043d5d;
+            --text-muted: #666666;
+            --border-color: #009edb;
+            --shadow: rgba(0, 102, 155, 0.15);
+            --card-bg: #ffffff;
+            --gradient-start: #00669b;
+            --gradient-end: #009edb;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-accent: #043d5d;
+            --text-primary: #ffffff;
+            --text-secondary: #9ddcf9;
+            --text-muted: #aaaaaa;
+            --border-color: #009edb;
+            --shadow: rgba(0, 158, 219, 0.3);
+            --card-bg: #1a1a1a;
+            --gradient-start: #043d5d;
+            --gradient-end: #00669b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 20px;
+        }
+
+        /* Admin Header - Matching existing style */
+        .admin-header {
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 2em;
+            background: linear-gradient(120deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: var(--gradient-start);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--ocu-dark-blue);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Card styling matching existing admin panel */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 2px solid var(--ocu-light-blue);
+            margin-bottom: 30px;
+        }
+
+        [data-theme="dark"] .card {
+            border-color: var(--ocu-dark-blue);
+        }
+
+        .card-title {
+            font-size: 1.8em;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Loading Spinner */
+        .loading-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 3px solid var(--bg-secondary);
+            border-top: 3px solid var(--ocu-cyan);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Achievement Overview Section */
+        .achievement-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid var(--ocu-cyan);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--ocu-cyan);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-size: 1.1em;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ocu-green), var(--ocu-light-green));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Badge Grid */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .badge-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .badge-card.locked {
+            opacity: 0.5;
+            filter: grayscale(0.9);
+        }
+
+        .badge-card.unlocked {
+            border-color: var(--ocu-green);
+            box-shadow: 0 5px 15px rgba(112, 191, 84, 0.2);
+        }
+
+        .badge-card.unlocked:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(112, 191, 84, 0.3);
+        }
+
+        .badge-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            background: #e0e0e0;
+        }
+
+        .badge-card.unlocked .badge-icon {
+            background: linear-gradient(135deg, var(--ocu-green), var(--ocu-light-green));
+            color: white;
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(112, 191, 84, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(112, 191, 84, 0); }
+        }
+
+        .badge-name {
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .badge-requirement {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .badge-status {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .badge-card.locked .badge-status {
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .badge-card.unlocked .badge-status {
+            background: var(--ocu-green);
+            color: white;
+        }
+
+        /* Student Selection Dropdown */
+        .student-selector {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .student-dropdown {
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1em;
+            cursor: pointer;
+            min-width: 250px;
+        }
+
+        /* Control Buttons */
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--ocu-true-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ocu-dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--ocu-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: var(--ocu-light-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--ocu-yellow);
+            color: var(--text-primary);
+        }
+
+        .btn-warning:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Unlock Animation Modal */
+        .unlock-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 10000;
+            text-align: center;
+            animation: unlockPop 0.5s ease;
+            border: 3px solid var(--ocu-green);
+        }
+
+        @keyframes unlockPop {
+            0% { 
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .unlock-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .unlock-title {
+            font-size: 2em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .unlock-subtitle {
+            font-size: 1.2em;
+            color: var(--text-muted);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+        }
+
+        /* Admin Mode Indicator */
+        .admin-badge {
+            background: var(--ocu-yellow);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        /* Error State */
+        .error-message {
+            background: #ff5555;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .badges-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .achievement-overview {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <h1 class="admin-title">🏆 Achievement Badge System</h1>
+        <div class="header-controls">
+            <span id="adminIndicator" class="admin-badge" style="display: none;">ADMIN MODE</span>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Student Selector -->
+        <div class="card">
+            <h2 class="card-title">
+                <span>👤</span> Select Student
+            </h2>
+            <div class="student-selector">
+                <select class="student-dropdown" id="studentSelect" onchange="loadStudentData()">
+                    <option value="">Loading students...</option>
+                </select>
+                <button class="control-btn btn-primary" onclick="refreshStudentList()">↻ Refresh</button>
+                <button class="control-btn btn-success" id="addPointsBtn" onclick="addTestPoints()" style="display:none;">+100 Test Points</button>
+                <button class="control-btn btn-warning" id="syncBtn" onclick="syncBadges()" style="display:none;">Sync Badges</button>
+            </div>
+            <div id="errorMessage"></div>
+        </div>
+
+        <!-- Achievement Overview -->
+        <div class="card">
+            <h2 class="card-title">
+                <span>📊</span> Achievement Overview
+            </h2>
+            <div class="achievement-overview">
+                <div class="stat-card">
+                    <div class="stat-value" id="currentPoints">0</div>
+                    <div class="stat-label">Current Points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="unlockedBadges">0</div>
+                    <div class="stat-label">Badges Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalBadges">12</div>
+                    <div class="stat-label">Total Badges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completion">0%</div>
+                    <div class="stat-label">Completion</div>
+                </div>
+            </div>
+            
+            <!-- Progress to Next Badge -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span>Progress to Next Badge</span>
+                    <span id="nextBadgeInfo">0 / 0 points</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Badges Grid -->
+        <div class="card">
+            <h2 class="card-title">
+                <span>🎖️</span> Achievement Badges
+            </h2>
+            <div class="badges-grid" id="badgesGrid">
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <p>Loading badges...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
+        const API_BASE = 'https://api.github.com/gists';
+        const FUNCTION_URL = '/.netlify/functions/update-points';
+
+        // Badge definitions with OCU-themed milestones
+        const badges = [
+            { id: 'badge_first_steps', name: "First Steps", icon: "🌱", points: 10, description: "Begin your journey" },
+            { id: 'badge_quick_learner', name: "Quick Learner", icon: "📚", points: 25, description: "Show dedication" },
+            { id: 'badge_rising_star', name: "Rising Star", icon: "⭐", points: 50, description: "Stand out from the crowd" },
+            { id: 'badge_problem_solver', name: "Problem Solver", icon: "🧩", points: 100, description: "Master the basics" },
+            { id: 'badge_code_warrior', name: "Code Warrior", icon: "⚔️", points: 200, description: "Fight through challenges" },
+            { id: 'badge_achiever', name: "Achiever", icon: "🎯", points: 350, description: "Hit your targets" },
+            { id: 'badge_expert', name: "Expert", icon: "💎", points: 500, description: "Show expertise" },
+            { id: 'badge_master', name: "Master", icon: "🏅", points: 750, description: "Master your craft" },
+            { id: 'badge_champion', name: "Champion", icon: "🏆", points: 1000, description: "Become a champion" },
+            { id: 'badge_elite', name: "Elite", icon: "👑", points: 1500, description: "Join the elite" },
+            { id: 'badge_legend', name: "Legend", icon: "🌟", points: 2000, description: "Become legendary" },
+            { id: 'badge_ocu_hero', name: "OCU Hero", icon: "🦅", points: 3000, description: "Ultimate achievement" }
+        ];
+
+        // State management
+        let studentsData = new Map();
+        let currentStudent = null;
+        let isAdmin = false;
+        let masterConfig = null;
+
+        // Initialize the system
+        async function init() {
+            // Check admin status
+            isAdmin = !!localStorage.getItem('csci3403_admin');
+            if (isAdmin) {
+                document.getElementById('adminIndicator').style.display = 'inline-block';
+                document.getElementById('addPointsBtn').style.display = 'inline-block';
+                document.getElementById('syncBtn').style.display = 'inline-block';
+            }
+
+            // Load theme
+            updateTheme();
+            
+            // Fetch all students
+            await fetchAllStudents();
+            
+            // Render empty badges
+            renderBadges();
+        }
+
+        // Fetch all students from GitHub Gists
+        async function fetchAllStudents() {
+            try {
+                showError('');
+                
+                // Show loading in dropdown
+                const select = document.getElementById('studentSelect');
+                select.innerHTML = '<option value="">Loading students...</option>';
+
+                // Fetch master config - PUBLIC READ, no auth needed
+                const response = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch config: ${response.status}`);
+                }
+                
+                const gist = await response.json();
+                
+                if (!gist.files || !gist.files['csci3403-config.json']) {
+                    throw new Error('Config file not found');
+                }
+                
+                masterConfig = JSON.parse(gist.files['csci3403-config.json'].content);
+                
+                if (!masterConfig.students || Object.keys(masterConfig.students).length === 0) {
+                    select.innerHTML = '<option value="">No students enrolled</option>';
+                    return;
+                }
+
+                // Fetch all student data in parallel
+                const studentPromises = Object.entries(masterConfig.students).map(async ([studentId, gistId]) => {
+                    try {
+                        const studentResponse = await fetch(`${API_BASE}/${gistId}`);
+                        
+                        if (!studentResponse.ok) {
+                            console.error(`Failed to fetch data for ${studentId}`);
+                            return null;
+                        }
+                        
+                        const studentGist = await studentResponse.json();
+                        
+                        if (!studentGist.files || !studentGist.files['student-data.json']) {
+                            console.error(`No data file for ${studentId}`);
+                            return null;
+                        }
+                        
+                        const data = JSON.parse(studentGist.files['student-data.json'].content);
+                        
+                        // Ensure achievements array exists
+                        if (!data.achievements) {
+                            data.achievements = [];
+                        }
+                        
+                        // Store complete data
+                        studentsData.set(studentId, {
+                            id: studentId,
+                            gistId: gistId,
+                            name: data.name || studentId,
+                            points: data.points || 0,
+                            achievements: data.achievements || [],
+                            data: data
+                        });
+                        
+                        return studentId;
+                    } catch (error) {
+                        console.error(`Error fetching student ${studentId}:`, error);
+                        return null;
+                    }
+                });
+
+                await Promise.all(studentPromises);
+                
+                // Populate dropdown
+                populateStudentDropdown();
+                
+            } catch (error) {
+                console.error('Error fetching students:', error);
+                showError('Failed to load student data. Please refresh the page.');
+            }
+        }
+
+        // Populate student dropdown
+        function populateStudentDropdown() {
+            const select = document.getElementById('studentSelect');
+            select.innerHTML = '<option value="">Select a student...</option>';
+            
+            // Sort students by name
+            const sortedStudents = Array.from(studentsData.values()).sort((a, b) => 
+                a.name.localeCompare(b.name)
+            );
+            
+            sortedStudents.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = `${student.name} (${student.points} pts)`;
+                select.appendChild(option);
+            });
+        }
+
+        // Load selected student data
+        function loadStudentData() {
+            const select = document.getElementById('studentSelect');
+            const studentId = select.value;
+            
+            if (!studentId) {
+                currentStudent = null;
+                updateDisplay();
+                return;
+            }
+            
+            currentStudent = studentsData.get(studentId);
+            updateDisplay();
+        }
+
+        // Update display with current student data
+        function updateDisplay() {
+            if (!currentStudent) {
+                document.getElementById('currentPoints').textContent = '0';
+                document.getElementById('unlockedBadges').textContent = '0';
+                document.getElementById('completion').textContent = '0%';
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('nextBadgeInfo').textContent = 'Select a student';
+                renderBadges();
+                return;
+            }
+
+            // Calculate unlocked badges based on points
+            const unlockedBadgeIds = badges
+                .filter(badge => currentStudent.points >= badge.points)
+                .map(badge => badge.id);
+
+            // Update stats
+            document.getElementById('currentPoints').textContent = currentStudent.points.toLocaleString();
+            document.getElementById('unlockedBadges').textContent = unlockedBadgeIds.length;
+            const completion = Math.round((unlockedBadgeIds.length / badges.length) * 100);
+            document.getElementById('completion').textContent = `${completion}%`;
+
+            // Update progress bar
+            const nextBadge = badges.find(b => currentStudent.points < b.points);
+            if (nextBadge) {
+                const prevBadge = badges.filter(b => b.points <= currentStudent.points).pop();
+                const prevPoints = prevBadge ? prevBadge.points : 0;
+                const progress = ((currentStudent.points - prevPoints) / (nextBadge.points - prevPoints)) * 100;
+                document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+                document.getElementById('nextBadgeInfo').textContent = 
+                    `${currentStudent.points} / ${nextBadge.points} points`;
+            } else {
+                document.getElementById('progressBar').style.width = '100%';
+                document.getElementById('nextBadgeInfo').textContent = 'All badges unlocked! 🎉';
+            }
+
+            renderBadges();
+        }
+
+        // Render all badges
+        function renderBadges() {
+            const grid = document.getElementById('badgesGrid');
+            grid.innerHTML = '';
+
+            badges.forEach(badge => {
+                const isUnlocked = currentStudent && currentStudent.points >= badge.points;
+                const badgeEl = document.createElement('div');
+                badgeEl.className = `badge-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+                badgeEl.innerHTML = `
+                    <div class="badge-icon">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                    <div class="badge-requirement">${badge.points.toLocaleString()} points</div>
+                    <div class="badge-status">${isUnlocked ? 'EARNED' : 'LOCKED'}</div>
+                `;
+                grid.appendChild(badgeEl);
+            });
+        }
+
+        // Add test points (Admin only)
+        async function addTestPoints() {
+            if (!currentStudent || !isAdmin) {
+                alert('Please select a student first!');
+                return;
+            }
+
+            const previousUnlocked = badges.filter(b => currentStudent.points >= b.points);
+            currentStudent.points += 100;
+            
+            // Check for newly unlocked badges
+            const newlyUnlocked = badges.filter(b => 
+                currentStudent.points >= b.points && 
+                !previousUnlocked.includes(b)
+            );
+
+            // Update the student's data
+            currentStudent.data.points = currentStudent.points;
+            
+            // Add new badges to achievements
+            newlyUnlocked.forEach(badge => {
+                if (!currentStudent.data.achievements.includes(badge.id)) {
+                    currentStudent.data.achievements.push(badge.id);
+                }
+            });
+
+            // Save to GitHub via Netlify function
+            try {
+                const response = await fetch(FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'updateStudent',
+                        studentId: currentStudent.id,
+                        gistId: currentStudent.gistId,
+                        updateData: currentStudent.data
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update student data');
+                }
+
+                // Show unlock animations
+                newlyUnlocked.forEach((badge, index) => {
+                    setTimeout(() => showUnlockAnimation(badge), index * 500);
+                });
+
+                // Update display
+                updateDisplay();
+                
+                // Update dropdown
+                populateStudentDropdown();
+                document.getElementById('studentSelect').value = currentStudent.id;
+                
+            } catch (error) {
+                console.error('Error updating points:', error);
+                showError('Failed to save points. Changes are local only.');
+            }
+        }
+
+        // Sync badges with current points (Admin only)
+        async function syncBadges() {
+            if (!currentStudent || !isAdmin) {
+                alert('Please select a student first!');
+                return;
+            }
+
+            // Recalculate all badges based on current points
+            const earnedBadges = badges
+                .filter(badge => currentStudent.points >= badge.points)
+                .map(badge => badge.id);
+
+            currentStudent.data.achievements = earnedBadges;
+
+            // Save to GitHub
+            try {
+                const response = await fetch(FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'updateStudent',
+                        studentId: currentStudent.id,
+                        gistId: currentStudent.gistId,
+                        updateData: currentStudent.data
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to sync badges');
+                }
+
+                alert('Badges synced successfully!');
+                updateDisplay();
+                
+            } catch (error) {
+                console.error('Error syncing badges:', error);
+                showError('Failed to sync badges.');
+            }
+        }
+
+        // Show unlock animation
+        function showUnlockAnimation(badge) {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            
+            const modal = document.createElement('div');
+            modal.className = 'unlock-modal';
+            modal.innerHTML = `
+                <div class="unlock-icon">${badge.icon}</div>
+                <div class="unlock-title">Badge Unlocked!</div>
+                <div class="unlock-subtitle">${badge.name}</div>
+            `;
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+
+            setTimeout(() => {
+                overlay.remove();
+                modal.remove();
+            }, 2500);
+        }
+
+        // Refresh student list
+        async function refreshStudentList() {
+            await fetchAllStudents();
+            if (currentStudent) {
+                document.getElementById('studentSelect').value = currentStudent.id;
+                loadStudentData();
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            if (message) {
+                errorDiv.innerHTML = `<div class="error-message">${message}</div>`;
+            } else {
+                errorDiv.innerHTML = '';
+            }
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('ocuTheme', newTheme);
+            
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+
+        // Update theme on load
+        function updateTheme() {
+            const savedTheme = localStorage.getItem('ocuTheme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            if (!isAdmin) { // Only auto-refresh if not in admin mode
+                refreshStudentList();
+            }
+        }, 30000);
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
