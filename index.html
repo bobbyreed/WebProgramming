@@ -3,62 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Programming - CSCI 3403</title>
+    <title>CSCI 3403 - Web Programming</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-    <link rel="stylesheet" href="./styles/auth.css">
+    <link rel="stylesheet" href="styles/auth.css">
     <style>
-        /* OCU Brand Colors */
         :root {
-            --ocu-black: #000000;
-            --ocu-true-blue: #00669b;
-            --ocu-white: #ffffff;
-            --ocu-dark-blue: #043d5d;
-            --ocu-cyan: #009edb;
-            --ocu-light-blue: #9ddcf9;
-            --ocu-green: #70bf54;
-            --ocu-light-green: #afd46c;
-            --ocu-yellow: #ffc222;
+            /* OCU Brand Colors */
+            --ocu-dark-blue: #002855;
+            --ocu-true-blue: #0047AB;
+            --ocu-light-blue: #5E9ED6;
+            --ocu-cyan: #00B4D8;
+            --ocu-light-green: #90EE90;
+            --ocu-yellow: #FFD700;
             
-            /* Light mode (default) */
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --text-primary: #000000;
-            --text-secondary: #043d5d;
-            --text-muted: #666666;
+            /* Light Theme Colors */
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #546e7a;
+            --text-muted: #78909c;
+            --border-color: #e0e0e0;
             --card-bg: #ffffff;
-            --gradient-start: #00669b;
-            --gradient-end: #009edb;
-            --shadow: rgba(0, 102, 155, 0.2);
-            --link-color: #00669b;
-            --link-hover: #043d5d;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --link-color: #0047AB;
+            --link-hover: #002855;
         }
         
         [data-theme="dark"] {
-            --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: #9ddcf9;
-            --text-muted: #aaaaaa;
-            --card-bg: #1a1a1a;
-            --gradient-start: #043d5d;
-            --gradient-end: #00669b;
-            --shadow: rgba(0, 158, 219, 0.3);
-            --link-color: #009edb;
-            --link-hover: #9ddcf9;
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #2a2a3e;
+            --card-bg: #0f3460;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --link-color: #5E9ED6;
+            --link-hover: #00B4D8;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            background: linear-gradient(135deg, var(--ocu-dark-blue) 0%, var(--ocu-true-blue) 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #0a0a0a 0%, var(--ocu-dark-blue) 100%);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         /* Theme Toggle */
@@ -67,23 +71,23 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            background: var(--card-bg);
-            padding: 10px;
-            border-radius: 30px;
-            box-shadow: 0 4px 10px var(--shadow);
             display: flex;
             align-items: center;
             gap: 10px;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 6px var(--shadow);
         }
         
         .theme-toggle-label {
             color: var(--text-primary);
             font-size: 0.9em;
-            user-select: none;
         }
         
         .theme-switch {
             position: relative;
+            display: inline-block;
             width: 60px;
             height: 30px;
         }
@@ -108,36 +112,26 @@
         
         .theme-slider:before {
             position: absolute;
-            content: "☀️";
-            height: 24px;
-            width: 24px;
-            left: 3px;
-            bottom: 3px;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
         }
         
         input:checked + .theme-slider {
-            background-color: var(--ocu-dark-blue);
+            background-color: var(--ocu-cyan);
         }
         
         input:checked + .theme-slider:before {
             transform: translateX(30px);
-            content: "🌙";
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
         }
         
         header {
-            background: var(--card-bg);
+            background: var(--bg-secondary);
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 60px var(--shadow);
@@ -183,6 +177,19 @@
             overflow: hidden;
         }
         
+        .lecture-card.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .lecture-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+        }
+        
         .lecture-card::before {
             content: '';
             position: absolute;
@@ -193,7 +200,7 @@
             background: linear-gradient(90deg, var(--ocu-true-blue) 0%, var(--ocu-cyan) 100%);
         }
         
-        .lecture-card:hover {
+        .lecture-card:not(.locked):hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px var(--shadow);
         }
@@ -230,11 +237,16 @@
             transition: all 0.3s ease;
         }
         
+        .lecture-card.locked a {
+            background: #ccc;
+            pointer-events: none;
+        }
+        
         [data-theme="dark"] .lecture-card a {
             background: linear-gradient(135deg, var(--ocu-dark-blue) 0%, var(--ocu-true-blue) 100%);
         }
         
-        .lecture-card a:hover {
+        .lecture-card:not(.locked) a:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px var(--shadow);
         }
@@ -255,6 +267,18 @@
         .status-coming {
             background: var(--ocu-yellow);
             color: var(--ocu-dark-blue);
+        }
+        
+        .status-locked {
+            background: #ccc;
+            color: #666;
+        }
+        
+        .lecture-date {
+            display: block;
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
         }
         
         .info-section {
@@ -336,36 +360,18 @@
         </label>
         <span class="theme-toggle-label">Dark</span>
     </div>
+    
     <!--Auth-->
-<div id="auth-section" class="auth-container">
-    <div class="auth-form">
-        <input type="text" id="student-id" placeholder="Student ID" />
-        <input type="password" id="class-pin" placeholder="Class PIN" />
-        <button onclick="handleLogin()">Login</button>
+    <div id="auth-section" class="auth-container">
+        <div class="auth-form">
+            <input type="text" id="student-id" placeholder="Student ID" />
+            <input type="password" id="class-pin" placeholder="Class PIN" />
+            <button onclick="handleLogin()">Login</button>
+        </div>
     </div>
-</div>
 
-<div id="user-info" style="display: none;"></div>
+    <div id="user-info" style="display: none;"></div>
 
-<script>
-async function handleLogin() {
-    const studentId = document.getElementById('student-id').value;
-    const pin = document.getElementById('class-pin').value;
-    
-    if (!studentId || !pin) {
-        alert('Please enter both Student ID and PIN');
-        return;
-    }
-    
-    const success = await auth.authenticate(studentId, pin);
-    if (success) {
-        alert('Welcome to CSCI 3403!');
-        location.reload();
-    } else {
-        alert('Invalid credentials');
-    }
-}
-</script>
     <div class="container">
         <header>
             <h1>Web Programming</h1>
@@ -378,316 +384,166 @@ async function handleLogin() {
             <p class="subtitle">Welcome to the course! This course serves as an introduction to creating and maintaining <em>mostly</em> frontend web technologies. We will dive into some server work, but will save most of it for Advanced Web Programming (The course after this one).</p>
             <br>
             <a href="./pages/leaderboard.html" style="
-                        background: linear-gradient(135deg, #FFD700, #FFA500);
-                        color: #333;
-                        padding: 10px 20px;
-                        border-radius: 25px;
-                        text-decoration: none;
-                        font-weight: bold;
-                        margin-left: 33%;
-                    ">
-                        🏆 Leaderboard
-                    </a>
+                background: linear-gradient(135deg, #FFD700, #FFA500);
+                color: #333;
+                padding: 10px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: bold;
+                margin-left: 33%;
+            ">
+                🏆 Leaderboard
+            </a>
         </div>
         
-        <div class="lectures-grid">
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 1</span>
-                <h3>Course Introduction</h3>
-                <p>Icebreaking coding challenge and introduction to the Odin Project.</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-coming">Coming Soon</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 2</span>
-                <h3>How the Web Works</h3>
-                <p>Understanding the internet, DNS, packets, client-server architecture, and what happens when you search Google.</p>
-                <a href="./pages/2HowTheWebWorks.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 3</span>
-                <h3>HTML Elements and Tags</h3>
-                <p>Learning the building blocks of HTML - elements, tags, void elements, and how to structure content.</p>
-                <a href="./pages/3HTMLElementsAndTags.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 4</span>
-                <h3>HTML Boilerplate</h3>
-                <p>Understanding the essential structure every HTML document needs, including DOCTYPE, head, and body
-                    elements.</p>
-                <a href="./pages/4HTMLBoilerplate.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 5</span>
-                <h3>Working with Text</h3>
-                <p>Creating paragraphs, headings, bold and italic text, proper nesting, and HTML comments.</p>
-                <a href="./pages/5HTMLWorkingWithText.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 6</span>
-                <h3>Lists, Links, and Images</h3>
-                <p>Building navigation with lists, creating links between pages, and embedding images with proper
-                    accessibility.</p>
-                <a href="./pages/6HTMLListsLinksImages.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 7</span>
-                <h3>Writing Good Commits</h3>
-                <p>Best practices for Git commit messages, version control workflow, and Recipe Project work session.
-                </p>
-                <a href="./pages/7WritingGoodCommits.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 8</span>
-                <h3>CSS Foundations</h3>
-                <p>Introduction to CSS, selectors, properties, and beginning to style our HTML pages.</p>
-                <a href="./pages/8IntrotoCSS.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 9</span>
-                <h3>The Cascade</h3>
-                <p>Understanding CSS specificity, inheritance, and how styles cascade through your documents.</p>
-                <a href="./pages/9CSSTheCascade.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 10</span>
-                <h3>Browser Developer Tools</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, placeat. Commodi ratione accusantium deleniti corrupti soluta cumque dolores sunt distinctio necessitatibus officia quaerat nesciunt explicabo possimus eius, adipisci aspernatur voluptatum.</p>
-                <a href="./pages/10BrowserDeveloperTools.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 11</span>
-                <h3>The Box Model</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/11CSSTheBoxModel.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 12</span>
-                <h3>CSS - Block and Inline</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/12CSSBlockandInline.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 13</span>
-                <h3>CSS Flexbox</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="./pages/13CSSFlexbox.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 14</span>
-                <h3>CSS Flexbox part deux</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/14CSSFlexbox2.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 15</span>
-                <h3>Midterm Review</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="./pages/15MidtermReview.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 16</span>
-                <h3>Landing Page - Work Session</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/16LandingPage.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 17</span>
-                <h3>Javascript Intro</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="./pages/17Javascript.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 18</span>
-                <h3>JavaScript Environment Setup</h3>
-                <p>Let's dive into Node.js and when to use and not ta use</p>
-                <a href="./pages/18JSEnvironmentSetup.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 19</span>
-                <h3>JavaScript Data types and Conditionals</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, placeat. Commodi ratione accusantium deleniti corrupti soluta cumque dolores sunt distinctio necessitatibus officia quaerat nesciunt explicabo possimus eius, adipisci aspernatur voluptatum.</p>
-                <a href="./pages/19JSDataTypesandConditionals.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-           <div class="lecture-card">
-                <span class="lecture-number">Lecture 20</span>
-                <h3>JavaScript Developer Tools</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/20JSDeveloperTools.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 21</span>
-                <h3>JavaScript Functions</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="./pages/21JSFunctions.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-           <div class="lecture-card">
-                <span class="lecture-number">Lecture 22</span>
-                <h3>JavaScript let vs. var vs. const</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/22JSLetVarConst.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 23</span>
-                <h3>JavaScript Errors</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="./pages/23JSErrors.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-           <div class="lecture-card">
-                <span class="lecture-number">Lecture 24</span>
-                <h3>JavaScript Clean Code</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="./pages/24JSCleanCode.html">View Lecture</a>
-                <span class="status-badge status-ready">Ready</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 25</span>
-                <h3>JavaScript Loops and Arrays</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-ready">Coming Soon</span>
-            </div>
-             <div class="lecture-card">
-                <span class="lecture-number">Lecture 26</span>
-                <h3>JavaScript30</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-coming">Coming Soon</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 27</span>
-                <h3>JavaScript Exercises</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-ready">Coming Soon</span>
-            </div>
-           <div class="lecture-card">
-                <span class="lecture-number">Lecture 28</span>
-                <h3>JavaScript Project: Etch-a-Sketch</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-coming">Coming Soon</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 29</span>
-                <h3>JavaScript Objects</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-ready">Coming Soon</span>
-            </div>
-           <div class="lecture-card">
-                <span class="lecture-number">Lecture 30</span>
-                <h3>Final Exam Review</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident porro atque ad temporibus vitae ut alias debitis ratione neque dolore blanditiis natus odio minus eveniet sequi, voluptates in qui perspiciatis?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-coming">Coming Soon</span>
-            </div>
-            <div class="lecture-card">
-                <span class="lecture-number">Lecture 31</span>
-                <h3>Final Boss</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt incidunt laudantium nam velit ducimus porro amet recusandae facilis perspiciatis ut earum, iure, nobis mollitia sit dolore repellat natus! Repellendus?</p>
-                <a href="#">View Lecture</a>
-                <span class="status-badge status-ready">Coming Soon</span>
-            </div>
+        <div class="lectures-grid" id="lectures-container">
+            <!-- Lectures will be dynamically generated here -->
         </div>
-        
-        <div class="info-section">
-            <h2>🛠️ Resources</h2>
-            <ul>
-                <li><a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a></li>
-                <li>Email: <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></li>
-            </ul><br>
-            <a href="./pages/leaderboard.html" style="
-                        background: linear-gradient(135deg, #FFD700, #FFA500);
-                        color: #333;
-                        padding: 10px 20px;
-                        border-radius: 25px;
-                        text-decoration: none;
-                        font-weight: bold;
-                        margin-left: 33%;
-                    ">
-                        🏆 Leaderboard
-                    </a>
-        </div>
-        
         
         <footer>
-            <p>&copy; 2025 bobby reed </p>
-            <p>Contact: <a href="mailto:bobby.reed@okcu.edu">bobby.reed@okcu.edu</a></p>
+            <p>© 2025 Oklahoma City University • Computer Science Department</p>
         </footer>
     </div>
-    
+
     <script>
-        // Theme toggle functionality - uses same key as lecture pages
-        const currentTheme = localStorage.getItem('ocuTheme') || 'light';
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        
-        const themeCheckbox = document.getElementById('theme-checkbox');
-        themeCheckbox.checked = currentTheme === 'dark';
-        
-        themeCheckbox.addEventListener('change', function() {
-            const theme = this.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('ocuTheme', theme);
-        });
-        
-        // Check for authentication
-        function checkLectureAccess() {
-        const authData = localStorage.getItem('csci3403_auth');
-        
-        if (!authData) {
-            // Not authenticated - disable all lecture links
-            document.querySelectorAll('.lecture-card a').forEach(link => {
-                link.style.pointerEvents = 'none';
-                link.style.opacity = '0.5';
-                link.textContent = 'Login Required';
-            });
-        } else {
-            // Authenticated - lectures available
-            console.log('User authenticated - lectures available');
+        // Lecture data with dates (Tuesdays and Thursdays)
+        const lectures = [
+            { number: 1, date: '2025-08-02', title: 'Course Introduction', description: 'Icebreaking coding challenge and introduction to the Odin Project.', href: '#', status: 'coming' },
+            { number: 2, date: '2025-08-04', title: 'How the Web Works', description: 'Understanding the internet, DNS, packets, client-server architecture, and what happens when you search Google.', href: './pages/2HowTheWebWorks.html', status: 'ready' },
+            { number: 3, date: '2025-09-02', title: 'HTML Elements and Tags', description: 'Learning the building blocks of HTML - elements, tags, void elements, and how to structure content.', href: './pages/3HTMLElementsAndTags.html', status: 'ready' },
+            { number: 4, date: '2025-09-04', title: 'HTML Boilerplate', description: 'Understanding the essential structure every HTML document needs, including DOCTYPE, head, and body elements.', href: './pages/4HTMLBoilerplate.html', status: 'ready' },
+            { number: 5, date: '2025-09-09', title: 'Working with Text', description: 'Creating paragraphs, headings, bold and italic text, proper nesting, and HTML comments.', href: './pages/5HTMLWorkingWithText.html', status: 'ready' },
+            { number: 6, date: '2025-09-11', title: 'Lists, Links, and Images', description: 'Building navigation with lists, creating links between pages, and embedding images with proper accessibility.', href: './pages/6HTMLListsLinksImages.html', status: 'ready' },
+            { number: 7, date: '2025-09-16', title: 'Writing Good Commits', description: 'Best practices for Git commit messages, version control workflow, and Recipe Project work session.', href: './pages/7WritingGoodCommits.html', status: 'ready' },
+            { number: 8, date: '2025-09-18', title: 'CSS Foundations', description: 'Introduction to CSS, selectors, properties, and beginning to style our HTML pages.', href: './pages/8IntrotoCSS.html', status: 'ready' },
+            { number: 9, date: '2025-09-23', title: 'The Cascade', description: 'Understanding CSS specificity, inheritance, and how styles cascade through your documents.', href: './pages/9CSSTheCascade.html', status: 'ready' },
+            { number: 10, date: '2025-09-25', title: 'Browser Developer Tools', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, placeat.', href: './pages/10BrowserDeveloperTools.html', status: 'ready' },
+            { number: 11, date: '2025-09-30', title: 'The Box Model', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/11CSSTheBoxModel.html', status: 'ready' },
+            { number: 12, date: '2025-10-02', title: 'CSS - Block and Inline', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/12CSSBlockandInline.html', status: 'ready' },
+            { number: 13, date: '2025-10-07', title: 'CSS Flexbox', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/13CSSFlexbox.html', status: 'ready' },
+            { number: 14, date: '2025-10-09', title: 'CSS Flexbox part deux', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/14CSSFlexbox2.html', status: 'ready' },
+            { number: 15, date: '2025-10-14', title: 'Midterm Review', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/15MidtermReview.html', status: 'ready' },
+            { number: 16, date: '2025-10-16', title: 'Landing Page - Work Session', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/16LandingPage.html', status: 'ready' },
+            { number: 17, date: '2025-10-21', title: 'No Class - Fall Break', description: 'Enjoy your break!', href: '#', status: 'coming' },
+            { number: 18, date: '2025-10-23', title: 'Javascript Intro', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/17Javascript.html', status: 'ready' },
+            { number: 19, date: '2025-10-28', title: 'JavaScript Environment Setup', description: "Let's dive into Node.js and when to use and not to use", href: './pages/18JSEnvironmentSetup.html', status: 'ready' },
+            { number: 20, date: '2025-10-30', title: 'JavaScript Data types and Conditionals', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/19JSDataTypesandConditionals.html', status: 'ready' },
+            { number: 21, date: '2025-11-04', title: 'JavaScript Developer Tools', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/20JSDeveloperTools.html', status: 'ready' },
+            { number: 22, date: '2025-11-06', title: 'JavaScript Functions', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/21JSFunctions.html', status: 'ready' },
+            { number: 23, date: '2025-11-11', title: 'JavaScript let vs. var vs. const', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/22JSLetVarConst.html', status: 'ready' },
+            { number: 24, date: '2025-11-13', title: 'JavaScript Errors', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/23JSErrors.html', status: 'ready' },
+            { number: 25, date: '2025-11-18', title: 'JavaScript Clean Code', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/24JSCleanCode.html', status: 'ready' },
+            { number: 26, date: '2025-11-20', title: 'JavaScript Loops and Arrays', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 27, date: '2025-11-25', title: 'JavaScript30', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 28, date: '2025-11-27', title: 'No Class - Thanksgiving', description: 'Happy Thanksgiving!', href: '#', status: 'coming' },
+            { number: 29, date: '2025-12-02', title: 'JavaScript Exercises', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 30, date: '2025-12-04', title: 'JavaScript Project: Etch-a-Sketch', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 31, date: '2025-12-09', title: 'JavaScript Objects', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 32, date: '2025-12-11', title: 'Final Exam Review', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' }
+        ];
+
+        // Function to check if lecture should be available
+        function isLectureAvailable(lectureDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const lecDate = new Date(lectureDate);
+            lecDate.setHours(0, 0, 0, 0);
+            
+            return today >= lecDate;
         }
-    }
-    
-    // Run on page load
-    document.addEventListener('DOMContentLoaded', checkLectureAccess);
+
+        // Function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Function to render lectures
+        function renderLectures() {
+            const container = document.getElementById('lectures-container');
+            container.innerHTML = '';
+            
+            lectures.forEach(lecture => {
+                const isAvailable = isLectureAvailable(lecture.date);
+                const card = document.createElement('div');
+                card.className = `lecture-card ${!isAvailable ? 'locked' : ''}`;
+                
+                let statusBadge = '';
+                if (!isAvailable) {
+                    statusBadge = '<span class="status-badge status-locked">Locked</span>';
+                } else if (lecture.status === 'ready') {
+                    statusBadge = '<span class="status-badge status-ready">Available</span>';
+                } else {
+                    statusBadge = '<span class="status-badge status-coming">Coming Soon</span>';
+                }
+                
+                card.innerHTML = `
+                    <span class="lecture-number">Lecture ${lecture.number}</span>
+                    <span class="lecture-date">${formatDate(lecture.date)}</span>
+                    <h3>${lecture.title}</h3>
+                    <p>${lecture.description}</p>
+                    ${isAvailable ? `<a href="${lecture.href}">View Lecture</a>` : '<a href="#">Locked Until ' + formatDate(lecture.date) + '</a>'}
+                    ${statusBadge}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Authentication script
+        async function handleLogin() {
+            const studentId = document.getElementById('student-id').value;
+            const pin = document.getElementById('class-pin').value;
+            
+            if (!studentId || !pin) {
+                alert('Please enter both Student ID and PIN');
+                return;
+            }
+            
+            // Simple authentication (you should replace this with actual authentication)
+            if (pin === '3403') {
+                localStorage.setItem('csci3403_auth', JSON.stringify({ studentId, authenticated: true }));
+                document.getElementById('auth-section').style.display = 'none';
+                alert('Welcome to CSCI 3403!');
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        // Check authentication on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const authData = localStorage.getItem('csci3403_auth');
+            if (authData) {
+                const auth = JSON.parse(authData);
+                if (auth.authenticated) {
+                    document.getElementById('auth-section').style.display = 'none';
+                }
+            }
+            
+            // Render lectures
+            renderLectures();
+            
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-checkbox');
+            const currentTheme = localStorage.getItem('theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
     </script>
-    
-    <script src="./js/auth.js"></script>
 </body>
 </html>
