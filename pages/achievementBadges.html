@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achievement Badge System - CSCI 3403</title>
+    <title>Achievement Badges - CSCI 3403</title>
     <style>
-        /* OCU Brand Color Variables - Matching your existing theme */
+        /* OCU Brand Color Variables */
         :root {
-            /* Primary Colors */
             --ocu-black: #000000;
             --ocu-true-blue: #00669b;
             --ocu-white: #ffffff;
-            
-            /* Secondary Colors */
             --ocu-dark-blue: #043d5d;
             --ocu-cyan: #009edb;
             --ocu-light-blue: #9ddcf9;
-            
-            /* Accent Colors */
             --ocu-green: #70bf54;
             --ocu-light-green: #afd46c;
             --ocu-yellow: #ffc222;
-            
-            /* Theme colors for light mode */
             --bg-primary: #ffffff;
             --bg-secondary: #f8f9fa;
             --bg-accent: #e8f4f9;
@@ -36,7 +29,6 @@
             --gradient-end: #009edb;
         }
 
-        /* Dark mode variables */
         [data-theme="dark"] {
             --bg-primary: #000000;
             --bg-secondary: #1a1a1a;
@@ -65,7 +57,6 @@
             padding: 20px;
         }
 
-        /* Admin Header - Matching existing style */
         .admin-header {
             background: var(--card-bg);
             padding: 20px 30px;
@@ -85,7 +76,7 @@
             background-clip: text;
         }
 
-        .header-controls {
+        .admin-controls {
             display: flex;
             gap: 15px;
             align-items: center;
@@ -99,20 +90,17 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
-            transition: background 0.3s ease;
         }
 
         .theme-toggle:hover {
             background: var(--ocu-dark-blue);
         }
 
-        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Card styling matching existing admin panel */
         .card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -135,29 +123,49 @@
             gap: 10px;
         }
 
-        /* Loading Spinner */
-        .loading-container {
-            text-align: center;
-            padding: 40px;
+        .student-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .spinner {
-            border: 3px solid var(--bg-secondary);
-            border-top: 3px solid var(--ocu-cyan);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        .student-dropdown {
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1em;
+            cursor: pointer;
+            min-width: 250px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .control-btn {
+            padding: 10px 20px;
+            background: var(--ocu-true-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
         }
 
-        /* Achievement Overview Section */
-        .achievement-overview {
+        .control-btn:hover {
+            background: var(--ocu-dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.add-points {
+            background: var(--ocu-green);
+        }
+
+        .control-btn.add-points:hover {
+            background: var(--ocu-light-green);
+        }
+
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
@@ -181,10 +189,8 @@
         .stat-label {
             color: var(--text-muted);
             margin-top: 5px;
-            font-size: 1.1em;
         }
 
-        /* Progress Bar */
         .progress-container {
             background: var(--bg-secondary);
             border-radius: 15px;
@@ -205,7 +211,6 @@
             background: #e0e0e0;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
         }
 
         .progress-fill {
@@ -224,12 +229,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             animation: shimmer 2s infinite;
         }
 
@@ -238,12 +238,10 @@
             100% { transform: translateX(100%); }
         }
 
-        /* Badge Grid */
         .badges-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
         }
 
         .badge-card {
@@ -252,8 +250,8 @@
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
             border: 2px solid transparent;
+            position: relative;
         }
 
         .badge-card.locked {
@@ -324,80 +322,32 @@
             color: white;
         }
 
-        /* Student Selection Dropdown */
-        .student-selector {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
         }
 
-        .student-dropdown {
-            padding: 10px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-size: 1em;
-            cursor: pointer;
-            min-width: 250px;
+        .spinner {
+            border: 3px solid var(--bg-secondary);
+            border-top: 3px solid var(--ocu-cyan);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
 
-        /* Control Buttons */
-        .control-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .control-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95em;
-            transition: all 0.2s ease;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background: var(--ocu-true-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--ocu-dark-blue);
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: var(--ocu-green);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: var(--ocu-light-green);
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background: var(--ocu-yellow);
-            color: var(--text-primary);
-        }
-
-        .btn-warning:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        /* Unlock Animation Modal */
-        .unlock-modal {
+        .unlock-notification {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: var(--card-bg);
+            background: white;
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -421,28 +371,6 @@
             }
         }
 
-        .unlock-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: bounce 1s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .unlock-title {
-            font-size: 2em;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .unlock-subtitle {
-            font-size: 1.2em;
-            color: var(--text-muted);
-        }
-
         .overlay {
             position: fixed;
             top: 0;
@@ -453,7 +381,6 @@
             z-index: 9999;
         }
 
-        /* Admin Mode Indicator */
         .admin-badge {
             background: var(--ocu-yellow);
             color: var(--text-primary);
@@ -463,67 +390,53 @@
             font-weight: bold;
         }
 
-        /* Error State */
-        .error-message {
-            background: #ff5555;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
             .badges-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
             
-            .achievement-overview {
+            .stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Admin Header -->
     <header class="admin-header">
-        <h1 class="admin-title">🏆 Achievement Badge System</h1>
-        <div class="header-controls">
-            <span id="adminIndicator" class="admin-badge" style="display: none;">ADMIN MODE</span>
+        <h1 class="admin-title">🏆 Achievement Badges</h1>
+        <div class="admin-controls">
+            <span id="admin-badge" class="admin-badge" style="display: none;">ADMIN</span>
             <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
         </div>
     </header>
     
     <div class="container">
-        <!-- Student Selector -->
+        <!-- Student Selector Card -->
         <div class="card">
             <h2 class="card-title">
-                <span>👤</span> Select Student
+                <span>👤</span> Student Progress
             </h2>
             <div class="student-selector">
-                <select class="student-dropdown" id="studentSelect" onchange="loadStudentData()">
+                <select class="student-dropdown" id="studentSelect" onchange="loadSelectedStudent()">
                     <option value="">Loading students...</option>
                 </select>
-                <button class="control-btn btn-primary" onclick="refreshStudentList()">↻ Refresh</button>
-                <button class="control-btn btn-success" id="addPointsBtn" onclick="addTestPoints()" style="display:none;">+100 Test Points</button>
-                <button class="control-btn btn-warning" id="syncBtn" onclick="syncBadges()" style="display:none;">Sync Badges</button>
+                <button class="control-btn" onclick="refreshData()">↻ Refresh</button>
+                <button class="control-btn add-points" id="addPointsBtn" style="display:none;" onclick="addTestPoints()">+100 Points</button>
             </div>
-            <div id="errorMessage"></div>
         </div>
 
-        <!-- Achievement Overview -->
+        <!-- Stats Overview -->
         <div class="card">
             <h2 class="card-title">
-                <span>📊</span> Achievement Overview
+                <span>📊</span> Achievement Statistics
             </h2>
-            <div class="achievement-overview">
+            <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="currentPoints">0</div>
                     <div class="stat-label">Current Points</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="unlockedBadges">0</div>
+                    <div class="stat-value" id="badgesEarned">0</div>
                     <div class="stat-label">Badges Earned</div>
                 </div>
                 <div class="stat-card">
@@ -536,11 +449,10 @@
                 </div>
             </div>
             
-            <!-- Progress to Next Badge -->
             <div class="progress-container">
                 <div class="progress-header">
                     <span>Progress to Next Badge</span>
-                    <span id="nextBadgeInfo">0 / 0 points</span>
+                    <span id="nextBadgeInfo">Select a student</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressBar" style="width: 0%"></div>
@@ -554,181 +466,175 @@
                 <span>🎖️</span> Achievement Badges
             </h2>
             <div class="badges-grid" id="badgesGrid">
-                <div class="loading-container">
-                    <div class="spinner"></div>
-                    <p>Loading badges...</p>
-                </div>
+                <!-- Badges will be populated here -->
             </div>
         </div>
     </div>
 
     <script>
-        // Configuration
+        // GitHub Gist Configuration - matching your system exactly
         const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
         const API_BASE = 'https://api.github.com/gists';
         const FUNCTION_URL = '/.netlify/functions/update-points';
 
-        // Badge definitions with OCU-themed milestones
-        const badges = [
-            { id: 'badge_first_steps', name: "First Steps", icon: "🌱", points: 10, description: "Begin your journey" },
-            { id: 'badge_quick_learner', name: "Quick Learner", icon: "📚", points: 25, description: "Show dedication" },
-            { id: 'badge_rising_star', name: "Rising Star", icon: "⭐", points: 50, description: "Stand out from the crowd" },
-            { id: 'badge_problem_solver', name: "Problem Solver", icon: "🧩", points: 100, description: "Master the basics" },
-            { id: 'badge_code_warrior', name: "Code Warrior", icon: "⚔️", points: 200, description: "Fight through challenges" },
-            { id: 'badge_achiever', name: "Achiever", icon: "🎯", points: 350, description: "Hit your targets" },
-            { id: 'badge_expert', name: "Expert", icon: "💎", points: 500, description: "Show expertise" },
-            { id: 'badge_master', name: "Master", icon: "🏅", points: 750, description: "Master your craft" },
-            { id: 'badge_champion', name: "Champion", icon: "🏆", points: 1000, description: "Become a champion" },
-            { id: 'badge_elite', name: "Elite", icon: "👑", points: 1500, description: "Join the elite" },
-            { id: 'badge_legend', name: "Legend", icon: "🌟", points: 2000, description: "Become legendary" },
-            { id: 'badge_ocu_hero', name: "OCU Hero", icon: "🦅", points: 3000, description: "Ultimate achievement" }
+        // Badge definitions
+        const BADGES = [
+            { id: 'first_steps', name: 'First Steps', icon: '🌱', points: 10 },
+            { id: 'quick_learner', name: 'Quick Learner', icon: '📚', points: 25 },
+            { id: 'rising_star', name: 'Rising Star', icon: '⭐', points: 50 },
+            { id: 'problem_solver', name: 'Problem Solver', icon: '🧩', points: 100 },
+            { id: 'code_warrior', name: 'Code Warrior', icon: '⚔️', points: 200 },
+            { id: 'achiever', name: 'Achiever', icon: '🎯', points: 350 },
+            { id: 'expert', name: 'Expert', icon: '💎', points: 500 },
+            { id: 'master', name: 'Master', icon: '🏅', points: 750 },
+            { id: 'champion', name: 'Champion', icon: '🏆', points: 1000 },
+            { id: 'elite', name: 'Elite', icon: '👑', points: 1500 },
+            { id: 'legend', name: 'Legend', icon: '🌟', points: 2000 },
+            { id: 'ocu_hero', name: 'OCU Hero', icon: '🦅', points: 3000 }
         ];
 
-        // State management
-        let studentsData = new Map();
+        // State
+        let students = new Map();
         let currentStudent = null;
         let isAdmin = false;
-        let masterConfig = null;
 
-        // Initialize the system
+        // Initialize
         async function init() {
+            // Check authentication
+            const authData = localStorage.getItem('csci3403_auth');
+            if (!authData) {
+                alert('Please login to view achievements');
+                window.location.href = 'index.html';
+                return;
+            }
+
             // Check admin status
             isAdmin = !!localStorage.getItem('csci3403_admin');
             if (isAdmin) {
-                document.getElementById('adminIndicator').style.display = 'inline-block';
+                document.getElementById('admin-badge').style.display = 'inline-block';
                 document.getElementById('addPointsBtn').style.display = 'inline-block';
-                document.getElementById('syncBtn').style.display = 'inline-block';
             }
 
-            // Load theme
-            updateTheme();
-            
-            // Fetch all students
-            await fetchAllStudents();
-            
-            // Render empty badges
+            // Set theme
+            const currentTheme = localStorage.getItem('ocuTheme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = currentTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+            // Load data
+            await loadAllStudents();
             renderBadges();
         }
 
-        // Fetch all students from GitHub Gists
-        async function fetchAllStudents() {
+        // Load all students from GitHub
+        async function loadAllStudents() {
             try {
-                showError('');
-                
-                // Show loading in dropdown
-                const select = document.getElementById('studentSelect');
-                select.innerHTML = '<option value="">Loading students...</option>';
+                const dropdown = document.getElementById('studentSelect');
+                dropdown.innerHTML = '<option value="">Loading...</option>';
 
-                // Fetch master config - PUBLIC READ, no auth needed
-                const response = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch config: ${response.status}`);
+                // Fetch master config - PUBLIC read
+                const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
+                if (!masterResponse.ok) {
+                    throw new Error(`Failed to fetch config: ${masterResponse.status}`);
                 }
-                
-                const gist = await response.json();
-                
-                if (!gist.files || !gist.files['csci3403-config.json']) {
+
+                const masterGist = await masterResponse.json();
+                if (!masterGist.files || !masterGist.files['csci3403-config.json']) {
                     throw new Error('Config file not found');
                 }
+
+                const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
                 
-                masterConfig = JSON.parse(gist.files['csci3403-config.json'].content);
-                
-                if (!masterConfig.students || Object.keys(masterConfig.students).length === 0) {
-                    select.innerHTML = '<option value="">No students enrolled</option>';
+                if (!config.students || Object.keys(config.students).length === 0) {
+                    dropdown.innerHTML = '<option value="">No students enrolled</option>';
                     return;
                 }
 
-                // Fetch all student data in parallel
-                const studentPromises = Object.entries(masterConfig.students).map(async ([studentId, gistId]) => {
+                // Fetch each student's data
+                const promises = Object.entries(config.students).map(async ([studentId, gistId]) => {
                     try {
-                        const studentResponse = await fetch(`${API_BASE}/${gistId}`);
-                        
-                        if (!studentResponse.ok) {
-                            console.error(`Failed to fetch data for ${studentId}`);
+                        const response = await fetch(`${API_BASE}/${gistId}`);
+                        if (!response.ok) {
+                            console.error(`Failed to fetch ${studentId}`);
                             return null;
                         }
-                        
-                        const studentGist = await studentResponse.json();
-                        
-                        if (!studentGist.files || !studentGist.files['student-data.json']) {
+
+                        const gist = await response.json();
+                        if (!gist.files || !gist.files['student-data.json']) {
                             console.error(`No data file for ${studentId}`);
                             return null;
                         }
+
+                        const data = JSON.parse(gist.files['student-data.json'].content);
                         
-                        const data = JSON.parse(studentGist.files['student-data.json'].content);
-                        
-                        // Ensure achievements array exists
-                        if (!data.achievements) {
-                            data.achievements = [];
-                        }
-                        
-                        // Store complete data
-                        studentsData.set(studentId, {
+                        students.set(studentId, {
                             id: studentId,
                             gistId: gistId,
                             name: data.name || studentId,
                             points: data.points || 0,
                             achievements: data.achievements || [],
-                            data: data
+                            fullData: data
                         });
-                        
+
                         return studentId;
                     } catch (error) {
-                        console.error(`Error fetching student ${studentId}:`, error);
+                        console.error(`Error loading ${studentId}:`, error);
                         return null;
                     }
                 });
 
-                await Promise.all(studentPromises);
-                
+                await Promise.all(promises);
+
                 // Populate dropdown
-                populateStudentDropdown();
+                dropdown.innerHTML = '<option value="">Select a student...</option>';
                 
+                // Sort by name
+                const sorted = Array.from(students.values()).sort((a, b) => 
+                    a.name.localeCompare(b.name)
+                );
+
+                sorted.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.id;
+                    option.textContent = `${student.name} (${student.points} pts)`;
+                    dropdown.appendChild(option);
+                });
+
+                // Auto-select current user if not admin
+                if (!isAdmin) {
+                    const authData = JSON.parse(localStorage.getItem('csci3403_auth'));
+                    if (authData && authData.studentId && students.has(authData.studentId)) {
+                        dropdown.value = authData.studentId;
+                        loadSelectedStudent();
+                    }
+                }
+
             } catch (error) {
-                console.error('Error fetching students:', error);
-                showError('Failed to load student data. Please refresh the page.');
+                console.error('Error loading students:', error);
+                document.getElementById('studentSelect').innerHTML = 
+                    '<option value="">Error loading data</option>';
             }
         }
 
-        // Populate student dropdown
-        function populateStudentDropdown() {
-            const select = document.getElementById('studentSelect');
-            select.innerHTML = '<option value="">Select a student...</option>';
-            
-            // Sort students by name
-            const sortedStudents = Array.from(studentsData.values()).sort((a, b) => 
-                a.name.localeCompare(b.name)
-            );
-            
-            sortedStudents.forEach(student => {
-                const option = document.createElement('option');
-                option.value = student.id;
-                option.textContent = `${student.name} (${student.points} pts)`;
-                select.appendChild(option);
-            });
-        }
-
-        // Load selected student data
-        function loadStudentData() {
-            const select = document.getElementById('studentSelect');
-            const studentId = select.value;
+        // Load selected student
+        function loadSelectedStudent() {
+            const studentId = document.getElementById('studentSelect').value;
             
             if (!studentId) {
                 currentStudent = null;
                 updateDisplay();
                 return;
             }
-            
-            currentStudent = studentsData.get(studentId);
+
+            currentStudent = students.get(studentId);
             updateDisplay();
         }
 
-        // Update display with current student data
+        // Update display
         function updateDisplay() {
             if (!currentStudent) {
                 document.getElementById('currentPoints').textContent = '0';
-                document.getElementById('unlockedBadges').textContent = '0';
+                document.getElementById('badgesEarned').textContent = '0';
                 document.getElementById('completion').textContent = '0%';
                 document.getElementById('progressBar').style.width = '0%';
                 document.getElementById('nextBadgeInfo').textContent = 'Select a student';
@@ -736,21 +642,20 @@
                 return;
             }
 
-            // Calculate unlocked badges based on points
-            const unlockedBadgeIds = badges
-                .filter(badge => currentStudent.points >= badge.points)
-                .map(badge => badge.id);
+            // Calculate badges
+            const earnedBadges = BADGES.filter(b => currentStudent.points >= b.points);
+            const earnedCount = earnedBadges.length;
+            const completion = Math.round((earnedCount / BADGES.length) * 100);
 
             // Update stats
             document.getElementById('currentPoints').textContent = currentStudent.points.toLocaleString();
-            document.getElementById('unlockedBadges').textContent = unlockedBadgeIds.length;
-            const completion = Math.round((unlockedBadgeIds.length / badges.length) * 100);
+            document.getElementById('badgesEarned').textContent = earnedCount;
             document.getElementById('completion').textContent = `${completion}%`;
 
-            // Update progress bar
-            const nextBadge = badges.find(b => currentStudent.points < b.points);
+            // Progress bar
+            const nextBadge = BADGES.find(b => currentStudent.points < b.points);
             if (nextBadge) {
-                const prevBadge = badges.filter(b => b.points <= currentStudent.points).pop();
+                const prevBadge = BADGES.filter(b => b.points <= currentStudent.points).pop();
                 const prevPoints = prevBadge ? prevBadge.points : 0;
                 const progress = ((currentStudent.points - prevPoints) / (nextBadge.points - prevPoints)) * 100;
                 document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
@@ -764,127 +669,84 @@
             renderBadges();
         }
 
-        // Render all badges
+        // Render badges
         function renderBadges() {
             const grid = document.getElementById('badgesGrid');
             grid.innerHTML = '';
 
-            badges.forEach(badge => {
+            BADGES.forEach(badge => {
                 const isUnlocked = currentStudent && currentStudent.points >= badge.points;
-                const badgeEl = document.createElement('div');
-                badgeEl.className = `badge-card ${isUnlocked ? 'unlocked' : 'locked'}`;
-                badgeEl.innerHTML = `
+                
+                const card = document.createElement('div');
+                card.className = `badge-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+                card.innerHTML = `
                     <div class="badge-icon">${badge.icon}</div>
                     <div class="badge-name">${badge.name}</div>
                     <div class="badge-requirement">${badge.points.toLocaleString()} points</div>
                     <div class="badge-status">${isUnlocked ? 'EARNED' : 'LOCKED'}</div>
                 `;
-                grid.appendChild(badgeEl);
+                grid.appendChild(card);
             });
         }
 
-        // Add test points (Admin only)
+        // Add test points (admin only)
         async function addTestPoints() {
-            if (!currentStudent || !isAdmin) {
-                alert('Please select a student first!');
-                return;
-            }
+            if (!currentStudent || !isAdmin) return;
 
-            const previousUnlocked = badges.filter(b => currentStudent.points >= b.points);
+            const prevBadges = BADGES.filter(b => currentStudent.points >= b.points);
             currentStudent.points += 100;
-            
-            // Check for newly unlocked badges
-            const newlyUnlocked = badges.filter(b => 
+            currentStudent.fullData.points = currentStudent.points;
+
+            // Check for new badges
+            const newBadges = BADGES.filter(b => 
                 currentStudent.points >= b.points && 
-                !previousUnlocked.includes(b)
+                !prevBadges.includes(b)
             );
 
-            // Update the student's data
-            currentStudent.data.points = currentStudent.points;
-            
-            // Add new badges to achievements
-            newlyUnlocked.forEach(badge => {
-                if (!currentStudent.data.achievements.includes(badge.id)) {
-                    currentStudent.data.achievements.push(badge.id);
+            // Update achievements
+            newBadges.forEach(badge => {
+                if (!currentStudent.fullData.achievements) {
+                    currentStudent.fullData.achievements = [];
+                }
+                if (!currentStudent.fullData.achievements.includes(badge.id)) {
+                    currentStudent.fullData.achievements.push(badge.id);
                 }
             });
 
-            // Save to GitHub via Netlify function
+            // Save via Netlify function
             try {
                 const response = await fetch(FUNCTION_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'updateStudent',
                         studentId: currentStudent.id,
                         gistId: currentStudent.gistId,
-                        updateData: currentStudent.data
+                        updateData: currentStudent.fullData
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to update student data');
+                    throw new Error('Failed to save');
                 }
 
                 // Show unlock animations
-                newlyUnlocked.forEach((badge, index) => {
-                    setTimeout(() => showUnlockAnimation(badge), index * 500);
+                newBadges.forEach((badge, i) => {
+                    setTimeout(() => showUnlockAnimation(badge), i * 500);
                 });
 
-                // Update display
                 updateDisplay();
                 
                 // Update dropdown
-                populateStudentDropdown();
-                document.getElementById('studentSelect').value = currentStudent.id;
-                
-            } catch (error) {
-                console.error('Error updating points:', error);
-                showError('Failed to save points. Changes are local only.');
-            }
-        }
-
-        // Sync badges with current points (Admin only)
-        async function syncBadges() {
-            if (!currentStudent || !isAdmin) {
-                alert('Please select a student first!');
-                return;
-            }
-
-            // Recalculate all badges based on current points
-            const earnedBadges = badges
-                .filter(badge => currentStudent.points >= badge.points)
-                .map(badge => badge.id);
-
-            currentStudent.data.achievements = earnedBadges;
-
-            // Save to GitHub
-            try {
-                const response = await fetch(FUNCTION_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'updateStudent',
-                        studentId: currentStudent.id,
-                        gistId: currentStudent.gistId,
-                        updateData: currentStudent.data
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to sync badges');
+                const dropdown = document.getElementById('studentSelect');
+                const option = dropdown.querySelector(`option[value="${currentStudent.id}"]`);
+                if (option) {
+                    option.textContent = `${currentStudent.name} (${currentStudent.points} pts)`;
                 }
 
-                alert('Badges synced successfully!');
-                updateDisplay();
-                
             } catch (error) {
-                console.error('Error syncing badges:', error);
-                showError('Failed to sync badges.');
+                console.error('Error saving:', error);
+                alert('Failed to save points');
             }
         }
 
@@ -893,46 +755,36 @@
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             
-            const modal = document.createElement('div');
-            modal.className = 'unlock-modal';
-            modal.innerHTML = `
-                <div class="unlock-icon">${badge.icon}</div>
-                <div class="unlock-title">Badge Unlocked!</div>
-                <div class="unlock-subtitle">${badge.name}</div>
+            const notification = document.createElement('div');
+            notification.className = 'unlock-notification';
+            notification.innerHTML = `
+                <div style="font-size: 4em; margin-bottom: 20px;">${badge.icon}</div>
+                <h2 style="color: var(--text-secondary); margin-bottom: 10px;">Badge Unlocked!</h2>
+                <p style="font-size: 1.2em; color: var(--text-muted);">${badge.name}</p>
             `;
 
             document.body.appendChild(overlay);
-            document.body.appendChild(modal);
+            document.body.appendChild(notification);
 
             setTimeout(() => {
                 overlay.remove();
-                modal.remove();
+                notification.remove();
             }, 2500);
         }
 
-        // Refresh student list
-        async function refreshStudentList() {
-            await fetchAllStudents();
+        // Refresh data
+        async function refreshData() {
+            await loadAllStudents();
             if (currentStudent) {
                 document.getElementById('studentSelect').value = currentStudent.id;
-                loadStudentData();
-            }
-        }
-
-        // Show error message
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            if (message) {
-                errorDiv.innerHTML = `<div class="error-message">${message}</div>`;
-            } else {
-                errorDiv.innerHTML = '';
+                loadSelectedStudent();
             }
         }
 
         // Theme toggle
         function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('ocuTheme', newTheme);
             
@@ -940,23 +792,12 @@
             btn.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
         }
 
-        // Update theme on load
-        function updateTheme() {
-            const savedTheme = localStorage.getItem('ocuTheme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            const btn = document.querySelector('.theme-toggle');
-            btn.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-        }
-
         // Auto-refresh every 30 seconds
         setInterval(() => {
-            if (!isAdmin) { // Only auto-refresh if not in admin mode
-                refreshStudentList();
-            }
+            if (!isAdmin) refreshData();
         }, 30000);
 
-        // Initialize on load
+        // Start
         init();
     </script>
 </body>
