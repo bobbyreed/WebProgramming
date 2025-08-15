@@ -160,21 +160,106 @@
             font-size: 1.1em;
         }
         
-        .lectures-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
+        .lectures-container {
+            position: relative;
             margin-bottom: 40px;
+            overflow: hidden;
+        }
+        
+        .lectures-grid {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .lecture-card {
+            flex: 0 0 calc(25% - 15px);
+            min-width: 0;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--ocu-true-blue);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+        
+        [data-theme="dark"] .carousel-nav {
+            background: var(--ocu-cyan);
+        }
+        
+        .carousel-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 15px var(--shadow);
+        }
+        
+        .carousel-nav.prev {
+            left: -25px;
+        }
+        
+        .carousel-nav.next {
+            right: -25px;
+        }
+        
+        .carousel-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .carousel-nav:disabled:hover {
+            transform: translateY(-50%);
+        }
+        
+        .lecture-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: var(--ocu-true-blue);
+            width: 24px;
+            border-radius: 4px;
+        }
+        
+        [data-theme="dark"] .indicator.active {
+            background: var(--ocu-cyan);
         }
         
         .lecture-card {
             background: var(--card-bg);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px var(--shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
         }
         
         .lecture-card.locked {
@@ -396,20 +481,27 @@
             </a>
         </div>
         
-        <div class="lectures-grid" id="lectures-container">
-            <!-- Lectures will be dynamically generated here -->
+        <div class="lectures-container">
+            <button class="carousel-nav prev" id="prevBtn" onclick="navigateCarousel(-1)">‹</button>
+            <button class="carousel-nav next" id="nextBtn" onclick="navigateCarousel(1)">›</button>
+            <div class="lectures-grid" id="lectures-container">
+                <!-- Lectures will be dynamically generated here -->
+            </div>
+            <div class="lecture-indicators" id="indicators">
+                <!-- Indicators will be dynamically generated -->
+            </div>
         </div>
         
         <footer>
-            <p>© 2025 bobby reed</p>
+            <p>© 2025 Oklahoma City University • Computer Science Department</p>
         </footer>
     </div>
 
     <script>
         // Lecture data with dates (Tuesdays and Thursdays)
         const lectures = [
-            { number: 1, date: '2025-08-02', title: 'Course Introduction', description: 'Icebreaking coding challenge and introduction to the Odin Project.', href: '#', status: 'coming' },
-            { number: 2, date: '2025-08-04', title: 'How the Web Works', description: 'Understanding the internet, DNS, packets, client-server architecture, and what happens when you search Google.', href: './pages/2HowTheWebWorks.html', status: 'ready' },
+            { number: 1, date: '2025-08-26', title: 'Course Introduction', description: 'Icebreaking coding challenge and introduction to the Odin Project.', href: '#', status: 'coming' },
+            { number: 2, date: '2025-08-28', title: 'How the Web Works', description: 'Understanding the internet, DNS, packets, client-server architecture, and what happens when you search Google.', href: './pages/2HowTheWebWorks.html', status: 'ready' },
             { number: 3, date: '2025-09-02', title: 'HTML Elements and Tags', description: 'Learning the building blocks of HTML - elements, tags, void elements, and how to structure content.', href: './pages/3HTMLElementsAndTags.html', status: 'ready' },
             { number: 4, date: '2025-09-04', title: 'HTML Boilerplate', description: 'Understanding the essential structure every HTML document needs, including DOCTYPE, head, and body elements.', href: './pages/4HTMLBoilerplate.html', status: 'ready' },
             { number: 5, date: '2025-09-09', title: 'Working with Text', description: 'Creating paragraphs, headings, bold and italic text, proper nesting, and HTML comments.', href: './pages/5HTMLWorkingWithText.html', status: 'ready' },
@@ -434,13 +526,16 @@
             { number: 24, date: '2025-11-13', title: 'JavaScript Errors', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/23JSErrors.html', status: 'ready' },
             { number: 25, date: '2025-11-18', title: 'JavaScript Clean Code', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/24JSCleanCode.html', status: 'ready' },
             { number: 26, date: '2025-11-20', title: 'JavaScript Loops and Arrays', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
-            { number: 27, date: '2025-11-25', title: 'JavaScript30', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
-            { number: 28, date: '2025-11-27', title: 'No Class - Thanksgiving', description: 'Happy Thanksgiving!', href: '#', status: 'coming' },
-            { number: 29, date: '2025-12-02', title: 'JavaScript Exercises', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
+            { number: 27, date: '2025-11-25', title: 'JavaScript30', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/25JSLoopsandArrays.html', status: 'ready' },
+            { number: 28, date: '2025-11-27', title: 'No Class - Thanksgiving', description: 'Happy Thanksgiving!', href: '#', status: 'FREEDOM!' },
+            { number: 29, date: '2025-12-02', title: 'JavaScript Exercises', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: './pages/26JS30.html', status: 'ready' },
             { number: 30, date: '2025-12-04', title: 'JavaScript Project: Etch-a-Sketch', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
             { number: 31, date: '2025-12-09', title: 'JavaScript Objects', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' },
             { number: 32, date: '2025-12-11', title: 'Final Exam Review', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', href: '#', status: 'coming' }
         ];
+
+        let currentPage = 0;
+        const lecturesPerPage = 4;
 
         // Function to check if lecture should be available
         function isLectureAvailable(lectureDate) {
@@ -456,8 +551,53 @@
         // Function to format date
         function formatDate(dateString) {
             const date = new Date(dateString);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
             return date.toLocaleDateString('en-US', options);
+        }
+
+        // Function to navigate carousel
+        function navigateCarousel(direction) {
+            const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+            currentPage += direction;
+            
+            if (currentPage < 0) currentPage = 0;
+            if (currentPage >= totalPages) currentPage = totalPages - 1;
+            
+            renderLectures();
+            updateNavigationButtons();
+            updateIndicators();
+        }
+
+        // Function to go to specific page
+        function goToPage(page) {
+            currentPage = page;
+            renderLectures();
+            updateNavigationButtons();
+            updateIndicators();
+        }
+
+        // Function to update navigation buttons
+        function updateNavigationButtons() {
+            const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+        }
+
+        // Function to update indicators
+        function updateIndicators() {
+            const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+            const indicatorsContainer = document.getElementById('indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            for (let i = 0; i < totalPages; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = `indicator ${i === currentPage ? 'active' : ''}`;
+                indicator.onclick = () => goToPage(i);
+                indicatorsContainer.appendChild(indicator);
+            }
         }
 
         // Function to render lectures
@@ -465,7 +605,11 @@
             const container = document.getElementById('lectures-container');
             container.innerHTML = '';
             
-            lectures.forEach(lecture => {
+            const startIndex = currentPage * lecturesPerPage;
+            const endIndex = Math.min(startIndex + lecturesPerPage, lectures.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const lecture = lectures[i];
                 const isAvailable = isLectureAvailable(lecture.date);
                 const card = document.createElement('div');
                 card.className = `lecture-card ${!isAvailable ? 'locked' : ''}`;
@@ -483,13 +627,13 @@
                     <span class="lecture-number">Lecture ${lecture.number}</span>
                     <span class="lecture-date">${formatDate(lecture.date)}</span>
                     <h3>${lecture.title}</h3>
-                    <p>${lecture.description}</p>
+                    <p style="flex: 1; overflow: hidden; text-overflow: ellipsis;">${lecture.description}</p>
                     ${isAvailable ? `<a href="${lecture.href}">View Lecture</a>` : '<a href="#">Locked Until ' + formatDate(lecture.date) + '</a>'}
                     ${statusBadge}
                 `;
                 
                 container.appendChild(card);
-            });
+            }
         }
 
         // Authentication script
@@ -522,8 +666,21 @@
                 }
             }
             
-            // Render lectures
+            // Initialize carousel
             renderLectures();
+            updateNavigationButtons();
+            updateIndicators();
+            
+            // Jump to current week on load
+            const today = new Date();
+            for (let i = 0; i < lectures.length; i++) {
+                const lecDate = new Date(lectures[i].date);
+                if (lecDate > today) {
+                    const targetPage = Math.floor(Math.max(0, i - 2) / lecturesPerPage);
+                    goToPage(targetPage);
+                    break;
+                }
+            }
             
             // Theme toggle functionality
             const themeToggle = document.getElementById('theme-checkbox');
