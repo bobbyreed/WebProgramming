@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 25: JavaScript - Loops and Arrays</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Theme</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="theme-slider"></span>
+        </label>
+    </div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active">
+            <h1>JavaScript: Loops and Arrays <span class="emoji">🔁</span></h1>
+            <p class="subtitle">Day 25 - Handling Repetition and Collections</p>
+            <p class="meta-info">CS 2083 - Web Programming I</p>
+            <div class="home">
+                <a href="../index.html">⌂ Back to Schedule</a>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Problem We're Solving -->
+        <div class="slide">
+            <h1>Why Do We Need Loops? <span class="emoji">🤔</span></h1>
+            <h2>The Repetition Challenge</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Without Loops</h3>
+                    <div class="code-example">
+console.log("Student 1");<br>
+console.log("Student 2");<br>
+console.log("Student 3");<br>
+console.log("Student 4");<br>
+console.log("Student 5");<br>
+// ... 25 more lines? 😱
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ With Loops</h3>
+                    <div class="code-example">
+for (let i = 1; i <= 30; i++) {<br>
+&nbsp;&nbsp;console.log(`Student ${i}`);<br>
+}
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Key Insight:</strong> Computers excel at repetitive tasks - they're fast and never get tired!
+            </div>
+        </div>
+
+        <!-- Slide 3: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🔁 Master <code>for</code> and <code>while</code> loops</li>
+                <li>📦 Store multiple values in arrays</li>
+                <li>🔍 Access and modify array elements</li>
+                <li>⚡ Use powerful array methods: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
+                <li>🧪 Introduction to Test-Driven Development (TDD)</li>
+                <li>💪 Practice with real coding challenges</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: While Loops -->
+        <div class="slide">
+            <h1>While Loops <span class="emoji">⏰</span></h1>
+            <h2>Keep going while a condition is true</h2>
+            <div class="code-example">
+let count = 0;<br><br>
+while (count < 5) {<br>
+&nbsp;&nbsp;console.log(`Count is: ${count}`);<br>
+&nbsp;&nbsp;count++; <span class="comment">// Don't forget this!</span><br>
+}
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Watch Out for Infinite Loops!</strong>
+                <p>Always ensure your loop condition will eventually become false!</p>
+            </div>
+            <div class="activity-box">
+                <h3>Quick Challenge:</h3>
+                <p>What happens if we forget <code>count++</code>? 🤔</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: For Loops -->
+        <div class="slide">
+            <h1>For Loops <span class="emoji">🎢</span></h1>
+            <h2>When you know how many times to repeat</h2>
+            <div class="code-example">
+<span class="comment">// for (initialization; condition; update)</span><br>
+for (let i = 0; i < 5; i++) {<br>
+&nbsp;&nbsp;console.log(`Iteration ${i}`);<br>
+}
+            </div>
+            <div class="two-column">
+                <div>
+                    <h3>Parts of a For Loop:</h3>
+                    <ol>
+                        <li><strong>Initialization:</strong> <code>let i = 0</code></li>
+                        <li><strong>Condition:</strong> <code>i < 5</code></li>
+                        <li><strong>Update:</strong> <code>i++</code></li>
+                    </ol>
+                </div>
+                <div>
+                    <h3>Execution Order:</h3>
+                    <ol>
+                        <li>Initialize once</li>
+                        <li>Check condition</li>
+                        <li>Execute body</li>
+                        <li>Update</li>
+                        <li>Go to step 2</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Break and Continue -->
+        <div class="slide">
+            <h1>Loop Control: Break & Continue <span class="emoji">🛑</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>break</h3>
+                    <p>Exits the loop completely</p>
+                    <div class="code-example">
+for (let i = 0; i < 10; i++) {<br>
+&nbsp;&nbsp;if (i === 5) break;<br>
+&nbsp;&nbsp;console.log(i);<br>
+}<br>
+<span class="comment">// Output: 0, 1, 2, 3, 4</span>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h3>continue</h3>
+                    <p>Skips to next iteration</p>
+                    <div class="code-example">
+for (let i = 0; i < 5; i++) {<br>
+&nbsp;&nbsp;if (i === 2) continue;<br>
+&nbsp;&nbsp;console.log(i);<br>
+}<br>
+<span class="comment">// Output: 0, 1, 3, 4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Let's Practice Loops -->
+        <div class="slide">
+            <h1>Quick Loop Practice <span class="emoji">💻</span></h1>
+            <div class="activity-box">
+                <h3>5-Minute Challenge: Create These Loops</h3>
+                <ol>
+                    <li>Count from 10 to 1 (countdown)</li>
+                    <li>Print only even numbers from 0 to 20</li>
+                    <li>Calculate the sum of numbers 1 to 100</li>
+                </ol>
+            </div>
+            <div class="demo-box">
+                <p><strong>Hint for #3:</strong></p>
+                <div class="code-example">
+let sum = 0;<br>
+for (let i = 1; i <= 100; i++) {<br>
+&nbsp;&nbsp;<span class="comment">// What goes here?</span><br>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Introduction to Arrays -->
+        <div class="slide">
+            <h1>Arrays: Collections of Data <span class="emoji">📦</span></h1>
+            <h2>Store Multiple Values in One Variable</h2>
+            <div class="code-example">
+<span class="comment">// Creating arrays</span><br>
+const students = ["Alice", "Bob", "Charlie", "Diana"];<br>
+const scores = [95, 87, 92, 88, 91];<br>
+const mixed = [42, "hello", true, null];<br><br>
+<span class="comment">// Accessing elements (0-indexed!)</span><br>
+console.log(students[0]); <span class="comment">// "Alice"</span><br>
+console.log(scores[2]); <span class="comment">// 92</span>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Arrays are zero-indexed! The first element is at index 0.
+            </div>
+        </div>
+
+        <!-- Slide 9: Array Properties and Methods -->
+        <div class="slide">
+            <h1>Working with Arrays <span class="emoji">🔧</span></h1>
+            <div class="code-example">
+const fruits = ["apple", "banana", "orange"];<br><br>
+<span class="comment">// Length property</span><br>
+console.log(fruits.length); <span class="comment">// 3</span><br><br>
+<span class="comment">// Adding elements</span><br>
+fruits.push("grape"); <span class="comment">// Add to end</span><br>
+fruits.unshift("mango"); <span class="comment">// Add to beginning</span><br><br>
+<span class="comment">// Removing elements</span><br>
+fruits.pop(); <span class="comment">// Remove from end</span><br>
+fruits.shift(); <span class="comment">// Remove from beginning</span><br><br>
+<span class="comment">// Modifying elements</span><br>
+fruits[1] = "strawberry"; <span class="comment">// Change element</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: Loops with Arrays -->
+        <div class="slide">
+            <h1>Looping Through Arrays <span class="emoji">🔄</span></h1>
+            <h2>The Perfect Partnership</h2>
+            <div class="code-example">
+const numbers = [10, 20, 30, 40, 50];<br><br>
+<span class="comment">// Traditional for loop</span><br>
+for (let i = 0; i < numbers.length; i++) {<br>
+&nbsp;&nbsp;console.log(numbers[i]);<br>
+}<br><br>
+<span class="comment">// For...of loop (cleaner!)</span><br>
+for (const num of numbers) {<br>
+&nbsp;&nbsp;console.log(num);<br>
+}
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use <code>for...of</code> when you don't need the index!
+            </div>
+        </div>
+
+        <!-- Slide 11: Introduction to Array Methods -->
+        <div class="slide">
+            <h1>Array Magic: Higher-Order Methods <span class="emoji">✨</span></h1>
+            <h2>More Elegant Than Loops!</h2>
+            <div class="demo-box">
+                <h3>The Big Three:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>📍 <strong>map()</strong> - Transform each element</li>
+                    <li>🔍 <strong>filter()</strong> - Keep only what you want</li>
+                    <li>📊 <strong>reduce()</strong> - Combine into single value</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <p><strong>Key Concept:</strong> These methods take functions as arguments (callbacks)</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Map Method -->
+        <div class="slide">
+            <h1>The Map Method <span class="emoji">🗺️</span></h1>
+            <h2>Transform Every Element</h2>
+            <div class="code-example">
+<span class="comment">// Double all numbers</span><br>
+const numbers = [1, 2, 3, 4, 5];<br>
+const doubled = numbers.map(num => num * 2);<br>
+console.log(doubled); <span class="comment">// [2, 4, 6, 8, 10]</span><br><br>
+<span class="comment">// Make names uppercase</span><br>
+const names = ["alice", "bob", "charlie"];<br>
+const upperNames = names.map(name => name.toUpperCase());<br>
+console.log(upperNames); <span class="comment">// ["ALICE", "BOB", "CHARLIE"]</span>
+            </div>
+            <div class="tip-box">
+                <strong>Important:</strong> map() returns a NEW array - original is unchanged!
+            </div>
+        </div>
+
+        <!-- Slide 13: Filter Method -->
+        <div class="slide">
+            <h1>The Filter Method <span class="emoji">🔍</span></h1>
+            <h2>Keep Only What Passes the Test</h2>
+            <div class="code-example">
+<span class="comment">// Keep only even numbers</span><br>
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];<br>
+const evens = numbers.filter(num => num % 2 === 0);<br>
+console.log(evens); <span class="comment">// [2, 4, 6, 8]</span><br><br>
+<span class="comment">// Keep long words</span><br>
+const words = ["hi", "hello", "goodbye", "yes", "no"];<br>
+const longWords = words.filter(word => word.length > 3);<br>
+console.log(longWords); <span class="comment">// ["hello", "goodbye"]</span>
+            </div>
+            <div class="demo-box">
+                <p>Filter returns elements where callback returns <code>true</code></p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Reduce Method -->
+        <div class="slide">
+            <h1>The Reduce Method <span class="emoji">📊</span></h1>
+            <h2>Combine All Elements Into One Value</h2>
+            <div class="code-example">
+<span class="comment">// Sum all numbers</span><br>
+const numbers = [1, 2, 3, 4, 5];<br>
+const sum = numbers.reduce((total, num) => total + num, 0);<br>
+console.log(sum); <span class="comment">// 15</span><br><br>
+<span class="comment">// Find the maximum</span><br>
+const scores = [85, 92, 78, 96, 88];<br>
+const max = scores.reduce((max, score) => {<br>
+&nbsp;&nbsp;return score > max ? score : max;<br>
+}, 0);<br>
+console.log(max); <span class="comment">// 96</span>
+            </div>
+            <div class="tip-box">
+                <strong>Pattern:</strong> reduce((accumulator, current) => ..., initialValue)
+            </div>
+        </div>
+
+        <!-- Slide 15: Visual Example -->
+        <div class="slide">
+            <h1>Visualizing Array Methods <span class="emoji">🎨</span></h1>
+            <div class="demo-box">
+                <h3>The Sandwich Example 🥪</h3>
+                <div style="font-size: 1.2em; line-height: 2;">
+                    <p><strong>Start:</strong> [🍞, 🥬, 🍅, 🧀, 🥓, 🍞]</p>
+                    <p><strong>Filter (vegetarian):</strong> [🍞, 🥬, 🍅, 🧀, 🍞]</p>
+                    <p><strong>Map (toast):</strong> [🍞→🥖, 🥬, 🍅, 🧀, 🍞→🥖]</p>
+                    <p><strong>Reduce (stack):</strong> 🥪</p>
+                </div>
+            </div>
+            <div class="activity-box">
+                <p>Each method serves a specific purpose in data transformation!</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Chaining Methods -->
+        <div class="slide">
+            <h1>Method Chaining <span class="emoji">⛓️</span></h1>
+            <h2>Combine Multiple Operations</h2>
+            <div class="code-example">
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];<br><br>
+const result = numbers<br>
+&nbsp;&nbsp;.filter(num => num % 2 === 0) <span class="comment">// Keep evens</span><br>
+&nbsp;&nbsp;.map(num => num * 3) <span class="comment">// Triple them</span><br>
+&nbsp;&nbsp;.reduce((sum, num) => sum + num, 0); <span class="comment">// Sum all</span><br><br>
+console.log(result); <span class="comment">// 90 (2*3 + 4*3 + 6*3 + 8*3 + 10*3)</span>
+            </div>
+            <div class="tip-box">
+                <strong>Power Move:</strong> Chain methods for complex transformations in readable code!
+            </div>
+        </div>
+
+        <!-- Slide 17: Practice Challenge -->
+        <div class="slide">
+            <h1>Let's Code: sumOfTripledEvens <span class="emoji">💪</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Challenge</h3>
+                <p>Write a function that:</p>
+                <ol>
+                    <li>Takes an array of numbers</li>
+                    <li>Filters for even numbers</li>
+                    <li>Triples each even number</li>
+                    <li>Sums the results</li>
+                </ol>
+                <div class="
