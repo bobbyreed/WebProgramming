@@ -355,4 +355,251 @@ console.log(result); <span class="comment">// 90 (2*3 + 4*3 + 6*3 + 8*3 + 10*3)<
                     <li>Triples each even number</li>
                     <li>Sums the results</li>
                 </ol>
-                <div class="
+            </div>
+            <div class="code-example">
+<span class="comment">// Example:</span><br>
+sumOfTripledEvens([1, 2, 3, 4, 5, 6]);<br>
+<span class="comment">// Should return: 36 (2*3 + 4*3 + 6*3)</span>
+            </div>
+            <button data-timer="10">Start 10-Minute Timer</button>
+        </div>
+
+        <!-- Slide 18: Solution Reveal -->
+        <div class="slide">
+            <h1>Solution: Three Approaches <span class="emoji">🎯</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Traditional Loop</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+function sumOfTripledEvens(arr) {<br>
+&nbsp;&nbsp;let sum = 0;<br>
+&nbsp;&nbsp;for (let i = 0; i < arr.length; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] % 2 === 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += arr[i] * 3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;return sum;<br>
+}
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>Array Methods ✨</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+function sumOfTripledEvens(arr) {<br>
+&nbsp;&nbsp;return arr<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.filter(n => n % 2 === 0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.map(n => n * 3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.reduce((sum, n) => sum + n, 0);<br>
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Common Array Patterns -->
+        <div class="slide">
+            <h1>Common Array Patterns <span class="emoji">📋</span></h1>
+            <div class="code-example">
+const arr = [1, 2, 3, 4, 5];<br><br>
+<span class="comment">// Find if ANY element matches</span><br>
+arr.some(n => n > 3); <span class="comment">// true</span><br><br>
+<span class="comment">// Check if ALL elements match</span><br>
+arr.every(n => n > 0); <span class="comment">// true</span><br><br>
+<span class="comment">// Find first matching element</span><br>
+arr.find(n => n > 3); <span class="comment">// 4</span><br><br>
+<span class="comment">// Find index of element</span><br>
+arr.indexOf(3); <span class="comment">// 2</span><br><br>
+<span class="comment">// Check if includes</span><br>
+arr.includes(3); <span class="comment">// true</span>
+            </div>
+        </div>
+
+        <!-- Slide 20: Test-Driven Development Preview -->
+        <div class="slide">
+            <h1>Introduction to TDD <span class="emoji">🧪</span></h1>
+            <h2>Write Tests First, Code Second</h2>
+            <div class="demo-box">
+                <h3>The TDD Cycle:</h3>
+                <ol style="font-size: 1.2em;">
+                    <li>🔴 <strong>Red:</strong> Write a failing test</li>
+                    <li>🟢 <strong>Green:</strong> Write code to pass the test</li>
+                    <li>🔄 <strong>Refactor:</strong> Improve the code</li>
+                </ol>
+            </div>
+            <div class="activity-box">
+                <p><strong>Why TDD?</strong></p>
+                <ul>
+                    <li>Ensures your code works correctly</li>
+                    <li>Makes debugging easier</li>
+                    <li>Documents expected behavior</li>
+                    <li>Prevents regression bugs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 21: Simple TDD Example -->
+        <div class="slide">
+            <h1>TDD Example <span class="emoji">✅</span></h1>
+            <div class="code-example">
+<span class="comment">// 1. Write the test first (it will fail!)</span><br>
+function testAdd() {<br>
+&nbsp;&nbsp;const result = add(2, 3);<br>
+&nbsp;&nbsp;if (result !== 5) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error("Test failed!");<br>
+&nbsp;&nbsp;} else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log("Test passed!");<br>
+&nbsp;&nbsp;}<br>
+}<br><br>
+<span class="comment">// 2. Write code to make it pass</span><br>
+function add(a, b) {<br>
+&nbsp;&nbsp;return a + b;<br>
+}<br><br>
+<span class="comment">// 3. Run the test</span><br>
+testAdd(); <span class="comment">// "Test passed!"</span>
+            </div>
+        </div>
+
+        <!-- Slide 22: Today's Assignment Overview -->
+        <div class="slide">
+            <h1>Assignment Overview <span class="emoji">📝</span></h1>
+            <h2>Practice Makes Perfect!</h2>
+            <div class="activity-box">
+                <h3>JavaScript.info Exercises:</h3>
+                <ul>
+                    <li>Translate border-left-width to borderLeftWidth</li>
+                    <li>Filter range & Filter range "in place"</li>
+                    <li>Sort in decreasing order</li>
+                    <li>Copy and sort array</li>
+                    <li>Shuffle an array</li>
+                    <li>Filter unique array members</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <h3>JavaScript30 Challenges:</h3>
+                <ul>
+                    <li>Array Cardio Day 1</li>
+                    <li>Array Cardio Day 2</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 23: Exercise List -->
+        <div class="slide">
+            <h1>Core Exercises <span class="emoji">💻</span></h1>
+            <h2>From JavaScript Exercises Repository</h2>
+            <div class="two-column">
+                <div>
+                    <h3>String & Loop Practice:</h3>
+                    <ul>
+                        <li>06_repeatString</li>
+                        <li>07_reverseString</li>
+                        <li>08_removeFromArray</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Number & Logic:</h3>
+                    <ul>
+                        <li>09_sumAll</li>
+                        <li>10_leapYears</li>
+                        <li>11_tempConversion</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Solutions are in the solution folder, but try first without looking!
+            </div>
+        </div>
+
+        <!-- Slide 24: Let's Start Coding! -->
+        <div class="slide">
+            <h1>Practice Time! <span class="emoji">⚡</span></h1>
+            <div class="activity-box">
+                <h3>15-Minute In-Class Exercise</h3>
+                <p>Let's tackle <strong>repeatString</strong> together!</p>
+                <div class="code-example">
+<span class="comment">// Your function should:</span><br>
+repeatString('hey', 3) <span class="comment">// returns 'heyheyhey'</span><br>
+repeatString('hello', 0) <span class="comment">// returns ''</span><br>
+repeatString('hi', -1) <span class="comment">// returns 'ERROR'</span>
+                </div>
+                <p><strong>Hint:</strong> You'll need a loop or a clever string method!</p>
+            </div>
+            <button data-timer="15">Start 15-Minute Timer</button>
+        </div>
+
+        <!-- Slide 25: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h2>You Can Now:</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Use <code>for</code> and <code>while</code> loops effectively</li>
+                <li>✅ Control loop flow with <code>break</code> and <code>continue</code></li>
+                <li>✅ Create and manipulate arrays</li>
+                <li>✅ Transform data with <code>map</code></li>
+                <li>✅ Filter data with <code>filter</code></li>
+                <li>✅ Aggregate data with <code>reduce</code></li>
+                <li>✅ Understand basic TDD concepts</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Homework:</strong> Complete all exercises from the assignment list</p>
+                <p><strong>Next Class:</strong> DOM Manipulation - Making pages interactive!</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    
+    <!-- Additional slide functionality -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 25;
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName('slide');
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+
+</html>
