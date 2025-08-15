@@ -173,8 +173,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👏 Acknowledgments
 
-- **The Odin Project**: For excellent curriculum alignment
-- **Oklahoma City University**: For supporting innovative teaching methods
+- **[The Odin Project](https://www.theodinproject.com/)**: For excellent curriculum
+- **[Oklahoma City University](okcu.edu)**: For supporting innovative teaching methods
 - **Students**: For feedback and engagement that shapes the course
 
 *Building the next generation of web developers, one commit at a time.* 🚀
