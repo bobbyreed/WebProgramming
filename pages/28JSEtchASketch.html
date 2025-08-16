@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 27: DOM Manipulation & Events - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        .dom-tree {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .node-diagram {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .method-card {
+            background: var(--bg-accent);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid var(--ocu-true-blue);
+        }
+        
+        .event-type {
+            display: inline-block;
+            background: var(--ocu-light-blue);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+        }
+        
+        [data-theme="dark"] .event-type {
+            background: var(--ocu-cyan);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 27 - DOM Manipulation & Events
+                 <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Title & Overview -->
+        <div class="slide active">
+            <h1>Day 27: DOM Manipulation & Events</h1>
+            <h2>Making Web Pages Interactive <span class="emoji">🎮</span></h2>
+            <p style="font-size: 1.4em; margin: 30px 0;">Today we unlock JavaScript's superpower: dynamically changing web pages!</p>
+            
+            <div class="activity-box">
+                <h3>Today's Journey:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>🌳 Understanding the DOM tree structure</li>
+                    <li>🎯 Selecting elements with precision</li>
+                    <li>✨ Creating and modifying elements</li>
+                    <li>🎪 Handling user events</li>
+                    <li>🎨 Project: Etch-a-Sketch (if time permits)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is the DOM? -->
+        <div class="slide">
+            <h1>What is the DOM? <span class="emoji">🌳</span></h1>
+            <h2>Document Object Model</h2>
+            
+            <div class="demo-box">
+                <p><strong>The DOM is:</strong> A tree-like representation of your HTML that JavaScript can interact with</p>
+            </div>
+            
+            <div class="dom-tree">
+                <span class="tag">&lt;div id="container"&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="display"&gt;</span><span class="tag">&lt;/div&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="controls"&gt;</span><span class="tag">&lt;/div&gt;</span><br>
+                <span class="tag">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="two-column">
+                <div class="method-card">
+                    <h3>📦 Nodes</h3>
+                    <p>Everything in the DOM (elements, text, comments)</p>
+                </div>
+                <div class="method-card">
+                    <h3>🏷️ Elements</h3>
+                    <p>HTML tags that become element nodes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: DOM Relationships -->
+        <div class="slide">
+            <h1>DOM Family Tree <span class="emoji">👨‍👩‍👧‍👦</span></h1>
+            <h2>Understanding Relationships</h2>
+            
+            <div class="code-example">
+                <span class="tag">&lt;div id="container"&gt;</span> <span class="comment">&lt;-- Parent</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="display"&gt;</span><span class="tag">&lt;/div&gt;</span> <span class="comment">&lt;-- Child & Sibling</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="controls"&gt;</span><span class="tag">&lt;/div&gt;</span> <span class="comment">&lt;-- Child & Sibling</span><br>
+                <span class="tag">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Parent-Child</h3>
+                    <p>Elements directly inside another</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Siblings</h3>
+                    <p>Elements at the same level</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Ancestors</h3>
+                    <p>All parent elements up the tree</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Descendants</h3>
+                    <p>All child elements down the tree</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Selecting Elements -->
+        <div class="slide">
+            <h1>Targeting Elements <span class="emoji">🎯</span></h1>
+            <h2>Query Selectors</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Select by ID</span><br>
+                const container = document.querySelector("#container");<br><br>
+                
+                <span class="comment">// Select by class</span><br>
+                const display = document.querySelector(".display");<br><br>
+                
+                <span class="comment">// Select by tag</span><br>
+                const divs = document.querySelectorAll("div");<br><br>
+                
+                <span class="comment">// Complex selectors (CSS-style)</span><br>
+                const button = document.querySelector("#container > button.primary");
+            </div>
+            
+            <div class="warning-box">
+                <strong>Remember:</strong> querySelector returns ONE element, querySelectorAll returns a NodeList (like an array, but not quite!)
+            </div>
+        </div>
+
+        <!-- Slide 5: Relational Selectors -->
+        <div class="slide">
+            <h1>Navigating the DOM Tree <span class="emoji">🧭</span></h1>
+            <h2>Using Relationships</h2>
+            
+            <div class="code-example">
+                const container = document.querySelector("#container");<br><br>
+                
+                <span class="comment">// Navigate to children</span><br>
+                const firstChild = container.firstElementChild;<br>
+                const lastChild = container.lastElementChild;<br>
+                const allChildren = container.children;<br><br>
+                
+                <span class="comment">// Navigate to siblings</span><br>
+                const nextSibling = element.nextElementSibling;<br>
+                const prevSibling = element.previousElementSibling;<br><br>
+                
+                <span class="comment">// Navigate to parent</span><br>
+                const parent = element.parentElement;
+            </div>
+            
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use these when you need to move through the DOM based on structure, not selectors!
+            </div>
+        </div>
+
+        <!-- Slide 6: Creating Elements -->
+        <div class="slide">
+            <h1>Creating Elements <span class="emoji">🏗️</span></h1>
+            <h2>Building DOM Nodes in Memory</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Step 1: Create element in memory</span><br>
+                const newDiv = document.createElement("div");<br><br>
+                
+                <span class="comment">// Step 2: Add content and attributes</span><br>
+                newDiv.textContent = "Hello World!";<br>
+                newDiv.classList.add("message");<br>
+                newDiv.id = "welcome";<br><br>
+                
+                <span class="comment">// Step 3: Add to the DOM</span><br>
+                container.appendChild(newDiv);
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Key Concept:</strong> Elements are created in memory first, then added to the page!</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Modifying Elements -->
+        <div class="slide">
+            <h1>Modifying Elements <span class="emoji">✨</span></h1>
+            <h2>Common Manipulation Methods</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Text Content</h3>
+                    <code>element.textContent = "New text";</code>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>HTML Content</h3>
+                    <code>element.innerHTML = "&lt;span&gt;HTML&lt;/span&gt;";</code>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Styles</h3>
+                    <code>element.style.color = "blue";</code>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Classes</h3>
+                    <code>element.classList.add("active");</code>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Attributes</h3>
+                    <code>element.setAttribute("data-id", "123");</code>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Remove</h3>
+                    <code>element.remove();</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Working with Classes -->
+        <div class="slide">
+            <h1>Class Manipulation <span class="emoji">🎨</span></h1>
+            <h2>The classList API</h2>
+            
+            <div class="code-example">
+                const box = document.querySelector(".box");<br><br>
+                
+                <span class="comment">// Add a class</span><br>
+                box.classList.add("highlight");<br><br>
+                
+                <span class="comment">// Remove a class</span><br>
+                box.classList.remove("old-style");<br><br>
+                
+                <span class="comment">// Toggle a class (add if missing, remove if present)</span><br>
+                box.classList.toggle("active");<br><br>
+                
+                <span class="comment">// Check if class exists</span><br>
+                if (box.classList.contains("special")) {<br>
+                &nbsp;&nbsp;console.log("It's special!");<br>
+                }
+            </div>
+            
+            <div class="tip-box">
+                <strong>Best Practice:</strong> Toggle classes instead of inline styles for cleaner code!
+            </div>
+        </div>
+
+        <!-- Slide 9: Style Manipulation -->
+        <div class="slide">
+            <h1>Styling Elements <span class="emoji">🎭</span></h1>
+            <h2>Multiple Approaches</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>✅ Good: Toggle Classes</h3>
+                    <div class="code-example">
+                        element.classList.toggle("dark-mode");
+                    </div>
+                    <p>Clean, reusable, separates concerns</p>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>⚠️ Use Sparingly: Inline Styles</h3>
+                    <div class="code-example">
+                        element.style.backgroundColor = "blue";<br>
+                        element.style.fontSize = "20px";
+                    </div>
+                    <p>OK for dynamic values, avoid for static styles</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <strong>Note:</strong> CSS properties use camelCase in JS: background-color → backgroundColor
+            </div>
+        </div>
+
+        <!-- Slide 10: Live Exercise 1 -->
+        <div class="slide">
+            <h1>Exercise: Build a Container <span class="emoji">💻</span></h1>
+            <h2>Let's Practice Together!</h2>
+            
+            <div class="activity-box">
+                <h3>Create this structure using only JavaScript:</h3>
+                <div class="code-example">
+                    <span class="tag">&lt;div id="container"&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;p style="color: red"&gt;</span>Hey I'm red!<span class="tag">&lt;/p&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;h3 style="color: blue"&gt;</span>I'm a blue h3!<span class="tag">&lt;/h3&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;div&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;h1&gt;</span>I'm in a div<span class="tag">&lt;/h1&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;p&gt;</span>ME TOO!<span class="tag">&lt;/p&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br>
+                    <span class="tag">&lt;/div&gt;</span>
+                </div>
+            </div>
+            
+            <button data-timer="10">Start 10-Minute Timer</button>
+        </div>
+
+        <!-- Slide 11: Events Introduction -->
+        <div class="slide">
+            <h1>Events: Making It Interactive <span class="emoji">🎪</span></h1>
+            <h2>Responding to User Actions</h2>
+            
+            <div class="demo-box">
+                <p><strong>Events are:</strong> Things that happen on your webpage (clicks, key presses, mouse movements, etc.)</p>
+            </div>
+            
+            <div class="project-section">
+                <h3>Common Events:</h3>
+                <div style="text-align: center;">
+                    <span class="event-type">click</span>
+                    <span class="event-type">dblclick</span>
+                    <span class="event-type">mouseover</span>
+                    <span class="event-type">mouseout</span>
+                    <span class="event-type">keydown</span>
+                    <span class="event-type">keyup</span>
+                    <span class="event-type">submit</span>
+                    <span class="event-type">load</span>
+                    <span class="event-type">scroll</span>
+                    <span class="event-type">focus</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Three Ways to Handle Events -->
+        <div class="slide">
+            <h1>Three Ways to Add Events <span class="emoji">3️⃣</span></h1>
+            
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Method 1: HTML Attribute</h3>
+                    <div class="code-example">
+                        &lt;button onclick="alert('Hi!')"&gt;Click&lt;/button&gt;
+                    </div>
+                    <p>Mixes JS with HTML, only one handler</p>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>⚠️ Method 2: DOM Property</h3>
+                    <div class="code-example">
+                        btn.onclick = () => alert("Hi!");
+                    </div>
+                    <p>Better, but still only one handler</p>
+                </div>
+            </div>
+            
+            <div class="comparison-card good" style="margin-top: 20px;">
+                <h3>✅ Method 3: addEventListener</h3>
+                <div class="code-example">
+                    btn.addEventListener("click", () => {<br>
+                    &nbsp;&nbsp;alert("Hi!");<br>
+                    });
+                </div>
+                <p>Clean, multiple handlers possible, most flexible!</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: addEventListener Deep Dive -->
+        <div class="slide">
+            <h1>addEventListener() <span class="emoji">🎯</span></h1>
+            <h2>The Right Way™</h2>
+            
+            <div class="code-example">
+                const button = document.querySelector("#myButton");<br><br>
+                
+                <span class="comment">// Anonymous function</span><br>
+                button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;console.log("Clicked!");<br>
+                });<br><br>
+                
+                <span class="comment">// Named function (reusable!)</span><br>
+                function handleClick() {<br>
+                &nbsp;&nbsp;console.log("Button was clicked!");<br>
+                }<br>
+                button.addEventListener("click", handleClick);<br><br>
+                
+                <span class="comment">// With event object</span><br>
+                button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;console.log(e.target); <span class="comment">// The clicked element</span><br>
+                &nbsp;&nbsp;e.target.style.background = "blue";<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 14: The Event Object -->
+        <div class="slide">
+            <h1>The Event Object <span class="emoji">📦</span></h1>
+            <h2>Information About What Happened</h2>
+            
+            <div class="code-example">
+                button.addEventListener("click", function(e) {<br>
+                &nbsp;&nbsp;<span class="comment">// e is the event object</span><br>
+                &nbsp;&nbsp;console.log(e.type);        <span class="comment">// "click"</span><br>
+                &nbsp;&nbsp;console.log(e.target);      <span class="comment">// Element that was clicked</span><br>
+                &nbsp;&nbsp;console.log(e.currentTarget); <span class="comment">// Element with listener</span><br>
+                &nbsp;&nbsp;console.log(e.clientX);     <span class="comment">// Mouse X position</span><br>
+                &nbsp;&nbsp;console.log(e.clientY);     <span class="comment">// Mouse Y position</span><br>
+                &nbsp;&nbsp;console.log(e.timeStamp);   <span class="comment">// When it happened</span><br>
+                });<br><br>
+                
+                <span class="comment">// Prevent default behavior</span><br>
+                link.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;e.preventDefault(); <span class="comment">// Stop link navigation</span><br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 15: Multiple Elements -->
+        <div class="slide">
+            <h1>Events on Multiple Elements <span class="emoji">🎭</span></h1>
+            <h2>Using forEach with NodeLists</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Select ALL buttons</span><br>
+                const buttons = document.querySelectorAll("button");<br><br>
+                
+                <span class="comment">// Add listener to EACH button</span><br>
+                buttons.forEach((button) => {<br>
+                &nbsp;&nbsp;button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alert(`You clicked ${button.textContent}`);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;button.classList.toggle("clicked");<br>
+                &nbsp;&nbsp;});<br>
+                });<br><br>
+                
+                <span class="comment">// Or use the event target to identify which one</span><br>
+                buttons.forEach((button) => {<br>
+                &nbsp;&nbsp;button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;e.target.style.background = "yellow";<br>
+                &nbsp;&nbsp;});<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 16: Event Bubbling -->
+        <div class="slide">
+            <h1>Event Bubbling <span class="emoji">🫧</span></h1>
+            <h2>Events Travel Up the DOM Tree</h2>
+            
+            <div class="demo-box">
+                <p>When you click a child element, the event "bubbles" up through all parent elements!</p>
+            </div>
+            
+            <div class="code-example">
+                <span class="tag">&lt;div id="outer"&gt;</span> <span class="comment">&lt;-- 3rd: Event bubbles here</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div id="middle"&gt;</span> <span class="comment">&lt;-- 2nd: Then here</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;button id="inner"&gt;</span>Click<span class="tag">&lt;/button&gt;</span> <span class="comment">&lt;-- 1st: Click happens</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br>
+                <span class="tag">&lt;/div&gt;</span><br><br>
+                
+                <span class="comment">// Stop bubbling with stopPropagation()</span><br>
+                button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;e.stopPropagation();<br>
+                &nbsp;&nbsp;console.log("Button clicked, bubbling stopped!");<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 17: Common Patterns -->
+        <div class="slide">
+            <h1>Common DOM Patterns <span class="emoji">📚</span></h1>
+            <h2>Real-World Examples</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Toggle Dark Mode</h3>
+                    <div class="code-example">
+                        btn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;document.body.classList.toggle("dark");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Form Validation</h3>
+                    <div class="code-example">
+                        input.addEventListener("blur", (e) => {<br>
+                        &nbsp;&nbsp;if (!e.target.value) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;e.target.classList.add("error");<br>
+                        &nbsp;&nbsp;}<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Dynamic List</h3>
+                    <div class="code-example">
+                        addBtn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;const li = document.createElement("li");<br>
+                        &nbsp;&nbsp;li.textContent = input.value;<br>
+                        &nbsp;&nbsp;list.appendChild(li);<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Remove on Click</h3>
+                    <div class="code-example">
+                        item.addEventListener("click", (e) => {<br>
+                        &nbsp;&nbsp;e.target.remove();<br>
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Script Placement -->
+        <div class="slide">
+            <h1>Where to Put Your Script? <span class="emoji">📍</span></h1>
+            <h2>Timing is Everything!</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Problem: Script in Head</h3>
+                    <div class="code-example">
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/head&gt;
+                    </div>
+                    <p>DOM doesn't exist yet! querySelector returns null</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution 1: End of Body</h3>
+                    <div class="code-example">
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/body&gt;
+                    </div>
+                    <p>DOM is ready when script runs</p>
+                </div>
+            </div>
+            
+            <div class="comparison-card good" style="margin-top: 20px;">
+                <h3>✅ Solution 2: Defer Attribute</h3>
+                <div class="code-example">
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;script src="script.js" defer&gt;&lt;/script&gt;<br>
+                    &lt;/head&gt;
+                </div>
+                <p>Script loads but waits for DOM to be ready</p>
+            </div>
+        </div>
+
+        <!-- Slide 19: Practice Challenge -->
+        <div class="slide">
+            <h1>Challenge: Interactive Box <span class="emoji">🎨</span></h1>
+            <h2>Build This in 15 Minutes!</h2>
+            
+            <div class="activity-box">
+                <h3>Requirements:</h3>
+                <ol>
+                    <li>Create a colored box (div) with JavaScript</li>
+                    <li>Add three buttons: Red, Blue, Green</li>
+                    <li>Clicking a button changes the box color</li>
+                    <li>Double-clicking the box removes it</li>
+                    <li>Add a "Reset" button that recreates everything</li>
+                </ol>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Hints:</strong>
+                <ul>
+                    <li>Use createElement() and appendChild()</li>
+                    <li>Add event listeners to each button</li>
+                    <li>Use style.backgroundColor to change colors</li>
+                    <li>Remember remove() method exists!</li>
+                </ul>
+            </div>
+            
+            <button data-timer="15">Start 15-Minute Timer</button>
+        </div>
+
+        <!-- Slide 20: Project Introduction -->
+        <div class="slide">
+            <h1>Project: Etch-a-Sketch <span class="emoji">🎨</span></h1>
+            <h2>Time to Build Something Fun!</h2>
+            
+            <div class="demo-box">
+                <p><strong>What You'll Build:</strong> A browser-based drawing pad where you can "sketch" by hovering over squares!</p>
+            </div>
+            
+            <div class="project-section">
+                <h3>Core Features:</h3>
+                <ul>
+                    <li>🔲 16x16 grid of divs (created with JavaScript)</li>
+                    <li>🖱️ Hover effect changes square colors</li>
+                    <li>🔄 Button to resize the grid</li>
+                    <li>💪 Uses Flexbox for layout</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <strong>This is challenging!</strong> You'll need to Google, experiment, and problem-solve. That's the point!
+            </div>
+        </div>
+
+        <!-- Slide 21: Etch-a-Sketch Setup -->
+        <div class="slide">
+            <h1>Project Setup <span class="emoji">🚀</span></h1>
+            <h2>Getting Started</h2>
+            
+            <div class="code-example">
+                <span class="comment"># Create project structure</span><br>
+                mkdir etch-a-sketch<br>
+                cd etch-a-sketch<br>
+                touch index.html style.css script.js<br><br>
+                
+                <span class="comment"># Initialize git</span><br>
+                git init<br>
+                git add .<br>
+                git commit -m "Initial setup"
+            </div>
+            
+            <div class="activity-box">
+                <h3>HTML Structure (index.html):</h3>
+                <div class="code-example">
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;Etch-a-Sketch&lt;/title&gt;<br>
+                    &nbsp;&nbsp;&lt;link rel="stylesheet" href="style.css"&gt;<br>
+                    &nbsp;&nbsp;&lt;script src="script.js" defer&gt;&lt;/script&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Etch-a-Sketch&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&lt;button id="resize"&gt;Resize Grid&lt;/button&gt;<br>
+                    &nbsp;&nbsp;&lt;div id="container"&gt;&lt;/div&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Building the Grid -->
+        <div class="slide">
+            <h1>Creating the Grid <span class="emoji">🔲</span></h1>
+            <h2>JavaScript Logic</h2>
+            
+            <div class="code-example">
+                function createGrid(size) {<br>
+                &nbsp;&nbsp;const container = document.querySelector('#container');<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">// Clear existing grid</span><br>
+                &nbsp;&nbsp;container.innerHTML = '';<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<span class="comment">// Create size x size grid</span><br>
+                &nbsp;&nbsp;for (let i = 0; i < size * size; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const square = document.createElement('div');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;square.classList.add('grid-square');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Add hover effect</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;square.addEventListener('mouseenter', () => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;square.style.backgroundColor = 'black';<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;container.appendChild(square);<br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                
+                <span class="comment">// Start with 16x16 grid</span><br>
+                createGrid(16);
+            </div>
+        </div>
+
+        <!-- Slide 23: Flexbox Grid Styling -->
+        <div class="slide">
+            <h1>Styling with Flexbox <span class="emoji">🎨</span></h1>
+            <h2>Making it Look Good</h2>
+            
+            <div class="code-example">
+                <span class="comment">/* Container styling */</span><br>
+                #container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;flex-wrap: wrap;<br>
+                &nbsp;&nbsp;width: 500px;<br>
+                &nbsp;&nbsp;height: 500px;<br>
+                &nbsp;&nbsp;border: 2px solid black;<br>
+                &nbsp;&nbsp;margin: 20px auto;<br>
+                }<br><br>
+                
+                <span class="comment">/* Grid square styling */</span><br>
+                .grid-square {<br>
+                &nbsp;&nbsp;flex: 1 1 auto;<br>
+                &nbsp;&nbsp;border: 1px solid #ddd;<br>
+                &nbsp;&nbsp;box-sizing: border-box;<br>
+                }<br><br>
+                
+                <span class="comment">/* Calculate square size dynamically with CSS */</span><br>
+                <span class="comment">/* For 16x16: width = 500px / 16 = 31.25px */</span>
+            </div>
+            
+            <div class="warning-box">
+                <strong>Watch out for borders!</strong> They add to element size. Use box-sizing: border-box;
+            </div>
+        </div>
+
+        <!-- Slide 24: Extra Challenges -->
+        <div class="slide">
+            <h1>Bonus Challenges <span class="emoji">🏆</span></h1>
+            <h2>Level Up Your Project!</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>🌈 Random Colors</h3>
+                    <div class="code-example">
+                        const randomColor = () => {<br>
+                        &nbsp;&nbsp;const r = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const g = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const b = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;return `rgb(${r}, ${g}, ${b})`;<br>
+                        };
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🌑 Progressive Darkening</h3>
+                    <p>Each pass makes square 10% darker</p>
+                    <p>Use opacity or RGB calculations</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🎨 Color Picker</h3>
+                    <p>Let user choose the drawing color</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🧹 Clear Button</h3>
+                    <p>Reset all squares to white</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: Today's Takeaways -->
+        <div class="slide">
+            <h1>You Now Know DOM Manipulation! <span class="emoji">🎓</span></h1>
+            <h2>Today's Superpowers:</h2>
+            
+            <div class="demo-box" style="font-size: 1.2em;">
+                <ul>
+                    <li>✅ Navigate the DOM tree structure</li>
+                    <li>✅ Select elements with querySelector</li>
+                    <li>✅ Create new elements dynamically</li>
+                    <li>✅ Modify element properties and styles</li>
+                    <li>✅ Add interactive event listeners</li>
+                    <li>✅ Handle multiple elements efficiently</li>
+                    <li>✅ Understand event bubbling</li>
+                </ul>
+            </div>
+            
+            <div class="activity-box">
+                <h3>Practice Resources:</h3>
+                <ul>
+                    <li>📖 MDN DOM Documentation</li>
+                    <li>🎮 JavaScript30 by Wes Bos</li>
+                    <li>💪 Complete the Etch-a-Sketch project</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+            </span>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+
+    <!-- Lecture-Specific JavaScript -->
+    <script>
+        // Add any lecture-specific JavaScript here
+        document.addEventListener('slidechange', (e) => {
+            // Could add specific animations or demos for certain slides
+            console.log(`Slide ${e.detail.currentSlide + 1} of ${e.detail.totalSlides}`);
+        });
+    </script>
+</body>
+</html>

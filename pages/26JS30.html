@@ -24,7 +24,7 @@
         <div class="slide title-slide active">
             <h1>JavaScript30: Array Cardio <span class="emoji">💪</span></h1>
             <p class="subtitle">Day 27 - Mastering Array Methods Through Practice</p>
-            <p class="meta-info">Web Programming</p>
+            <p class="meta-info">CSCI 3403 - Web Programming</p>
             <div class="home">
                 <a href="../index.html">⌂ Back to Schedule</a>
             </div>
@@ -690,6 +690,52 @@ const avgAge = people.reduce((sum, person) => {<br>
 
     <!-- JavaScript for navigation and theme -->
     <script src="../js/presentation.js"></script>
+    <script>
+        // Slide navigation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('slideNumber').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize slide counter
+            document.getElementById('slideNumber').textContent = `1 / ${totalSlides}`;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Bind button clicks
+            document.getElementById('prevBtn').onclick = () => changeSlide(-1);
+            document.getElementById('nextBtn').onclick = () => changeSlide(1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
 </body>
 
 </html>

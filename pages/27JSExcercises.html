@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 29: JavaScript Exercises - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        .exercise-card {
+            background: var(--bg-accent);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid var(--ocu-true-blue);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        
+        .recognition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .recognition-card {
+            background: var(--slide-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .recognition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+        
+        .recognition-card .trophy {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .student-name {
+            font-size: 1.4em;
+            color: var(--ocu-true-blue);
+            font-weight: bold;
+            margin: 10px 0;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        [data-theme="dark"] .student-name {
+            color: var(--ocu-cyan);
+        }
+        
+        .exercise-hint {
+            background: rgba(0, 117, 191, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--ocu-light-blue);
+            margin: 15px 0;
+        }
+        
+        .timer-box {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--slide-bg);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--ocu-true-blue);
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ocu-true-blue), var(--ocu-light-blue));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .test-command {
+            background: var(--code-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            color: var(--ocu-cyan);
+            display: inline-block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 29 - JavaScript Exercises
+                 <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+        
+        <!-- Exercise Timer (hidden by default) -->
+        <div class="timer-box" id="exercise-timer" style="display: none;">
+            <span id="timer-minutes">5</span>:<span id="timer-seconds">00</span>
+        </div>
+
+        <!-- Slide 1: Title & Welcome -->
+        <div class="slide active">
+            <h1>JavaScript Exercises Workshop</h1>
+            <h2>Hands-On Problem Solving <span class="emoji">💪</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Day 29 - December 2nd</p>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <p style="margin-top: 30px; font-style: italic;">Today: 6 exercises, 4 ways to win! 🏆</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Mission <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🔁 Master string manipulation with <code>repeatString</code></li>
+                <li>🔄 Reverse strings efficiently with <code>reverseString</code></li>
+                <li>🗑️ Filter arrays with <code>removeFromArray</code></li>
+                <li>➕ Calculate ranges with <code>sumAll</code></li>
+                <li>📅 Validate leap years with <code>leapYears</code></li>
+                <li>🌡️ Convert temperatures with <code>tempConversion</code></li>
+            </ul>
+            <div class="tip-box">
+                <strong>Recognition Categories:</strong> First Complete 🥇 | Most Creative 🎨 | Cleanest Code ✨ | Shortest Solution 📏
+            </div>
+        </div>
+
+        <!-- Slide 3: How This Works -->
+        <div class="slide">
+            <h1>How Today Works <span class="emoji">⚙️</span></h1>
+            <div class="exercise-card">
+                <h3>For Each Exercise:</h3>
+                <ol style="font-size: 1.3em; line-height: 2;">
+                    <li>📖 We'll review the requirements together</li>
+                    <li>⏱️ You get 5-7 minutes to solve it</li>
+                    <li>🧪 Test your solution: <span class="test-command">npm test exerciseName</span></li>
+                    <li>✋ Raise hand when all tests pass</li>
+                    <li>🏆 Recognition for outstanding solutions</li>
+                    <li>💡 We'll discuss different approaches</li>
+                </ol>
+            </div>
+            <div class="demo-box">
+                <p><strong>Repository:</strong> github.com/TheOdinProject/javascript-exercises</p>
+                <p><strong>Remember:</strong> Read the test files for hints!</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Exercise 1 - repeatString -->
+        <div class="slide">
+            <h1>Exercise 1: repeatString <span class="emoji">🔁</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Write a function that repeats a given string a specified number of times.</p>
+                <div class="code-example">
+                    <pre>
+repeatString('hey', 3) // returns 'heyheyhey'
+repeatString('hello', 10) // returns 'hellohellohello...'
+repeatString('hi', 1) // returns 'hi'
+repeatString('bye', 0) // returns ''
+repeatString('goodbye', -1) // returns 'ERROR'</pre>
+                </div>
+            </div>
+            <div class="exercise-hint">
+                <strong>Hints:</strong>
+                <ul>
+                    <li>Check for negative numbers first</li>
+                    <li>Consider using <code>String.repeat()</code> or a loop</li>
+                    <li>Don't forget edge cases!</li>
+                </ul>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test repeatString</span>
+            </p>
+        </div>
+
+        <!-- Slide 5: repeatString Recognition -->
+        <div class="slide">
+            <h1>repeatString - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Share your approach!</strong> What made your solution unique?</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Exercise 2 - reverseString -->
+        <div class="slide">
+            <h1>Exercise 2: reverseString <span class="emoji">🔄</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Write a function that reverses a string.</p>
+                <div class="code-example">
+                    <pre>
+reverseString('hello') // returns 'olleh'
+reverseString('hello there') // returns 'ereht olleh'
+reverseString('123! abc!') // returns '!cba !321'
+reverseString('') // returns ''</pre>
+                </div>
+            </div>
+            <div class="exercise-hint">
+                <strong>Hints:</strong>
+                <ul>
+                    <li>Strings are immutable - you'll need to create a new one</li>
+                    <li>Consider <code>split()</code>, <code>reverse()</code>, and <code>join()</code></li>
+                    <li>Or try a loop working backwards!</li>
+                </ul>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test reverseString</span>
+            </p>
+        </div>
+
+        <!-- Slide 7: reverseString Recognition -->
+        <div class="slide">
+            <h1>reverseString - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Different approaches:</strong> Array methods vs loops vs recursion?</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Exercise 3 - removeFromArray -->
+        <div class="slide">
+            <h1>Exercise 3: removeFromArray <span class="emoji">🗑️</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Remove all given values from an array.</p>
+                <div class="code-example">
+                    <pre>
+removeFromArray([1, 2, 3, 4], 3) // returns [1, 2, 4]
+removeFromArray([1, 2, 3, 4], 3, 2) // returns [1, 4]
+removeFromArray([1, 2, 3, 4], 7, "tacos") // returns [1, 2, 3, 4]
+removeFromArray([1, 2, 3, 4], 7, 2) // returns [1, 3, 4]
+removeFromArray(["hey", 2, 3, "ho"], "hey", 3) // returns [2, "ho"]</pre>
+                </div>
+            </div>
+            <div class="exercise-hint">
+                <strong>Hints:</strong>
+                <ul>
+                    <li>The function can receive any number of values to remove</li>
+                    <li>Look into the <code>arguments</code> object or rest parameters <code>...</code></li>
+                    <li><code>filter()</code> might be your friend here</li>
+                </ul>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test removeFromArray</span>
+            </p>
+        </div>
+
+        <!-- Slide 9: removeFromArray Recognition -->
+        <div class="slide">
+            <h1>removeFromArray - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Key concept:</strong> How did you handle multiple arguments?</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Exercise 4 - sumAll -->
+        <div class="slide">
+            <h1>Exercise 4: sumAll <span class="emoji">➕</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Sum all numbers in a range between two numbers (inclusive).</p>
+                <div class="code-example">
+                    <pre>
+sumAll(1, 4) // returns 10 (1 + 2 + 3 + 4)
+sumAll(1, 4000) // returns 8002000
+sumAll(123, 1) // returns 7626 (works backwards too!)
+sumAll(-10, 4) // returns 'ERROR' (no negative numbers)
+sumAll(10, "90") // returns 'ERROR' (numbers only)
+sumAll(10, [90, 1]) // returns 'ERROR' (invalid input)</pre>
+                </div>
+            </div>
+            <div class="exercise-hint">
+                <strong>Hints:</strong>
+                <ul>
+                    <li>Validate inputs first!</li>
+                    <li>Handle the case where first > second</li>
+                    <li>A simple loop works great here</li>
+                </ul>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test sumAll</span>
+            </p>
+        </div>
+
+        <!-- Slide 11: sumAll Recognition -->
+        <div class="slide">
+            <h1>sumAll - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Math trick:</strong> Did anyone use the arithmetic sequence formula?</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Exercise 5 - leapYears -->
+        <div class="slide">
+            <h1>Exercise 5: leapYears <span class="emoji">📅</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Determine whether a given year is a leap year.</p>
+                <div class="code-example">
+                    <pre>
+leapYears(2000) // returns true
+leapYears(1985) // returns false
+leapYears(1996) // returns true
+leapYears(1900) // returns false
+leapYears(1600) // returns true
+leapYears(700) // returns false</pre>
+                </div>
+                <div class="tip-box">
+                    <strong>Leap Year Rules:</strong>
+                    <ul>
+                        <li>Divisible by 4 → leap year</li>
+                        <li>EXCEPT: Divisible by 100 → NOT a leap year</li>
+                        <li>EXCEPT EXCEPT: Divisible by 400 → IS a leap year</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test leapYears</span>
+            </p>
+        </div>
+
+        <!-- Slide 13: leapYears Recognition -->
+        <div class="slide">
+            <h1>leapYears - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Logic challenge:</strong> How did you order your conditions?</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Exercise 6 - tempConversion -->
+        <div class="slide">
+            <h1>Exercise 6: tempConversion <span class="emoji">🌡️</span></h1>
+            <div class="exercise-card">
+                <h3>The Challenge:</h3>
+                <p>Two functions: Convert Fahrenheit ↔ Celsius (round to 1 decimal place).</p>
+                <div class="code-example">
+                    <pre>
+convertToCelsius(32) // returns 0
+convertToCelsius(100) // returns 37.8
+convertToCelsius(-100) // returns -73.3
+
+convertToFahrenheit(0) // returns 32
+convertToFahrenheit(73.2) // returns 163.8
+convertToFahrenheit(-10) // returns 14</pre>
+                </div>
+                <div class="tip-box">
+                    <strong>Formulas:</strong>
+                    <ul>
+                        <li>C = (F - 32) × 5/9</li>
+                        <li>F = C × 9/5 + 32</li>
+                        <li>Round to 1 decimal: <code>Math.round(num * 10) / 10</code></li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Test Command:</strong> <span class="test-command">npm test tempConversion</span>
+            </p>
+        </div>
+
+        <!-- Slide 15: tempConversion Recognition -->
+        <div class="slide">
+            <h1>tempConversion - Recognition <span class="emoji">🏆</span></h1>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="trophy">🥇</div>
+                    <h3>First Complete</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">🎨</div>
+                    <h3>Most Creative</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">✨</div>
+                    <h3>Cleanest Code</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+                <div class="recognition-card">
+                    <div class="trophy">📏</div>
+                    <h3>Shortest Solution</h3>
+                    <div class="student-name" contenteditable="true">_____________</div>
+                </div>
+            </div>
+            <div class="demo-box">
+                <p><strong>Precision matters:</strong> How did you handle rounding?</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Overall Champions -->
+        <div class="slide">
+            <h1>Today's Champions! <span class="emoji">🎉</span></h1>
+            <div class="exercise-card">
+                <h2 style="text-align: center;">🏆 Overall Performance 🏆</h2>
+                <div class="recognition-grid">
+                    <div class="recognition-card" style="grid-column: span 2;">
+                        <div class="trophy" style="font-size: 4em;">👑</div>
+                        <h3>Exercise Master</h3>
+                        <p>Most Total Recognitions</p>
+                        <div class="student-name" contenteditable="true">_____________</div>
+                    </div>
+                    <div class="recognition-card">
+                        <div class="trophy">⚡</div>
+                        <h3>Speed Demon</h3>
+                        <p>Most "First Complete" Awards</p>
+                        <div class="student-name" contenteditable="true">_____________</div>
+                    </div>
+                    <div class="recognition-card">
+                        <div class="trophy">🧹</div>
+                        <h3>Clean Coder</h3>
+                        <p>Consistently Clean Solutions</p>
+                        <div class="student-name" contenteditable="true">_____________</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Key Takeaways -->
+        <div class="slide">
+            <h1>What We Learned <span class="emoji">💡</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Technical Skills:</h3>
+                    <ul style="font-size: 1.2em;">
+                        <li>String manipulation methods</li>
+                        <li>Array filtering techniques</li>
+                        <li>Input validation patterns</li>
+                        <li>Mathematical operations</li>
+                        <li>Conditional logic</li>
+                        <li>Function parameters & returns</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Problem-Solving Skills:</h3>
+                    <ul style="font-size: 1.2em;">
+                        <li>Reading test requirements</li>
+                        <li>Handling edge cases</li>
+                        <li>Code optimization</li>
+                        <li>Multiple solution approaches</li>
+                        <li>Debugging with tests</li>
+                        <li>Clean code practices</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> There's rarely just one "right" solution. The best code is code that works, is readable, and is maintainable!
+            </div>
+        </div>
+
+        <!-- Slide 18: Next Steps -->
+        <div class="slide">
+            <h1>Keep Practicing! <span class="emoji">🚀</span></h1>
+            <div class="exercise-card">
+                <h3>Your Homework:</h3>
+                <p style="font-size: 1.3em;">Complete any exercises you didn't finish in class.</p>
+                <p style="font-size: 1.3em;">Make sure all tests pass before next class!</p>
+            </div>
+            <div class="demo-box">
+                <h3>Coming Next Class:</h3>
+                <p style="font-size: 1.3em;"><strong>Project: Etch-a-Sketch</strong> 🎨</p>
+                <p>We'll build an interactive drawing application using everything we've learned!</p>
+            </div>
+            <div class="activity-box">
+                <h3>Extra Challenge (Optional):</h3>
+                <p>Try solving each exercise a completely different way!</p>
+                <ul>
+                    <li>If you used a loop, try array methods</li>
+                    <li>If you used built-in methods, try manual implementation</li>
+                    <li>Can you make it recursive?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 19: Closing -->
+        <div class="slide">
+            <h1>Great Work Today! <span class="emoji">🎊</span></h1>
+            <h2 style="text-align: center; margin-top: 50px;">You're becoming JavaScript problem solvers!</h2>
+            <div class="progress-bar" style="margin-top: 50px;">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <p style="text-align: center; font-size: 1.5em; margin-top: 50px;">
+                Questions before we wrap up?
+            </p>
+            <p style="text-align: center; margin-top: 50px;">
+                <strong>Don't forget:</strong> Push your solutions to GitHub! 📤
+            </p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">19</span>
+        </span>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+    
+    <!-- Exercise Timer Script -->
+    <script>
+        let timerInterval = null;
+        let timeLeft = 300; // 5 minutes default
+        
+        function startTimer(minutes) {
+            stopTimer();
+            timeLeft = minutes * 60;
+            document.getElementById('exercise-timer').style.display = 'block';
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    playTimerSound();
+                    alert("Time's up! Let's see those solutions!");
+                    return;
+                }
+                
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('timer-minutes').textContent = mins;
+                document.getElementById('timer-seconds').textContent = secs.toString().padStart(2, '0');
+                
+                // Warning at 30 seconds
+                if (timeLeft === 30) {
+                    document.getElementById('exercise-timer').style.background = '#ffeb3b';
+                    document.getElementById('exercise-timer').style.color = '#333';
+                }
+                // Critical at 10 seconds
+                if (timeLeft === 10) {
+                    document.getElementById('exercise-timer').style.background = '#f44336';
+                    document.getElementById('exercise-timer').style.color = 'white';
+                }
+            }, 1000);
+        }
+        
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            document.getElementById('exercise-timer').style.display = 'none';
+            document.getElementById('exercise-timer').style.background = 'var(--slide-bg)';
+            document.getElementById('exercise-timer').style.color = 'var(--ocu-true-blue)';
+        }
+        
+        function playTimerSound() {
+            // Simple beep using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+        
+        // Keyboard shortcuts for timer
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 't' && e.ctrlKey) {
+                startTimer(5); // Start 5-minute timer
+            }
+            if (e.key === 's' && e.ctrlKey) {
+                stopTimer(); // Stop timer
+            }
+        });
+        
+        // Update progress bar as we go through exercises
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        function updateProgressBar() {
+            const exerciseSlides = 6; // Total number of exercises
+            const currentExercise = Math.min(Math.floor((currentSlide / totalSlides) * exerciseSlides), exerciseSlides);
+            const progressPercent = (currentExercise / exerciseSlides) * 100;
+            
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                bar.style.width = progressPercent + '%';
+            });
+        }
+        
+        // Original changeSlide function enhanced
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = currentSlide + direction;
+            
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            updateProgressBar();
+            
+            // Auto-start timer on exercise slides (4, 6, 8, 10, 12, 14)
+            const exerciseSlides = [3, 5, 7, 9, 11, 13]; // 0-indexed
+            if (exerciseSlides.includes(currentSlide)) {
+                const confirmStart = confirm("Start 5-minute timer for this exercise?");
+                if (confirmStart) {
+                    startTimer(5);
+                }
+            }
+        }
+        
+        // Initialize
+        document.getElementById('totalSlides').textContent = totalSlides;
+    </script>
+</body>
+</html>
