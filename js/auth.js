@@ -377,6 +377,7 @@ class SimpleGistAuth {
         }
     }
     
+    
     showPointsNotification(points, reason) {
         // Create notification element
         const notification = document.createElement('div');

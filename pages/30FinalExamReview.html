@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Exam Review - CSCI 3403</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">
+            Final Exam Review - CSCI 3403
+            <button class="home"><a href="../index.html">Home</a></button>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Final Exam Review</h1>
+            <h2>CSCI 3403 - Web Programming <span class="emoji">📚</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">Everything You Need to Know</p>
+            <p style="font-size: 1.3em;">50 Questions | 150 Points | Multiple Formats</p>
+            <p style="margin-top: auto; font-style: italic;">Let's ace this together! 🚀</p>
+        </div>
+
+        <!-- Slide 2: Exam Format -->
+        <div class="slide">
+            <h1>Exam Format <span class="emoji">📋</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Question Types:</h3>
+                    <ul>
+                        <li>Multiple Choice (MC)</li>
+                        <li>True/False (TF)</li>
+                        <li>Short Answer (SA)</li>
+                        <li>Written Response (WR)</li>
+                        <li>Multi-Select (MS)</li>
+                        <li>Matching (M)</li>
+                        <li>Ordering (O)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Topics Covered:</h3>
+                    <ul>
+                        <li>HTML Structure & Elements</li>
+                        <li>CSS Styling & Layout</li>
+                        <li>JavaScript Programming</li>
+                        <li>Git & Version Control</li>
+                        <li>Web Best Practices</li>
+                        <li>Project Organization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Study Strategy -->
+        <div class="slide">
+            <h1>How to Use This Review <span class="emoji">🎯</span></h1>
+            <div class="concept-highlight">
+                <h3>During This Session:</h3>
+                <ul>
+                    <li>📝 Take notes on concepts you're unsure about</li>
+                    <li>❓ Ask questions immediately when confused</li>
+                    <li>💡 Think of examples for each concept</li>
+                    <li>🔗 Connect topics to your projects</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> The exam tests understanding, not memorization. Focus on WHY and HOW, not just WHAT.
+            </div>
+        </div>
+
+        <!-- HTML Section -->
+        <!-- Slide 4: HTML Overview -->
+        <div class="slide">
+            <h1>HTML Fundamentals <span class="emoji">🏗️</span></h1>
+            <h2>The Structure of the Web</h2>
+            <div class="key-points">
+                <h3>Core Concepts to Master:</h3>
+                <ul>
+                    <li>Document structure (DOCTYPE, html, head, body)</li>
+                    <li>Metadata elements and their purposes</li>
+                    <li>Semantic HTML vs generic containers</li>
+                    <li>Void elements vs container elements</li>
+                    <li>Attributes and their functions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: HTML Document Structure -->
+        <div class="slide">
+            <h1>HTML Document Anatomy</h1>
+            <div class="code-example">
+                <span class="comment">&lt;!-- Every HTML document needs these essential parts --&gt;</span><br>
+                <span class="tag">&lt;!DOCTYPE html&gt;</span> <span class="comment">&lt;!-- Tells browser it's HTML5 --&gt;</span><br>
+                <span class="tag">&lt;html lang="en"&gt;</span> <span class="comment">&lt;!-- Root element with language --&gt;</span><br>
+                <span class="tag">&lt;head&gt;</span> <span class="comment">&lt;!-- Metadata container (not visible) --&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;meta charset="UTF-8"&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;meta name="viewport" content="..."&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;title&gt;</span>Page Title<span class="tag">&lt;/title&gt;</span><br>
+                <span class="tag">&lt;/head&gt;</span><br>
+                <span class="tag">&lt;body&gt;</span> <span class="comment">&lt;!-- Visible content goes here --&gt;</span><br>
+                <span class="tag">&lt;/body&gt;</span><br>
+                <span class="tag">&lt;/html&gt;</span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Void vs Container Elements -->
+        <div class="slide">
+            <h1>Elements: Void vs Container</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Void Elements (Self-closing)</h3>
+                    <ul>
+                        <li><code>&lt;img&gt;</code> - Images</li>
+                        <li><code>&lt;br&gt;</code> - Line breaks</li>
+                        <li><code>&lt;input&gt;</code> - Form inputs</li>
+                        <li><code>&lt;meta&gt;</code> - Metadata</li>
+                        <li><code>&lt;hr&gt;</code> - Horizontal rule</li>
+                    </ul>
+                    <p class="note">No closing tag needed!</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>Container Elements</h3>
+                    <ul>
+                        <li><code>&lt;div&gt;...&lt;/div&gt;</code></li>
+                        <li><code>&lt;p&gt;...&lt;/p&gt;</code></li>
+                        <li><code>&lt;span&gt;...&lt;/span&gt;</code></li>
+                        <li><code>&lt;nav&gt;...&lt;/nav&gt;</code></li>
+                        <li><code>&lt;section&gt;...&lt;/section&gt;</code></li>
+                    </ul>
+                    <p class="note">Must have closing tag!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Semantic HTML -->
+        <div class="slide">
+            <h1>Semantic HTML Elements</h1>
+            <div class="demo-box">
+                <h3>Use semantic elements for meaning:</h3>
+                <ul>
+                    <li><code>&lt;nav&gt;</code> - Navigation menus</li>
+                    <li><code>&lt;header&gt;</code> - Introductory content</li>
+                    <li><code>&lt;main&gt;</code> - Main content area</li>
+                    <li><code>&lt;article&gt;</code> - Self-contained content</li>
+                    <li><code>&lt;section&gt;</code> - Thematic grouping</li>
+                    <li><code>&lt;footer&gt;</code> - Footer information</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Semantic HTML improves accessibility and SEO!
+            </div>
+        </div>
+
+        <!-- Slide 8: HTML Forms & Inputs -->
+        <div class="slide">
+            <h1>HTML Forms & Input Types</h1>
+            <h3>Common Input Types (HTML5):</h3>
+            <div class="two-column">
+                <div>
+                    <ul>
+                        <li><code>type="text"</code> - Text input</li>
+                        <li><code>type="email"</code> - Email validation</li>
+                        <li><code>type="number"</code> - Numeric input</li>
+                        <li><code>type="date"</code> - Date picker</li>
+                        <li><code>type="password"</code> - Hidden text</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><code>type="checkbox"</code> - Multiple choice</li>
+                        <li><code>type="radio"</code> - Single choice</li>
+                        <li><code>type="tel"</code> - Phone numbers</li>
+                        <li><code>type="url"</code> - Web addresses</li>
+                        <li><code>type="submit"</code> - Form submission</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="note">Note: Use <code>tel</code> not <code>phone</code>!</p>
+        </div>
+
+        <!-- CSS Section -->
+        <!-- Slide 9: CSS Overview -->
+        <div class="slide">
+            <h1>CSS Fundamentals <span class="emoji">🎨</span></h1>
+            <h2>Styling the Web</h2>
+            <div class="key-points">
+                <h3>Essential CSS Concepts:</h3>
+                <ul>
+                    <li>Selectors (element, class, ID)</li>
+                    <li>Specificity and the cascade</li>
+                    <li>Box Model (content, padding, border, margin)</li>
+                    <li>Display types (block, inline, inline-block, flex)</li>
+                    <li>Positioning (static, relative, absolute, fixed, sticky)</li>
+                    <li>Flexbox layout system</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: CSS Selectors -->
+        <div class="slide">
+            <h1>CSS Selectors & Syntax</h1>
+            <div class="code-example">
+                <span class="comment">/* Element Selector */</span><br>
+                p { color: blue; }<br><br>
+                <span class="comment">/* Class Selector (.) */</span><br>
+                .highlight { background: yellow; }<br><br>
+                <span class="comment">/* ID Selector (#) */</span><br>
+                #header { font-size: 24px; }<br><br>
+                <span class="comment">/* Descendant Selector */</span><br>
+                nav ul li { display: inline; }<br><br>
+                <span class="comment">/* Multiple Selectors */</span><br>
+                h1, h2, h3 { font-family: Arial; }
+            </div>
+        </div>
+
+        <!-- Slide 11: CSS Specificity -->
+        <div class="slide">
+            <h1>CSS Specificity Rules</h1>
+            <div class="concept-highlight">
+                <h3>Specificity Values:</h3>
+                <ul>
+                    <li><strong>Inline styles:</strong> 1000 points</li>
+                    <li><strong>ID selectors:</strong> 100 points</li>
+                    <li><strong>Class selectors:</strong> 10 points</li>
+                    <li><strong>Element selectors:</strong> 1 point</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                <span class="comment">/* Calculate specificity */</span><br>
+                #header .nav li { } <span class="comment">/* 100 + 10 + 1 = 111 */</span><br>
+                .content p { } <span class="comment">/* 10 + 1 = 11 */</span><br>
+                p { } <span class="comment">/* 1 */</span>
+            </div>
+            <p class="note">Higher specificity always wins, regardless of order!</p>
+        </div>
+
+        <!-- Slide 12: The Box Model -->
+        <div class="slide">
+            <h1>The Box Model</h1>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="display: inline-block; background: #f0f0f0; padding: 40px;">
+                    <div style="background: #e0e0e0; padding: 30px; border: 3px solid #333;">
+                        <div style="background: #d0d0d0; padding: 20px;">
+                            <div style="background: white; padding: 15px;">
+                                CONTENT
+                            </div>
+                            <p>← Padding →</p>
+                        </div>
+                        <p>← Border →</p>
+                    </div>
+                    <p>← Margin →</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Always use:</strong> <code>box-sizing: border-box;</code> for predictable layouts!
+            </div>
+        </div>
+
+        <!-- Slide 13: Display Properties -->
+        <div class="slide">
+            <h1>Display Property Values</h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Block Elements</h3>
+                    <ul>
+                        <li>Take full width available</li>
+                        <li>Start on new line</li>
+                        <li>Can contain other blocks</li>
+                        <li>Examples: div, p, h1-h6</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Inline Elements</h3>
+                    <ul>
+                        <li>Only take needed width</li>
+                        <li>Stay in line with text</li>
+                        <li>Can't set width/height</li>
+                        <li>Examples: span, a, strong</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Flexbox Essentials -->
+        <div class="slide">
+            <h1>Flexbox Layout System</h1>
+            <div class="code-example">
+                <span class="comment">/* Make a flex container */</span><br>
+                .container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;flex-direction: row; <span class="comment">/* or column */</span><br>
+                &nbsp;&nbsp;justify-content: center; <span class="comment">/* main axis */</span><br>
+                &nbsp;&nbsp;align-items: center; <span class="comment">/* cross axis */</span><br>
+                }<br><br>
+                <span class="comment">/* Flex items */</span><br>
+                .item {<br>
+                &nbsp;&nbsp;flex: 1; <span class="comment">/* grow, shrink, basis */</span><br>
+                }
+            </div>
+            <div class="tip-box">
+                <strong>Perfect Centering:</strong> <code>justify-content: center;</code> + <code>align-items: center;</code>
+            </div>
+        </div>
+
+        <!-- Slide 15: CSS Units -->
+        <div class="slide">
+            <h1>CSS Units</h1>
+            <div class="two-column">
+                <div>
+                    <h3>Absolute Units:</h3>
+                    <ul>
+                        <li><code>px</code> - Pixels (fixed)</li>
+                        <li><code>pt</code> - Points (print)</li>
+                        <li><code>cm</code> - Centimeters</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Relative Units:</h3>
+                    <ul>
+                        <li><code>em</code> - Relative to element font-size</li>
+                        <li><code>rem</code> - Relative to root font-size</li>
+                        <li><code>%</code> - Percentage of parent</li>
+                        <li><code>vw/vh</code> - Viewport width/height</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript Section -->
+        <!-- Slide 16: JavaScript Overview -->
+        <div class="slide">
+            <h1>JavaScript Fundamentals <span class="emoji">⚡</span></h1>
+            <h2>Making Websites Interactive</h2>
+            <div class="key-points">
+                <h3>Core JavaScript Topics:</h3>
+                <ul>
+                    <li>Variables (let, const, var)</li>
+                    <li>Data types and operators</li>
+                    <li>Functions and scope</li>
+                    <li>Arrays and array methods</li>
+                    <li>Objects and properties</li>
+                    <li>DOM manipulation</li>
+                    <li>Event handling</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 17: Variables & Constants -->
+        <div class="slide">
+            <h1>Variables: let vs const</h1>
+            <div class="code-example">
+                <span class="comment">// Use const for values that won't change</span><br>
+                const PI = 3.14159;<br>
+                const userName = "Alice";<br><br>
+                <span class="comment">// Use let for values that will change</span><br>
+                let score = 0;<br>
+                let currentLevel = 1;<br>
+                score = score + 10; <span class="comment">// This is allowed</span><br><br>
+                <span class="comment">// Don't use var (old way, has issues)</span><br>
+                <strike>var oldWay = "avoid this";</strike>
+            </div>
+            <div class="tip-box">
+                <strong>Best Practice:</strong> Use <code>const</code> by default, <code>let</code> only when needed
+            </div>
+        </div>
+
+        <!-- Slide 18: Functions -->
+        <div class="slide">
+            <h1>JavaScript Functions</h1>
+            <div class="code-example">
+                <span class="comment">// Function declaration</span><br>
+                function greet(name) { <span class="comment">// 'name' is a parameter</span><br>
+                &nbsp;&nbsp;return `Hello, ${name}!`;<br>
+                }<br><br>
+                <span class="comment">// Function call</span><br>
+                greet("World"); <span class="comment">// "World" is an argument</span><br><br>
+                <span class="comment">// Arrow function</span><br>
+                const add = (a, b) => a + b;<br><br>
+                <span class="comment">// Functions can be stored in variables</span><br>
+                const multiply = function(x, y) {<br>
+                &nbsp;&nbsp;return x * y;<br>
+                };
+            </div>
+        </div>
+
+        <!-- Slide 19: Parameters vs Arguments -->
+        <div class="slide">
+            <h1>Parameters vs Arguments</h1>
+            <div class="concept-highlight">
+                <h3>Key Distinction:</h3>
+                <ul>
+                    <li><strong>Parameters:</strong> Variables in function definition (placeholders)</li>
+                    <li><strong>Arguments:</strong> Actual values passed when calling function</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                <span class="comment">// 'a' and 'b' are PARAMETERS</span><br>
+                function multiply(a, b) {<br>
+                &nbsp;&nbsp;return a * b;<br>
+                }<br><br>
+                <span class="comment">// 5 and 3 are ARGUMENTS</span><br>
+                multiply(5, 3); <span class="comment">// Returns 15</span>
+            </div>
+        </div>
+
+        <!-- Slide 20: Comparison Operators -->
+        <div class="slide">
+            <h1>Equality: == vs ===</h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>== (Loose Equality)</h3>
+                    <p>Type coercion happens</p>
+                    <div class="code-example">
+                        "5" == 5 <span class="comment">// true</span><br>
+                        0 == false <span class="comment">// true</span><br>
+                        null == undefined <span class="comment">// true</span>
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>=== (Strict Equality)</h3>
+                    <p>Type and value must match</p>
+                    <div class="code-example">
+                        "5" === 5 <span class="comment">// false</span><br>
+                        0 === false <span class="comment">// false</span><br>
+                        null === undefined <span class="comment">// false</span>
+                    </div>
+                </div>
+            </div>
+            <p class="warning">Always use === for predictable comparisons!</p>
+        </div>
+
+        <!-- Slide 21: Array Methods -->
+        <div class="slide">
+            <h1>Essential Array Methods</h1>
+            <div class="code-example">
+                const numbers = [1, 2, 3, 4, 5];<br><br>
+                <span class="comment">// filter - creates new array with matching elements</span><br>
+                const evens = numbers.filter(n => n % 2 === 0); <span class="comment">// [2, 4]</span><br><br>
+                <span class="comment">// map - transforms each element</span><br>
+                const doubled = numbers.map(n => n * 2); <span class="comment">// [2, 4, 6, 8, 10]</span><br><br>
+                <span class="comment">// reduce - combines into single value</span><br>
+                const sum = numbers.reduce((a, b) => a + b, 0); <span class="comment">// 15</span><br><br>
+                <span class="comment">// forEach - loops through (no return)</span><br>
+                numbers.forEach(n => console.log(n));
+            </div>
+        </div>
+
+        <!-- Slide 22: DOM Manipulation -->
+        <div class="slide">
+            <h1>DOM Selection & Manipulation</h1>
+            <div class="code-example">
+                <span class="comment">// Select elements</span><br>
+                document.getElementById('header');<br>
+                document.querySelector('.class-name');<br>
+                document.querySelector('#id-name'); <span class="comment">// Alternative</span><br>
+                document.querySelectorAll('.items'); <span class="comment">// Returns NodeList</span><br><br>
+                <span class="comment">// Modify content</span><br>
+                element.textContent = "New text";<br>
+                element.innerHTML = "&lt;strong&gt;Bold&lt;/strong&gt;";<br><br>
+                <span class="comment">// Modify styles</span><br>
+                element.style.color = "red";<br>
+                element.classList.add('active');<br>
+                element.classList.remove('hidden');
+            </div>
+        </div>
+
+        <!-- Slide 23: Event Handling -->
+        <div class="slide">
+            <h1>Event Listeners</h1>
+            <div class="code-example">
+                <span class="comment">// Modern way - addEventListener</span><br>
+                const button = document.querySelector('#myButton');<br><br>
+                button.addEventListener('click', function(event) {<br>
+                &nbsp;&nbsp;console.log('Button clicked!');<br>
+                &nbsp;&nbsp;event.preventDefault(); <span class="comment">// Stop default action</span><br>
+                });<br><br>
+                <span class="comment">// Common events</span><br>
+                element.addEventListener('click', handler);<br>
+                element.addEventListener('submit', handler);<br>
+                element.addEventListener('change', handler);<br>
+                element.addEventListener('mouseover', handler);<br>
+                element.addEventListener('keydown', handler);
+            </div>
+        </div>
+
+        <!-- Slide 24: Variable Scope -->
+        <div class="slide">
+            <h1>JavaScript Scope</h1>
+            <div class="code-example">
+                <span class="comment">// Block scope (let and const)</span><br>
+                function myFunction() {<br>
+                &nbsp;&nbsp;let x = 10; <span class="comment">// Function scope</span><br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;if (true) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;let y = 20; <span class="comment">// Block scope</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const z = 30; <span class="comment">// Block scope</span><br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;console.log(x); <span class="comment">// 10 - works</span><br>
+                &nbsp;&nbsp;console.log(y); <span class="comment">// Error! y not accessible</span><br>
+                }<br><br>
+                console.log(x); <span class="comment">// Error! x not accessible outside function</span>
+            </div>
+        </div>
+
+        <!-- Git Section -->
+        <!-- Slide 25: Git Overview -->
+        <div class="slide">
+            <h1>Git & Version Control <span class="emoji">🔧</span></h1>
+            <h2>Managing Your Code</h2>
+            <div class="key-points">
+                <h3>Essential Git Concepts:</h3>
+                <ul>
+                    <li>Basic commands (add, commit, push, pull)</li>
+                    <li>Working directory vs staging area</li>
+                    <li>Branches and merging</li>
+                    <li>Commit messages best practices</li>
+                    <li>Resolving merge conflicts</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 26: Git Workflow -->
+        <div class="slide">
+            <h1>Git Basic Workflow</h1>
+            <div class="code-example">
+                <span class="comment"># Check status of working directory</span><br>
+                git status<br><br>
+                <span class="comment"># Stage all changes</span><br>
+                git add .<br><br>
+                <span class="comment"># Stage specific file</span><br>
+                git add filename.html<br><br>
+                <span class="comment"># Commit with message</span><br>
+                git commit -m "Add navigation menu"<br><br>
+                <span class="comment"># Push to remote repository</span><br>
+                git push origin main<br><br>
+                <span class="comment"># Pull latest changes</span><br>
+                git pull origin main
+            </div>
+        </div>
+
+        <!-- Slide 27: Git Commands Reference -->
+        <div class="slide">
+            <h1>Git Commands Quick Reference</h1>
+            <div class="two-column">
+                <div>
+                    <h3>Information Commands:</h3>
+                    <ul>
+                        <li><code>git status</code> - Check working directory</li>
+                        <li><code>git log</code> - View commit history</li>
+                        <li><code>git diff</code> - See changes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Action Commands:</h3>
+                    <ul>
+                        <li><code>git add</code> - Stage changes</li>
+                        <li><code>git commit</code> - Save snapshot</li>
+                        <li><code>git push</code> - Upload to remote</li>
+                        <li><code>git checkout -b</code> - Create branch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28: Good Commit Messages -->
+        <div class="slide">
+            <h1>Writing Good Commit Messages</h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Bad Messages</h3>
+                    <ul>
+                        <li>"fixed stuff"</li>
+                        <li>"updates"</li>
+                        <li>"asdfasdf"</li>
+                        <li>"work in progress"</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Good Messages</h3>
+                    <ul>
+                        <li>"Add responsive navigation menu"</li>
+                        <li>"Fix form validation bug"</li>
+                        <li>"Update homepage hero image"</li>
+                        <li>"Refactor CSS to use flexbox"</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Format:</strong> Use imperative mood, present tense, be specific about WHAT and WHY
+            </div>
+        </div>
+
+        <!-- Slide 29: Merge Conflicts -->
+        <div class="slide">
+            <h1>Understanding Merge Conflicts</h1>
+            <div class="concept-highlight">
+                <h3>When Conflicts Happen:</h3>
+                <p>When the same lines are modified differently in two branches</p>
+            </div>
+            <div class="code-example">
+                <span class="comment">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br>
+                Your changes here<br>
+                <span class="comment">=======</span><br>
+                Their changes here<br>
+                <span class="comment">&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</span>
+            </div>
+            <div class="tip-box">
+                <strong>Resolution:</strong> Edit file manually, remove markers, keep desired code, then stage and commit
+            </div>
+        </div>
+
+        <!-- Command Line Section -->
+        <!-- Slide 30: Command Line Basics -->
+        <div class="slide">
+            <h1>Command Line Essentials <span class="emoji">💻</span></h1>
+            <div class="code-example">
+                <span class="comment"># Navigation</span><br>
+                pwd <span class="comment"># Print working directory</span><br>
+                ls <span class="comment"># List files</span><br>
+                cd folder-name <span class="comment"># Change directory</span><br>
+                cd .. <span class="comment"># Go up one level</span><br><br>
+                <span class="comment"># File Operations</span><br>
+                mkdir project <span class="comment"># Make directory</span><br>
+                touch index.html <span class="comment"># Create file</span><br>
+                rm file.txt <span class="comment"># Remove file</span><br>
+                mv old-name new-name <span class="comment"># Rename/move</span><br>
+                cp source dest <span class="comment"># Copy file</span>
+            </div>
+        </div>
+
+        <!-- Web Development Best Practices -->
+        <!-- Slide 31: Project Structure -->
+        <div class="slide">
+            <h1>Project Organization</h1>
+            <div class="code-example">
+                project-root/<br>
+                ├── index.html<br>
+                ├── css/<br>
+                │&nbsp;&nbsp;&nbsp;├── styles.css<br>
+                │&nbsp;&nbsp;&nbsp;└── reset.css<br>
+                ├── js/<br>
+                │&nbsp;&nbsp;&nbsp;├── main.js<br>
+                │&nbsp;&nbsp;&nbsp;└── utils.js<br>
+                ├── images/<br>
+                │&nbsp;&nbsp;&nbsp;├── logo.png<br>
+                │&nbsp;&nbsp;&nbsp;└── hero-bg.jpg<br>
+                ├── README.md<br>
+                └── .gitignore
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> No spaces in file names! Use hyphens or underscores.
+            </div>
+        </div>
+
+        <!-- Slide 32: Clean Code Principles -->
+        <div class="slide">
+            <h1>Clean Code Principles</h1>
+            <div class="key-points">
+                <h3>JavaScript Best Practices:</h3>
+                <ul>
+                    <li>✅ Use descriptive variable and function names</li>
+                    <li>✅ Keep functions small and focused (one task)</li>
+                    <li>✅ Comment complex logic</li>
+                    <li>✅ Use consistent formatting</li>
+                    <li>✅ Avoid global variables</li>
+                    <li>✅ Handle errors properly</li>
+                    <li>✅ Use const by default, let when needed</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 33: Accessibility -->
+        <div class="slide">
+            <h1>Web Accessibility Basics</h1>
+            <div class="concept-highlight">
+                <h3>Essential Practices:</h3>
+                <ul>
+                    <li>Always include <code>alt</code> attributes on images</li>
+                    <li>Use semantic HTML elements</li>
+                    <li>Ensure proper color contrast</li>
+                    <li>Make forms accessible with labels</li>
+                    <li>Test keyboard navigation</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                <span class="comment">&lt;!-- Good: Descriptive alt text --&gt;</span><br>
+                &lt;img src="cat.jpg" alt="Orange tabby cat sleeping on windowsill"&gt;<br><br>
+                <span class="comment">&lt;!-- Required even if decorative --&gt;</span><br>
+                &lt;img src="decoration.png" alt=""&gt;
+            </div>
+        </div>
+
+        <!-- Slide 34: Responsive Design -->
+        <div class="slide">
+            <h1>Responsive Design with Media Queries</h1>
+            <div class="code-example">
+                <span class="comment">/* Mobile First Approach */</span><br>
+                .container {<br>
+                &nbsp;&nbsp;width: 100%;<br>
+                &nbsp;&nbsp;padding: 10px;<br>
+                }<br><br>
+                <span class="comment">/* Tablet and up */</span><br>
+                @media (min-width: 768px) {<br>
+                &nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: 750px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;margin: 0 auto;<br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                <span class="comment">/* Desktop */</span><br>
+                @media (min-width: 1024px) {<br>
+                &nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: 960px;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 35: Performance Tips -->
+        <div class="slide">
+            <h1>Web Performance Optimization</h1>
+            <div class="key-points">
+                <h3>Key Optimization Areas:</h3>
+                <ul>
+                    <li>🖼️ <strong>Images:</strong> Use correct format and size</li>
+                    <li>📦 <strong>Files:</strong> Minify CSS and JavaScript</li>
+                    <li>🔄 <strong>Caching:</strong> Leverage browser caching</li>
+                    <li>📊 <strong>Loading:</strong> Lazy load images below fold</li>
+                    <li>🎨 <strong>CSS:</strong> Put critical CSS inline</li>
+                    <li>📜 <strong>Scripts:</strong> Load JS at end of body</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Image optimization has huge impact on load times!
+            </div>
+        </div>
+
+        <!-- Advanced Topics -->
+        <!-- Slide 36: CSS Variables -->
+        <div class="slide">
+            <h1>CSS Custom Properties (Variables)</h1>
+            <div class="code-example">
+                <span class="comment">/* Define variables in :root */</span><br>
+                :root {<br>
+                &nbsp;&nbsp;--main-color: #007bff;<br>
+                &nbsp;&nbsp;--font-size: 16px;<br>
+                &nbsp;&nbsp;--spacing: 20px;<br>
+                }<br><br>
+                <span class="comment">/* Use variables with var() */</span><br>
+                .button {<br>
+                &nbsp;&nbsp;background: var(--main-color);<br>
+                &nbsp;&nbsp;font-size: var(--font-size);<br>
+                &nbsp;&nbsp;padding: var(--spacing);<br>
+                }
+            </div>
+            <div class="tip-box">
+                <strong>Note:</strong> Custom properties always start with <code>--</code>
+            </div>
+        </div>
+
+        <!-- Slide 37: Tables Structure -->
+        <div class="slide">
+            <h1>HTML Table Structure</h1>
+            <div class="code-example">
+                &lt;table&gt;<br>
+                &nbsp;&nbsp;&lt;thead&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Header 1&lt;/th&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Header 2&lt;/th&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br>
+                &nbsp;&nbsp;&lt;/thead&gt;<br>
+                &nbsp;&nbsp;&lt;tbody&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;Data 1&lt;/td&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;Data 2&lt;/td&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br>
+                &nbsp;&nbsp;&lt;/tbody&gt;<br>
+                &lt;/table&gt;
+            </div>
+        </div>
+
+        <!-- Slide 38: Promises & Async -->
+        <div class="slide">
+            <h1>Asynchronous JavaScript</h1>
+            <div class="concept-highlight">
+                <h3>JavaScript CAN handle async operations:</h3>
+                <ul>
+                    <li>Callbacks (old way)</li>
+                    <li>Promises (better)</li>
+                    <li>Async/Await (modern)</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                <span class="comment">// Async/Await example</span><br>
+                async function fetchData() {<br>
+                &nbsp;&nbsp;try {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch('/api/data');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
+                &nbsp;&nbsp;} catch (error) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 39: HTTPS & Security -->
+        <div class="slide">
+            <h1>Web Security: HTTPS</h1>
+            <div class="concept-highlight">
+                <h3>Primary Purpose of HTTPS:</h3>
+                <p style="font-size: 1.4em;">🔒 Encrypt data between browser and server</p>
+            </div>
+            <div class="key-points">
+                <h3>Additional Benefits:</h3>
+                <ul>
+                    <li>Protects user privacy</li>
+                    <li>Prevents data tampering</li>
+                    <li>Builds user trust</li>
+                    <li>Better SEO ranking (side benefit)</li>
+                    <li>Required for modern APIs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 40: HTML5 Features -->
+        <div class="slide">
+            <h1>HTML5 Semantic Elements</h1>
+            <div class="two-column">
+                <div>
+                    <h3>New in HTML5:</h3>
+                    <ul>
+                        <li>&lt;article&gt;</li>
+                        <li>&lt;section&gt;</li>
+                        <li>&lt;nav&gt;</li>
+                        <li>&lt;header&gt;</li>
+                        <li>&lt;footer&gt;</li>
+                        <li>&lt;aside&gt;</li>
+                        <li>&lt;main&gt;</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Pre-HTML5:</h3>
+                    <ul>
+                        <li>&lt;div&gt;</li>
+                        <li>&lt;span&gt;</li>
+                        <li>&lt;table&gt;</li>
+                        <li>&lt;p&gt;</li>
+                        <li>&lt;h1-h6&gt;</li>
+                        <li>&lt;ul&gt;, &lt;ol&gt;</li>
+                        <li>&lt;a&gt;</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 41: Common Mistakes -->
+        <div class="slide">
+            <h1>Common Mistakes to Avoid</h1>
+            <div class="warning-box">
+                <h3>Top Mistakes:</h3>
+                <ul>
+                    <li>❌ Forgetting closing tags</li>
+                    <li>❌ Using spaces in file names</li>
+                    <li>❌ Not committing frequently to Git</li>
+                    <li>❌ Using == instead of ===</li>
+                    <li>❌ Forgetting <code>box-sizing: border-box</code></li>
+                    <li>❌ Not using semantic HTML</li>
+                    <li>❌ Missing alt attributes</li>
+                    <li>❌ Using var instead of let/const</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 42: Study Tips -->
+        <div class="slide">
+            <h1>Exam Preparation Tips <span class="emoji">📖</span></h1>
+            <div class="key-points">
+                <h3>How to Prepare:</h3>
+                <ul>
+                    <li>📝 Review all homework assignments</li>
+                    <li>💻 Practice coding without looking at notes</li>
+                    <li>🔄 Redo exercises from The Odin Project</li>
+                    <li>👥 Study with classmates</li>
+                    <li>❓ Write your own practice questions</li>
+                    <li>🏗️ Build a small project using all three languages</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Understanding concepts is more important than memorization!
+            </div>
+        </div>
+
+        <!-- Slide 43: Key Takeaways -->
+        <div class="slide">
+            <h1>Remember These Key Points <span class="emoji">⭐</span></h1>
+            <div class="concept-highlight">
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>HTML = Structure (skeleton)</li>
+                    <li>CSS = Style (appearance)</li>
+                    <li>JavaScript = Behavior (interaction)</li>
+                    <li>Git = Version control (save your work!)</li>
+                    <li>Clean code = Future you will thank you</li>
+                    <li>Semantic HTML = Better for everyone</li>
+                    <li>Mobile-first = Modern web development</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 44: Q&A -->
+        <div class="slide">
+            <h1>Questions? <span class="emoji">🤔</span></h1>
+            <div style="text-align: center; margin-top: 50px;">
+                <h2>Now's the time to ask!</h2>
+                <p style="font-size: 1.4em; margin: 40px 0;">What concepts need clarification?</p>
+                <div class="tip-box" style="max-width: 600px; margin: 0 auto;">
+                    <h3>Remember:</h3>
+                    <p>No question is too simple - if you're wondering about it, others probably are too!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 45: Good Luck! -->
+        <div class="slide">
+            <h1>You've Got This! <span class="emoji">🎉</span></h1>
+            <div style="text-align: center;">
+                <h2>Final Exam Details:</h2>
+                <div class="concept-highlight" style="max-width: 600px; margin: 40px auto;">
+                    <ul style="font-size: 1.3em; text-align: left;">
+                        <li>📅 Thursday, December 18th</li>
+                        <li>⏰ 8:00 AM - 10:00 AM</li>
+                        <li>📍 In-Person</li>
+                        <li>📝 50 Questions</li>
+                        <li>💯 150 Points Total</li>
+                    </ul>
+                </div>
+                <p style="font-size: 1.5em; margin-top: 40px;">Good luck! You're going to do great! 🚀</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">45</span>
+            </span>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../js/presentation.js"></script>
+</body>
+</html>
