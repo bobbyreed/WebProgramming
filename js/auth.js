@@ -12,9 +12,49 @@ class SimpleGistAuth {
         // Check if already authenticated
         this.checkAuthStatus();
     }
+
+    // Helper method to get lecture number from current page
+    getLectureNumberFromPage() {
+            // Try from body data attribute
+            if (document.body.dataset.lectureNumber) {
+                return parseInt(document.body.dataset.lectureNumber);
+            }
+            
+            // Try from URL
+            const path = window.location.pathname;
+            const match = path.match(/(\d+)/);
+            if (match) return parseInt(match[1]);
+            
+            // Try from title
+            const title = document.title || document.querySelector('h1')?.textContent || '';
+            const titleMatch = title.match(/Lecture\s*(\d+)/i);
+            if (titleMatch) return parseInt(titleMatch[1]);
+            
+            return null;
+        }
     
     checkAuthStatus() {
         const authData = localStorage.getItem('csci3403_auth');
+        if (window.location.pathname.includes('pages/') && window.location.pathname.includes('.html')) {
+        // We're on a lecture page, initialize enhanced tracking
+        setTimeout(() => {
+            if (window.LectureTracker) {
+                // Use the separate tracker if loaded
+                return;
+            }
+            // Otherwise use the enhanced method
+            const lectureNumber = this.getLectureNumberFromPage();
+            if (lectureNumber) {
+                const lectureTitle = document.querySelector('h1')?.textContent || `Lecture ${lectureNumber}`;
+                
+                // Start tracking with 30 second delay
+                setTimeout(() => {
+                    this.trackLectureViewEnhanced(lectureNumber, lectureTitle);
+                }, 30000);
+            }
+        }, 1000);
+        }
+    
         if (authData) {
             this.currentStudent = JSON.parse(authData);
             this.updateUIForAuthenticated();
@@ -376,6 +416,233 @@ class SimpleGistAuth {
             this.showPointsNotification(pointsAwarded, `Viewed Lecture ${lectureNumber}`);
         }
     }
+
+    async trackLectureViewEnhanced(lectureNumber, lectureTitle, options = {}) {
+    if (!this.currentProgress) {
+        console.error('No student data loaded');
+        return false;
+    }
+    
+    const now = new Date().toISOString();
+    const {
+        minViewTime = 30,  // seconds
+        pointsFirstView = 10,
+        pointsCompletion = 5,
+        slideProgress = null
+    } = options;
+    
+    // Initialize structures if needed
+    if (!this.currentProgress.viewedLectures) {
+        this.currentProgress.viewedLectures = {};
+    }
+    if (!this.currentProgress.activities) {
+        this.currentProgress.activities = [];
+    }
+    if (!this.currentProgress.achievements) {
+        this.currentProgress.achievements = [];
+    }
+    
+    let pointsAwarded = 0;
+    let activityDescription = '';
+    
+    // Check if first time viewing this lecture
+    const lectureData = this.currentProgress.viewedLectures[lectureNumber];
+    
+    if (!lectureData) {
+        // First time viewing
+        this.currentProgress.viewedLectures[lectureNumber] = {
+            title: lectureTitle,
+            firstViewed: now,
+            lastViewed: now,
+            views: 1,
+            completed: true,  // Mark as completed after min view time
+            totalViewTime: minViewTime
+        };
+        
+        pointsAwarded = pointsFirstView;
+        activityDescription = `First complete view of Lecture ${lectureNumber}: ${lectureTitle}`;
+        
+    } else if (!lectureData.completed) {
+        // Completing a previously started lecture
+        lectureData.completed = true;
+        lectureData.lastViewed = now;
+        lectureData.views++;
+        lectureData.totalViewTime = (lectureData.totalViewTime || 0) + minViewTime;
+        
+        pointsAwarded = pointsCompletion;
+        activityDescription = `Completed Lecture ${lectureNumber}: ${lectureTitle}`;
+        
+    } else {
+        // Re-viewing a completed lecture
+        lectureData.views++;
+        lectureData.lastViewed = now;
+        lectureData.totalViewTime = (lectureData.totalViewTime || 0) + minViewTime;
+    }
+    
+    // Update slide progress if provided
+    if (slideProgress) {
+        if (!this.currentProgress.slideProgress) {
+            this.currentProgress.slideProgress = {};
+        }
+        this.currentProgress.slideProgress[lectureNumber] = slideProgress;
+    }
+    
+    // Award points and log activity
+    if (pointsAwarded > 0) {
+        this.currentProgress.points = (this.currentProgress.points || 0) + pointsAwarded;
+        
+        this.currentProgress.activities.unshift({
+            type: 'lecture_viewed',
+            lectureNumber: lectureNumber,
+            lectureTitle: lectureTitle,
+            points: pointsAwarded,
+            timestamp: now,
+            description: activityDescription
+        });
+        
+        // Keep only last 100 activities
+        if (this.currentProgress.activities.length > 100) {
+            this.currentProgress.activities = this.currentProgress.activities.slice(0, 100);
+        }
+        
+        // Check for achievement milestones
+        this.checkLectureAchievements();
+    }
+    
+    // Update the student's gist
+    const success = await this.updateStudentData(this.currentProgress);
+    
+    if (success && pointsAwarded > 0) {
+        // Show enhanced notification
+        this.showEnhancedPointsNotification(pointsAwarded, lectureTitle, !lectureData);
+    }
+    
+    return success;
+}
+
+// Add achievement checking
+checkLectureAchievements() {
+    const lectureCount = Object.keys(this.currentProgress.viewedLectures || {}).length;
+    const achievements = this.currentProgress.achievements || [];
+    let newAchievements = [];
+    
+    const milestones = [
+        { count: 1, id: 'first_lecture', name: 'First Steps', points: 5 },
+        { count: 5, id: 'getting_started', name: 'Getting Started', points: 10 },
+        { count: 10, id: 'dedicated_learner', name: 'Dedicated Learner', points: 20 },
+        { count: 15, id: 'halfway_there', name: 'Halfway There', points: 30 },
+        { count: 20, id: 'consistent_student', name: 'Consistent Student', points: 40 },
+        { count: 25, id: 'almost_done', name: 'Almost Done', points: 50 },
+        { count: 30, id: 'course_complete', name: 'Course Complete!', points: 100 }
+    ];
+    
+    milestones.forEach(milestone => {
+        if (lectureCount >= milestone.count && !achievements.includes(milestone.id)) {
+            achievements.push(milestone.id);
+            this.currentProgress.points = (this.currentProgress.points || 0) + milestone.points;
+            newAchievements.push(milestone);
+            
+            // Log achievement activity
+            this.currentProgress.activities.unshift({
+                type: 'achievement_earned',
+                achievementId: milestone.id,
+                achievementName: milestone.name,
+                points: milestone.points,
+                timestamp: new Date().toISOString(),
+                description: `Earned achievement: ${milestone.name}`
+            });
+        }
+    });
+    
+    this.currentProgress.achievements = achievements;
+    
+    // Show achievement notifications
+    newAchievements.forEach(achievement => {
+        setTimeout(() => {
+            this.showAchievementNotification(achievement.name, achievement.points);
+        }, 500);
+    });
+}
+
+// Enhanced notification with better visuals
+showEnhancedPointsNotification(points, lectureTitle, isFirstView) {
+    // Remove any existing notifications
+    document.querySelectorAll('.lecture-completion-notification').forEach(n => n.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = 'lecture-completion-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">${isFirstView ? '🎉' : '✅'}</div>
+            <div class="notification-text">
+                <div class="notification-title">
+                    ${isFirstView ? 'Lecture Completed!' : 'Lecture Reviewed!'}
+                </div>
+                <div class="notification-points">+${points} Points</div>
+                <div class="notification-subtitle">${lectureTitle}</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    requestAnimationFrame(() => {
+        notification.classList.add('show');
+    });
+    
+    // Update points display with animation
+    const pointsDisplay = document.getElementById('points-display');
+    if (pointsDisplay) {
+        pointsDisplay.classList.add('points-added');
+        this.updatePointsDisplay(this.currentProgress.points);
+        setTimeout(() => pointsDisplay.classList.remove('points-added'), 500);
+    }
+    
+    // Remove notification after delay
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Show achievement notification
+showAchievementNotification(achievementName, points) {
+    const notification = document.createElement('div');
+    notification.className = 'achievement-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">🏆</div>
+            <div class="notification-text">
+                <div class="notification-title">Achievement Unlocked!</div>
+                <div class="notification-achievement">${achievementName}</div>
+                <div class="notification-points">+${points} Bonus Points</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    requestAnimationFrame(() => {
+        notification.classList.add('show');
+    });
+    
+    // Play sound if available
+    try {
+        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmFgU7k9n1unEiBC13yO/eizEIHWq+8+OWT' +
+                         'QwTW7Xm67JdGAUvgs/12oo0CBpktfDemU8OE1mz5eqpWRkFNoHS9tiGLgggZrvv45dLEBVYqOnqsV4TBDyY2/XAcSAELHbI8N+NMggaabvt559OEAxPqOPwtmQcBjiP1/HMeS0GI3fH8N+RQAoUXrTp66hVFApGnt/yvmwhBSuAzvLZiTYIG2m98OScTgwOUqnm7blmFgU7k9n1unEiBC13yO/eizEIHWu+8+OWTQwTWrTm67JdGAUvgs/12oo0CC' +
+                         'Bktf');
+        audio.volume = 0.3;
+        audio.play().catch(() => {}); // Ignore errors
+    } catch (e) {}
+    
+    // Remove after delay
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
+}
     
     
     showPointsNotification(points, reason) {

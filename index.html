@@ -496,7 +496,7 @@
             <p>© 2025 bobby reed</p>
         </footer>
     </div>
-
+    <script src="./js/auth.js"></script>
     <script>
         // Lecture data with dates (Tuesdays and Thursdays)
         const lectures = [
@@ -637,7 +637,7 @@
         }
 
         // Authentication script
-        async function handleLogin() {
+       async function handleLogin() {
             const studentId = document.getElementById('student-id').value;
             const pin = document.getElementById('class-pin').value;
             
@@ -646,13 +646,16 @@
                 return;
             }
             
-            // Simple authentication (you should replace this with actual authentication)
-            if (pin === '3403') {
-                localStorage.setItem('csci3403_auth', JSON.stringify({ studentId, authenticated: true }));
-                document.getElementById('auth-section').style.display = 'none';
-                alert('Welcome to CSCI 3403!');
+            // Use the auth.js authentication system instead of hardcoded check
+            if (typeof auth !== 'undefined' && auth) {
+                const success = await auth.authenticate(studentId, pin);
+                if (success) {
+                    // Authentication successful - auth.js handles the UI updates
+                    alert('Welcome to CSCI 3403!');
+                }
+                // If failed, auth.js will show appropriate error message
             } else {
-                alert('Invalid credentials');
+                alert('Authentication system not loaded. Please refresh the page.');
             }
         }
 
