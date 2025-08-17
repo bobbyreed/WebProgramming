@@ -1,7 +1,7 @@
 class SimpleGistAuth {
     constructor() {
         // Master gist ID - this is PUBLIC so it's safe to have here
-        this.MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
+        this.MASTER_GIST_ID = 'c35e670e87a6bb78eb2266cc6da98f6f';
         
         // GitHub API base (for PUBLIC reads only)
         this.API_BASE = 'https://api.github.com/gists';
@@ -34,7 +34,7 @@ class SimpleGistAuth {
         }
     
     checkAuthStatus() {
-        const authData = localStorage.getItem('csci3403_auth');
+        const authData = localStorage.getItem('csci5603_auth');
         if (window.location.pathname.includes('pages/') && window.location.pathname.includes('.html')) {
         // We're on a lecture page, initialize enhanced tracking
         setTimeout(() => {
@@ -76,11 +76,11 @@ class SimpleGistAuth {
             
             const gist = await response.json();
             
-            if (!gist.files || !gist.files['csci3403-config.json']) {
+            if (!gist.files || !gist.files['csci5603-DBDesign.json']) {
                 throw new Error('Config file not found in gist');
             }
             
-            const config = JSON.parse(gist.files['csci3403-config.json'].content);
+            const config = JSON.parse(gist.files['csci5603-DBDesign.json'].content);
             
             // Verify PIN
             if (config.classPin !== pin) {
@@ -94,7 +94,7 @@ class SimpleGistAuth {
                 timestamp: new Date().toISOString()
             };
             
-            localStorage.setItem('csci3403_auth', JSON.stringify(authData));
+            localStorage.setItem('csci5603_auth', JSON.stringify(authData));
             this.currentStudent = authData;
             
             // IMPORTANT: Update UI immediately after storing auth
@@ -202,7 +202,7 @@ class SimpleGistAuth {
             }
             
             const masterGist = await masterResponse.json();
-            const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
+            const config = JSON.parse(masterGist.files['csci5603-DBDesign.json'].content);
             
             const gistId = config.students[studentId];
             if (!gistId) {
@@ -696,7 +696,7 @@ showAchievementNotification(achievementName, points) {
     }
     
     logout() {
-        localStorage.removeItem('csci3403_auth');
+        localStorage.removeItem('csci5603_auth');
         localStorage.removeItem(`student_${this.currentStudent.studentId}`);
         location.reload();
     }
