@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Introduction to Web Programming - Guided Notes | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .checkbox-list {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checkbox-list li {
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-list li:before {
+            content: "☐ ";
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Day 1: Introduction to Web Programming</h1>
+        <p>CSCI 3403 - Guided Notes</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>🚀 Today's Goal:</strong> Build and deploy your first website in 30 minutes!
+    </div>
+
+    <!-- Ice Breaker Section -->
+    <div class="section">
+        <h2>🎯 Ice Breaker: One-Page Website Challenge</h2>
+        
+        <h3>The Twist</h3>
+        <p>You'll build <span class="blank">_________________</span>'s idea, not your own!</p>
+        
+        <h3>Pre-Exercise Setup</h3>
+        <ol>
+            <li>Write your website topic on: <span class="blank">_________________</span></li>
+            <li>Get approval from: <span class="blank">_________________</span></li>
+            <li>Keep your topic <span class="blank">_________________</span> (don't share!)</li>
+            <li>Find a partner and <span class="blank">_________________</span> whiteboards</li>
+        </ol>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> Perfect is the enemy of <span class="blank">_________</span>!
+        </div>
+    </div>
+
+    <!-- Phase 1: Project Setup -->
+    <div class="section">
+        <h2>📁 Phase 1: Project Setup</h2>
+        
+        <h3>Git Commands</h3>
+        <div class="code-block">
+<span class="code-blank">_________</span> partner-topic-site
+<span class="code-blank">_________</span> partner-topic-site
+git <span class="code-blank">_________</span>
+        </div>
+        
+        <h3>Create These Files</h3>
+        <ul class="checkbox-list">
+            <li>index.html</li>
+            <li>style.css</li>
+            <li>script.js</li>
+        </ul>
+        
+        <p><strong>VS Code Shortcut:</strong> Type <span class="blank">_____</span> and hit Enter for instant HTML boilerplate!</p>
+        
+        <h3>Link Your Files</h3>
+        <p>CSS goes in the <span class="blank">_________________</span> section</p>
+        <p>JavaScript goes before the closing <span class="blank">_________________</span> tag</p>
+    </div>
+
+    <!-- Phase 2: Development -->
+    <div class="section">
+        <h2>⚡ Phase 2: Rapid Development</h2>
+        
+        <h3>HTML Structure Checklist</h3>
+        <ul class="checkbox-list">
+            <li>Meaningful &lt;title&gt; tag</li>
+            <li>Header with site name</li>
+            <li>At least 3 content sections</li>
+            <li>Navigation (even if single page)</li>
+            <li>Footer with your name</li>
+        </ul>
+        
+        <p><strong>Time Limit:</strong> <span class="blank">_________</span> minutes</p>
+    </div>
+
+    <!-- Phase 3: Deployment -->
+    <div class="section">
+        <h2>🌐 Phase 3: Deploy to GitHub Pages</h2>
+        
+        <h3>Git Commands Sequence</h3>
+        <div class="code-block">
+git <span class="code-blank">_________</span> .
+git <span class="code-blank">_________</span> -m "Initial site about [topic]"
+git <span class="code-blank">_________</span> -M main
+git <span class="code-blank">_________</span> -u origin main
+        </div>
+        
+        <h3>Enable GitHub Pages</h3>
+        <ol>
+            <li>Go to repo <span class="blank">_________________</span> → Pages</li>
+            <li>Source: Deploy from <span class="blank">_________________</span></li>
+            <li>Branch: <span class="blank">_________</span>, folder: <span class="blank">_________</span></li>
+            <li>Wait <span class="blank">_________</span> minutes</li>
+        </ol>
+        
+        <p><strong>Your site URL:</strong> https://<span class="long-blank">_____________________</span>.github.io/<span class="long-blank">_____________________</span></p>
+    </div>
+
+    <!-- Phase 4: Custom Domain -->
+    <div class="section">
+        <h2>🌟 Phase 4: Custom Domain (Optional)</h2>
+        
+        <div class="info-box">
+            <strong>⚠️ MUST BE DONE WITH PROFESSOR REED</strong>
+        </div>
+        
+        <h3>A Records to Add</h3>
+        <table>
+            <tr>
+                <th>Record Type</th>
+                <th>IP Address</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>185.199.108.153</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>185.199.109.153</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>185.199.110.153</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>185.199.111.153</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- The Odin Project Section -->
+    <div class="section">
+        <h2>📚 The Odin Project</h2>
+        
+        <h3>What is The Odin Project?</h3>
+        <p>A <span class="blank">_________________</span>, open-source curriculum for learning <span class="blank">_________________</span> development</p>
+        
+        <h3>Key Features</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>🎯 Project-Based</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+            <tr>
+                <td>🌟 Industry-Relevant</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+            <tr>
+                <td>👥 Community</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+        </table>
+        
+        <h3>Website URL</h3>
+        <p>Visit: <span class="long-blank">_________________________________</span>.com</p>
+    </div>
+
+    <!-- Foundations Course -->
+    <div class="section">
+        <h2>🎓 Foundations Course Overview</h2>
+        
+        <h3>What We'll Learn This Semester</h3>
+        <div class="practice-box">
+            <table>
+                <tr>
+                    <th>Technology</th>
+                    <th>Key Topics (List 2-3)</th>
+                </tr>
+                <tr>
+                    <td>HTML</td>
+                    <td><span class="long-blank">_________________________________</span></td>
+                </tr>
+                <tr>
+                    <td>CSS</td>
+                    <td><span class="long-blank">_________________________________</span></td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td><span class="long-blank">_________________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Tools</td>
+                    <td><span class="long-blank">_________________________________</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <h3>The Learning Path</h3>
+        <ol>
+            <li>Introduction: <span class="long-blank">_________________________________</span></li>
+            <li>Prerequisites: <span class="long-blank">_________________________________</span></li>
+            <li>Git Basics: <span class="long-blank">_________________________________</span></li>
+            <li>HTML & CSS: <span class="long-blank">_________________________________</span></li>
+            <li>JavaScript: <span class="long-blank">_________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Account Setup -->
+    <div class="section">
+        <h2>🛠️ Account Setup Checklist</h2>
+        
+        <ul class="checkbox-list">
+            <li>Create account on theodinproject.com</li>
+            <li>Sign up with GitHub (recommended) or email</li>
+            <li>Navigate to Foundations Course</li>
+            <li>Begin Introduction section</li>
+        </ul>
+        
+        <div class="tip">
+            <strong>💡 Pro Tip:</strong> Use GitHub sign-in to connect your learning progress with your repos!
+        </div>
+    </div>
+
+    <!-- Thursday's Homework -->
+    <div class="section">
+        <h2>📝 Thursday's Homework</h2>
+        
+        <h3>Part 1: Odin Project Introduction</h3>
+        <p><strong>Complete these sections:</strong></p>
+        <ul class="checkbox-list">
+            <li>How This Course Will Work</li>
+            <li>Introduction to Web Development</li>
+            <li>Motivation and Mindset</li>
+            <li>Asking For Help</li>
+            <li>Join the Odin Community</li>
+        </ul>
+        
+        <h3>Part 2: Setup Requirements</h3>
+        <ul class="checkbox-list">
+            <li>Complete all Discord setup</li>
+            <li>Complete all GitHub setup</li>
+            <li>Install necessary tools</li>
+        </ul>
+        
+        <h3>Part 3: One-Page Website</h3>
+        <p>Enhance your site with:</p>
+        <ul class="checkbox-list">
+            <li>Complete any unfinished tasks</li>
+            <li>Add at least 3 more sections</li>
+            <li>Style with CSS (colors, fonts, layout)</li>
+            <li>Add JavaScript interactivity</li>
+            <li>BONUS: Make it responsive!</li>
+        </ul>
+    </div>
+
+    <!-- Tips for Success -->
+    <div class="section">
+        <h2>🏆 Tips for Success</h2>
+        
+        <p>Fill in the blanks with the success tips discussed in class:</p>
+        <ol>
+            <li>💻 Code Every <span class="blank">_________________</span>: Even just 30 minutes</li>
+            <li>🤝 Help <span class="blank">_________________</span>: Teaching solidifies learning</li>
+            <li>🔍 Read <span class="blank">_________________</span> Messages: They're your friends</li>
+            <li>📖 Read <span class="blank">_________________</span>: MDN is your bible</li>
+            <li>🏗️ Build <span class="blank">_________________</span>: Beyond assignments</li>
+            <li>❓ Ask <span class="blank">_________________</span>: No question is stupid</li>
+        </ol>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="section">
+        <h2>📚 Resources & Support</h2>
+        
+        <table>
+            <tr>
+                <th>Resource Type</th>
+                <th>Where to Find It</th>
+            </tr>
+            <tr>
+                <td>Course Materials</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Communication</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Office Hours</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><span class="long-blank">_________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Additional Notes -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during class:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Reflection Questions -->
+    <div class="section">
+        <h2>💭 Reflection Questions</h2>
+        <ol>
+            <li>What was the most challenging part of building the one-page website?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What are you most excited to learn in this course?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What questions do you still have about the course structure?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <div class="footer">
+        <p>Welcome to Web Programming! 🚀</p>
+        <p>Remember: Every expert was once a beginner. Keep coding!</p>
+    </div>
+</body>
+</html>
