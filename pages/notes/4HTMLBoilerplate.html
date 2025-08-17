@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Boilerplate - Guided Notes | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning strong {
+            color: #721c24;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>HTML Boilerplate - Guided Notes</h1>
+        <p>CSCI 4513 - Web Programming | Class 4</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Goal:</strong> Master the HTML boilerplate structure and understand each component's purpose!
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="section">
+        <h2>🏗️ What is HTML Boilerplate?</h2>
+        
+        <p>HTML boilerplate is the <span class="blank">_________________</span> structure that every HTML document needs.</p>
+        
+        <p>Think of it like the <span class="blank">_________________</span> of your webpage - it provides the basic framework.</p>
+        
+        <h3>Why is Boilerplate Important?</h3>
+        <ul>
+            <li>Tells browsers how to <span class="blank">_________________</span> your content</li>
+            <li>Ensures proper <span class="blank">_________________</span> across different browsers</li>
+            <li>Sets up important <span class="blank">_________________</span> for search engines</li>
+            <li>Improves <span class="blank">_________________</span> for screen readers</li>
+        </ul>
+    </div>
+
+    <!-- File Setup Section -->
+    <div class="section">
+        <h2>📁 Creating HTML Files</h2>
+        
+        <p><strong>File Extension:</strong> HTML files must end with <span class="blank">_________</span></p>
+        
+        <p><strong>Homepage Name:</strong> Always name your homepage <span class="blank">_________________</span></p>
+        
+        <div class="tip">
+            <strong>💡 Why index.html?</strong> Web servers automatically look for this file when users visit your website!
+        </div>
+    </div>
+
+    <!-- DOCTYPE Section -->
+    <div class="section">
+        <h2>📜 The DOCTYPE Declaration</h2>
+        
+        <p>The DOCTYPE must be the <span class="blank">_________________</span> line of every HTML document!</p>
+        
+        <div class="code-block">
+&lt;<span class="code-blank">_________</span> html&gt;
+        </div>
+        
+        <h3>Purpose of DOCTYPE:</h3>
+        <ol>
+            <li>Tells the browser which <span class="blank">_________________</span> of HTML to use</li>
+            <li>For HTML5, we use: <span class="blank">_________________</span></li>
+            <li>Must appear <span class="blank">_________________</span> the &lt;html&gt; tag</li>
+        </ol>
+        
+        <div class="warning">
+            <strong>⚠️ Common Mistake:</strong> Forgetting the DOCTYPE can cause rendering issues!
+        </div>
+    </div>
+
+    <!-- HTML Element Section -->
+    <div class="section">
+        <h2>🏠 The HTML Element</h2>
+        
+        <p>The &lt;html&gt; element is the <span class="blank">_________________</span> element of the document.</p>
+        
+        <div class="code-block">
+&lt;html <span class="code-blank">_________</span>="en"&gt;
+    &lt;!-- All other elements go here --&gt;
+&lt;/html&gt;
+        </div>
+        
+        <h3>The lang Attribute</h3>
+        <table>
+            <tr>
+                <th>Purpose</th>
+                <th>Your Notes</th>
+            </tr>
+            <tr>
+                <td>Specifies language of content</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Helps screen readers</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Improves SEO</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- HEAD Element Section -->
+    <div class="section">
+        <h2>🧠 The HEAD Element</h2>
+        
+        <p>The HEAD contains <span class="blank">_________________</span> about the webpage.</p>
+        
+        <div class="code-block">
+&lt;head&gt;
+    &lt;meta <span class="code-blank">_________</span>="UTF-8"&gt;
+    &lt;<span class="code-blank">_________</span>&gt;Page Title&lt;/<span class="code-blank">_________</span>&gt;
+&lt;/head&gt;
+        </div>
+        
+        <h3>What Goes in the HEAD?</h3>
+        <p>List 4 things that can go in the HEAD element:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="warning">
+            <strong>⚠️ Remember:</strong> Nothing in the HEAD is <span class="blank">_________________</span> on the page!
+        </div>
+    </div>
+
+    <!-- Character Encoding Section -->
+    <div class="section">
+        <h2>🌍 Character Encoding</h2>
+        
+        <div class="code-block">
+&lt;meta charset="<span class="code-blank">_________</span>"&gt;
+        </div>
+        
+        <h3>Why UTF-8?</h3>
+        <ul>
+            <li>Supports characters from <span class="blank">_________________</span> languages</li>
+            <li>Handles special symbols like: <span class="blank">_________________</span></li>
+            <li>Standard encoding for the <span class="blank">_________________</span></li>
+        </ul>
+        
+        <p><strong>Without UTF-8:</strong> Café might display as <span class="blank">_________________</span></p>
+    </div>
+
+    <!-- TITLE Element Section -->
+    <div class="section">
+        <h2>🏷️ The TITLE Element</h2>
+        
+        <div class="code-block">
+&lt;title&gt;<span class="code-blank">_________________________</span>&lt;/title&gt;
+        </div>
+        
+        <h3>Where Does the Title Appear?</h3>
+        <p>List 4 places:</p>
+        <ol>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+        </ol>
+        
+        <p><strong>No title?</strong> Browser shows <span class="blank">_________________</span> instead!</p>
+    </div>
+
+    <!-- BODY Element Section -->
+    <div class="section">
+        <h2>👁️ The BODY Element</h2>
+        
+        <p>The BODY contains all <span class="blank">_________________</span> content.</p>
+        
+        <div class="code-block">
+&lt;<span class="code-blank">_________</span>&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;!-- All visible content goes here --&gt;
+&lt;/<span class="code-blank">_________</span>&gt;
+        </div>
+        
+        <h3>What Can Go in the BODY?</h3>
+        <p>List 5 types of content:</p>
+        <ol>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Complete Boilerplate Section -->
+    <div class="section">
+        <h2>🎯 Complete HTML Boilerplate</h2>
+        
+        <p>Fill in the complete boilerplate structure:</p>
+        
+        <div class="code-block">
+<span class="code-blank">_______________</span>
+<span class="code-blank">_______________</span> lang="<span class="code-blank">_____</span>"&gt;
+<span class="code-blank">_______________</span>
+    &lt;meta <span class="code-blank">_______________</span>="UTF-8"&gt;
+    &lt;<span class="code-blank">_______________</span>&gt;My First Webpage&lt;/<span class="code-blank">_______________</span>&gt;
+<span class="code-blank">_______________</span>
+<span class="code-blank">_______________</span>
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+<span class="code-blank">_______________</span>
+<span class="code-blank">_______________</span>
+        </div>
+    </div>
+
+    <!-- Browser Methods Section -->
+    <div class="section">
+        <h2>🌐 Opening HTML in Browser</h2>
+        
+        <h3>Three Methods:</h3>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>How to Do It</th>
+            </tr>
+            <tr>
+                <td>Drag & Drop</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Double Click</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Terminal/Command Line</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+        
+        <p><strong>Refresh Shortcut:</strong> Windows: <span class="blank">_________</span> | Mac: <span class="blank">_________</span></p>
+    </div>
+
+    <!-- VS Code Shortcut Section -->
+    <div class="section">
+        <h2>✨ VS Code Shortcut</h2>
+        
+        <p>Type <span class="blank">_____</span> and press <span class="blank">_________</span> to generate boilerplate instantly!</p>
+        
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Don't rely on this shortcut while learning! Build muscle memory by typing it manually.
+        </div>
+    </div>
+
+    <!-- Validation Section -->
+    <div class="section">
+        <h2>✅ HTML Validation</h2>
+        
+        <p><strong>W3C Validator Website:</strong> <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>Why Validate Your HTML?</h3>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Common Mistakes Section -->
+    <div class="section">
+        <h2>⚠️ Common Boilerplate Mistakes</h2>
+        
+        <p>Check the mistakes you want to avoid:</p>
+        <ul style="list-style: none;">
+            <li>☐ Forgetting the <span class="blank">_________________</span></li>
+            <li>☐ Missing <span class="blank">_________________</span> tags</li>
+            <li>☐ Wrong order (body before <span class="blank">_________________</span>)</li>
+            <li>☐ Missing <span class="blank">_________________</span> attribute</li>
+            <li>☐ Forgetting charset <span class="blank">_________________</span> tag</li>
+            <li>☐ Content in the <span class="blank">_________________</span> section</li>
+            <li>☐ Missing <span class="blank">_________________</span> element</li>
+        </ul>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+        <h2>💪 Practice Exercise</h2>
+        
+        <div class="practice-box">
+            <h3>Write the Complete Boilerplate from Memory:</h3>
+            <p>Use the space below to practice writing the complete HTML boilerplate structure:</p>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+        
+        <h3>Self-Check Questions:</h3>
+        <ol>
+            <li>Did you include the DOCTYPE? ☐</li>
+            <li>Is your HTML element the root with lang attribute? ☐</li>
+            <li>Does your HEAD come before BODY? ☐</li>
+            <li>Did you include charset UTF-8? ☐</li>
+            <li>Did you add a title? ☐</li>
+            <li>Are all tags properly closed? ☐</li>
+        </ol>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📝 Homework Assignment</h2>
+        
+        <h3>Part 1: Video & Practice</h3>
+        <p>Video Title: <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>Part 2: Validation</h3>
+        <ul>
+            <li>Run your HTML through: <span class="long-blank">_________________________________________</span></li>
+            <li>Submit screenshot to: <span class="long-blank">_________________________________________</span></li>
+        </ul>
+        
+        <h3>Part 3: Peer Review</h3>
+        <ul>
+            <li>Respond to <span class="blank">_____</span> other student posts</li>
+            <li>Compare and <span class="blank">_________________</span> their results with yours</li>
+        </ul>
+    </div>
+
+    <!-- Additional Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or observations during the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: Practice makes perfect! Write the boilerplate 5 times before next class!</p>
+        <p>Goal: Under 30 seconds from memory! 🚀</p>
+    </div>
+</body>
+</html>

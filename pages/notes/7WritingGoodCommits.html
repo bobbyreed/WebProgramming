@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 7 - Writing Good Commits & Recipe Project - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border: 2px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        .warning {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning strong {
+            color: #c62828;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-card {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .comparison-card.bad {
+            background: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .comparison-card.good {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Writing Good Commits & Recipe Project</h1>
+        <p>CSCI 4513 - Web Programming | Week 4, Class 7</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📋 Today's Agenda:</strong> Writing Good Commit Messages (20 min) + Recipe Project Work Session (25 min)
+        <br><strong>🚨 Important:</strong> Recipe Project due tomorrow (Thursday) evening!
+    </div>
+
+    <!-- Part 1: Git Commits -->
+    <div class="section">
+        <h2>📝 Part 1: Writing Good Commits</h2>
+        
+        <h3>Why Commit Messages Matter</h3>
+        <p>List three reasons why good commit messages are important:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="tip">
+            <strong>💡 Career Tip:</strong> Employers WILL look at your <span class="blank">_________________</span> history on GitHub!
+        </div>
+        
+        <h3>Anatomy of a Good Commit Message</h3>
+        <p>A good commit message has two parts:</p>
+        <ol>
+            <li><strong>Subject Line:</strong> Describes <span class="blank">_________________</span> you did
+                <br>Character limit: <span class="blank">_____</span> to <span class="blank">_____</span> characters
+            </li>
+            <li><strong>Body (optional):</strong> Explains <span class="blank">_________________</span> you did it and 
+                <span class="blank">_________________</span> it solves the problem
+            </li>
+        </ol>
+        
+        <div class="warning">
+            <strong>⚠️ Remember:</strong> Always leave a <span class="blank">_________________</span> line between subject and body!
+        </div>
+        
+        <h3>Bad vs. Good Commits</h3>
+        <div class="comparison-grid">
+            <div class="comparison-card bad">
+                <strong>❌ Bad Example:</strong>
+                <div class="code-block">fix bug</div>
+                <p>Problems with this commit:</p>
+                <ul>
+                    <li><span class="long-blank">_________________________</span></li>
+                    <li><span class="long-blank">_________________________</span></li>
+                </ul>
+            </div>
+            <div class="comparison-card good">
+                <strong>✅ Good Example:</strong>
+                <div class="code-block">
+                    Fix navbar collapse on mobile devices<br><br>
+                    The hamburger menu wasn't toggling due to<br>
+                    missing data-toggle attribute.
+                </div>
+                <p>Why this is better:</p>
+                <ul>
+                    <li><span class="long-blank">_________________________</span></li>
+                    <li><span class="long-blank">_________________________</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3>The 7 Rules of Great Commit Messages</h3>
+        <ol>
+            <li>Separate subject from body with a <span class="blank">_________________</span></li>
+            <li>Limit subject line to <span class="blank">_____</span> characters</li>
+            <li><span class="blank">_________________</span> the subject line</li>
+            <li>Don't end subject line with a <span class="blank">_________________</span></li>
+            <li>Use <span class="blank">_________________</span> mood (e.g., "Add" not "Added")</li>
+            <li>Wrap body at <span class="blank">_____</span> characters</li>
+            <li>Use body to explain <span class="blank">_________________</span> and <span class="blank">_________________</span>, not how</li>
+        </ol>
+        
+        <h3>When to Commit</h3>
+        <p>You should commit when you (check all that apply):</p>
+        <ul>
+            <li>☐ Complete a feature (even a small one)</li>
+            <li>☐ Fix a bug</li>
+            <li>☐ Add a new file or component</li>
+            <li>☐ Make a meaningful change that works</li>
+            <li>☐ Before trying something experimental</li>
+            <li>☐ End of a work session (with working code)</li>
+        </ul>
+        
+        <h3>Creating Multi-line Commits</h3>
+        <p>To create a commit with subject and body:</p>
+        <div class="code-block">
+            # Instead of: git commit -m "message"
+            # Use: git <span class="code-blank">_________</span>
+            # This opens <span class="code-blank">_________</span> where you can write multi-line messages
+        </div>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+        <h2>✍️ Practice: Fix These Commits</h2>
+        <p>Rewrite these bad commit messages to be more descriptive:</p>
+        
+        <table>
+            <tr>
+                <th>Bad Commit</th>
+                <th>Your Improved Version</th>
+            </tr>
+            <tr>
+                <td>"css changes"</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>"oops"</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>"FINALLY!!!!"</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>"stuff"</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Part 2: Recipe Project -->
+    <div class="section">
+        <h2>🍳 Part 2: Recipe Project Requirements</h2>
+        
+        <h3>Project Structure</h3>
+        <p>Your project needs:</p>
+        <ul>
+            <li>Main <span class="blank">_________________</span> page listing all recipes</li>
+            <li>At least <span class="blank">_____</span> separate recipe pages</li>
+            <li>Proper file organization (folders for <span class="blank">_________________</span> and <span class="blank">_________________</span>)</li>
+            <li>Links between <span class="blank">_________________</span> pages</li>
+        </ul>
+        
+        <h3>Each Recipe Page Must Include</h3>
+        <p>Check off as you complete each requirement:</p>
+        <ul>
+            <li>☐ Recipe title using <span class="blank">_____</span> tag</li>
+            <li>☐ Image of the dish with proper <span class="blank">_____</span> attribute</li>
+            <li>☐ Description in a <span class="blank">_____</span> tag</li>
+            <li>☐ Ingredients using <span class="blank">_____</span> list (unordered)</li>
+            <li>☐ Steps using <span class="blank">_____</span> list (ordered)</li>
+            <li>☐ Link back to <span class="blank">_________________</span></li>
+        </ul>
+        
+        <h3>File Structure</h3>
+        <p>Draw or write your project's file structure:</p>
+        <div class="code-block">
+            odin-recipes/
+            ├── <span class="code-blank">_________</span>.html
+            ├── recipes/
+            │   ├── <span class="code-blank">_________</span>.html
+            │   ├── <span class="code-blank">_________</span>.html
+            │   └── <span class="code-blank">_________</span>.html
+            └── <span class="code-blank">_________</span>/
+                ├── (your image files)
+        </div>
+        
+        <h3>HTML Template - Index Page</h3>
+        <p>Fill in the missing parts:</p>
+        <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="<span class="code-blank">_____</span>"&gt;
+&lt;head&gt;
+    &lt;meta charset="<span class="code-blank">_________</span>"&gt;
+    &lt;<span class="code-blank">_________</span>&gt;Odin Recipes&lt;/<span class="code-blank">_________</span>&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Odin Recipes&lt;/h1&gt;
+    &lt;<span class="code-blank">_____</span>&gt;  &lt;!-- Start list --&gt;
+        &lt;li&gt;&lt;a href="<span class="code-blank">_________________</span>"&gt;Recipe Name&lt;/a&gt;&lt;/li&gt;
+    &lt;/<span class="code-blank">_____</span>&gt;  &lt;!-- End list --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+        
+        <h3>HTML Template - Recipe Page</h3>
+        <p>Complete the image tag with proper attributes:</p>
+        <div class="code-block">
+&lt;img <span class="code-blank">_________</span>="../images/lasagna.jpg" <span class="code-blank">_________</span>="Delicious lasagna"&gt;
+        </div>
+        
+        <p>Write the link tag to go back to the main page:</p>
+        <div class="code-block">
+&lt;<span class="code-blank">___</span> <span class="code-blank">_________</span>="../index.html"&gt;Back to recipes&lt;/<span class="code-blank">___</span>&gt;
+        </div>
+    </div>
+
+    <!-- Git Workflow for Project -->
+    <div class="section">
+        <h2>🔄 Git Workflow for Your Project</h2>
+        
+        <h3>Suggested Commit Messages</h3>
+        <p>Write appropriate commit messages for these milestones:</p>
+        <ol>
+            <li>Creating initial project structure:
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            <li>Adding the main index page:
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            <li>Adding your first recipe:
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            <li>Adding images to recipes:
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            <li>Fixing a broken link:
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+        
+        <h3>Git Commands Sequence</h3>
+        <p>Number these commands in the correct order (1-5):</p>
+        <ul>
+            <li>___ git push origin main</li>
+            <li>___ git add .</li>
+            <li>___ Make changes to files</li>
+            <li>___ git commit</li>
+            <li>___ git status (to check what changed)</li>
+        </ul>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div class="section">
+        <h2>🔧 Common Issues & Solutions</h2>
+        
+        <table>
+            <tr>
+                <th>Problem</th>
+                <th>Possible Cause</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>Images not showing</td>
+                <td><span class="blank">_________________</span> path is wrong</td>
+                <td>Check ../ for going up directories</td>
+            </tr>
+            <tr>
+                <td>Links not working</td>
+                <td>Missing <span class="blank">_________________</span> extension</td>
+                <td>Include .html in href</td>
+            </tr>
+            <tr>
+                <td>Page looks weird</td>
+                <td>Missing closing <span class="blank">_________________</span></td>
+                <td>Check all tags are closed properly</td>
+            </tr>
+        </table>
+        
+        <div class="warning">
+            <strong>⚠️ Testing Reminder:</strong> Click <span class="blank">_________________</span> link and verify <span class="blank">_________________</span> image before submitting!
+        </div>
+    </div>
+
+    <!-- Submission Checklist -->
+    <div class="section">
+        <h2>✅ Final Submission Checklist</h2>
+        <p>Before submitting on D2L, ensure you have:</p>
+        <ul>
+            <li>☐ Main index page with links to all recipes</li>
+            <li>☐ At least 3 recipe pages</li>
+            <li>☐ Each recipe has all required elements</li>
+            <li>☐ All links work correctly</li>
+            <li>☐ All images display properly</li>
+            <li>☐ Proper HTML structure (DOCTYPE, head, body)</li>
+            <li>☐ Meaningful commit history</li>
+            <li>☐ Pushed to GitHub</li>
+            <li>☐ GitHub repository link ready to submit</li>
+        </ul>
+        
+        <div class="practice-box">
+            <strong>GitHub Repository URL:</strong>
+            <br><br>
+            https://github.com/<span class="long-blank">_________________</span>/odin-recipes
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or reminders:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="section">
+        <h2>🎯 Key Takeaways</h2>
+        <p>The three most important things I learned today:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <p>One thing I want to practice more:</p>
+        <span class="long-blank">_________________________________________</span>
+    </div>
+
+    <div class="footer">
+        <p>Remember: Good commits today = impressed employers tomorrow! 🌟</p>
+        <p>Recipe Project Due: Thursday Evening on D2L</p>
+    </div>
+</body>
+</html>

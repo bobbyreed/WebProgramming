@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Intro - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .info-box {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CSS Foundations: Intro to CSS - Guided Notes</h1>
+        <p>CSCI 4513 - Web Programming | Week 4, Class 8</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>⚠️ REMINDER:</strong> Recipe Project due TONIGHT! Submit GitHub link on D2L.
+    </div>
+
+    <!-- CSS Basics Section -->
+    <div class="section">
+        <h2>🎨 CSS Fundamentals</h2>
+        
+        <h3>What is CSS?</h3>
+        <p>CSS stands for <span class="blank">_________________</span> Style Sheets</p>
+        <p>Purpose: CSS describes <span class="blank">_________________</span> HTML elements should be displayed</p>
+        
+        <h3>HTML vs CSS</h3>
+        <table>
+            <tr>
+                <th>HTML (Structure)</th>
+                <th>CSS (Style)</th>
+            </tr>
+            <tr>
+                <td>The <span class="blank">_________________</span></td>
+                <td>The <span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Content, headings, paragraphs</td>
+                <td>Colors, fonts, spacing, layout</td>
+            </tr>
+        </table>
+        
+        <h3>CSS Basic Syntax</h3>
+        <div class="code-block">
+<span class="code-blank">_________</span> {
+    <span class="code-blank">_________</span>: <span class="code-blank">_________</span>;
+    property2: value2;
+}
+        </div>
+        
+        <p>Three parts of a CSS rule:</p>
+        <ol>
+            <li><strong>Selector:</strong> <span class="blank">_________________</span></li>
+            <li><strong>Property:</strong> <span class="blank">_________________</span></li>
+            <li><strong>Value:</strong> <span class="blank">_________________</span></li>
+        </ol>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> Properties and values separated by <span class="blank">_____</span>, declarations end with <span class="blank">_____</span>
+        </div>
+    </div>
+
+    <!-- Selectors Section -->
+    <div class="section">
+        <h2>🎯 CSS Selectors</h2>
+        
+        <h3>Types of Selectors</h3>
+        <table>
+            <tr>
+                <th>Selector Type</th>
+                <th>Symbol/Syntax</th>
+                <th>Example</th>
+                <th>What it Selects</th>
+            </tr>
+            <tr>
+                <td>Universal</td>
+                <td><span class="blank">_____</span></td>
+                <td>* { }</td>
+                <td><span class="long-blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>(none)</td>
+                <td>p { }</td>
+                <td><span class="long-blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Class</td>
+                <td><span class="blank">_____</span></td>
+                <td>.highlight { }</td>
+                <td><span class="long-blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td><span class="blank">_____</span></td>
+                <td>#header { }</td>
+                <td><span class="long-blank">_________________________</span></td>
+            </tr>
+        </table>
+        
+        <h3>Class vs ID</h3>
+        <p><strong>Classes:</strong> Can be used on <span class="blank">_________________</span> elements</p>
+        <p><strong>IDs:</strong> Must be <span class="blank">_________________</span> on the page</p>
+        
+        <h3>Advanced Selectors</h3>
+        <p><strong>Grouping (comma-separated):</strong> Applies same styles to <span class="blank">_________________</span> selectors</p>
+        <div class="code-block">
+h1, h2, h3 {
+    color: blue;
+}
+        </div>
+        
+        <p><strong>Chaining (no space):</strong> Elements must have <span class="blank">_________________</span> specified criteria</p>
+        <div class="code-block">
+.alert<span class="code-blank">_____</span>warning {
+    /* Needs BOTH classes */
+}
+        </div>
+        
+        <p><strong>Descendant (space):</strong> Selects elements <span class="blank">_________________</span> other elements</p>
+        <div class="code-block">
+.container <span class="code-blank">_____</span> p {
+    /* Paragraphs inside .container */
+}
+        </div>
+    </div>
+
+    <!-- Properties Section -->
+    <div class="section">
+        <h2>🎨 Common CSS Properties</h2>
+        
+        <h3>Color Properties</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>What it Changes</th>
+                <th>Example Values</th>
+            </tr>
+            <tr>
+                <td>color</td>
+                <td><span class="blank">_________________</span></td>
+                <td>red, #FF0000, rgb(255,0,0)</td>
+            </tr>
+            <tr>
+                <td>background-color</td>
+                <td><span class="blank">_________________</span></td>
+                <td>blue, #0000FF, transparent</td>
+            </tr>
+        </table>
+        
+        <h3>Typography Properties</h3>
+        <ul>
+            <li><strong>font-family:</strong> Sets the <span class="blank">_________________</span> (include fallbacks!)</li>
+            <li><strong>font-size:</strong> Sets the <span class="blank">_________________</span> (no space before unit!)</li>
+            <li><strong>font-weight:</strong> Sets the <span class="blank">_________________</span> (bold = 700)</li>
+            <li><strong>text-align:</strong> Aligns text <span class="blank">_________________</span></li>
+        </ul>
+        
+        <h3>Image Sizing</h3>
+        <p>To maintain aspect ratio, set width and height to <span class="blank">_________________</span></p>
+        <div class="code-block">
+img {
+    width: 300px;
+    height: <span class="code-blank">_________</span>;
+}
+        </div>
+    </div>
+
+    <!-- Adding CSS to HTML Section -->
+    <div class="section">
+        <h2>🔗 Three Ways to Add CSS to HTML</h2>
+        
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Where CSS Goes</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td>1. External (Best!)</td>
+                <td><span class="long-blank">_________________________</span></td>
+                <td>Most projects, reusable styles</td>
+            </tr>
+            <tr>
+                <td>2. Internal</td>
+                <td><span class="long-blank">_________________________</span></td>
+                <td>Single page unique styles</td>
+            </tr>
+            <tr>
+                <td>3. Inline (Avoid!)</td>
+                <td><span class="long-blank">_________________________</span></td>
+                <td>Quick testing only</td>
+            </tr>
+        </table>
+        
+        <h3>External CSS Link</h3>
+        <div class="code-block">
+&lt;head&gt;
+    &lt;link <span class="code-blank">_________</span>="stylesheet" <span class="code-blank">_________</span>="styles.css"&gt;
+&lt;/head&gt;
+        </div>
+        
+        <h3>Internal CSS</h3>
+        <div class="code-block">
+&lt;head&gt;
+    &lt;<span class="code-blank">_________</span>&gt;
+        p { color: blue; }
+    &lt;/<span class="code-blank">_________</span>&gt;
+&lt;/head&gt;
+        </div>
+        
+        <h3>Inline CSS</h3>
+        <div class="code-block">
+&lt;p <span class="code-blank">_________</span>="color: blue; font-size: 16px;"&gt;Text&lt;/p&gt;
+        </div>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+        <h2>✏️ Practice Exercises</h2>
+        
+        <h3>Write the CSS selector for:</h3>
+        <ol>
+            <li>All paragraphs: <span class="blank">_________________</span></li>
+            <li>Elements with class "warning": <span class="blank">_________________</span></li>
+            <li>Element with ID "footer": <span class="blank">_________________</span></li>
+            <li>All h1, h2, and h3 elements: <span class="long-blank">_________________________</span></li>
+            <li>Paragraphs inside divs: <span class="long-blank">_________________________</span></li>
+            <li>Elements with both "alert" and "urgent" classes: <span class="long-blank">_________________________</span></li>
+        </ol>
+        
+        <h3>Fix this CSS (find 3 errors):</h3>
+        <div class="code-block">
+p {
+    color red;
+    font-size: 16 px;
+    background-color: blue
+}
+        </div>
+        <p>Errors:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Odin Project Exercises -->
+    <div class="section">
+        <h2>💻 Odin Project Exercises</h2>
+        <p>We'll complete these exercises in class:</p>
+        
+        <div class="practice-box">
+            <h3>Exercise Checklist:</h3>
+            <ul style="list-style: none;">
+                <li>☐ 01-css-methods</li>
+                <li>☐ 02-class-id-selectors</li>
+                <li>☐ 03-grouping-selectors</li>
+                <li>☐ 04-chaining-selectors</li>
+                <li>☐ 05-descendant-combinator</li>
+            </ul>
+            
+            <h3 style="margin-top: 20px;">Exercise Notes:</h3>
+            <p>Key takeaways from each exercise:</p>
+            <br>
+            <p>01-css-methods: <span class="long-blank">_________________________________________</span></p>
+            <p>02-class-id-selectors: <span class="long-blank">_________________________________________</span></p>
+            <p>03-grouping-selectors: <span class="long-blank">_________________________________________</span></p>
+            <p>04-chaining-selectors: <span class="long-blank">_________________________________________</span></p>
+            <p>05-descendant-combinator: <span class="long-blank">_________________________________________</span></p>
+        </div>
+    </div>
+
+    <!-- Key Concepts Review -->
+    <div class="section">
+        <h2>🔑 Key Concepts Review</h2>
+        
+        <h3>Fill in the blanks:</h3>
+        <ol>
+            <li>CSS stands for <span class="long-blank">_________________________________________</span></li>
+            
+            <li>The three parts of a CSS rule are:
+                <br>• <span class="blank">_________________</span>
+                <br>• <span class="blank">_________________</span>
+                <br>• <span class="blank">_________________</span>
+            </li>
+            
+            <li>To select a class, use the symbol: <span class="blank">_____</span></li>
+            
+            <li>To select an ID, use the symbol: <span class="blank">_____</span></li>
+            
+            <li>The best way to add CSS to HTML is: <span class="blank">_________________</span></li>
+            
+            <li>Classes can be used <span class="blank">_________________</span> times, 
+                while IDs can only be used <span class="blank">_________________</span> time per page.</li>
+            
+            <li>To apply the same style to multiple selectors, separate them with: <span class="blank">_____</span></li>
+            
+            <li>To select elements nested inside other elements, use a: <span class="blank">_________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Additional Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or examples from class:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Questions to Ask:</h3>
+        <ul>
+            <li>_________________________________________________</li>
+            <li>_________________________________________________</li>
+            <li>_________________________________________________</li>
+        </ul>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📚 Homework & Next Steps</h2>
+        
+        <div class="practice-box">
+            <h3>Tonight's Homework:</h3>
+            <ul style="list-style: none;">
+                <li>☐ <strong>SUBMIT RECIPE PROJECT on D2L!</strong></li>
+                <li>☐ Finish any incomplete CSS exercises</li>
+                <li>☐ Read about CSS Cascade and Specificity</li>
+                <li>☐ (Optional) Add basic CSS to Recipe Project</li>
+            </ul>
+            
+            <h3 style="margin-top: 20px;">Next Class Preview:</h3>
+            <p>Topic: <span class="long-blank">_________________________________________</span></p>
+            <p>Key Concept: How CSS decides which styles "win" when there are conflicts</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: CSS is your creative superpower! 🎨</p>
+        <p>Practice makes perfect - experiment with different styles!</p>
+        <p><strong>Don't forget: Recipe Project due TONIGHT!</strong></p>
+    </div>
+</body>
+</html>

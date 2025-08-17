@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cascade - Guided Notes | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: -40px -40px 30px -40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .extra-long-blank {
+            display: inline-block;
+            min-width: 300px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .specificity-calc {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        
+        .spec-box {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSS Cascade - Guided Notes</h1>
+            <p>CSCI 4513 - Web Programming | Week 5, Class 9</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 Today's Focus:</strong> Understanding how CSS decides which styles "win" when rules conflict
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="section">
+            <h2>🌊 What is the Cascade?</h2>
+            
+            <h3>Definition</h3>
+            <p>The cascade is CSS's <span class="blank">_________________</span> resolution system.</p>
+            <p>It determines which CSS rules get <span class="blank">_________________</span> to HTML elements.</p>
+            
+            <h3>Why Do We Need It?</h3>
+            <p>Multiple sources of CSS can target the same element:</p>
+            <ul>
+                <li>Browser <span class="blank">_________________</span> styles</li>
+                <li>Your <span class="blank">_________________</span> files</li>
+                <li>Multiple <span class="blank">_________________</span> targeting same element</li>
+                <li><span class="blank">_________________</span> styles (in HTML)</li>
+            </ul>
+            
+            <div class="tip">
+                <strong>💡 Remember:</strong> CSS only does what we tell it to do!
+            </div>
+        </div>
+
+        <!-- Three Main Factors Section -->
+        <div class="section">
+            <h2>🎯 The Three Main Factors</h2>
+            
+            <p>The cascade uses three main factors to resolve conflicts:</p>
+            
+            <table>
+                <tr>
+                    <th>Factor</th>
+                    <th>Description</th>
+                    <th>Rule</th>
+                </tr>
+                <tr>
+                    <td>1. <span class="blank">_________________</span></td>
+                    <td>How specific is the selector?</td>
+                    <td>More specific wins</td>
+                </tr>
+                <tr>
+                    <td>2. <span class="blank">_________________</span></td>
+                    <td>Does it inherit from parent?</td>
+                    <td>Direct beats inherited</td>
+                </tr>
+                <tr>
+                    <td>3. <span class="blank">_________________</span></td>
+                    <td>Which rule came last?</td>
+                    <td>Last one wins</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Specificity Section -->
+        <div class="section">
+            <h2>1️⃣ Factor #1: Specificity</h2>
+            
+            <h3>Specificity Hierarchy (from highest to lowest)</h3>
+            <ol>
+                <li><span class="blank">_________________</span> styles (avoid these!) - Value: 1000</li>
+                <li><span class="blank">_________________</span> selectors - Value: 100</li>
+                <li><span class="blank">_________________</span> selectors - Value: 10</li>
+                <li><span class="blank">_________________</span> selectors - Value: 1</li>
+            </ol>
+            
+            <div class="tip">
+                <strong>⚠️ Important Rule:</strong> 1 ID beats <span class="blank">_______</span> classes, 
+                1 class beats <span class="blank">_______</span> type selectors!
+            </div>
+            
+            <h3>Practice: Calculate Specificity</h3>
+            <div class="practice-box">
+                <p>Calculate the specificity for each selector:</p>
+                <ol>
+                    <li><code>p</code> = <span class="blank">_______</span></li>
+                    <li><code>.header</code> = <span class="blank">_______</span></li>
+                    <li><code>#main</code> = <span class="blank">_______</span></li>
+                    <li><code>.nav .item</code> = <span class="blank">_______</span></li>
+                    <li><code>#header .nav li</code> = <span class="blank">_______</span></li>
+                    <li><code>div.highlight#main</code> = <span class="blank">_______</span></li>
+                </ol>
+            </div>
+            
+            <h3>What DOESN'T Add to Specificity?</h3>
+            <ul>
+                <li>The universal selector: <span class="blank">_________________</span></li>
+                <li>Combinators: <span class="blank">_______</span>, <span class="blank">_______</span>, 
+                    <span class="blank">_______</span>, and <span class="blank">_______</span> (space)</li>
+            </ul>
+        </div>
+
+        <!-- Example Analysis Section -->
+        <div class="section">
+            <h2>📝 Specificity Examples</h2>
+            
+            <h3>Example 1: Class Selectors</h3>
+            <div class="code-block">
+&lt;div class="main"&gt;
+  &lt;div class="list subsection"&gt;Text&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+            
+            <div class="code-block">
+/* Rule 1 */
+.subsection { color: blue; }     <span style="color: #95a5a6;">/* Specificity: _____ */</span>
+
+/* Rule 2 */
+.main .list { color: red; }       <span style="color: #95a5a6;">/* Specificity: _____ */</span>
+            </div>
+            
+            <p><strong>Which rule wins?</strong> <span class="blank">_________________</span></p>
+            <p><strong>Why?</strong> <span class="long-blank">_________________________________________</span></p>
+            
+            <h3>Example 2: ID vs Classes</h3>
+            <div class="code-block">
+&lt;div class="main"&gt;
+  &lt;div class="list" id="subsection"&gt;Text&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+            
+            <div class="code-block">
+/* Rule 1 */
+#subsection { color: blue; }      <span style="color: #95a5a6;">/* Specificity: _____ */</span>
+
+/* Rule 2 */
+.main .list { color: red; }       <span style="color: #95a5a6;">/* Specificity: _____ */</span>
+            </div>
+            
+            <p><strong>Which rule wins?</strong> <span class="blank">_________________</span></p>
+            <p><strong>Why?</strong> <span class="long-blank">_________________________________________</span></p>
+        </div>
+
+        <!-- Inheritance Section -->
+        <div class="section">
+            <h2>2️⃣ Factor #2: Inheritance</h2>
+            
+            <h3>Properties That Typically Inherit:</h3>
+            <ul>
+                <li>Typography: <span class="blank">_________</span>, <span class="blank">_________</span>, 
+                    <span class="blank">_________</span></li>
+                <li>Text properties: <span class="blank">_________</span>, <span class="blank">_________</span></li>
+                <li>List properties: <span class="blank">_________</span></li>
+            </ul>
+            
+            <h3>Properties That DON'T Inherit:</h3>
+            <ul>
+                <li>Box model: <span class="blank">_________</span>, <span class="blank">_________</span>, 
+                    <span class="blank">_________</span></li>
+                <li><span class="blank">_________________</span> properties</li>
+                <li><span class="blank">_________________</span> and display</li>
+            </ul>
+            
+            <div class="tip">
+                <strong>💡 Key Rule:</strong> Direct styling ALWAYS beats <span class="blank">_________________</span>!
+            </div>
+            
+            <h3>Inheritance Example</h3>
+            <div class="code-block">
+&lt;div id="parent"&gt;
+  &lt;div class="child"&gt;Text&lt;/div&gt;
+&lt;/div&gt;
+
+#parent { color: red; }    <span style="color: #95a5a6;">/* Specificity: 100 */</span>
+.child { color: blue; }     <span style="color: #95a5a6;">/* Specificity: 10 */</span>
+            </div>
+            
+            <p><strong>What color is the text?</strong> <span class="blank">_________________</span></p>
+            <p><strong>Why?</strong> <span class="long-blank">_________________________________________</span></p>
+        </div>
+
+        <!-- Rule Order Section -->
+        <div class="section">
+            <h2>3️⃣ Factor #3: Rule Order</h2>
+            
+            <h3>The Tie-Breaker</h3>
+            <p>When two rules have:</p>
+            <ul>
+                <li>✓ Same <span class="blank">_________________</span></li>
+                <li>✓ Both are <span class="blank">_________________</span> (not inherited)</li>
+            </ul>
+            <p><strong>Then:</strong> The <span class="blank">_________________</span> rule wins!</p>
+            
+            <h3>Rule Order Example</h3>
+            <div class="code-block">
+.alert { color: red; }
+.warning { color: yellow; }
+
+&lt;p class="alert warning"&gt;Message&lt;/p&gt;
+            </div>
+            
+            <p><strong>What color is the text?</strong> <span class="blank">_________________</span></p>
+            <p><strong>Why?</strong> <span class="long-blank">_________________________________________</span></p>
+            
+            <div class="tip">
+                <strong>Note:</strong> Order in the HTML class attribute does NOT matter - only CSS file order!
+            </div>
+        </div>
+
+        <!-- Complete Algorithm Section -->
+        <div class="section">
+            <h2>🔄 The Complete Cascade Algorithm</h2>
+            
+            <p>Fill in the cascade decision process:</p>
+            <ol>
+                <li>Collect all <span class="blank">_________________</span> targeting the element</li>
+                <li>Check <span class="blank">_________________</span> - higher wins!</li>
+                <li>If tied, check <span class="blank">_________________</span> vs inherited</li>
+                <li>If still tied, <span class="blank">_________________</span> rule wins!</li>
+            </ol>
+        </div>
+
+        <!-- Practice Problems Section -->
+        <div class="section">
+            <h2>🏋️ Practice Problems</h2>
+            
+            <div class="practice-box">
+                <h3>Problem 1: Predict the Color</h3>
+                <div class="code-block">
+&lt;div id="container" class="box"&gt;
+  &lt;p class="text"&gt;What color am I?&lt;/p&gt;
+&lt;/div&gt;
+
+#container { color: red; }
+.box p { color: blue; }
+.text { color: green; }
+                </div>
+                <p><strong>Answer:</strong> <span class="blank">_________________</span></p>
+                <p><strong>Explanation:</strong> <span class="extra-long-blank">_________________________________________</span></p>
+            </div>
+            
+            <div class="practice-box">
+                <h3>Problem 2: Calculate Total Specificity</h3>
+                <table>
+                    <tr>
+                        <th>Selector</th>
+                        <th>IDs</th>
+                        <th>Classes</th>
+                        <th>Types</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td><code>body #wrapper .container ul li</code></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>nav > ul > li > a.active</code></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                        <td><span class="blank">____</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Best Practices Section -->
+        <div class="section">
+            <h2>✨ Best Practices</h2>
+            
+            <h3>Do's ✅</h3>
+            <ul>
+                <li>Keep specificity <span class="blank">_________________</span></li>
+                <li>Use <span class="blank">_________________</span> for styling (not IDs)</li>
+                <li>Organize CSS from <span class="blank">_________________</span> to specific</li>
+                <li>Use DevTools to <span class="blank">_________________</span> cascade issues</li>
+            </ul>
+            
+            <h3>Don'ts ❌</h3>
+            <ul>
+                <li>Avoid <span class="blank">_________________</span> styles</li>
+                <li>Don't use <span class="blank">_________________</span> for styling</li>
+                <li>Minimize use of <span class="blank">_________________</span></li>
+                <li>Don't make selectors overly <span class="blank">_________________</span></li>
+            </ul>
+        </div>
+
+        <!-- DevTools Section -->
+        <div class="section">
+            <h2>🔍 Using DevTools for Cascade Debugging</h2>
+            
+            <p>DevTools shows you:</p>
+            <ul>
+                <li>✓ Applied styles (<span class="blank">_________________</span>)</li>
+                <li>✗ Overridden styles (<span class="blank">_________________</span> out)</li>
+                <li>📍 Source file and <span class="blank">_________________</span> number</li>
+                <li>🎯 <span class="blank">_________________</span> final values</li>
+            </ul>
+            
+            <div class="practice-box">
+                <h3>DevTools Exercise</h3>
+                <p>Open your Recipe Project and find:</p>
+                <ol>
+                    <li>A style that's being overridden: _________________________________</li>
+                    <li>The winning rule's specificity: _________________________________</li>
+                    <li>The source file and line number: _________________________________</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Exercise Notes Section -->
+        <div class="section">
+            <h2>📋 Today's Exercise: 01-cascade-fix</h2>
+            
+            <h3>Setup Commands</h3>
+            <div class="code-block">
+git clone <span class="code-blank">_________________________________________</span>
+cd css-exercises/foundations/cascade/<span class="code-blank">_________________</span>
+code .
+            </div>
+            
+            <h3>Exercise Notes</h3>
+            <p>Problems encountered and solutions:</p>
+            <ol>
+                <li>Problem: <span class="long-blank">_________________________________________</span>
+                    <br>Solution: <span class="long-blank">_________________________________________</span>
+                </li>
+                <li>Problem: <span class="long-blank">_________________________________________</span>
+                    <br>Solution: <span class="long-blank">_________________________________________</span>
+                </li>
+                <li>Problem: <span class="long-blank">_________________________________________</span>
+                    <br>Solution: <span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Additional Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes, examples, or questions:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="section">
+            <h2>🎯 Key Takeaways</h2>
+            
+            <div class="practice-box">
+                <p>Complete these summary statements:</p>
+                <ol>
+                    <li>The cascade resolves <span class="long-blank">_________________________________________</span></li>
+                    <li>Specificity is calculated by counting <span class="long-blank">_________________________________________</span></li>
+                    <li>Direct styling always beats <span class="blank">_________________</span></li>
+                    <li>When specificity is equal, the <span class="blank">_________________</span> rule wins</li>
+                    <li>The best practice is to keep specificity <span class="blank">_________________</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Great work today! You're mastering the cascade! 🌊</p>
+            <p>Next Class: Browser Developer Tools - Tuesday at 9:30 AM</p>
+        </div>
+    </div>
+</body>
+</html>
