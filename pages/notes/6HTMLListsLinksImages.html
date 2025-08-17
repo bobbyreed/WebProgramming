@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists, Links & Images - Guided Notes | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning strong {
+            color: #721c24;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .notes-area {
+            min-height: 150px;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            background: #fafafa;
+            margin-top: 10px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Lists, Links & Images - Guided Notes</h1>
+        <p>CSCI 4513 - Web Programming | Week 3, Class 6</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Topics:</strong> HTML Lists (Ordered & Unordered), Links (Absolute & Relative), Images (src, alt, dimensions)
+    </div>
+
+    <!-- Lists Section -->
+    <div class="section">
+        <h2>📝 HTML Lists</h2>
+        
+        <h3>Two Types of Lists</h3>
+        <p>1. <strong>Unordered Lists</strong> use the <span class="blank">_________________</span> element</p>
+        <p>   • Used when <span class="blank">_________________</span> doesn't matter</p>
+        <p>   • Display with <span class="blank">_________________</span> points by default</p>
+        
+        <p>2. <strong>Ordered Lists</strong> use the <span class="blank">_________________</span> element</p>
+        <p>   • Used when <span class="blank">_________________</span> is important</p>
+        <p>   • Display with <span class="blank">_________________</span> by default</p>
+        
+        <p><strong>Both types</strong> use <span class="blank">_________________</span> elements for individual list items.</p>
+        
+        <h3>List Code Structure</h3>
+        <div class="code-block">
+&lt;!-- Unordered List --&gt;
+&lt;<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;First item&lt;/<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;Second item&lt;/<span class="code-blank">_____</span>&gt;
+&lt;/<span class="code-blank">_____</span>&gt;
+
+&lt;!-- Ordered List --&gt;
+&lt;<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;Step 1&lt;/<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;Step 2&lt;/<span class="code-blank">_____</span>&gt;
+&lt;/<span class="code-blank">_____</span>&gt;
+        </div>
+        
+        <div class="practice-box">
+            <strong>Practice:</strong> Create a shopping list (unordered) with 3 items:
+            <br><br>
+            1. _________________________________<br>
+            2. _________________________________<br>
+            3. _________________________________
+        </div>
+    </div>
+
+    <!-- Links Section -->
+    <div class="section">
+        <h2>🔗 HTML Links</h2>
+        
+        <h3>The Anchor Element</h3>
+        <p>Links are created using the <span class="blank">_________________</span> element</p>
+        <p>The destination is specified with the <span class="blank">_________________</span> attribute</p>
+        
+        <div class="code-block">
+&lt;<span class="code-blank">_____</span> <span class="code-blank">_____</span>="https://example.com"&gt;
+    Link text
+&lt;/<span class="code-blank">_____</span>&gt;
+        </div>
+        
+        <h3>Absolute vs Relative Links</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Format</th>
+                <th>Use Case</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>Absolute</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+                <td>https://google.com</td>
+            </tr>
+            <tr>
+                <td>Relative</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+                <td>about.html</td>
+            </tr>
+        </table>
+        
+        <h3>Directory Navigation</h3>
+        <p>• Current directory: <span class="blank">_________________</span> (optional)</p>
+        <p>• Parent directory: <span class="blank">_________________</span></p>
+        <p>• Example from subfolder: <span class="blank">_________________</span>/index.html</p>
+        
+        <h3>Opening Links in New Tab</h3>
+        <p>Use the <span class="blank">_________________</span> attribute with value <span class="blank">_________________</span></p>
+        
+        <div class="warning">
+            <strong>⚠️ Security Alert:</strong> Always add <span class="blank">_________________</span> attribute with value 
+            <span class="blank">_________________</span> when opening links in new tabs!
+        </div>
+        
+        <div class="code-block">
+&lt;a href="https://example.com" 
+   <span class="code-blank">_________________</span>="<span class="code-blank">_________________</span>"
+   <span class="code-blank">_________________</span>="<span class="code-blank">_________________</span>"&gt;
+    Safe external link
+&lt;/a&gt;
+        </div>
+        
+        <h3>Security Attributes Explained</h3>
+        <p><strong>noopener:</strong> <span class="long-blank">_________________________________________</span></p>
+        <p><strong>noreferrer:</strong> <span class="long-blank">_________________________________________</span></p>
+    </div>
+
+    <!-- Images Section -->
+    <div class="section">
+        <h2>🖼️ HTML Images</h2>
+        
+        <h3>The Image Element</h3>
+        <p>Images use the <span class="blank">_________________</span> element</p>
+        <p>This is a <span class="blank">_________________</span> element (no closing tag needed)</p>
+        
+        <h3>Essential Image Attributes</h3>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Purpose</th>
+                <th>Required?</th>
+            </tr>
+            <tr>
+                <td>src</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>alt</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+                <td>Yes*</td>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+                <td>Recommended</td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+                <td>Recommended</td>
+            </tr>
+        </table>
+        <p><em>*Always include for accessibility!</em></p>
+        
+        <h3>Complete Image Code</h3>
+        <div class="code-block">
+&lt;<span class="code-blank">_____</span> 
+    <span class="code-blank">_____</span>="photo.jpg"
+    <span class="code-blank">_____</span>="Description of image"
+    <span class="code-blank">_____</span>="600"
+    <span class="code-blank">_____</span>="400"&gt;
+        </div>
+        
+        <h3>Why Alt Text Matters</h3>
+        <ol>
+            <li>SEO: <span class="long-blank">_________________________________________</span></li>
+            <li>Accessibility: <span class="long-blank">_________________________________________</span></li>
+            <li>Fallback: <span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <h3>Image Formats</h3>
+        <table>
+            <tr>
+                <th>Format</th>
+                <th>Best For</th>
+                <th>Key Feature</th>
+            </tr>
+            <tr>
+                <td>JPEG/JPG</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Good compression</td>
+            </tr>
+            <tr>
+                <td>PNG</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Supports transparency</td>
+            </tr>
+            <tr>
+                <td>GIF</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Supports animation</td>
+            </tr>
+            <tr>
+                <td>SVG</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Scalable vector graphics</td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Pro Tip:</strong> Keep images under <span class="blank">_____</span>KB for optimal performance!
+        </div>
+    </div>
+
+    <!-- Combined Example Section -->
+    <div class="section">
+        <h2>🎯 Combining Concepts</h2>
+        
+        <h3>Making an Image a Link</h3>
+        <p>Complete the code to create a clickable logo:</p>
+        <div class="code-block">
+&lt;<span class="code-blank">_____</span> <span class="code-blank">_____</span>="https://okcu.edu"&gt;
+    &lt;<span class="code-blank">_____</span> 
+        <span class="code-blank">_____</span>="okcu-logo.png"
+        <span class="code-blank">_____</span>="Oklahoma City University"
+        width="200"
+        height="100"&gt;
+&lt;/<span class="code-blank">_____</span>&gt;
+        </div>
+        
+        <h3>Navigation List with Links</h3>
+        <p>Complete this navigation menu structure:</p>
+        <div class="code-block">
+&lt;<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/<span class="code-blank">_____</span>&gt;
+    &lt;<span class="code-blank">_____</span>&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/<span class="code-blank">_____</span>&gt;
+&lt;/<span class="code-blank">_____</span>&gt;
+        </div>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+        <h2>✏️ Practice Problems</h2>
+        
+        <h3>1. Write the HTML for an unordered list of your 3 favorite websites:</h3>
+        <div class="notes-area">
+            <br><br><br><br>
+        </div>
+        
+        <h3>2. Create a link to Google that opens in a new tab (include security attributes):</h3>
+        <div class="notes-area">
+            <br><br><br>
+        </div>
+        
+        <h3>3. Write the complete code for an image of a cat with all recommended attributes:</h3>
+        <div class="notes-area">
+            <br><br><br><br>
+        </div>
+        
+        <h3>4. What's wrong with this code? Fix it:</h3>
+        <div class="code-block">
+&lt;a href="https://example.com" target="_blank"&gt;Visit Example&lt;/a&gt;
+        </div>
+        <p><strong>Problem:</strong> <span class="long-blank">_________________________________________</span></p>
+        <p><strong>Fixed code:</strong></p>
+        <div class="notes-area">
+            <br><br>
+        </div>
+    </div>
+
+    <!-- Key Concepts Section -->
+    <div class="section">
+        <h2>🔑 Key Concepts to Remember</h2>
+        
+        <h3>Lists</h3>
+        <ul>
+            <li>Use <span class="blank">_____</span> for unordered lists (when order doesn't matter)</li>
+            <li>Use <span class="blank">_____</span> for ordered lists (when sequence is important)</li>
+            <li>Always wrap list items in <span class="blank">_____</span> tags</li>
+        </ul>
+        
+        <h3>Links</h3>
+        <ul>
+            <li>Absolute links include: <span class="long-blank">_________________________________________</span></li>
+            <li>Relative links are for: <span class="long-blank">_________________________________________</span></li>
+            <li>Security for new tabs: Always use <span class="blank">_________________</span></li>
+        </ul>
+        
+        <h3>Images</h3>
+        <ul>
+            <li>Images are <span class="blank">_________________</span> elements (no closing tag)</li>
+            <li>Alt text is crucial for: <span class="long-blank">_________________________________________</span></li>
+            <li>Specify dimensions to: <span class="long-blank">_________________________________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📚 Homework Assignment</h2>
+        
+        <div class="info-box">
+            <strong>Task:</strong> Add a list of images that are links to your one-page website
+        </div>
+        
+        <h3>Requirements Checklist:</h3>
+        <ul>
+            <li>☐ Create an unordered list</li>
+            <li>☐ Include at least 3 list items</li>
+            <li>☐ Each item contains an image wrapped in a link</li>
+            <li>☐ All images have proper alt text</li>
+            <li>☐ Links go to relevant external sites</li>
+            <li>☐ Use security attributes for external links</li>
+        </ul>
+        
+        <h3>Planning Your List:</h3>
+        <p><strong>Website 1:</strong> <span class="long-blank">_________________________________________</span></p>
+        <p><strong>Image description:</strong> <span class="long-blank">_________________________________________</span></p>
+        
+        <p><strong>Website 2:</strong> <span class="long-blank">_________________________________________</span></p>
+        <p><strong>Image description:</strong> <span class="long-blank">_________________________________________</span></p>
+        
+        <p><strong>Website 3:</strong> <span class="long-blank">_________________________________________</span></p>
+        <p><strong>Image description:</strong> <span class="long-blank">_________________________________________</span></p>
+    </div>
+
+    <!-- Additional Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the lecture:</p>
+        <div class="notes-area" style="min-height: 200px;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="section">
+        <h2>⚡ Quick Reference</h2>
+        
+        <h3>Common File Paths</h3>
+        <table>
+            <tr>
+                <th>Path</th>
+                <th>Meaning</th>
+            </tr>
+            <tr>
+                <td>image.jpg</td>
+                <td>Same folder as current file</td>
+            </tr>
+            <tr>
+                <td>images/photo.jpg</td>
+                <td>In 'images' subfolder</td>
+            </tr>
+            <tr>
+                <td>../image.jpg</td>
+                <td>In parent folder</td>
+            </tr>
+            <tr>
+                <td>../../images/pic.jpg</td>
+                <td>Up two levels, then into 'images'</td>
+            </tr>
+        </table>
+        
+        <h3>VS Code Shortcuts</h3>
+        <ul>
+            <li><code>ul>li*3</code> + Tab = Creates unordered list with 3 items</li>
+            <li><code>ol>li*5</code> + Tab = Creates ordered list with 5 items</li>
+            <li><code>img</code> + Tab = Creates image element with attributes</li>
+            <li><code>a</code> + Tab = Creates anchor element</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Great work today! Remember to practice these concepts! 🚀</p>
+        <p>Next class: CSS Foundations - Get ready to style! 🎨</p>
+    </div>
+</body>
+</html>

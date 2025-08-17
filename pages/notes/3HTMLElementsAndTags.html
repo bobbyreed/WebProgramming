@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Foundations - Guided Notes | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>HTML Foundations - Elements and Tags</h1>
+        <p>CSCI 4513 - Web Programming | Week 2, Class 3</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>🎯 Learning Objectives:</strong> Understand HTML tags and elements, explore void elements, and see how HTML, CSS, and JavaScript work together
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="section">
+        <h2>🌐 The Web Development Trinity</h2>
+        
+        <h3>Three Languages Working Together</h3>
+        <p><strong>HTML</strong> (HyperText Markup Language) provides <span class="blank">_________________</span> and <span class="blank">_________________</span></p>
+        <p><strong>CSS</strong> (Cascading Style Sheets) adds <span class="blank">_________________</span> to HTML elements</p>
+        <p><strong>JavaScript</strong> adds <span class="blank">_________________</span> and makes pages interactive</p>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> HTML and CSS are technically NOT <span class="blank">_________________</span> languages because they don't contain logic - they only handle presentation!
+        </div>
+        
+        <h3>Quick Check - Which Language Would You Use?</h3>
+        <ol>
+            <li>To add a paragraph of text: <span class="blank">_________________</span></li>
+            <li>To change the color of a button: <span class="blank">_________________</span></li>
+            <li>To make a button do something when clicked: <span class="blank">_________________</span></li>
+        </ol>
+    </div>
+
+    <!-- HTML Tags Section -->
+    <div class="section">
+        <h2>🏗️ HTML Tags - The Building Blocks</h2>
+        
+        <h3>What are HTML Tags?</h3>
+        <p>HTML tags are <span class="blank">_________________</span> wrapped in <span class="blank">_________________</span> brackets</p>
+        
+        <h3>Two Types of Tags:</h3>
+        <ul>
+            <li><strong>Opening tags:</strong> Look like: <span class="blank">_________________</span></li>
+            <li><strong>Closing tags:</strong> Look like: <span class="blank">_________________</span></li>
+        </ul>
+        
+        <p>The main difference between opening and closing tags is the <span class="blank">_________________</span></p>
+        
+        <div class="practice-box">
+            <strong>Practice:</strong> Write the opening and closing tags for a paragraph:
+            <br>Opening: <span class="long-blank">_________________________</span>
+            <br>Closing: <span class="long-blank">_________________________</span>
+        </div>
+    </div>
+
+    <!-- HTML Elements Section -->
+    <div class="section">
+        <h2>📦 HTML Elements - Content + Tags</h2>
+        
+        <h3>Anatomy of an HTML Element</h3>
+        <p>An HTML element consists of THREE parts:</p>
+        <ol>
+            <li><span class="blank">_________________</span> tag</li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span> tag</li>
+        </ol>
+        
+        <h3>Complete this Element:</h3>
+        <div class="code-block">
+<span class="code-blank">_______</span>This is my first paragraph!<span class="code-blank">_______</span>
+        </div>
+        
+        <p>Elements are like <span class="blank">_________________</span> for content - they tell the browser what type of content they contain.</p>
+        
+        <h3>Common HTML Elements</h3>
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Purpose</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>&lt;h1&gt; to &lt;h6&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;h1&gt;Main Title&lt;/h1&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;p&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;p&gt;Text content&lt;/p&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;a&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;a&gt;Click here&lt;/a&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;div&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;div&gt;Content&lt;/div&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;span&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;span&gt;Inline text&lt;/span&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;ul&gt;</td>
+                <td><span class="blank">_________________</span></td>
+                <td>&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Void Elements Section -->
+    <div class="section">
+        <h2>🚫 Void Elements - The Exceptions</h2>
+        
+        <h3>What are Void Elements?</h3>
+        <p>Void elements are special because they <span class="blank">_________________</span> have a closing tag</p>
+        <p>They are called "void" because they are <span class="blank">_________________</span> of content</p>
+        
+        <h3>Common Void Elements - List 4:</h3>
+        <ol>
+            <li><span class="blank">_________________</span> - Line break</li>
+            <li><span class="blank">_________________</span> - Image</li>
+            <li><span class="blank">_________________</span> - Horizontal rule</li>
+            <li><span class="blank">_________________</span> - Form input field</li>
+        </ol>
+        
+        <div class="tip">
+            <strong>⚠️ Note on Self-Closing Tags:</strong><br>
+            You might see &lt;br /&gt; or &lt;img /&gt; in older code.<br>
+            Modern HTML discourages this! Just use <span class="blank">_________________</span> instead.
+        </div>
+    </div>
+
+    <!-- Semantic HTML Section -->
+    <div class="section">
+        <h2>🎯 Semantic HTML - Why the Right Tag Matters</h2>
+        
+        <h3>Benefits of Using Correct Tags:</h3>
+        <ol>
+            <li><strong>SEO (Search Engine Optimization):</strong> 
+                <br><span class="long-blank">_________________________________________</span></li>
+            <li><strong>Accessibility:</strong> 
+                <br><span class="long-blank">_________________________________________</span></li>
+            <li><strong>Code Maintainability:</strong> 
+                <br><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="practice-box">
+            <strong>Think About It:</strong> Why is using &lt;h1&gt; better than &lt;p style="font-size:2em"&gt; for a main heading?
+            <br><br><span class="long-blank">_________________________________________</span>
+            <br><span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- Common Mistakes Section -->
+    <div class="section">
+        <h2>⚠️ Common Beginner Mistakes to Avoid</h2>
+        
+        <h3>1. Forgetting Closing Tags</h3>
+        <p>❌ Wrong: <code>&lt;p&gt;This won't work properly</code></p>
+        <p>✅ Correct: <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>2. Incorrect Nesting</h3>
+        <p>❌ Wrong: <code>&lt;p&gt;&lt;strong&gt;Text&lt;/p&gt;&lt;/strong&gt;</code></p>
+        <p>✅ Correct: <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>3. Using Wrong Elements</h3>
+        <p>List one example of using the wrong element for content:</p>
+        <span class="long-blank">_________________________________________</span>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+        <h2>💻 Practice Activities</h2>
+        
+        <h3>Activity 1: Create These Elements</h3>
+        <p>Write the complete HTML for:</p>
+        <ol>
+            <li>A main heading with the text "Welcome to My Site"
+                <br><span class="long-blank">_________________________________________</span></li>
+            <li>A paragraph with any text you choose
+                <br><span class="long-blank">_________________________________________</span></li>
+            <li>A line break (void element)
+                <br><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <h3>Activity 2: Identify the Parts</h3>
+        <p>For this element: <code>&lt;h2&gt;About Me&lt;/h2&gt;</code></p>
+        <ul>
+            <li>Opening tag: <span class="blank">_________________</span></li>
+            <li>Content: <span class="blank">_________________</span></li>
+            <li>Closing tag: <span class="blank">_________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📚 Homework Assignment</h2>
+        
+        <h3>Due: Before Next Class (Thursday)</h3>
+        <p>Add to your one-page website:</p>
+        <ol>
+            <li>One void tag: <span class="blank">_________________</span></li>
+            <li>Three new tags you haven't used before:
+                <br>1. <span class="blank">_________________</span>
+                <br>2. <span class="blank">_________________</span>
+                <br>3. <span class="blank">_________________</span>
+            </li>
+        </ol>
+        
+        <h3>Submission Steps:</h3>
+        <ol>
+            <li>Make your changes in <span class="blank">_________________</span> (which editor?)</li>
+            <li>Use git command: <span class="blank">_________________</span> to stage changes</li>
+            <li>Use git command: <span class="blank">_________________</span> to commit with message</li>
+            <li>Use git command: <span class="blank">_________________</span> to upload to GitHub</li>
+            <li>Submit the commit link on <span class="blank">_________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Review Questions Section -->
+    <div class="section">
+        <h2>✅ Quick Review Questions</h2>
+        
+        <ol>
+            <li>What does HTML stand for?
+                <br><span class="long-blank">_________________________________________</span></li>
+            
+            <li>What are the three parts of an HTML element?
+                <br><span class="long-blank">_________________________________________</span></li>
+            
+            <li>What makes void elements different from regular elements?
+                <br><span class="long-blank">_________________________________________</span></li>
+            
+            <li>Why is semantic HTML important? Give two reasons:
+                <br>1. <span class="long-blank">_________________________________________</span>
+                <br>2. <span class="long-blank">_________________________________________</span></li>
+            
+            <li>What symbol indicates a closing tag?
+                <br><span class="blank">_________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or code examples from class:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="section">
+        <h2>🎯 Key Takeaways</h2>
+        <ul>
+            <li>HTML provides <strong>structure</strong>, CSS provides <strong>style</strong>, JavaScript provides <strong>behavior</strong></li>
+            <li>HTML elements = opening tag + content + closing tag</li>
+            <li>Void elements have no closing tag because they don't contain content</li>
+            <li>Using semantic HTML improves SEO, accessibility, and code maintainability</li>
+            <li>Always close your tags and nest them properly!</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Remember: Practice makes perfect! Keep coding! 🚀</p>
+        <p>Next Class: HTML Boilerplate - Thursday</p>
+    </div>
+</body>
+</html>

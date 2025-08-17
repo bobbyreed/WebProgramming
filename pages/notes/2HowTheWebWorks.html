@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Web Works - Guided Notes | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .diagram-box {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #f8f9ff;
+            text-align: center;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>How the Web Works - Guided Notes</h1>
+        <p>CSCI 4513 - Web Programming | Class 2</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Goal:</strong> Understand the fundamentals of how the web works, from networks to websites
+    </div>
+
+    <!-- Networks and Internet Section -->
+    <div class="section">
+        <h2>🌐 Networks and the Internet</h2>
+        
+        <h3>What is a Network?</h3>
+        <p>A network is <span class="blank">_________________</span> or more computers connected together to share <span class="blank">_________________</span></p>
+        
+        <h3>What is the Internet?</h3>
+        <p>The Internet is a <span class="blank">_________________</span> of <span class="blank">_________________</span></p>
+        <p>It's the <span class="blank">_________________</span> that carries data (like a highway system)</p>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> The Internet is NOT the same as the World Wide Web!
+        </div>
+        
+        <h3>Key Infrastructure Players</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>What It Does</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>ISP</td>
+                <td><span class="long-blank">_________________________________</span></td>
+                <td>Cox, AT&T</td>
+            </tr>
+            <tr>
+                <td>Router</td>
+                <td><span class="long-blank">_________________________________</span></td>
+                <td>Home router</td>
+            </tr>
+            <tr>
+                <td>Modem</td>
+                <td><span class="long-blank">_________________________________</span></td>
+                <td>Cable modem</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Data Transfer Section -->
+    <div class="section">
+        <h2>📦 How Data Travels: Packets</h2>
+        
+        <h3>What are Packets?</h3>
+        <p>Packets are <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>Each Packet Contains:</h3>
+        <ol>
+            <li><span class="blank">_________________</span> address (where from)</li>
+            <li><span class="blank">_________________</span> address (where to)</li>
+            <li>Piece of the <span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span> number (for reassembly)</li>
+        </ol>
+        
+        <div class="practice-box">
+            <strong>Practice:</strong> Why do we use packets instead of sending data all at once?
+            <br><span class="long-blank">_________________________________________</span>
+            <br><span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- IP and DNS Section -->
+    <div class="section">
+        <h2>🔢 IP Addresses and DNS</h2>
+        
+        <h3>IP Addresses</h3>
+        <p>An IP address is like a <span class="blank">_________________</span> number for computers on the internet</p>
+        
+        <table>
+            <tr>
+                <th>Version</th>
+                <th>Format</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>IPv4</td>
+                <td><span class="blank">_____</span> numbers (0-255)</td>
+                <td>192.168.1.1</td>
+            </tr>
+            <tr>
+                <td>IPv6</td>
+                <td>Much longer, <span class="blank">_________________</span> format</td>
+                <td>2001:0db8:85a3:0000</td>
+            </tr>
+        </table>
+        
+        <h3>DNS (Domain Name System)</h3>
+        <p>DNS is the internet's <span class="blank">_________________</span> book</p>
+        <p>It translates <span class="blank">_________________</span> names (like google.com) into <span class="blank">_________________</span> addresses</p>
+        
+        <div class="diagram-box">
+            <strong>DNS Process:</strong><br>
+            1. You type: <span class="blank">_________________</span><br>
+            2. DNS Server looks up the <span class="blank">_________________</span><br>
+            3. Returns: <span class="blank">_________________</span><br>
+            4. Your browser connects to that <span class="blank">_________________</span>
+        </div>
+    </div>
+
+    <!-- Client-Server Section -->
+    <div class="section">
+        <h2>💻 Client-Server Model</h2>
+        
+        <table>
+            <tr>
+                <th>Client</th>
+                <th>Server</th>
+            </tr>
+            <tr>
+                <td>
+                    • <span class="blank">_________________</span> information<br>
+                    • Your web <span class="blank">_________________</span><br>
+                    • Like a customer at a restaurant
+                </td>
+                <td>
+                    • <span class="blank">_________________</span> information<br>
+                    • Hosts <span class="blank">_________________</span><br>
+                    • Like the waiter/kitchen at a restaurant
+                </td>
+            </tr>
+        </table>
+        
+        <h3>Example Interaction:</h3>
+        <p>Client says: "<span class="long-blank">_________________________________________</span>"</p>
+        <p>Server responds: "<span class="long-blank">_________________________________________</span>"</p>
+    </div>
+
+    <!-- Web Components Section -->
+    <div class="section">
+        <h2>🔍 Web Components - Don't Mix These Up!</h2>
+        
+        <h3>Define Each:</h3>
+        <ol>
+            <li><strong>Web Browser:</strong>
+                <br><span class="long-blank">_________________________________________</span>
+                <br>Examples: <span class="blank">_________</span>, <span class="blank">_________</span>, <span class="blank">_________</span>
+            </li>
+            
+            <li><strong>Search Engine:</strong>
+                <br><span class="long-blank">_________________________________________</span>
+                <br>Examples: <span class="blank">_________</span>, <span class="blank">_________</span>, <span class="blank">_________</span>
+            </li>
+            
+            <li><strong>Web Page:</strong>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li><strong>Web Server:</strong>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Google Search Journey Section -->
+    <div class="section">
+        <h2>🔎 Journey of a Google Search</h2>
+        
+        <h3>Fill in the Steps:</h3>
+        <ol>
+            <li>You type "google.com" → Browser checks its <span class="blank">_________________</span></li>
+            <li>If not found, browser asks <span class="blank">_________________</span> for IP address</li>
+            <li>DNS returns: <span class="blank">_________________</span></li>
+            <li>Browser establishes <span class="blank">_________________</span> with Google's server</li>
+            <li>Google sends back <span class="blank">_________________</span>, CSS, and JavaScript</li>
+            <li>You type search query and hit Enter</li>
+            <li>Query is <span class="blank">_________________</span> (HTTPS) and sent to Google</li>
+            <li>Google searches its <span class="blank">_________________</span> pages</li>
+            <li>Results returned in about <span class="blank">_________________</span> seconds!</li>
+        </ol>
+    </div>
+
+    <!-- Internet vs WWW Section -->
+    <div class="section">
+        <h2>🌍 Internet vs. World Wide Web</h2>
+        
+        <table>
+            <tr>
+                <th>Internet</th>
+                <th>World Wide Web</th>
+            </tr>
+            <tr>
+                <td>
+                    • The <span class="blank">_________________</span><br>
+                    • Physical <span class="blank">_________________</span><br>
+                    • Existed since <span class="blank">_________________</span><br>
+                    • Includes email, FTP, gaming, etc.
+                </td>
+                <td>
+                    • One <span class="blank">_________________</span> on the internet<br>
+                    • Web pages with <span class="blank">_________________</span><br>
+                    • Created <span class="blank">_________________</span> by Tim Berners-Lee<br>
+                    • Uses <span class="blank">_________________</span> protocol
+                </td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Analogy:</strong> The Web runs ON the Internet, like <span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- HTTP vs HTTPS Section -->
+    <div class="section">
+        <h2>🔒 Security: HTTP vs HTTPS</h2>
+        
+        <h3>Compare:</h3>
+        <table>
+            <tr>
+                <th>HTTP</th>
+                <th>HTTPS</th>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span> (not secure)</td>
+                <td><span class="blank">_________________</span> (secure)</td>
+            </tr>
+            <tr>
+                <td>Like sending <span class="blank">_________________</span></td>
+                <td>Like sending <span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Anyone can <span class="blank">_________________</span></td>
+                <td>Only recipient can <span class="blank">_________________</span></td>
+            </tr>
+        </table>
+        
+        <p><strong>When should you look for HTTPS?</strong>
+        <br><span class="long-blank">_________________________________________</span></p>
+    </div>
+
+    <!-- Review Questions Section -->
+    <div class="section">
+        <h2>✅ Quick Review Questions</h2>
+        
+        <ol>
+            <li>What's the difference between a client and a server?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>Why do we need DNS?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What are packets and why do we use them?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>Browser vs. Search Engine - explain the difference:
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Practice Activity Section -->
+    <div class="section">
+        <h2>🛠️ Practice Activity</h2>
+        
+        <div class="practice-box">
+            <h3>Check Your Browser:</h3>
+            <p>Visit: <strong>whatismybrowser.com</strong></p>
+            <p>My browser: <span class="blank">_________________</span></p>
+            <p>Version: <span class="blank">_________________</span></p>
+            
+            <h3>Find Your IP:</h3>
+            <p>Visit: <strong>whatismyipaddress.com</strong></p>
+            <p>My IP address: <span class="blank">_________________</span></p>
+            <p>My ISP: <span class="blank">_________________</span></p>
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or insights from the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Key Vocabulary Section -->
+    <div class="section">
+        <h2>📚 Key Vocabulary to Remember</h2>
+        
+        <table>
+            <tr>
+                <th>Term</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td>Protocol</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>TCP/IP</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Port</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Bandwidth</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Latency</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Great job taking notes! 🌐</p>
+        <p>Remember: Understanding these concepts is fundamental to everything we'll build this semester!</p>
+        <p>Next class: Environment Setup and Git/GitHub</p>
+    </div>
+</body>
+</html>
