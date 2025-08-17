@@ -1,7 +1,7 @@
 class SimpleGistAuth {
     constructor() {
         // Master gist ID - this is PUBLIC so it's safe to have here
-        this.MASTER_GIST_ID = 'c35e670e87a6bb78eb2266cc6da98f6f';
+        this.MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
         
         // GitHub API base (for PUBLIC reads only)
         this.API_BASE = 'https://api.github.com/gists';
