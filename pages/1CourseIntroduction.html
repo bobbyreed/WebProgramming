@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Introduction to Web Programming - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
+    <style>
+        .ice-breaker-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .checklist-item {
+            background: var(--bg-accent);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--ocu-true-blue);
+        }
+        
+        .phase-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .odin-feature {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-accent);
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .countdown-timer {
+            font-size: 3em;
+            color: var(--ocu-true-blue);
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 1 - Introduction
+                 <button class="home"><a href="../index.html">Home</a></button>
+            </span>
+        </div>
+
+        <!-- Slide 1: Welcome -->
+        <div class="slide active">
+            <h1>Welcome to Web Programming!</h1>
+            <h2>CSCI 3403 <span class="emoji">🚀</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">Building the Web, One Line at a Time</p>
+            <p style="font-size: 1.3em;">Oklahoma City University</p>
+            <div class="tip-box" style="margin-top: 40px;">
+                <strong>Today's Mission:</strong> Build and deploy your first website in 30 minutes!
+            </div>
+        </div>
+
+        <!-- Slide 2: Today's Agenda -->
+        <div class="slide">
+            <h1>Today's Agenda</h1>
+            <h2>What We'll Accomplish <span class="emoji">📋</span></h2>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🏃 <strong>Ice Breaker:</strong> One-Page Website Exercise (30 min)</li>
+                <li>📚 <strong>Course Overview:</strong> The Odin Project</li>
+                <li>🛠️ <strong>Setup:</strong> Accounts & Tools</li>
+                <li>🎯 <strong>Foundations Course:</strong> Your Learning Path</li>
+                <li>📝 <strong>Homework:</strong> Thursday's Preparation</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Ice Breaker Introduction -->
+        <div class="slide">
+            <h1>Ice Breaker: Build Someone Else's Idea!</h1>
+            <h2>30-Minute Website Challenge <span class="emoji">⚡</span></h2>
+            <div class="ice-breaker-card">
+                <h3>The Twist:</h3>
+                <p style="font-size: 1.3em;">You won't build YOUR idea - you'll build your PARTNER'S!</p>
+            </div>
+            <div class="warning-box">
+                <strong>Rules:</strong>
+                <ul>
+                    <li>Write your topic on the whiteboard (get approval first!)</li>
+                    <li>Keep it SECRET - don't share with others</li>
+                    <li>Find a partner and swap whiteboards</li>
+                    <li>Build their idea, not yours!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Pre-Exercise Setup -->
+        <div class="slide">
+            <h1>Pre-Exercise Setup</h1>
+            <h2>Before We Start Coding <span class="emoji">📝</span></h2>
+            <div class="phase-card">
+                <h3>Step 1: Choose Your Topic</h3>
+                <ul>
+                    <li>Think of something fun and creative</li>
+                    <li>Write it on the whiteboard</li>
+                    <li>Get Professor Reed's approval</li>
+                    <li>Return to your seat</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <h3>Step 2: Find Your Partner</h3>
+                <ul>
+                    <li>Stand up with your whiteboard</li>
+                    <li>Find someone to swap with</li>
+                    <li>DON'T discuss the topics!</li>
+                    <li>You'll build THEIR idea</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: Phase 1 - Project Setup -->
+        <div class="slide">
+            <h1>Phase 1: Project Setup</h1>
+            <h2>Git & GitHub <span class="emoji">🔧</span></h2>
+            <div class="code-example">
+                mkdir partner-topic-site
+                cd partner-topic-site
+                git init
+            </div>
+            <div class="checklist-item">
+                <h3>✓ Create GitHub Repository</h3>
+                <p>Name it after your partner's topic</p>
+            </div>
+            <div class="code-example">
+                git remote add origin https://github.com/yourusername/repo-name.git
+            </div>
+            <div class="tip-box">
+                <strong>Helper:</strong> Use <code>touch index.html style.css script.js</code> to create all files at once!
+            </div>
+        </div>
+
+        <!-- Slide 6: Initial Files -->
+        <div class="slide">
+            <h1>Phase 1: Initial Files</h1>
+            <h2>Setting Up Your Project <span class="emoji">📁</span></h2>
+            <div class="checklist-item">
+                <h3>Create These Files:</h3>
+                <ul>
+                    <li>☐ index.html</li>
+                    <li>☐ style.css</li>
+                    <li>☐ script.js</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>HTML Boilerplate Shortcut!</h3>
+                <p>In VS Code, type <code>!</code> and hit Enter for instant HTML structure</p>
+            </div>
+            <div class="checklist-item">
+                <h3>Link Your Files:</h3>
+                <ul>
+                    <li>☐ Add CSS link in &lt;head&gt;</li>
+                    <li>☐ Add JS script before &lt;/body&gt;</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Phase 2 - Rapid Development -->
+        <div class="slide">
+            <h1>Phase 2: Rapid Development</h1>
+            <h2>HTML Structure Checklist <span class="emoji">⚡</span></h2>
+            <div class="phase-card">
+                <h3>Required Elements:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>☐ Meaningful &lt;title&gt; tag</li>
+                    <li>☐ Header with site name</li>
+                    <li>☐ At least 3 content sections</li>
+                    <li>☐ Navigation (even if single page)</li>
+                    <li>☐ Footer with your name</li>
+                </ul>
+            </div>
+            <div class="countdown-timer">
+                ⏱️ 15 Minutes!
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Perfect is the enemy of done! Ship something fun!
+            </div>
+        </div>
+
+        <!-- Slide 8: Phase 3 - Deploy to GitHub Pages -->
+        <div class="slide">
+            <h1>Phase 3: Deploy to GitHub Pages</h1>
+            <h2>Making It Live! <span class="emoji">🌐</span></h2>
+            <div class="code-example">
+                git add .
+                git commit -m "Initial site about [topic]"
+                git branch -M main
+                git push -u origin main
+            </div>
+            <div class="phase-card">
+                <h3>Enable GitHub Pages:</h3>
+                <ol>
+                    <li>Go to repo Settings → Pages</li>
+                    <li>Source: Deploy from branch</li>
+                    <li>Branch: main, folder: / (root)</li>
+                    <li>Save and wait 2-3 minutes</li>
+                </ol>
+            </div>
+            <div class="demo-box">
+                <p><strong>Your site:</strong> https://yourusername.github.io/repo-name</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Phase 4 - Custom Domain (Demo) -->
+        <div class="slide">
+            <h1>Phase 4: Custom Domain Setup</h1>
+            <h2>Professional URLs <span class="emoji">🌟</span></h2>
+            <div class="warning-box">
+                <strong>⚠️ MUST BE DONE WITH PROFESSOR REED</strong>
+            </div>
+            <div class="phase-card">
+                <h3>A Record Configuration:</h3>
+                <ol>
+                    <li>I'll provide the domain: [instructor-domain].com</li>
+                    <li>You pick your subdomain: yourname.[instructor-domain].com</li>
+                    <li>I'll show you how to add GitHub to your DNS</li>
+                </ol>
+            </div>
+            <div class="code-example">
+                A Records:
+                185.199.108.153
+                185.199.109.153
+                185.199.110.153
+                185.199.111.153
+            </div>
+        </div>
+
+        <!-- Slide 10: Timer Start -->
+        <div class="slide">
+            <h1>Ready, Set, CODE!</h1>
+            <h2>30-Minute Challenge Begins NOW! <span class="emoji">🏁</span></h2>
+            <div class="countdown-timer">
+                30:00
+            </div>
+            <div class="activity-box">
+                <h3>Need Help?</h3>
+                <ul>
+                    <li>🙋 Raise your hand for debugging</li>
+                    <li>🔍 Google is your friend for syntax</li>
+                    <li>🤖 AI is great for specific questions</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Focus:</strong> Get it live first, make it pretty later!
+            </div>
+        </div>
+
+        <!-- Slide 11: The Odin Project Introduction -->
+        <div class="slide">
+            <h1>The Odin Project</h1>
+            <h2>Your Learning Journey <span class="emoji">📚</span></h2>
+            <div class="visual-example">
+                <h3>What is The Odin Project?</h3>
+                <p style="font-size: 1.3em;">A free, open-source curriculum for learning web development</p>
+            </div>
+            <div class="odin-feature">
+                <span style="font-size: 2em;">🎯</span>
+                <div>
+                    <h4>Project-Based Learning</h4>
+                    <p>Build real projects, not just follow tutorials</p>
+                </div>
+            </div>
+            <div class="odin-feature">
+                <span style="font-size: 2em;">🌟</span>
+                <div>
+                    <h4>Industry-Relevant Skills</h4>
+                    <p>Learn what actual developers use daily</p>
+                </div>
+            </div>
+            <div class="odin-feature">
+                <span style="font-size: 2em;">👥</span>
+                <div>
+                    <h4>Active Community</h4>
+                    <p>Discord server with thousands of learners</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Course Structure -->
+        <div class="slide">
+            <h1>This Semester: Foundations Course</h1>
+            <h2>What We'll Master <span class="emoji">🎓</span></h2>
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>HTML</h3>
+                    <ul>
+                        <li>Semantic markup</li>
+                        <li>Forms & validation</li>
+                        <li>Accessibility</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>CSS</h3>
+                    <ul>
+                        <li>Flexbox & Grid</li>
+                        <li>Responsive design</li>
+                        <li>Animations</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>JavaScript</h3>
+                    <ul>
+                        <li>DOM manipulation</li>
+                        <li>Events & listeners</li>
+                        <li>Problem solving</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li>Git & GitHub</li>
+                        <li>Command line</li>
+                        <li>Developer tools</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Getting Started -->
+        <div class="slide">
+            <h1>Getting Started with Odin</h1>
+            <h2>Account Setup <span class="emoji">🚀</span></h2>
+            <div class="activity-box">
+                <h3>Step 1: Visit The Odin Project</h3>
+                <p style="font-size: 1.3em;">Go to <strong>theodinproject.com</strong></p>
+            </div>
+            <div class="activity-box">
+                <h3>Step 2: Create Your Account</h3>
+                <ul>
+                    <li>Sign up with GitHub (recommended)</li>
+                    <li>Or use email registration</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>Step 3: Start Foundations</h3>
+                <ul>
+                    <li>Navigate to Foundations Course</li>
+                    <li>Begin with Introduction section</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Learning Path -->
+        <div class="slide">
+            <h1>The Foundations Path</h1>
+            <h2>Your Roadmap <span class="emoji">🗺️</span></h2>
+            <div class="phase-card">
+                <h3>1. Introduction</h3>
+                <p>How the course works, mindset, asking for help</p>
+            </div>
+            <div class="phase-card">
+                <h3>2. Prerequisites</h3>
+                <p>Computer basics, web basics, installations</p>
+            </div>
+            <div class="phase-card">
+                <h3>3. Git Basics</h3>
+                <p>Version control fundamentals</p>
+            </div>
+            <div class="phase-card">
+                <h3>4. HTML & CSS</h3>
+                <p>Building and styling web pages</p>
+            </div>
+            <div class="phase-card">
+                <h3>5. JavaScript</h3>
+                <p>Making websites interactive</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Thursday's Homework -->
+        <div class="slide">
+            <h1>Thursday's Homework</h1>
+            <h2>Foundations Prep <span class="emoji">📝</span></h2>
+            <div class="warning-box">
+                <strong>Due: Before Thursday's Class</strong>
+            </div>
+            <div class="checklist-item">
+                <h3>Complete Introduction Section:</h3>
+                <ul>
+                    <li>☐ How This Course Will Work</li>
+                    <li>☐ Introduction to Web Development</li>
+                    <li>☐ Motivation and Mindset</li>
+                    <li>☐ Asking For Help</li>
+                    <li>☐ Join the Odin Community</li>
+                </ul>
+            </div>
+            <div class="checklist-item">
+                <h3>Setup Requirements:</h3>
+                <ul>
+                    <li>☐ Complete all Discord setup</li>
+                    <li>☐ Complete all GitHub setup</li>
+                    <li>☐ Install necessary tools</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 16: One-Page Website Homework -->
+        <div class="slide">
+            <h1>One-Page Website Follow-Up</h1>
+            <h2>Finish What You Started <span class="emoji">✨</span></h2>
+            <div class="activity-box">
+                <h3>For Thursday:</h3>
+                <ul>
+                    <li>Complete any unfinished tasks from today's exercise</li>
+                    <li>Add at least 3 more sections to your site</li>
+                    <li>Style it with CSS (colors, fonts, layout)</li>
+                    <li>Add some JavaScript interactivity</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Bonus Points:</strong> Make it responsive (mobile-friendly)!
+            </div>
+            <div class="demo-box">
+                <p><strong>Share your site:</strong> Post your GitHub Pages URL in Discord!</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Important Resources -->
+        <div class="slide">
+            <h1>Resources & Support</h1>
+            <h2>Where to Get Help <span class="emoji">🆘</span></h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>📚 Course Materials</h3>
+                    <ul>
+                        <li>theodinproject.com</li>
+                        <li>Course website</li>
+                        <li>GitHub repo</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>💬 Communication</h3>
+                    <ul>
+                        <li>Discord server</li>
+                        <li>Office hours</li>
+                        <li>Email support</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Struggling is part of learning. Don't give up!
+            </div>
+        </div>
+
+        <!-- Slide 18: Success Tips -->
+        <div class="slide">
+            <h1>Tips for Success</h1>
+            <h2>How to Excel in This Course <span class="emoji">🏆</span></h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>💻 <strong>Code Every Day:</strong> Even just 30 minutes</li>
+                <li>🤝 <strong>Help Others:</strong> Teaching solidifies learning</li>
+                <li>🔍 <strong>Read Error Messages:</strong> They're your friends</li>
+                <li>📖 <strong>Read Documentation:</strong> MDN is your bible</li>
+                <li>🏗️ <strong>Build Projects:</strong> Beyond assignments</li>
+                <li>❓ <strong>Ask Questions:</strong> No question is stupid</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Start assignments early. Web dev is about problem-solving, which takes time!
+            </div>
+        </div>
+
+        <!-- Slide 19: Wrap-Up -->
+        <div class="slide">
+            <h1>Today's Achievements</h1>
+            <h2>What You've Accomplished <span class="emoji">✅</span></h2>
+            <div class="demo-box">
+                <h3>You've Successfully:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>✅ Built and deployed a website in 30 minutes</li>
+                    <li>✅ Used Git and GitHub</li>
+                    <li>✅ Set up your Odin Project account</li>
+                    <li>✅ Learned the course structure</li>
+                    <li>✅ Received your first assignments</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>Before Thursday:</h3>
+                <p>Complete Odin Introduction + Enhance your website!</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Questions & Next Steps -->
+        <div class="slide">
+            <h1>Questions?</h1>
+            <h2>Let's Build Amazing Things! <span class="emoji">🚀</span></h2>
+            <div style="text-align: center; margin-top: 50px;">
+                <p style="font-size: 2em;">Ready to become a web developer?</p>
+                <p style="font-size: 1.5em; margin-top: 30px;">See you Thursday!</p>
+            </div>
+            <div class="tip-box" style="margin-top: 50px;">
+                <strong>Office Hours:</strong> [Your office hours here]<br>
+                <strong>Email:</strong> [Your email here]<br>
+                <strong>Discord:</strong> Join the class server!
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span id="slideNumber">1 / 20</span>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- JavaScript for slide navigation -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slideNumber').textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
+            if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+        });
+
+        // Timer functionality for the 30-minute challenge
+        let timerInterval;
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    display.textContent = "TIME'S UP!";
+                }
+            }, 1000);
+        }
+
+        // Start timer when on slide 10
+        function checkTimerSlide() {
+            if (currentSlide === 9) { // Slide 10 (0-indexed)
+                const display = document.querySelector('.countdown-timer');
+                if (display && !timerInterval) {
+                    startTimer(30 * 60, display);
+                }
+            }
+        }
+
+        // Check timer on each slide change
+        const originalShowSlide = showSlide;
+        showSlide = function(n) {
+            originalShowSlide(n);
+            checkTimerSlide();
+        };
+    </script>
+</body>
+</html>
