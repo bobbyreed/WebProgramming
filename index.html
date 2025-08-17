@@ -546,7 +546,7 @@
     <!--Auth-->
     <div id="auth-section" class="auth-container">
         <div class="auth-form">
-            <input type="text" id="student-id" placeholder="Student ID" />
+            <input type="text" id="student-id" placeholder="Name" />
             <input type="password" id="class-pin" placeholder="Class PIN" />
             <button onclick="handleLogin()">Login</button>
         </div>
@@ -737,7 +737,7 @@ async function handleLogin() {
     const pin = document.getElementById('class-pin').value;
     
     if (!studentId || !pin) {
-        alert('Please enter both Student ID and PIN');
+        alert('Please enter both your nmae and the class PIN');
         return;
     }
     
