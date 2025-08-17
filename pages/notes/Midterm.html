@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm Review - Guided Notes | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Midterm Review - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Week 8, Class 15</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Extra Credit Reminder:</strong> Add a README to your GitHub profile (Due before midterm)
+    </div>
+
+    <!-- HTML Section -->
+    <div class="section">
+        <h2>🏗️ HTML Foundations</h2>
+        
+        <h3>What is HTML?</h3>
+        <p>HTML stands for <span class="blank">_________________</span> Markup Language</p>
+        <p>It provides <span class="blank">_________________</span> and meaning to content</p>
+        <p>HTML is about <span class="blank">_________________</span> and semantics, NOT appearance!</p>
+        
+        <h3>Elements & Tags</h3>
+        <p>Most HTML elements have:</p>
+        <ul>
+            <li>An <span class="blank">_________________</span> tag</li>
+            <li>A <span class="blank">_________________</span> tag</li>
+        </ul>
+        
+        <p><strong>Void Elements</strong> (self-closing) - List 3 examples:</p>
+        <ol>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+        </ol>
+        
+        <h3>HTML Boilerplate Structure</h3>
+        <div class="code-block">
+&lt;!<span class="code-blank">_________</span> html&gt;
+&lt;html <span class="code-blank">_________</span>="en"&gt;
+&lt;head&gt;
+    &lt;meta <span class="code-blank">_________</span>="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;<span class="code-blank">_________</span>&gt;Page Title&lt;/<span class="code-blank">_________</span>&gt;
+&lt;/head&gt;
+&lt;<span class="code-blank">_________</span>&gt;
+    &lt;!-- Content goes here --&gt;
+&lt;/<span class="code-blank">_________</span>&gt;
+&lt;/html&gt;
+        </div>
+        
+        <div class="tip">
+            <strong>💡 Quick Tip:</strong> Type <span class="blank">_____</span> + Enter in VS Code for instant boilerplate!
+        </div>
+        
+        <h3>Common HTML Elements</h3>
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td>&lt;h1&gt; - &lt;h6&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;p&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;strong&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;em&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;ul&gt; and &lt;ol&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;a href=""&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>&lt;img src="" alt=""&gt;</td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Git/GitHub Section -->
+    <div class="section">
+        <h2>🐙 Git & GitHub</h2>
+        
+        <h3>Git vs GitHub</h3>
+        <table>
+            <tr>
+                <th>Git</th>
+                <th>GitHub</th>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span> control system</td>
+                <td>Web-based <span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Tracks changes <span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span> repositories</td>
+            </tr>
+            <tr>
+                <td>Command-line tool</td>
+                <td>Collaboration platform</td>
+            </tr>
+        </table>
+        
+        <h3>Essential Git Commands</h3>
+        <p>Complete the commands and their purposes:</p>
+        <ul>
+            <li><code>git <span class="blank">_________</span></code> - Initialize a new repository</li>
+            <li><code>git <span class="blank">_________</span> .</code> - Stage all changes</li>
+            <li><code>git <span class="blank">_________</span> -m "message"</code> - Save changes with message</li>
+            <li><code>git <span class="blank">_________</span></code> - Upload to remote repository</li>
+            <li><code>git <span class="blank">_________</span></code> - Download from remote repository</li>
+            <li><code>git <span class="blank">_________</span></code> - Check repository status</li>
+            <li><code>git <span class="blank">_________</span></code> - View commit history</li>
+        </ul>
+        
+        <h3>Git Workflow</h3>
+        <p>Number these in the correct order (1-4):</p>
+        <ul style="list-style: none;">
+            <li>___ Local Repository</li>
+            <li>___ Working Directory</li>
+            <li>___ Remote Repository (GitHub)</li>
+            <li>___ Staging Area</li>
+        </ul>
+        
+        <h3>Writing Good Commit Messages</h3>
+        <p>Good commit messages should:</p>
+        <ol>
+            <li>Use <span class="blank">_________________</span> mood (e.g., "Add" not "Added")</li>
+            <li>Be <span class="blank">_________________</span> characters or less for the subject</li>
+            <li>Explain <span class="blank">_________________</span> and <span class="blank">_________________</span>, not how</li>
+        </ol>
+        
+        <div class="practice-box">
+            <strong>Practice:</strong> Write a good commit message for adding a navigation menu:
+            <br><br>
+            <span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- CLI Section -->
+    <div class="section">
+        <h2>💻 Command Line Interface (CLI)</h2>
+        
+        <h3>Why Use the Terminal?</h3>
+        <ul>
+            <li>⚡ <span class="blank">_________________</span> than GUI for many tasks</li>
+            <li>🔧 More <span class="blank">_________________</span> and flexible</li>
+            <li>🤖 <span class="blank">_________________</span> capabilities</li>
+            <li>💼 Required for <span class="blank">_________________</span> development</li>
+        </ul>
+        
+        <h3>Essential CLI Commands</h3>
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Function</th>
+            </tr>
+            <tr>
+                <td>pwd</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>ls</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>cd folder</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>cd ..</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>mkdir name</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>touch file.txt</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>rm file</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- CSS Section -->
+    <div class="section">
+        <h2>🎨 CSS Foundations</h2>
+        
+        <h3>CSS Syntax</h3>
+        <div class="code-block">
+<span class="code-blank">_________</span> {
+    <span class="code-blank">_________</span>: <span class="code-blank">_________</span>;
+}
+        </div>
+        
+        <h3>Three Ways to Add CSS</h3>
+        <ol>
+            <li><strong>Inline:</strong> <span class="blank">_________________________</span> (avoid!)</li>
+            <li><strong>Internal:</strong> <span class="blank">_________________________</span> tags in head</li>
+            <li><strong>External:</strong> <span class="blank">_________________________</span> ✅ (BEST!)</li>
+        </ol>
+        
+        <h3>CSS Selectors</h3>
+        <p>Complete the selector syntax:</p>
+        <ul>
+            <li>Type selector: <span class="blank">_________</span> { }</li>
+            <li>Class selector: <span class="blank">_________</span>classname { }</li>
+            <li>ID selector: <span class="blank">_________</span>idname { }</li>
+        </ul>
+        
+        <h3>The Cascade - Three Main Factors</h3>
+        <ol>
+            <li><span class="blank">_________________</span> - How specific is the selector?</li>
+            <li><span class="blank">_________________</span> - Direct styles beat inherited</li>
+            <li><span class="blank">_________________</span> - Last rule wins (tie-breaker)</li>
+        </ol>
+        
+        <h3>Specificity Values</h3>
+        <p>Fill in the specificity values:</p>
+        <ul>
+            <li>Inline styles: <span class="blank">_________</span></li>
+            <li>ID selectors: <span class="blank">_________</span></li>
+            <li>Class selectors: <span class="blank">_________</span></li>
+            <li>Type selectors: <span class="blank">_________</span></li>
+        </ul>
+        
+        <div class="practice-box">
+            <strong>Calculate Specificity:</strong> #header .nav li a
+            <br><br>
+            IDs: ___ × 100 = ___
+            <br>
+            Classes: ___ × 10 = ___
+            <br>
+            Types: ___ × 1 = ___
+            <br>
+            <strong>Total:</strong> ___
+        </div>
+    </div>
+
+    <!-- Box Model Section -->
+    <div class="section">
+        <h2>📦 The Box Model</h2>
+        
+        <h3>Box Model Layers (Inside to Outside)</h3>
+        <ol>
+            <li><span class="blank">_________________</span> - The actual content</li>
+            <li><span class="blank">_________________</span> - Space inside the border</li>
+            <li><span class="blank">_________________</span> - The edge of the element</li>
+            <li><span class="blank">_________________</span> - Space outside the border</li>
+        </ol>
+        
+        <h3>Box-Sizing Property</h3>
+        <p>Always use: <code>* { box-sizing: <span class="blank">_________________</span>; }</code></p>
+        <p>This makes padding and border <span class="blank">_________________</span> in the element's total width</p>
+        
+        <h3>Margin vs Padding</h3>
+        <ul>
+            <li>Use <span class="blank">_________________</span> for space BETWEEN elements</li>
+            <li>Use <span class="blank">_________________</span> for space INSIDE elements</li>
+        </ul>
+        
+        <h3>Centering Elements</h3>
+        <p>To center a block element horizontally, use: <code>margin: <span class="blank">_________</span>;</code></p>
+        
+        <div class="tip">
+            <strong>Remember:</strong> Margins <span class="blank">_________________</span> vertically, padding doesn't!
+        </div>
+    </div>
+
+    <!-- Flexbox Section -->
+    <div class="section">
+        <h2>⚡ Flexbox</h2>
+        
+        <h3>Creating a Flex Container</h3>
+        <div class="code-block">
+.container {
+    display: <span class="code-blank">_________</span>;
+}
+        </div>
+        
+        <h3>Flexbox Container Properties</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Purpose</th>
+                <th>Common Values</th>
+            </tr>
+            <tr>
+                <td>flex-direction</td>
+                <td>Sets main axis direction</td>
+                <td><span class="blank">_________</span> | column</td>
+            </tr>
+            <tr>
+                <td>justify-content</td>
+                <td><span class="blank">_________</span> axis alignment</td>
+                <td>center | space-between | <span class="blank">_________</span></td>
+            </tr>
+            <tr>
+                <td>align-items</td>
+                <td><span class="blank">_________</span> axis alignment</td>
+                <td>center | flex-start | <span class="blank">_________</span></td>
+            </tr>
+        </table>
+        
+        <h3>Flexbox Item Properties</h3>
+        <ul>
+            <li><code>flex-grow</code>: <span class="blank">_________________</span> ratio</li>
+            <li><code>flex-shrink</code>: <span class="blank">_________________</span> ratio</li>
+            <li><code>flex-basis</code>: <span class="blank">_________________</span> size</li>
+        </ul>
+        
+        <p><strong>Shorthand:</strong> <code>flex: 1;</code> means grow: <span class="blank">___</span>, shrink: <span class="blank">___</span>, basis: <span class="blank">___</span></p>
+        
+        <h3>Common Flexbox Pattern - Center Everything</h3>
+        <div class="code-block">
+.center {
+    display: flex;
+    justify-content: <span class="code-blank">_________</span>;
+    align-items: <span class="code-blank">_________</span>;
+}
+        </div>
+    </div>
+
+    <!-- Study Tips Section -->
+    <div class="section">
+        <h2>📖 Study Tips & Common Mistakes</h2>
+        
+        <h3>Study Checklist</h3>
+        <ul>
+            <li>☐ Review all homework assignments</li>
+            <li>☐ Practice Git commands in terminal</li>
+            <li>☐ Build a simple webpage using all concepts</li>
+            <li>☐ Use DevTools to inspect CSS cascade</li>
+            <li>☐ Create flexbox layouts from scratch</li>
+            <li>☐ Write semantic HTML</li>
+            <li>☐ Practice CLI navigation</li>
+        </ul>
+        
+        <h3>Common Mistakes to Avoid</h3>
+        <table>
+            <tr>
+                <th>❌ Don't Do This</th>
+                <th>✅ Do This Instead</th>
+            </tr>
+            <tr>
+                <td>Forgetting closing tags</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Using spaces in file names</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Not committing frequently</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Using inline styles</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Ignoring semantic HTML</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section">
+        <h2>🤔 Practice Questions</h2>
+        <p>Answer these to test your understanding:</p>
+        
+        <ol>
+            <li>What's the difference between a class and an ID selector?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>How do you center an element horizontally with margin?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What does <code>git add .</code> do?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What's the difference between padding and margin?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>How do you make a flex container?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What's a void element? Give three examples.
+                <br><span class="long-blank">_________________________________________</span>
+                <br>Examples: _________, _________, _________
+            </li>
+            
+            <li>How does CSS specificity work?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What command creates a new directory?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the review:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Good luck on your midterm! You've got this! 🚀</p>
+        <p>Remember: Practice coding, don't just read about it!</p>
+    </div>
+</body>
+</html>

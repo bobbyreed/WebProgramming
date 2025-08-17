@@ -28,6 +28,103 @@
             --link-color: #0047AB;
             --link-hover: #002855;
         }
+        /* Authentication Container Styles with Theme Support */
+    .auth-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background: var(--card-bg, #ffffff);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 2px solid var(--border-color, #e0e0e0);
+    }
+    
+    [data-theme="dark"] .auth-container {
+        background: var(--card-bg, #1a1a1a);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-color: var(--border-color, #333);
+    }
+    
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 300px;
+    }
+    
+    .auth-form input {
+        padding: 12px 15px;
+        border: 1px solid var(--border-color, #ddd);
+        border-radius: 8px;
+        font-size: 16px;
+        background: var(--input-bg, #fff);
+        color: var(--text-primary, #333);
+    }
+    
+    [data-theme="dark"] .auth-form input {
+        background: var(--input-bg, #2a2a2a);
+        color: var(--text-primary, #f0f0f0);
+        border-color: var(--border-color, #444);
+    }
+    
+    .auth-form input::placeholder {
+        color: var(--text-secondary, #999);
+    }
+    
+    .auth-form button {
+        padding: 12px 20px;
+        background: var(--ocu-true-blue);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .auth-form button:hover {
+        background: var(--ocu-dark-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    #user-info {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        background: var(--card-bg, #fff);
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px var(--shadow, rgba(0, 0, 0, 0.1));
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: var(--text-primary, #333);
+    }
+    
+    [data-theme="dark"] #user-info {
+        background: var(--card-bg, #1a1a1a);
+        color: var(--text-primary, #f0f0f0);
+    }
+    
+    #user-info button {
+        padding: 5px 10px;
+        background: var(--ocu-red, #dc2626);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    
+    #user-info button:hover {
+        background: #b91c1c;
+    }
         
         [data-theme="dark"] {
             --bg-primary: #1a1a2e;
@@ -637,7 +734,87 @@
         }
 
         // Authentication script
-       async function handleLogin() {
+        async function handleLogin() {
+                const studentId = document.getElementById('student-id').value;
+                const pin = document.getElementById('class-pin').value;
+                
+                if (!studentId || !pin) {
+                    alert('Please enter both Student ID and PIN');
+                    return;
+                }
+                
+                // Use the auth.js authentication system
+                if (typeof auth !== 'undefined' && auth) {
+                    const success = await auth.authenticate(studentId, pin);
+                    if (success) {
+                        // Hide the auth section immediately after successful login
+                        document.getElementById('auth-section').style.display = 'none';
+                        
+                        // Ensure the user info is displayed
+                        const userInfo = document.getElementById('user-info');
+                        if (userInfo) {
+                            userInfo.style.display = 'flex';
+                        }
+                        
+                        // Show welcome message
+                        alert('Welcome to CSCI 3403!');
+                        
+                        // Optional: Refresh the page to ensure everything is loaded
+                        // location.reload();
+                    }
+                } else {
+                    alert('Authentication system not loaded. Please refresh the page.');
+                }
+            }
+          // Fix theme toggle to use consistent key
+    window.addEventListener('DOMContentLoaded', () => {
+        const authData = localStorage.getItem('csci3403_auth');
+        if (authData) {
+            const auth = JSON.parse(authData);
+            if (auth.authenticated) {
+                document.getElementById('auth-section').style.display = 'none';
+                const userInfo = document.getElementById('user-info');
+                if (userInfo) {
+                    userInfo.style.display = 'flex';
+                }
+            }
+        }
+        
+        // Initialize carousel
+        renderLectures();
+        updateNavigationButtons();
+        updateIndicators();
+        
+        // Jump to current week on load
+        const today = new Date();
+        for (let i = 0; i < lectures.length; i++) {
+            const lecDate = new Date(lectures[i].date);
+            if (lecDate > today) {
+                const targetPage = Math.floor(Math.max(0, i - 2) / lecturesPerPage);
+                goToPage(targetPage);
+                break;
+            }
+        }
+        
+        // Theme toggle functionality - FIXED to use 'ocuTheme' consistently
+        const themeToggle = document.getElementById('theme-checkbox');
+        const currentTheme = localStorage.getItem('ocuTheme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+        
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('ocuTheme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('ocuTheme', 'light');
+            }
+        });
+    });  
             const studentId = document.getElementById('student-id').value;
             const pin = document.getElementById('class-pin').value;
             
@@ -657,7 +834,7 @@
             } else {
                 alert('Authentication system not loaded. Please refresh the page.');
             }
-        }
+        
 
         // Check authentication on load
         window.addEventListener('DOMContentLoaded', () => {

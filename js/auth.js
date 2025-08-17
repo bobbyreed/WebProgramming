@@ -97,6 +97,9 @@ class SimpleGistAuth {
             localStorage.setItem('csci3403_auth', JSON.stringify(authData));
             this.currentStudent = authData;
             
+            // IMPORTANT: Update UI immediately after storing auth
+            this.updateUIForAuthenticated();
+            
             // Check if student has a gist, create if not
             if (!config.students || !config.students[studentId]) {
                 console.log('New student! Creating gist...');
@@ -660,27 +663,30 @@ showAchievementNotification(achievementName, points) {
     }
     
     updateUIForAuthenticated() {
-        // Hide login form
-        const loginEl = document.getElementById('auth-section');
-        if (loginEl) loginEl.style.display = 'none';
-        
-        // Show user info
-        const userEl = document.getElementById('user-info');
-        if (userEl) {
-            userEl.style.display = 'block';
-            userEl.innerHTML = `
-                <span>Student: ${this.currentStudent.studentId}</span>
-                <span id="points-display" style="
-                    background: var(--ocu-green);
-                    color: white;
-                    padding: 5px 10px;
-                    border-radius: 15px;
-                    font-weight: bold;
-                ">Loading...</span>
-                <button onclick="auth.logout()">Logout</button>
-            `;
-        }
-    }
+            // Hide login form
+            const loginEl = document.getElementById('auth-section');
+            if (loginEl) {
+                loginEl.style.display = 'none';
+            }
+            
+            // Show user info
+            const userEl = document.getElementById('user-info');
+            if (userEl) {
+                userEl.style.display = 'flex'; // Changed from 'block' to 'flex' to match CSS
+                userEl.innerHTML = `
+                    <span>Student: ${this.currentStudent.studentId}</span>
+                    <span id="points-display" style="
+                        background: var(--ocu-green, #10b981);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 15px;
+                        font-weight: bold;
+                    ">Loading...</span>
+                    <button onclick="auth.logout()">Logout</button>
+                `;
+            }
+}
+
     
     updatePointsDisplay(points) {
         const pointsEl = document.getElementById('points-display');
