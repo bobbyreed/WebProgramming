@@ -34,7 +34,7 @@ class SimpleGistAuth {
         }
     
     checkAuthStatus() {
-        const authData = localStorage.getItem('csci5603_auth');
+        const authData = localStorage.getItem('csci3403_auth');
         if (window.location.pathname.includes('pages/') && window.location.pathname.includes('.html')) {
         // We're on a lecture page, initialize enhanced tracking
         setTimeout(() => {
@@ -76,11 +76,11 @@ class SimpleGistAuth {
             
             const gist = await response.json();
             
-            if (!gist.files || !gist.files['csci5603-DBDesign.json']) {
+            if (!gist.files || !gist.files['csci3403-config.json']) {
                 throw new Error('Config file not found in gist');
             }
             
-            const config = JSON.parse(gist.files['csci5603-DBDesign.json'].content);
+            const config = JSON.parse(gist.files['csci3403-config.json'].content);
             
             // Verify PIN
             if (config.classPin !== pin) {
@@ -94,7 +94,7 @@ class SimpleGistAuth {
                 timestamp: new Date().toISOString()
             };
             
-            localStorage.setItem('csci5603_auth', JSON.stringify(authData));
+            localStorage.setItem('csci3403_auth', JSON.stringify(authData));
             this.currentStudent = authData;
             
             // IMPORTANT: Update UI immediately after storing auth
@@ -202,7 +202,7 @@ class SimpleGistAuth {
             }
             
             const masterGist = await masterResponse.json();
-            const config = JSON.parse(masterGist.files['csci5603-DBDesign.json'].content);
+            const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
             
             const gistId = config.students[studentId];
             if (!gistId) {
@@ -696,7 +696,7 @@ showAchievementNotification(achievementName, points) {
     }
     
     logout() {
-        localStorage.removeItem('csci5603_auth');
+        localStorage.removeItem('csci3403_auth');
         localStorage.removeItem(`student_${this.currentStudent.studentId}`);
         location.reload();
     }
