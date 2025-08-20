@@ -631,186 +631,162 @@
         ];
 
         // Carousel variables
-const lecturesPerPage = 4;
 let currentPage = 0;
+    const lecturesPerPage = 4;
 
-// Carousel functions
-function goToPage(page) {
-    currentPage = page;
-    renderLectures();
-    updateNavigationButtons();
-    updateIndicators();
-}
-
-function nextPage() {
-    if (currentPage < Math.ceil(lectures.length / lecturesPerPage) - 1) {
-        goToPage(currentPage + 1);
+    // Function to check if lecture should be available
+    function isLectureAvailable(lectureDate) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        const lecDate = new Date(lectureDate);
+        lecDate.setHours(0, 0, 0, 0);
+        
+        return today >= lecDate;
     }
-}
 
-function prevPage() {
-    if (currentPage > 0) {
-        goToPage(currentPage - 1);
+    // Function to format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { weekday: 'short', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
     }
-}
 
-function updateNavigationButtons() {
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    if (prevBtn) {
+    // IMPORTANT: Define navigateCarousel in the global scope
+    window.navigateCarousel = function(direction) {
+        const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+        currentPage += direction;
+        
+        if (currentPage < 0) currentPage = 0;
+        if (currentPage >= totalPages) currentPage = totalPages - 1;
+        
+        renderLectures();
+        updateNavigationButtons();
+        updateIndicators();
+    }
+
+    // Function to go to specific page
+    function goToPage(page) {
+        currentPage = page;
+        renderLectures();
+        updateNavigationButtons();
+        updateIndicators();
+    }
+
+    // Function to update navigation buttons
+    function updateNavigationButtons() {
+        const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
         prevBtn.disabled = currentPage === 0;
+        nextBtn.disabled = currentPage === totalPages - 1;
     }
-    
-    if (nextBtn) {
-        nextBtn.disabled = currentPage >= Math.ceil(lectures.length / lecturesPerPage) - 1;
-    }
-}
 
-function isLectureAvailable(date) {
-    const lectureDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    lectureDate.setHours(0, 0, 0, 0);
-    return lectureDate <= today;
-}
-
-function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    const options = { weekday: 'short', month: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-}
-
-function updateIndicators() {
-    const indicatorsContainer = document.getElementById('indicators');
-    if (!indicatorsContainer) return;
-    
-    indicatorsContainer.innerHTML = '';
-    const totalPages = Math.ceil(lectures.length / lecturesPerPage);
-    
-    for (let i = 0; i < totalPages; i++) {
-        const indicator = document.createElement('div');
-        indicator.className = `indicator ${i === currentPage ? 'active' : ''}`;
-        indicator.onclick = () => goToPage(i);
-        indicatorsContainer.appendChild(indicator);
-    }
-}
-
-function renderLectures() {
-    const container = document.getElementById('lectures-container');
-    container.innerHTML = '';
-    
-    const startIndex = currentPage * lecturesPerPage;
-    const endIndex = Math.min(startIndex + lecturesPerPage, lectures.length);
-    
-    for (let i = startIndex; i < endIndex; i++) {
-        const lecture = lectures[i];
-        const isAvailable = isLectureAvailable(lecture.date);
-        const card = document.createElement('div');
-        card.className = `lecture-card ${!isAvailable ? 'locked' : ''}`;
+    // Function to update indicators
+    function updateIndicators() {
+        const totalPages = Math.ceil(lectures.length / lecturesPerPage);
+        const indicatorsContainer = document.getElementById('indicators');
+        indicatorsContainer.innerHTML = '';
         
-        let statusBadge = '';
-        if (!isAvailable) {
-            statusBadge = '<span class="status-badge status-locked">Locked</span>';
-        } else if (lecture.status === 'ready') {
-            statusBadge = '<span class="status-badge status-ready">Available</span>';
+        for (let i = 0; i < totalPages; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = `indicator ${i === currentPage ? 'active' : ''}`;
+            indicator.onclick = () => goToPage(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+    }
+
+    // Function to render lectures
+    function renderLectures() {
+        const container = document.getElementById('lectures-container');
+        const start = currentPage * lecturesPerPage;
+        const end = start + lecturesPerPage;
+        const visibleLectures = lectures.slice(start, end);
+        
+        container.innerHTML = '';
+        
+        visibleLectures.forEach(lecture => {
+            const isAvailable = isLectureAvailable(lecture.date);
+            const card = document.createElement('div');
+            card.className = `lecture-card ${!isAvailable ? 'locked' : ''}`;
+            
+            card.innerHTML = `
+                <div class="lecture-number">Lecture ${lecture.number}</div>
+                <div class="lecture-date">${formatDate(lecture.date)}</div>
+                <h3>${lecture.title}</h3>
+                <p>${lecture.description}</p>
+                ${isAvailable 
+                    ? `<a href="${lecture.href}" class="lecture-link">View Lecture →</a>`
+                    : '<div class="coming-soon">Coming Soon</div>'
+                }
+            `;
+            
+            container.appendChild(card);
+        });
+    }
+
+    // Authentication function
+    function authenticate() {
+        const password = document.getElementById('password').value;
+        if (window.authCheck) {
+            if (window.authCheck(password)) {
+                renderLectures();
+                updateNavigationButtons();
+                updateIndicators();
+                console.log('Authentication successful');
+            }
+            // If failed, auth.js will show appropriate error message
         } else {
-            statusBadge = '<span class="status-badge status-coming">Coming Soon</span>';
+            alert('Authentication system not loaded. Please refresh the page.');
         }
-        
-        card.innerHTML = `
-            <span class="lecture-number">Lecture ${lecture.number}</span>
-            <span class="lecture-date">${formatDate(lecture.date)}</span>
-            <h3>${lecture.title}</h3>
-            <p style="flex: 1; overflow: hidden; text-overflow: ellipsis;">${lecture.description}</p>
-            ${isAvailable ? `<a href="${lecture.href}">View Lecture</a>` : '<a href="#">Locked Until ' + formatDate(lecture.date) + '</a>'}
-            ${statusBadge}
-        `;
-        
-        container.appendChild(card);
     }
-}
 
-// Authentication function - PROPERLY DEFINED
-async function handleLogin() {
-    const studentId = document.getElementById('student-id').value;
-    const pin = document.getElementById('class-pin').value;
-    
-    if (!studentId || !pin) {
-        alert('Please enter both your nmae and the class PIN');
-        return;
-    }
-    
-    // Use the auth.js authentication system
-    if (typeof auth !== 'undefined' && auth) {
-        const success = await auth.authenticate(studentId, pin);
-        if (success) {
-            // Hide the auth section immediately after successful login
-            document.getElementById('auth-section').style.display = 'none';
-            
-            // Ensure the user info is displayed
-            const userInfo = document.getElementById('user-info');
-            if (userInfo) {
-                userInfo.style.display = 'flex';
-            }
-            
-            // Show welcome message
-            alert('Welcome to CSCI 3403!');
-        }
-    } else {
-        alert('Authentication system not loaded. Please refresh the page.');
-    }
-}
-
-// Check authentication on load
-window.addEventListener('DOMContentLoaded', () => {
-    const authData = localStorage.getItem('csci3403_auth');
-    if (authData) {
-        const auth = JSON.parse(authData);
-        if (auth.authenticated) {
-            document.getElementById('auth-section').style.display = 'none';
-            const userInfo = document.getElementById('user-info');
-            if (userInfo) {
-                userInfo.style.display = 'flex';
+    // Check authentication on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const authData = localStorage.getItem('csci3403_auth');
+        if (authData) {
+            const auth = JSON.parse(authData);
+            if (auth.authenticated) {
+                document.getElementById('auth-section').style.display = 'none';
             }
         }
-    }
-    
-    // Initialize carousel
-    renderLectures();
-    updateNavigationButtons();
-    updateIndicators();
-    
-    // Jump to current week on load
-    const today = new Date();
-    for (let i = 0; i < lectures.length; i++) {
-        const lecDate = new Date(lectures[i].date);
-        if (lecDate > today) {
-            const targetPage = Math.floor(Math.max(0, i - 2) / lecturesPerPage);
-            goToPage(targetPage);
-            break;
+        
+        // Initialize carousel
+        renderLectures();
+        updateNavigationButtons();
+        updateIndicators();
+        
+        // Jump to current week on load
+        const today = new Date();
+        for (let i = 0; i < lectures.length; i++) {
+            const lecDate = new Date(lectures[i].date);
+            if (lecDate > today) {
+                const targetPage = Math.floor(Math.max(0, i - 2) / lecturesPerPage);
+                goToPage(targetPage);
+                break;
+            }
         }
-    }
-    
-    // Theme toggle functionality - using 'ocuTheme' consistently
-    const themeToggle = document.getElementById('theme-checkbox');
-    const currentTheme = localStorage.getItem('ocuTheme') || 'light';
-    
-    if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.checked = true;
-    }
-    
-    themeToggle.addEventListener('change', () => {
-        if (themeToggle.checked) {
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('ocuTheme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('ocuTheme', 'light');
+            themeToggle.checked = true;
         }
+        
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
     });
-});
     </script>
     <script src="./js/auth.js"></script>
 </body>
