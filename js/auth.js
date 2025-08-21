@@ -264,55 +264,26 @@ class SimpleGistAuth {
         }
     }
     
-    async updateStudentData(updates) {
-        if (!this.currentStudent || !this.studentGistId) {
-            console.error('No student data to update');
-            return false;
+    async updateStudentData(data) {
+        const response = await fetch(this.FUNCTION_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'updateStudent',
+                studentId: this.currentStudent.studentId,
+                updateData: data
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Update local state
+            localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(data));
+            // Don't need gist IDs, server handles everything
         }
         
-        // Merge updates with current data
-        const studentData = { ...this.currentProgress, ...updates };
-        studentData.lastActive = new Date().toISOString();
-        
-        try {
-            // UPDATE through Netlify function (secure!)
-            const response = await fetch(this.FUNCTION_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'updateStudent',
-                    studentId: this.currentStudent.studentId,
-                    gistId: this.studentGistId,
-                    updateData: studentData
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to update gist');
-            }
-            
-            // Update local storage
-            localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(studentData));
-            this.currentProgress = studentData;
-            
-            // Update UI
-            this.updatePointsDisplay(studentData.points);
-            
-            console.log('Student data updated successfully');
-            return true;
-            
-        } catch (error) {
-            console.error('Error updating gist:', error);
-            
-            // Still update locally even if server fails
-            localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(studentData));
-            this.currentProgress = studentData;
-            this.updatePointsDisplay(studentData.points);
-            
-            return false;
-        }
+        return result.success;
     }
     
     async updateMasterConfig(studentId, gistId) {
