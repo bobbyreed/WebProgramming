@@ -1,5 +1,4 @@
 # Web Programming Course Website
-## CSCI 3403 - Oklahoma City University
 
 A comprehensive web-based course platform for undergraduate Web Programming, focusing on vanilla HTML, CSS, JavaScript, and modern web technologies.
 
@@ -7,12 +6,12 @@ A comprehensive web-based course platform for undergraduate Web Programming, foc
 
 ## 📚 Overview
 
-This repository contains the complete course website for CSCI 3403 Web Programming at Oklahoma City University. The site serves as both a teaching platform and a demonstration of web development best practices, built entirely with vanilla technologies to help students understand core web fundamentals.
+This repository contains the complete course website for a web programming course. The site serves as both a teaching platform and a demonstration of web development best practices, built entirely with vanilla technologies to help students understand core web fundamentals.
 
 ## ✨ Features
 
 ### Course Content
-- **32 Interactive Lecture Slides**: Comprehensive presentations covering the full web development stack
+- **31 Interactive Lecture Slideshows**: Comprehensive presentations covering the full web development stack
 - **Progressive Learning Path**: From HTML basics to advanced JavaScript concepts
 - **Hands-on Examples**: Live code demonstrations embedded within lectures
 - **The Odin Project Integration**: Assignments aligned with industry-standard curriculum
