@@ -173,7 +173,7 @@
     height: 4px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0 0 8px 8px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .lecture-progress-bar {
