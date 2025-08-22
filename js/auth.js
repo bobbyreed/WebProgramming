@@ -12,6 +12,92 @@ class SimpleGistAuth {
         // Check if already authenticated
         this.checkAuthStatus();
     }
+    async authenticate(studentId, pin) {
+        console.log('🔵 Starting authentication for:', studentId);
+        
+        try {
+            // Step 1: Fetch master config
+            console.log('🔵 Step 1: Fetching master gist...');
+            const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
+            console.log('🔵 Master gist response status:', response.status);
+            
+            if (!response.ok) {
+                console.error('❌ Failed to fetch master gist:', response.status);
+                throw new Error(`Failed to fetch config: ${response.status}`);
+            }
+            
+            const gist = await response.json();
+            console.log('🔵 Step 2: Got gist data, has files?', !!gist.files);
+            
+            if (!gist.files || !gist.files['csci3403-config.json']) {
+                console.error('❌ Config file not found in gist');
+                console.log('Available files:', Object.keys(gist.files || {}));
+                throw new Error('Config file not found in gist');
+            }
+            
+            const config = JSON.parse(gist.files['csci3403-config.json'].content);
+            console.log('🔵 Step 3: Config parsed successfully');
+            console.log('Config has classPin?', !!config.classPin);
+            console.log('Config has students?', !!config.students);
+            if (config.students) {
+                console.log('Existing students:', Object.keys(config.students));
+            }
+            
+            // Verify PIN
+            console.log('🔵 Step 4: Checking PIN...');
+            console.log('Expected PIN (first 2 chars):', config.classPin?.substring(0, 2) + '***');
+            console.log('Provided PIN (first 2 chars):', pin?.substring(0, 2) + '***');
+            
+            if (config.classPin !== pin) {
+                console.error('❌ Invalid PIN');
+                throw new Error('Invalid PIN');
+            }
+            
+            console.log('✅ PIN verified!');
+            
+            // Store authentication
+            const authData = {
+                studentId: studentId,
+                authenticated: true,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('csci3403_auth', JSON.stringify(authData));
+            this.currentStudent = authData;
+            console.log('🔵 Step 5: Auth data stored');
+            
+            // Update UI
+            this.updateUIForAuthenticated();
+            console.log('🔵 Step 6: UI updated');
+            
+            // Check if student exists
+            if (!config.students || !config.students[studentId]) {
+                console.log('🔵 Step 7: NEW STUDENT - Will call createStudentGist');
+                console.log('About to call Netlify function at:', this.FUNCTION_URL);
+                await this.createStudentGist(studentId);
+            } else {
+                console.log('🔵 Step 7: EXISTING STUDENT - Will call loadStudentGist');
+                console.log('Student gist ID:', config.students[studentId]);
+                this.studentGistId = config.students[studentId];
+                await this.loadStudentGist(studentId);
+            }
+            
+            console.log('✅ Authentication complete!');
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Authentication failed:', error.message);
+            console.error('Full error:', error);
+            
+            if (error.message === 'Invalid PIN') {
+                alert('Invalid PIN. Please try again.');
+            } else {
+                alert('Authentication error: ' + error.message);
+            }
+            
+            return false;
+        }
+    }
 
     // Helper method to get lecture number from current page
     getLectureNumberFromPage() {
