@@ -200,48 +200,51 @@ class SimpleGistAuth {
     }
     
     async createStudentGist(studentId) {
-        const studentData = {
-            studentId: studentId,
-            name: studentId,
-            joinedDate: new Date().toISOString(),
-            lastActive: new Date().toISOString(),
-            points: 10, // Welcome bonus!
-            viewedLectures: {},
-            achievements: ['🆕'],
-            streak: 1,
-            activities: [
-                {
-                    type: 'joined_class',
-                    points: 10,
-                    timestamp: new Date().toISOString(),
-                    description: 'Welcome to CSCI 3403!'
-                }
-            ]
-        };
-        
-        try {
-            // CREATE gist through Netlify function (secure!)
-            const response = await fetch(this.FUNCTION_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'createGist',
-                    studentId: studentId,
-                    updateData: studentData
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to create gist');
+    const studentData = {
+        studentId: studentId,
+        name: studentId,
+        joinedDate: new Date().toISOString(),
+        lastActive: new Date().toISOString(),
+        points: 10, // Welcome bonus!
+        viewedLectures: {},
+        achievements: ['🆕'],
+        streak: 1,
+        activities: [
+            {
+                type: 'joined_class',
+                points: 10,
+                timestamp: new Date().toISOString(),
+                description: 'Welcome to CSCI 3403!'
             }
+        ]
+    };
+    
+    try {
+        // CREATE gist through Netlify function (secure!)
+        const response = await fetch(this.FUNCTION_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'createGist',
+                studentId: studentId,
+                updateData: studentData,
+                masterGistId: this.MASTER_GIST_ID  
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to create gist');
+        }
+        
+        const result = await response.json();
+        
+        if (result.success && result.gistId) {
+            this.studentGistId = result.gistId;
             
-            const newGist = await response.json();
-            this.studentGistId = newGist.id;
-            
-            // Update master config with new student
-            await this.updateMasterConfig(studentId, newGist.id);
+            // Note: Master config is now updated automatically by the Netlify function
+            // during the createGist action, so don'tcall updateMasterConfig
             
             // Store locally
             localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
@@ -252,19 +255,22 @@ class SimpleGistAuth {
             
             // Show welcome message
             this.showPointsNotification(10, 'Welcome to CSCI 3403!');
-            
-            return studentData;
-            
-        } catch (error) {
-            console.error('Error creating student gist:', error);
-            
-            // Fallback to local storage only
-            localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
-            this.currentProgress = studentData;
-            alert('Created local profile. Contact instructor if issues persist.');
-            return studentData;
+        } else {
+            throw new Error('Failed to get gist ID from server');
         }
+        
+        return studentData;
+        
+    } catch (error) {
+        console.error('Error creating student gist:', error);
+        
+        // Fallback to local storage only
+        localStorage.setItem(`student_${studentId}`, JSON.stringify(studentData));
+        this.currentProgress = studentData;
+        alert('Created local profile. Contact instructor if issues persist.');
+        return studentData;
     }
+}
     
     async loadStudentGist(studentId) {
         try {
@@ -286,7 +292,7 @@ class SimpleGistAuth {
             
             this.studentGistId = gistId;
             
-            // READ student gist (public read, no token needed)
+            // 2 READ student gist (public read, no token needed)
             const response = await fetch(`${this.API_BASE}/${gistId}`);
             
             if (!response.ok) {
@@ -296,7 +302,7 @@ class SimpleGistAuth {
             const gist = await response.json();
             const studentData = JSON.parse(gist.files['student-data.json'].content);
             
-            // Calculate streak
+            // Three Calculate streak
             const now = new Date();
             const lastActive = new Date(studentData.lastActive);
             const hoursSinceActive = (now - lastActive) / (1000 * 60 * 60);
@@ -377,29 +383,54 @@ class SimpleGistAuth {
       });
         }
 
-// Use it like: testAuth('testuser', 'YOUR_PIN_HERE')
+
     
-    async updateStudentData(data) {
+    async updateStudentData(studentData) {
+    try {
         const response = await fetch(this.FUNCTION_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 action: 'updateStudent',
                 studentId: this.currentStudent.studentId,
-                updateData: data
+                gistId: this.studentGistId,  // Make sure to include gistId
+                updateData: studentData
             })
         });
+        
+        if (!response.ok) {
+            throw new Error('Failed to update gist');
+        }
         
         const result = await response.json();
         
         if (result.success) {
-            // Update local state
-            localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(data));
-            // Don't need gist IDs, server handles everything
+            // Update local storage
+            localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(studentData));
+            this.currentProgress = studentData;
+            
+            // Update UI
+            this.updatePointsDisplay(studentData.points);
+            
+            console.log('Student data updated successfully');
+            return true;
         }
         
-        return result.success;
+        return false;
+        
+    } catch (error) {
+        console.error('Error updating gist:', error);
+        
+        // Still update locally even if server fails
+        localStorage.setItem(`student_${this.currentStudent.studentId}`, JSON.stringify(studentData));
+        this.currentProgress = studentData;
+        this.updatePointsDisplay(studentData.points);
+        
+        return false;
     }
+}
     
     async updateMasterConfig(studentId, gistId) {
         try {
