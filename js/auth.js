@@ -792,6 +792,7 @@ showAchievementNotification(achievementName, points) {
 let auth;
 document.addEventListener('DOMContentLoaded', () => {
     auth = new SimpleGistAuth();
+    window.authManager = auth;
 });
 
 console.log('Auth.js loaded successfully - Netlify secure version');
