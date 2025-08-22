@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE - Class 7: Writing Good Commits & Recipe Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.5in;
+            background: white;
+        }
+        
+        .header {
+            border: 3px solid #000;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            page-break-after: avoid;
+        }
+        
+        .header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+        
+        .timing-box {
+            background: #f0f0f0;
+            border: 2px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .slide-section {
+            border: 1px solid #666;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .slide-header {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: yellow;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        .answer-key {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-box {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .talking-points {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .warning {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            margin: 20px 0 10px 0;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            margin: 15px 0 10px 0;
+            font-weight: bold;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        code {
+            background: #f0f0f0;
+            padding: 2px 4px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ccc;
+        }
+        
+        .code-block {
+            background: #f0f0f0;
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+            
+            .slide-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE</h1>
+        <h2>Class 7: Writing Good Commits & Recipe Project</h2>
+        <p>CSCI 4513 - Web Programming | Week 4</p>
+        <p><strong>Total Time: 45-50 minutes</strong></p>
+    </div>
+
+    <div class="timing-box">
+        <h3>⏰ CLASS TIMING BREAKDOWN</h3>
+        <ul>
+            <li><strong>0:00-0:02</strong> - Welcome & Agenda (Slides 1-2)</li>
+            <li><strong>0:02-0:20</strong> - Git Commits Lesson (Slides 3-10)</li>
+            <li><strong>0:20-0:25</strong> - Recipe Project Overview (Slides 11-13)</li>
+            <li><strong>0:25-0:30</strong> - Live Demo Setup (Slides 14-17)</li>
+            <li><strong>0:30-0:50</strong> - Work Session (Slides 18-19)</li>
+            <li><strong>0:50-0:55</strong> - Wrap-up & Submission (Slides 20-24)</li>
+        </ul>
+    </div>
+
+    <div class="warning">
+        <p>⚠️ CRITICAL REMINDERS:</p>
+        <ul>
+            <li>Have VS Code and terminal ready for live demo</li>
+            <li>Create a sample GitHub repository beforehand as backup</li>
+            <li>Recipe Project is due TOMORROW evening!</li>
+            <li>Students should have guided notes ready</li>
+        </ul>
+    </div>
+
+    <h2>PART 1: WRITING GOOD COMMITS (Slides 1-10)</h2>
+
+    <!-- Slide 1-2 -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 1-2: Introduction & Agenda (2 min)</div>
+        <div class="talking-points">
+            <strong>Quick Start:</strong>
+            <ul>
+                <li>Welcome students, ensure they have guided notes</li>
+                <li>Emphasize Recipe Project due tomorrow</li>
+                <li>Today is hands-on - they'll leave with progress on project</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 3: Why Commit Messages Matter (3 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES ANSWERS - Students fill in 3 reasons:</strong>
+            <ol>
+                <li><span class="emphasis">Job Applications - Employers look at GitHub</span></li>
+                <li><span class="emphasis">Team Collaboration/Bug Tracking</span></li>
+                <li><span class="emphasis">Future reference (6 months later)</span></li>
+            </ol>
+        </div>
+        <div class="talking-points">
+            <strong>Key Points to Emphasize:</strong>
+            <ul>
+                <li>Tell story about reviewing candidate's GitHub with commits like "asdfasdf"</li>
+                <li>This is the EASIEST way to stand out as a junior developer</li>
+                <li><span class="emphasis">STRESS: "commit history"</span> for notes blank</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 4: Bad Commit Examples (2 min)</div>
+        <div class="talking-points">
+            <strong>Read each bad example out loud with dramatic effect!</strong>
+            <ul>
+                <li>Ask: "What's wrong with 'fix bug'?" - Wait for responses</li>
+                <li>Point out: No context, no why, unprofessional</li>
+                <li>Mention: These are REAL examples from student projects</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 5: Anatomy of Good Commit (3 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES ANSWERS:</strong>
+            <ul>
+                <li>Subject Line: <span class="emphasis">WHAT</span> you did</li>
+                <li>Character limit: <span class="emphasis">50-72</span> characters</li>
+                <li>Body: <span class="emphasis">WHY</span> you did it and <span class="emphasis">HOW</span> it solves</li>
+                <li>Leave a <span class="emphasis">blank</span> line between subject and body</li>
+            </ul>
+        </div>
+        <div class="talking-points">
+            <strong>Walk through the example slowly:</strong>
+            <ul>
+                <li>Subject: Clear, specific action</li>
+                <li>Blank line (emphasize this!)</li>
+                <li>Body: Context and reasoning</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 6: Bad vs Good Comparison (2 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES - Students analyze:</strong>
+            <p>Bad problems: No context, vague, unclear what was fixed</p>
+            <p>Good improvements: Specific, explains issue, provides context</p>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 7: When to Commit (2 min)</div>
+        <div class="talking-points">
+            <strong>Video game save point analogy works great!</strong>
+            <ul>
+                <li>Have students check ALL boxes in guided notes</li>
+                <li>Emphasize: "Commit early and often"</li>
+                <li>Warning about broken code - use branches or WIP</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 8: The 7 Rules (3 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES ANSWERS - Fill in blanks:</strong>
+            <ol>
+                <li>Separate with <span class="emphasis">blank line</span></li>
+                <li>Limit to <span class="emphasis">50-72</span> characters</li>
+                <li><span class="emphasis">Capitalize</span> the subject line</li>
+                <li>Don't end with <span class="emphasis">period</span></li>
+                <li>Use <span class="emphasis">imperative</span> mood</li>
+                <li>Wrap at <span class="emphasis">72</span> characters</li>
+                <li>Explain <span class="emphasis">what</span> and <span class="emphasis">why</span></li>
+            </ol>
+        </div>
+        <div class="talking-points">
+            <strong>Test tip:</strong> "If applied, this commit will..." - Write on board!</li>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 9: Multi-line Commits (2 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES ANSWERS:</strong>
+            <ul>
+                <li>Command: <span class="emphasis">git commit</span> (no -m flag)</li>
+                <li>Opens: <span class="emphasis">VS Code</span></li>
+            </ul>
+        </div>
+        <div class="demo-box">
+            <strong>QUICK DEMO:</strong> Show this live if possible - open VS Code with git commit
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 10: Practice Exercise (2 min)</div>
+        <div class="answer-key">
+            <strong>PRACTICE ANSWERS - Example improvements:</strong>
+            <ul>
+                <li>"css changes" → "Update CSS grid layout for recipe cards"</li>
+                <li>"oops" → "Revert accidental deletion of index.html"</li>
+                <li>"FINALLY!!!!" → "Fix image path preventing photos from loading"</li>
+                <li>"stuff" → "Add navigation links between recipe pages"</li>
+            </ul>
+        </div>
+        <div class="talking-points">
+            <strong>Have 2-3 students share their improvements</strong>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>PART 2: RECIPE PROJECT (Slides 11-24)</h2>
+
+    <!-- Slide 11-12 -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 11-12: Project Requirements (3 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES ANSWERS:</strong>
+            <ul>
+                <li>Main <span class="emphasis">index</span> page</li>
+                <li>At least <span class="emphasis">3</span> recipe pages</li>
+                <li>Folders for <span class="emphasis">recipes</span> and <span class="emphasis">images</span></li>
+                <li>Links between <span class="emphasis">all</span> pages</li>
+                <li>Title using <span class="emphasis">h1</span> tag</li>
+                <li>Image with <span class="emphasis">alt</span> attribute</li>
+                <li>Description in <span class="emphasis">p</span> tag</li>
+                <li>Ingredients: <span class="emphasis">ul</span> (unordered)</li>
+                <li>Steps: <span class="emphasis">ol</span> (ordered)</li>
+                <li>Link back to <span class="emphasis">main/index page</span></li>
+            </ul>
+        </div>
+        <div class="warning">
+            <strong>EMPHASIZE:</strong> Due TOMORROW evening on D2L!
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 13: File Structure (2 min)</div>
+        <div class="answer-key">
+            <strong>GUIDED NOTES - File structure blanks:</strong>
+            <ul>
+                <li><span class="emphasis">index</span>.html</li>
+                <li>Three recipe files: <span class="emphasis">[recipe-name]</span>.html</li>
+                <li><span class="emphasis">images</span> folder</li>
+            </ul>
+        </div>
+        <div class="talking-points">
+            <strong>Draw on board!</strong> Show the folder hierarchy visually
+        </div>
+    </div>
+
+    <!-- Slides 14-17: Live Demo -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 14-17: Live Demo Setup (5 min)</div>
+        <div class="demo-box">
+            <strong>🎬 LIVE CODING DEMO - DO THIS TOGETHER:</strong>
+            <ol>
+                <li><strong>Terminal Commands:</strong></li>
+            </ol>
+            <div class="code-block">mkdir odin-recipes
+cd odin-recipes
+git init
+touch index.html
+mkdir recipes images
+code .</div>
+            
+            <ol start="2">
+                <li><strong>Create index.html together</strong> - Have students follow along</li>
+                <li><strong>Create one recipe file together</strong></li>
+                <li><strong>Make first commit:</strong> "Initial commit with project structure"</li>
+                <li><strong>GitHub:</strong> Show how to create repo and connect</li>
+            </ol>
+        </div>
+        
+        <div class="answer-key">
+            <strong>HTML TEMPLATE BLANKS:</strong>
+            <ul>
+                <li>lang="<span class="emphasis">en</span>"</li>
+                <li>charset="<span class="emphasis">UTF-8</span>"</li>
+                <li><span class="emphasis">title</span> tags</li>
+                <li><span class="emphasis">ul</span> for list</li>
+                <li>href="<span class="emphasis">recipes/[name].html</span>"</li>
+                <li><span class="emphasis">src</span>="../images/..." <span class="emphasis">alt</span>="..."</li>
+                <li><span class="emphasis">a href</span>="../index.html"</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <strong>Common Issues to Mention:</strong>
+            <ul>
+                <li>File paths: ../ goes UP a directory</li>
+                <li>Case sensitivity: Image.jpg ≠ image.jpg</li>
+                <li>Missing .html extensions</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 18-19: Work Session -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 18-19: Work Session (20 min)</div>
+        <div class="timing-box">
+            <strong>⏰ START 20-MINUTE TIMER ON SCREEN</strong>
+            <p>Click the timer button on slide 19!</p>
+        </div>
+        
+        <div class="talking-points">
+            <strong>During Work Session:</strong>
+            <ul>
+                <li>Walk around actively - don't sit at desk</li>
+                <li>Check each student has project started</li>
+                <li>Common issues to watch for:
+                    <ul>
+                        <li>Not initializing git</li>
+                        <li>Wrong file structure</li>
+                        <li>Broken image paths</li>
+                        <li>Missing closing tags</li>
+                    </ul>
+                </li>
+                <li>5-minute warning at 15 minutes</li>
+                <li>Last 2 minutes: "Commit what you have!"</li>
+            </ul>
+        </div>
+        
+        <div class="answer-key">
+            <strong>Git Commands Order (Guided Notes):</strong>
+            <ol>
+                <li>Make changes to files</li>
+                <li>git status</li>
+                <li>git add .</li>
+                <li>git commit</li>
+                <li>git push origin main</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slides 20-24: Wrap-up -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 20-24: Submission & Wrap-up (5 min)</div>
+        <div class="answer-key">
+            <strong>Final Guided Notes Answers:</strong>
+            <ul>
+                <li>Test <span class="emphasis">every</span> link</li>
+                <li>Verify <span class="emphasis">every</span> image</li>
+                <li>Missing closing <span class="emphasis">tags</span></li>
+                <li>File <span class="emphasis">.html</span> extension</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <strong>FINAL REMINDERS - Say these out loud:</strong>
+            <ol>
+                <li>"Recipe Project due TOMORROW evening on D2L"</li>
+                <li>"Submit your GitHub repository link, not files"</li>
+                <li>"Test everything before submitting"</li>
+                <li>"Make meaningful commits as you work"</li>
+            </ol>
+        </div>
+        
+        <div class="talking-points">
+            <strong>If time remains:</strong>
+            <ul>
+                <li>Show a good example from a previous semester</li>
+                <li>Preview Thursday's CSS introduction</li>
+                <li>Continue work session</li>
+                <li>Individual help for struggling students</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>TROUBLESHOOTING GUIDE</h2>
+    
+    <table>
+        <tr>
+            <th>Common Problem</th>
+            <th>Quick Solution</th>
+            <th>Teaching Moment</th>
+        </tr>
+        <tr>
+            <td>Git not initialized</td>
+            <td><code>git init</code> in project folder</td>
+            <td>Always start with git init</td>
+        </tr>
+        <tr>
+            <td>Images broken</td>
+            <td>Check: ../ paths, file extensions, case</td>
+            <td>Relative vs absolute paths</td>
+        </tr>
+        <tr>
+            <td>Links not working</td>
+            <td>Add .html, check folder structure</td>
+            <td>File paths in HTML</td>
+        </tr>
+        <tr>
+            <td>Can't push to GitHub</td>
+            <td>Check remote: <code>git remote -v</code></td>
+            <td>Local vs remote repositories</td>
+        </tr>
+        <tr>
+            <td>VS Code won't open for commit</td>
+            <td>Use <code>git commit -m</code> as backup</td>
+            <td>Git editor configuration</td>
+        </tr>
+    </table>
+
+    <h2>SAMPLE COMMIT MESSAGES FOR DEMO</h2>
+    
+    <div class="code-block">1. Initial commit with project structure
+
+2. Add index page with recipe links
+
+3. Add lasagna recipe with ingredients and steps
+
+4. Add pizza and taco recipes
+
+5. Add images for all recipes
+
+6. Fix broken navigation links
+
+7. Update recipe descriptions for clarity</div>
+
+    <h2>POST-CLASS CHECKLIST</h2>
+    
+    <ul>
+        <li>☐ Remind about tomorrow's deadline (send D2L announcement)</li>
+        <li>☐ Post any helpful links or resources discussed</li>
+        <li>☐ Note students who need extra help</li>
+        <li>☐ Prepare for CSS introduction next class</li>
+        <li>☐ Check D2L submission folder is set up correctly</li>
+    </ul>
+
+    <h2>NOTES SECTION</h2>
+    <div style="border: 1px dashed #000; min-height: 200px; padding: 10px; margin-top: 20px;">
+        <p><em>Space for instructor notes during/after class:</em></p>
+        <br><br><br><br><br><br><br>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: Your enthusiasm about good commits is contagious!</strong></p>
+        <p>Students will care about this if you show them why it matters for their careers.</p>
+    </div>
+</body>
+</html>

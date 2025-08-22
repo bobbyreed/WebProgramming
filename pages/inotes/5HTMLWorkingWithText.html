@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working with Text - Instructor Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            border: 3px solid #333;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            page-break-after: avoid;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            font-size: 1.4em;
+        }
+        
+        .time-marker {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .slide-ref {
+            background: #e3f2fd;
+            padding: 5px 10px;
+            border-left: 4px solid #2196f3;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            padding: 10px;
+            border: 2px solid #f57c00;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            font-weight: bold;
+            color: #d84315;
+        }
+        
+        .answer-key {
+            background: #c8e6c9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .answer-key strong {
+            color: #2e7d32;
+        }
+        
+        .teaching-tip {
+            background: #fff3e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ff9800;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .demo-box {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px dashed #666;
+        }
+        
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-radius: 5px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .emphasis {
+            background: #fce4ec;
+            padding: 2px 5px;
+            font-weight: bold;
+            border-bottom: 2px solid #e91e63;
+        }
+        
+        .checkpoint {
+            background: #e8f5e9;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+        }
+        
+        .checkpoint h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #e0e0e0;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                padding: 10px;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                page-break-after: always;
+            }
+            
+            .notes-alert {
+                border: 3px solid #000;
+                background: white;
+            }
+        }
+        
+        .timing-note {
+            float: right;
+            background: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .critical {
+            color: #d32f2f;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE</h1>
+        <h2>HTML Foundations - Working with Text</h2>
+        <p>CSCI 4513 | Week 3, Class 5 | 50 Minutes</p>
+        <p><strong>Slides:</strong> 25 total | <strong>Guided Notes:</strong> Required</p>
+    </div>
+
+    <!-- Pre-Class Setup -->
+    <div class="section">
+        <h2>PRE-CLASS SETUP (5 minutes before)</h2>
+        <ul>
+            <li>✓ Load slide presentation</li>
+            <li>✓ Open VS Code with demo HTML file ready</li>
+            <li>✓ Ensure students have guided notes handout</li>
+            <li>✓ Test projector/screen sharing</li>
+            <li>✓ Have The Odin Project page ready for reference</li>
+        </ul>
+        <div class="teaching-tip">
+            Remind students to have their guided notes out and a pen/pencil ready!
+        </div>
+    </div>
+
+    <!-- Opening Section -->
+    <div class="section">
+        <h2>OPENING (Minutes 1-5)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 1: Title Slide</div>
+        <ul>
+            <li>Welcome students to Class 5</li>
+            <li>Quick energy check - "Ready to make our websites speak?"</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 2: Quick Recap</div>
+        <ul>
+            <li>Review journey so far</li>
+            <li>Connect to previous HTML structure lesson</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 3: Learning Objectives</div>
+        <div class="notes-alert">
+            Students fill in Learning Objectives section - give them 30 seconds
+        </div>
+        <div class="answer-key">
+            <strong>Answers:</strong> paragraphs, six (6), bold, italic, nesting, comments, indentation
+        </div>
+    </div>
+
+    <!-- The Whitespace Problem -->
+    <div class="section">
+        <h2>THE WHITESPACE PROBLEM (Minutes 5-10)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 4: The Problem with Plain Text</div>
+        <ul>
+            <li>Ask class: "What do you expect this to display?"</li>
+            <li>Get 2-3 student predictions</li>
+            <li>Build suspense before revealing...</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 5: Browser Output</div>
+        <div class="notes-alert">
+            Students fill in: "compress" whitespace into "one" space
+        </div>
+        <div class="emphasis">EMPHASIZE: This is why we need HTML elements!</div>
+        
+        <div class="teaching-tip">
+            Show live demo in browser - type multiple spaces and watch them collapse
+        </div>
+        
+        <div class="answer-key">
+            <strong>Key Point:</strong> Browsers compress ALL whitespace (spaces, tabs, newlines) into a single space
+            <br><strong>Solution:</strong> HTML elements
+        </div>
+    </div>
+
+    <!-- Paragraphs Section -->
+    <div class="section">
+        <h2>PARAGRAPH ELEMENTS (Minutes 10-15)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 6: The Paragraph Element</div>
+        <div class="notes-alert">
+            Students fill in: &lt;p&gt; tag in multiple places
+        </div>
+        
+        <div class="demo-box">
+            <strong>LIVE DEMO:</strong>
+            <ol>
+                <li>Show text without &lt;p&gt; tags (all runs together)</li>
+                <li>Add &lt;p&gt; tags</li>
+                <li>Show proper spacing in browser</li>
+            </ol>
+        </div>
+        
+        <div class="slide-ref">Slide 7: Quick Practice</div>
+        <div class="notes-alert">
+            Students do 3-minute paragraph practice - circulate and help
+        </div>
+        
+        <div class="teaching-tip">
+            Remind about VS Code tip: type "lorem" + Enter for dummy text!
+        </div>
+        
+        <div class="answer-key">
+            <strong>VS Code Tip Answer:</strong> lorem
+        </div>
+    </div>
+
+    <!-- Headings Section -->
+    <div class="section">
+        <h2>HTML HEADINGS (Minutes 15-22)</h2>
+        <div class="timing-note">7 minutes</div>
+        
+        <div class="slide-ref">Slide 8: HTML Headings</div>
+        <ul>
+            <li>Show visual hierarchy</li>
+            <li>Point out: larger numbers = smaller text (counterintuitive!)</li>
+        </ul>
+        
+        <div class="notes-alert">
+            Students complete heading table:
+        </div>
+        <div class="answer-key">
+            <table>
+                <tr>
+                    <th>Tag</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>h1</td>
+                    <td>Main page title</td>
+                </tr>
+                <tr>
+                    <td>h2</td>
+                    <td>Section heading</td>
+                </tr>
+                <tr>
+                    <td>h3</td>
+                    <td>Subsection</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="slide-ref">Slide 9: Heading Hierarchy</div>
+        <div class="critical">CRITICAL POINT: Only ONE h1 per page!</div>
+        
+        <div class="notes-alert">
+            Students fill in: Only "ONE" h1 per page
+        </div>
+        
+        <div class="teaching-tip">
+            Use building/outline analogy: h1 is the building name, h2 are floors, h3 are rooms
+        </div>
+        
+        <div class="demo-box">
+            <strong>Show BAD example:</strong> Multiple h1s, skipped levels
+            <br><strong>Show GOOD example:</strong> Proper hierarchy
+        </div>
+    </div>
+
+    <!-- Text Formatting Section -->
+    <div class="section">
+        <h2>TEXT FORMATTING (Minutes 22-28)</h2>
+        <div class="timing-note">6 minutes</div>
+        
+        <div class="slide-ref">Slide 10: Strong Element</div>
+        <div class="notes-alert">
+            Students fill in: "bold" AND "important", tag is "strong"
+        </div>
+        
+        <div class="emphasis">EMPHASIZE: Semantic meaning for screen readers!</div>
+        
+        <div class="slide-ref">Slide 11: Em Element</div>
+        <div class="notes-alert">
+            Students fill in: "italic" AND "emphasized", tag is "em"
+        </div>
+        
+        <div class="slide-ref">Slide 12: Combining Elements</div>
+        <div class="demo-box">
+            <strong>LIVE DEMO:</strong> Nest strong inside em and vice versa
+            <br>Show: &lt;strong&gt;&lt;em&gt;Bold and italic!&lt;/em&gt;&lt;/strong&gt;
+        </div>
+        
+        <div class="teaching-tip">
+            Stress: These add MEANING, not just visual style! This matters for accessibility.
+        </div>
+        
+        <div class="answer-key">
+            <strong>Key Concept:</strong> "semantic" meaning
+        </div>
+    </div>
+
+    <!-- Nesting and Indentation -->
+    <div class="section">
+        <h2>NESTING & INDENTATION (Minutes 28-33)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 13: Nesting Elements</div>
+        <div class="slide-ref">Slide 14: Parent-Child Relationships</div>
+        
+        <div class="notes-alert">
+            Students fill in relationships:
+        </div>
+        <div class="answer-key">
+            <ul>
+                <li>Elements inside = <strong>children</strong></li>
+                <li>Containing element = <strong>parent</strong></li>
+                <li>Same level = <strong>siblings</strong></li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            Use family tree analogy - draw on board if needed
+        </div>
+        
+        <div class="slide-ref">Slide 15: Indentation Best Practices</div>
+        <div class="notes-alert">
+            Students fill in: "2" spaces standard (or "4" spaces)
+        </div>
+        
+        <div class="demo-box">
+            <strong>PRACTICE:</strong> Have students indent the unformatted code in their notes
+        </div>
+        
+        <div class="emphasis">Show VS Code auto-format: Alt+Shift+F (Windows) or Option+Shift+F (Mac)</div>
+    </div>
+
+    <!-- HTML Comments -->
+    <div class="section">
+        <h2>HTML COMMENTS (Minutes 33-37)</h2>
+        <div class="timing-note">4 minutes</div>
+        
+        <div class="slide-ref">Slide 16: HTML Comments</div>
+        <div class="notes-alert">
+            Students fill in comment syntax:
+        </div>
+        <div class="answer-key">
+            <ul>
+                <li>Opening: <strong>&lt;!--</strong></li>
+                <li>Closing: <strong>--&gt;</strong></li>
+                <li>VS Code Windows/Linux: <strong>Ctrl + /</strong></li>
+                <li>VS Code Mac: <strong>Cmd + /</strong></li>
+            </ul>
+        </div>
+        
+        <div class="slide-ref">Slide 17: When to Use Comments</div>
+        <div class="notes-alert">
+            Students list good uses for comments
+        </div>
+        <div class="answer-key">
+            <strong>Good uses:</strong>
+            <ul>
+                <li>Explaining complex code</li>
+                <li>TODO reminders</li>
+                <li>Temporarily disabling code</li>
+                <li>Section markers</li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            Demo the VS Code shortcut live - students love keyboard shortcuts!
+        </div>
+    </div>
+
+    <!-- Live Demo -->
+    <div class="section">
+        <h2>LIVE CODING DEMO (Minutes 37-42)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 18: Live Coding Demo</div>
+        
+        <div class="demo-box">
+            <strong>BUILD A MINI BLOG POST:</strong>
+            <ol>
+                <li>Start with h1: "My First Blog Post"</li>
+                <li>Add h2: "Introduction"</li>
+                <li>Add paragraph with lorem ipsum</li>
+                <li>Add &lt;strong&gt; to emphasize a word</li>
+                <li>Add another h2: "Main Content"</li>
+                <li>Add paragraph with &lt;em&gt; for emphasis</li>
+                <li>Add h3: "Important Details"</li>
+                <li>Add comments for each section</li>
+                <li>Show proper indentation throughout</li>
+            </ol>
+        </div>
+        
+        <div class="teaching-tip">
+            Go slowly! Students should follow along in their own VS Code
+        </div>
+        
+        <div class="checkpoint">
+            <h3>Check for Understanding:</h3>
+            <ul>
+                <li>Ask: "Why only one h1?"</li>
+                <li>Ask: "What's the difference between strong and em?"</li>
+                <li>Ask: "Why do we indent?"</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Practice Activity -->
+    <div class="section">
+        <h2>PRACTICE ACTIVITY (Minutes 42-47)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 19: Your Turn - Blog Article</div>
+        
+        <div class="notes-alert">
+            Students work on Blog Article Practice section in notes
+        </div>
+        
+        <div class="teaching-tip">
+            Circulate the room! This is prime time to catch struggling students
+        </div>
+        
+        <div class="checkpoint">
+            <h3>While Circulating, Check For:</h3>
+            <ul>
+                <li>✓ Only one h1?</li>
+                <li>✓ Proper heading hierarchy?</li>
+                <li>✓ Using strong vs em correctly?</li>
+                <li>✓ Proper indentation?</li>
+                <li>✓ Comments added?</li>
+            </ul>
+        </div>
+        
+        <div class="emphasis">
+            At 3 minutes: "You should have your headings done!"
+            <br>At 4 minutes: "Start wrapping up!"
+        </div>
+    </div>
+
+    <!-- Common Mistakes -->
+    <div class="section">
+        <h2>COMMON MISTAKES (Minutes 47-48)</h2>
+        <div class="timing-note">1 minute</div>
+        
+        <div class="slide-ref">Slide 20: Common Mistakes</div>
+        
+        <div class="notes-alert">
+            Students complete Common Mistakes table if time permits
+        </div>
+        
+        <div class="answer-key">
+            <strong>Quick hits to emphasize:</strong>
+            <ul>
+                <li>Multiple h1s - confuses page structure</li>
+                <li>Skipping levels - breaks hierarchy</li>
+                <li>Using strong just for bold - missing semantic meaning</li>
+                <li>No indentation - code becomes unreadable</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div class="section">
+        <h2>HOMEWORK & WRAP-UP (Minutes 48-50)</h2>
+        <div class="timing-note">2 minutes</div>
+        
+        <div class="slide-ref">Slide 21: Homework Assignment</div>
+        
+        <div class="critical">HOMEWORK DUE THURSDAY!</div>
+        
+        <div class="notes-alert">
+            Students should write down homework requirements
+        </div>
+        
+        <ul>
+            <li>Watch Kevin Powell videos (links in Odin Project)</li>
+            <li>Create blog article page</li>
+            <li>Add 3+ text tags to one-page website</li>
+            <li>Push to GitHub, submit on D2L</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 22: Knowledge Check</div>
+        <p><strong>If time:</strong> Quick verbal quiz with class</p>
+        <p><strong>If no time:</strong> "Review these on your own!"</p>
+        
+        <div class="slide-ref">Slides 23-25: Resources & Closing</div>
+        <ul>
+            <li>Point out additional resources</li>
+            <li>Preview next class (Lists, Links, Images)</li>
+            <li>Final encouragement</li>
+        </ul>
+    </div>
+
+    <!-- Key Reminders -->
+    <div class="section">
+        <h2>🎯 KEY TEACHING REMINDERS</h2>
+        
+        <h3>Must-Emphasize Concepts:</h3>
+        <ol>
+            <li><span class="emphasis">Only ONE h1 per page</span> - This is critical!</li>
+            <li><span class="emphasis">Semantic meaning</span> - HTML is about meaning, not looks</li>
+            <li><span class="emphasis">Whitespace compression</span> - Why we need HTML elements</li>
+            <li><span class="emphasis">Proper nesting</span> - Parent/child relationships</li>
+            <li><span class="emphasis">Indentation</span> - 2 or 4 spaces, be consistent</li>
+        </ol>
+        
+        <h3>Common Student Struggles:</h3>
+        <ul>
+            <li>Forgetting to close tags (especially nested ones)</li>
+            <li>Using h1 multiple times</li>
+            <li>Skipping heading levels (h1 → h3)</li>
+            <li>Not understanding semantic vs visual</li>
+            <li>Poor/no indentation</li>
+        </ul>
+        
+        <h3>If Running Behind:</h3>
+        <ul>
+            <li>Skip Slide 23 (Resources)</li>
+            <li>Shorten practice activity to 3 minutes</li>
+            <li>Make Knowledge Check homework</li>
+        </ul>
+        
+        <h3>If Running Ahead:</h3>
+        <ul>
+            <li>Extended Q&A on Knowledge Check</li>
+            <li>Show more nesting examples</li>
+            <li>Demo more VS Code shortcuts</li>
+            <li>Have students share their blog articles</li>
+        </ul>
+    </div>
+
+    <!-- Post-Class -->
+    <div class="section">
+        <h2>POST-CLASS CHECKLIST</h2>
+        <ul>
+            <li>□ Remind about homework deadline (Thursday)</li>
+            <li>□ Post slides to course website</li>
+            <li>□ Upload guided notes to D2L if not already done</li>
+            <li>□ Check that recording saved (if applicable)</li>
+            <li>□ Note any concepts that need review next class</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Students often need heading hierarchy reinforced multiple times - plan to review briefly next class
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="section">
+        <h2>QUICK ANSWER REFERENCE</h2>
+        
+        <table>
+            <tr>
+                <th>Guided Notes Section</th>
+                <th>Key Answers</th>
+            </tr>
+            <tr>
+                <td>Whitespace Problem</td>
+                <td>compress, one</td>
+            </tr>
+            <tr>
+                <td>Paragraph Tag</td>
+                <td>&lt;p&gt;</td>
+            </tr>
+            <tr>
+                <td>VS Code Lorem Tip</td>
+                <td>lorem</td>
+            </tr>
+            <tr>
+                <td>Number of Heading Levels</td>
+                <td>six (6)</td>
+            </tr>
+            <tr>
+                <td>h1 Rule</td>
+                <td>ONE per page</td>
+            </tr>
+            <tr>
+                <td>Strong Element</td>
+                <td>bold, important</td>
+            </tr>
+            <tr>
+                <td>Em Element</td>
+                <td>italic, emphasized</td>
+            </tr>
+            <tr>
+                <td>Nesting Terms</td>
+                <td>children, parent, siblings</td>
+            </tr>
+            <tr>
+                <td>Standard Indentation</td>
+                <td>2 or 4 spaces</td>
+            </tr>
+            <tr>
+                <td>Comment Syntax</td>
+                <td>&lt;!-- and --&gt;</td>
+            </tr>
+            <tr>
+                <td>Comment Shortcut (Win)</td>
+                <td>Ctrl + /</td>
+            </tr>
+            <tr>
+                <td>Comment Shortcut (Mac)</td>
+                <td>Cmd + /</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Boilerplate - Instructor Guide | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            border: 3px double #000;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+        }
+        
+        .timing-box {
+            float: right;
+            border: 2px solid #000;
+            padding: 10px;
+            margin-left: 20px;
+            font-weight: bold;
+            background: #f0f0f0;
+        }
+        
+        .slide-section {
+            page-break-inside: avoid;
+            border: 1px solid #666;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: white;
+        }
+        
+        .slide-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .slide-section h3 {
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+            text-decoration: underline;
+        }
+        
+        .note-fill {
+            background: #ffeb3b;
+            padding: 8px;
+            margin: 10px 0;
+            border-left: 5px solid #f57c00;
+            font-weight: bold;
+        }
+        
+        .note-fill::before {
+            content: "📝 STUDENTS FILL IN: ";
+            font-weight: bold;
+        }
+        
+        .demo {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .demo::before {
+            content: "💻 LIVE DEMO: ";
+            font-weight: bold;
+        }
+        
+        .activity {
+            background: #e8f5e9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .activity::before {
+            content: "👥 ACTIVITY: ";
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #d32f2f;
+        }
+        
+        .emphasis::before {
+            content: "⚠️ EMPHASIZE: ";
+            font-weight: bold;
+        }
+        
+        .talking-points {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .talking-points li {
+            margin-bottom: 5px;
+        }
+        
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #999;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+        
+        .transition {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px dashed #999;
+        }
+        
+        .transition::before {
+            content: "➡️ TRANSITION: ";
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            .slide-section {
+                page-break-inside: avoid;
+            }
+            
+            .note-fill {
+                background: none;
+                border: 2px solid #000;
+                padding: 5px;
+            }
+            
+            .demo, .activity, .emphasis {
+                background: none;
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE: HTML Boilerplate Lecture</h1>
+        <p>CSCI 4513 - Web Programming | Class 4 | ~45 minutes</p>
+        <p>This guide corresponds to student guided notes - highlighted sections indicate fill-in-the-blank moments</p>
+    </div>
+
+    <!-- Opening -->
+    <div class="slide-section">
+        <div class="timing-box">0:00 - 0:02</div>
+        <h2>Opening & Title Slide</h2>
+        <h3>Setup</h3>
+        <ul class="talking-points">
+            <li>Have VS Code open with empty folder</li>
+            <li>Browser ready (Google Chrome preferred)</li>
+            <li>W3C Validator website bookmarked</li>
+            <li>Ensure students have guided notes ready</li>
+        </ul>
+        <div class="transition">Welcome students, reference homework from last class on HTML elements</div>
+    </div>
+
+    <!-- Slide 2-3 -->
+    <div class="slide-section">
+        <div class="timing-box">0:02 - 0:05</div>
+        <h2>Agenda & Recap (Slides 2-3)</h2>
+        <h3>Key Points</h3>
+        <ul class="talking-points">
+            <li>Quick review of Classes 1-3</li>
+            <li>Today's goal: Write boilerplate from memory</li>
+            <li>Preview homework assignment</li>
+        </ul>
+        <div class="emphasis">Today we're building the foundation EVERY webpage needs</div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide-section">
+        <div class="timing-box">0:05 - 0:08</div>
+        <h2>Why HTML Boilerplate? (Slide 4)</h2>
+        <h3>Talking Points</h3>
+        <div class="note-fill">skeleton (students write this)</div>
+        <ul class="talking-points">
+            <li>Analogy: Like a skeleton provides structure to body</li>
+            <li>Without it: encoding issues, accessibility problems</li>
+            <li>Every professional website starts with this</li>
+        </ul>
+        <div class="note-fill">Students fill in: skeleton, interpret, rendering, metadata, accessibility</div>
+        <div class="emphasis">Show example of webpage with wrong encoding (Café → CafÃ©)</div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide-section">
+        <div class="timing-box">0:08 - 0:11</div>
+        <h2>Creating Your First HTML File (Slide 5)</h2>
+        <h3>Live Demonstration</h3>
+        <div class="demo">Create folder and file together with class</div>
+        <div class="note-fill">.html extension</div>
+        <div class="note-fill">index.html (homepage name)</div>
+        <div class="emphasis">CRITICAL: Explain why index.html - servers look for this by default!</div>
+        <div class="activity">Have students create their own folder/file now</div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide-section">
+        <div class="timing-box">0:11 - 0:14</div>
+        <h2>The DOCTYPE Declaration (Slide 6)</h2>
+        <h3>Key Teaching Points</h3>
+        <div class="note-fill">FIRST line of document</div>
+        <div class="code-example">&lt;!DOCTYPE html&gt;</div>
+        <div class="note-fill">Students write: &lt;!DOCTYPE html&gt;</div>
+        <ul class="talking-points">
+            <li>Show old HTML4 DOCTYPE for comparison (they don't need to know it)</li>
+            <li>Must be BEFORE html tag, not inside it</li>
+            <li>Tells browser to use HTML5 standards</li>
+        </ul>
+        <div class="note-fill">version, &lt;!DOCTYPE html&gt;, before</div>
+        <div class="demo">Type it in your file as students follow along</div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide-section">
+        <div class="timing-box">0:14 - 0:17</div>
+        <h2>The HTML Element (Slide 7)</h2>
+        <h3>Root Element Concept</h3>
+        <div class="note-fill">root element</div>
+        <div class="code-example">&lt;html lang="en"&gt;
+    &lt;!-- Everything else goes here --&gt;
+&lt;/html&gt;</div>
+        <div class="note-fill">lang="en"</div>
+        <ul class="talking-points">
+            <li>Root = top level, parent of all</li>
+            <li>lang attribute for accessibility</li>
+            <li>Screen readers use lang to pronounce correctly</li>
+        </ul>
+        <div class="emphasis">Have students fill in table about lang attribute purposes</div>
+        <div class="demo">Add to file, show proper indentation</div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide-section">
+        <div class="timing-box">0:17 - 0:21</div>
+        <h2>The HEAD Element (Slide 8)</h2>
+        <h3>The Brain Analogy</h3>
+        <div class="note-fill">metadata</div>
+        <div class="emphasis">HEAD = brain, BODY = what you see</div>
+        <div class="code-example">&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Webpage&lt;/title&gt;
+&lt;/head&gt;</div>
+        <div class="note-fill">Students list 4 things: meta tags, title, CSS links, JavaScript</div>
+        <ul class="talking-points">
+            <li>Nothing in HEAD is visible on page</li>
+            <li>Sets up how page works, not what it shows</li>
+            <li>Always comes BEFORE body</li>
+        </ul>
+        <div class="note-fill">visible (Nothing in HEAD is visible)</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Slide 9 -->
+    <div class="slide-section">
+        <div class="timing-box">0:21 - 0:24</div>
+        <h2>Character Encoding (Slide 9)</h2>
+        <h3>UTF-8 Demonstration</h3>
+        <div class="note-fill">UTF-8</div>
+        <div class="demo">Show example: Café, ñ, 中文, 😊</div>
+        <ul class="talking-points">
+            <li>UTF-8 = Universal character set</li>
+            <li>Without it: special characters break</li>
+            <li>Always use UTF-8 for web</li>
+        </ul>
+        <div class="note-fill">all, special symbols, web</div>
+        <div class="emphasis">Show real example of broken encoding if possible</div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide-section">
+        <div class="timing-box">0:24 - 0:27</div>
+        <h2>The TITLE Element (Slide 10)</h2>
+        <h3>Where Titles Appear</h3>
+        <div class="code-example">&lt;title&gt;My Amazing Website&lt;/title&gt;</div>
+        <div class="note-fill">Students fill: Browser tab, Bookmarks, Search results, Social media</div>
+        <ul class="talking-points">
+            <li>Show browser tab changing when title added</li>
+            <li>Google search result example</li>
+            <li>No title = shows "index.html" (bad UX)</li>
+        </ul>
+        <div class="note-fill">index.html or filename</div>
+        <div class="demo">Add title and refresh browser to show change</div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide-section">
+        <div class="timing-box">0:27 - 0:30</div>
+        <h2>The BODY Element (Slide 11)</h2>
+        <h3>Visible Content Container</h3>
+        <div class="note-fill">visible</div>
+        <div class="code-example">&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;/body&gt;</div>
+        <div class="note-fill">Students list 5 types: text, images, links, forms, videos</div>
+        <ul class="talking-points">
+            <li>Everything users SEE goes here</li>
+            <li>HEAD = setup, BODY = content</li>
+            <li>Add h1 and show in browser</li>
+        </ul>
+        <div class="demo">Add body with h1, save, refresh browser</div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide-section">
+        <div class="timing-box">0:30 - 0:33</div>
+        <h2>Complete Boilerplate (Slide 12)</h2>
+        <h3>Put It All Together</h3>
+        <div class="emphasis">CRITICAL MOMENT - Students fill in complete structure</div>
+        <div class="code-example">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Webpage&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+        <div class="activity">Have students write complete boilerplate in notes</div>
+        <div class="note-fill">Students fill ENTIRE code structure in guided notes</div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide-section">
+        <div class="timing-box">0:33 - 0:36</div>
+        <h2>Live Coding Demo (Slide 13)</h2>
+        <h3>Build From Scratch</h3>
+        <div class="demo">Delete everything and rebuild from scratch</div>
+        <ol class="talking-points">
+            <li>Type slowly, explain each line</li>
+            <li>Make an intentional mistake (missing closing tag)</li>
+            <li>Show error in browser</li>
+            <li>Fix and demonstrate proper structure</li>
+        </ol>
+        <div class="activity">Students follow along, building their own</div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide-section">
+        <div class="timing-box">0:36 - 0:38</div>
+        <h2>Opening in Browser (Slide 14)</h2>
+        <h3>Three Methods</h3>
+        <div class="demo">Demonstrate all three methods</div>
+        <div class="note-fill">Students fill in table with three methods</div>
+        <ul class="talking-points">
+            <li>Drag and drop (easiest for beginners)</li>
+            <li>Double-click (default browser)</li>
+            <li>Terminal commands (professional method)</li>
+        </ul>
+        <div class="note-fill">Ctrl+R (Windows), Cmd+R (Mac)</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Slide 15 -->
+    <div class="slide-section">
+        <div class="timing-box">0:38 - 0:40</div>
+        <h2>VS Code Shortcut (Slide 15)</h2>
+        <h3>The Emmet Abbreviation</h3>
+        <div class="demo">Show ! + Enter shortcut</div>
+        <div class="note-fill">! (exclamation), Enter</div>
+        <div class="emphasis">WARNING: Don't use this yet! Build muscle memory first!</div>
+        <ul class="talking-points">
+            <li>Show the shortcut once</li>
+            <li>Explain viewport meta (brief mention)</li>
+            <li>Emphasize manual practice importance</li>
+        </ul>
+    </div>
+
+    <!-- Slide 16 -->
+    <div class="slide-section">
+        <div class="timing-box">0:40 - 0:43</div>
+        <h2>Practice Activity (Slide 16)</h2>
+        <h3>5-Minute Challenge</h3>
+        <div class="activity">HANDS-ON PRACTICE TIME</div>
+        <ol class="talking-points">
+            <li>Set timer for 5 minutes</li>
+            <li>Walk around and help students</li>
+            <li>Have students do it 3 times</li>
+            <li>Partner check at end</li>
+        </ol>
+        <div class="emphasis">Goal: Under 30 seconds by end of practice</div>
+    </div>
+
+    <!-- Slide 17 -->
+    <div class="slide-section">
+        <div class="timing-box">0:43 - 0:45</div>
+        <h2>HTML Validation (Slide 17)</h2>
+        <h3>W3C Validator</h3>
+        <div class="demo">Show validator.w3.org</div>
+        <div class="note-fill">validator.w3.org</div>
+        <ul class="talking-points">
+            <li>Copy/paste HTML into validator</li>
+            <li>Show green checkmark (success)</li>
+            <li>Create intentional error, show red error</li>
+            <li>Explain homework requirement</li>
+        </ul>
+        <div class="note-fill">Students write 3 reasons to validate</div>
+    </div>
+
+    <!-- Slide 18 -->
+    <div class="slide-section">
+        <div class="timing-box">0:45 - 0:47</div>
+        <h2>Common Mistakes (Slide 18)</h2>
+        <h3>Mistake Checklist</h3>
+        <div class="emphasis">Have students check off mistakes to avoid</div>
+        <div class="note-fill">Students fill in blanks for each mistake</div>
+        <ul class="talking-points">
+            <li>Show example of each mistake</li>
+            <li>Demonstrate how validator catches these</li>
+            <li>Emphasize most common: missing DOCTYPE, wrong order</li>
+        </ul>
+    </div>
+
+    <!-- Slide 19 -->
+    <div class="slide-section">
+        <div class="timing-box">0:47 - 0:49</div>
+        <h2>Homework Assignment (Slide 19)</h2>
+        <h3>Three Parts - EMPHASIZE ALL</h3>
+        <div class="emphasis">CRITICAL: All three parts required!</div>
+        <div class="note-fill">Video title, W3 HTML Validator, D2L discussion, 2 responses, compare and contrast</div>
+        <table>
+            <tr>
+                <th>Part</th>
+                <th>Requirement</th>
+                <th>Emphasis Point</th>
+            </tr>
+            <tr>
+                <td>1. Video</td>
+                <td>Watch and follow along</td>
+                <td>Build while watching</td>
+            </tr>
+            <tr>
+                <td>2. Validation</td>
+                <td>Screenshot to D2L</td>
+                <td>NEW TOPIC in discussion</td>
+            </tr>
+            <tr>
+                <td>3. Peer Review</td>
+                <td>2 responses</td>
+                <td>Compare/contrast required</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Closing -->
+    <div class="slide-section">
+        <div class="timing-box">0:49 - 0:50</div>
+        <h2>Summary & Questions (Slides 20-21)</h2>
+        <h3>Wrap-up</h3>
+        <ul class="talking-points">
+            <li>Review what they can now do</li>
+            <li>Preview next class (Working with Text)</li>
+            <li>Challenge: Write boilerplate 5 times before next class</li>
+            <li>Answer any questions</li>
+        </ul>
+        <div class="emphasis">Office hours reminder if students need help</div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="page-break"></div>
+    <div class="slide-section">
+        <h2>Quick Reference: Student Fill-ins by Section</h2>
+        <table>
+            <tr>
+                <th>Section</th>
+                <th>Key Fill-ins</th>
+                <th>Time</th>
+            </tr>
+            <tr>
+                <td>Why Boilerplate</td>
+                <td>skeleton, interpret, rendering, metadata, accessibility</td>
+                <td>0:05</td>
+            </tr>
+            <tr>
+                <td>File Setup</td>
+                <td>.html, index.html</td>
+                <td>0:08</td>
+            </tr>
+            <tr>
+                <td>DOCTYPE</td>
+                <td>FIRST, &lt;!DOCTYPE html&gt;, version, before</td>
+                <td>0:11</td>
+            </tr>
+            <tr>
+                <td>HTML Element</td>
+                <td>root, lang="en"</td>
+                <td>0:14</td>
+            </tr>
+            <tr>
+                <td>HEAD</td>
+                <td>metadata, charset, title, visible</td>
+                <td>0:17</td>
+            </tr>
+            <tr>
+                <td>Encoding</td>
+                <td>UTF-8, all, special symbols, web</td>
+                <td>0:21</td>
+            </tr>
+            <tr>
+                <td>TITLE</td>
+                <td>4 locations, index.html</td>
+                <td>0:24</td>
+            </tr>
+            <tr>
+                <td>BODY</td>
+                <td>visible, body, 5 content types</td>
+                <td>0:27</td>
+            </tr>
+            <tr>
+                <td>Complete Structure</td>
+                <td>ENTIRE boilerplate code</td>
+                <td>0:30</td>
+            </tr>
+            <tr>
+                <td>Browser Methods</td>
+                <td>3 methods, refresh shortcuts</td>
+                <td>0:36</td>
+            </tr>
+            <tr>
+                <td>VS Code</td>
+                <td>!, Enter</td>
+                <td>0:38</td>
+            </tr>
+            <tr>
+                <td>Validation</td>
+                <td>validator.w3.org, 3 reasons</td>
+                <td>0:43</td>
+            </tr>
+            <tr>
+                <td>Mistakes</td>
+                <td>7 common mistakes</td>
+                <td>0:45</td>
+            </tr>
+            <tr>
+                <td>Homework</td>
+                <td>All assignment details</td>
+                <td>0:47</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Teaching Tips -->
+    <div class="slide-section">
+        <h2>Additional Teaching Tips</h2>
+        <h3>Preparation Checklist</h3>
+        <ul>
+            <li>☐ VS Code open with empty folder</li>
+            <li>☐ Browser ready (Chrome preferred)</li>
+            <li>☐ W3C Validator bookmarked</li>
+            <li>☐ Example of broken encoding ready</li>
+            <li>☐ Timer for practice activity</li>
+            <li>☐ Guided notes distributed</li>
+        </ul>
+        
+        <h3>Common Student Questions</h3>
+        <table>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+            <tr>
+                <td>Why can't we just use the VS Code shortcut?</td>
+                <td>Building muscle memory; won't always have VS Code</td>
+            </tr>
+            <tr>
+                <td>What if I forget the DOCTYPE?</td>
+                <td>Page may render in quirks mode; always validate</td>
+            </tr>
+            <tr>
+                <td>Can I use a different lang?</td>
+                <td>Yes! lang="es" for Spanish, "fr" for French, etc.</td>
+            </tr>
+            <tr>
+                <td>Why index.html specifically?</td>
+                <td>Web server default; automatically serves this file</td>
+            </tr>
+        </table>
+        
+        <h3>If Running Behind Schedule</h3>
+        <ul>
+            <li>Skip detailed DOCTYPE history (Slide 6)</li>
+            <li>Reduce practice time to 3 minutes</li>
+            <li>Demo validation quickly, let them explore in homework</li>
+        </ul>
+        
+        <h3>If Ahead of Schedule</h3>
+        <ul>
+            <li>Add more practice rounds</li>
+            <li>Show more validation examples</li>
+            <li>Preview next class content briefly</li>
+        </ul>
+    </div>
+</body>
+</html>

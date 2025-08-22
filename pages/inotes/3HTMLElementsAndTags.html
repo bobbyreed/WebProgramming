@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE - HTML Foundations | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            border: 3px solid #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #f0f0f0;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .timing-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            text-align: center;
+            page-break-before: avoid;
+        }
+        
+        .slide-section {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        
+        .slide-header {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .slide-content {
+            padding: 15px;
+        }
+        
+        .answer-key {
+            background: #fffacd;
+            border-left: 4px solid #ffd700;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .answer-key .label {
+            color: #d4af37;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        .emphasis-box {
+            background: #ffe6e6;
+            border: 2px solid #ff0000;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .emphasis-box strong {
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+        
+        .teaching-tip {
+            background: #e6f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .activity-instructions {
+            background: #f0fff0;
+            border: 1px dashed #008000;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .notes-reference {
+            background: #f5f5f5;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #999;
+        }
+        
+        .notes-reference .section-label {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .time-marker {
+            background: #ffd700;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .demo-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        
+        .checklist {
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                padding: 10px;
+            }
+            
+            .slide-section {
+                page-break-inside: avoid;
+            }
+            
+            .timing-bar {
+                page-break-before: always;
+            }
+            
+            .header {
+                background: white;
+            }
+            
+            .answer-key {
+                background: white;
+                border: 2px solid black;
+                padding: 8px;
+            }
+        }
+        
+        .page-break {
+            page-break-before: always;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔴 INSTRUCTOR GUIDE - CONFIDENTIAL 🔴</h1>
+        <h2>HTML Foundations - Elements and Tags</h2>
+        <p>CSCI 4513 | Week 2, Class 3 | 40-50 Minutes</p>
+        <p>Date: _____________ | Room: _____________</p>
+    </div>
+
+    <div class="checklist">
+        <h3>Pre-Class Checklist:</h3>
+        <label><input type="checkbox"> Projector/screen working</label><br>
+        <label><input type="checkbox"> Slides loaded and tested</label><br>
+        <label><input type="checkbox"> VS Code ready for demo</label><br>
+        <label><input type="checkbox"> Sample one-page website open</label><br>
+        <label><input type="checkbox"> Guided notes distributed/available</label><br>
+        <label><input type="checkbox"> D2L homework submission link ready</label>
+    </div>
+
+    <!-- OPENING SECTION -->
+    <div class="timing-bar">⏰ MINUTES 1-5: INTRODUCTION & SETUP</div>
+    
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 1: Title</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <p><strong>Welcome students enthusiastically!</strong></p>
+            <teaching-tip class="teaching-tip">
+                💡 Start with energy! "Today we actually start BUILDING things!"
+            </teaching-tip>
+            <p>Mention: This is where the fun begins - we're moving from theory to practice</p>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 2: Quick Recap</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <p><strong>Quick review of previous classes:</strong></p>
+            <ul>
+                <li>Ask: "Who successfully pushed their one-page website to GitHub?"</li>
+                <li>Celebrate successes</li>
+                <li>Address any lingering Git issues briefly</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 3: Learning Objectives</span>
+            <span class="time-marker">1 min</span>
+        </div>
+        <div class="slide-content">
+            <p>Read through objectives</p>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> Students should have objectives visible at top of page
+            </notes-reference>
+        </div>
+    </div>
+
+    <!-- CONCEPTUAL FOUNDATION -->
+    <div class="timing-bar">⏰ MINUTES 5-15: CORE CONCEPTS</div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 4: The Web Trinity</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>EMPHASIZE FOR NOTES:</strong> Have students fill in blanks!
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">ANSWER KEY:</span><br>
+                • HTML provides: <strong>structure</strong> and <strong>content</strong><br>
+                • CSS adds: <strong>style/styling/presentation</strong><br>
+                • JavaScript adds: <strong>behavior/logic/interactivity</strong>
+            </div>
+            <teaching-tip class="teaching-tip">
+                💡 Use analogy: HTML = skeleton, CSS = clothing/skin, JavaScript = muscles/brain
+            </teaching-tip>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 5: Not Programming Languages</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>KEY POINT FOR NOTES:</strong> Students write "programming" in the blank
+            </emphasis-box>
+            <p>Explain: HTML/CSS = markup/styling languages (no logic)</p>
+            <p>JavaScript = actual programming language (has logic)</p>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> "Quick Check" section - review answers together
+            </notes-reference>
+            <div class="answer-key">
+                <span class="label">Quick Check Answers:</span><br>
+                1. Paragraph of text: <strong>HTML</strong><br>
+                2. Change button color: <strong>CSS</strong><br>
+                3. Button click action: <strong>JavaScript</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 6: HTML Tags</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>FILL-IN-THE-BLANKS TIME!</strong>
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">ANSWER KEY:</span><br>
+                • Tags are: <strong>keywords</strong> wrapped in <strong>angle</strong> brackets<br>
+                • Opening tags look like: <strong>&lt;tagname&gt;</strong><br>
+                • Closing tags look like: <strong>&lt;/tagname&gt;</strong><br>
+                • Difference is the: <strong>forward slash /</strong>
+            </div>
+            <teaching-tip class="teaching-tip">
+                💡 Write examples on board as you explain
+            </teaching-tip>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 7: HTML Elements</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>CRITICAL CONCEPT - SLOW DOWN HERE!</strong>
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">Three Parts of an Element:</span><br>
+                1. <strong>Opening</strong> tag<br>
+                2. <strong>Content</strong><br>
+                3. <strong>Closing</strong> tag
+            </div>
+            <p>Have students complete the practice element in their notes:</p>
+            <div class="demo-code">
+                &lt;p&gt;This is my first paragraph!&lt;/p&gt;
+            </div>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> "Complete this Element" exercise
+            </notes-reference>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 8: Common HTML Elements</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <p>Quick overview - students will fill in table during next activity</p>
+            <div class="answer-key">
+                <span class="label">Table Answers:</span><br>
+                • h1-h6: <strong>Headings</strong><br>
+                • p: <strong>Paragraphs</strong><br>
+                • a: <strong>Links/Anchors</strong><br>
+                • div: <strong>Container/Division</strong><br>
+                • span: <strong>Inline text</strong><br>
+                • ul: <strong>Unordered list</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIRST ACTIVITY -->
+    <div class="timing-bar">⏰ MINUTES 15-20: HANDS-ON ACTIVITY #1</div>
+
+    <div class="slide-section page-break">
+        <div class="slide-header">
+            <span>SLIDE 9: Let's Try It!</span>
+            <span class="time-marker">5 min</span>
+        </div>
+        <div class="slide-content">
+            <activity-instructions class="activity-instructions">
+                <strong>ACTIVITY INSTRUCTIONS:</strong>
+                <ol>
+                    <li>Have students open VS Code</li>
+                    <li>Open their one-page website</li>
+                    <li>Walk around and help</li>
+                    <li>Show examples on projector if needed</li>
+                </ol>
+            </activity-instructions>
+            <checklist class="checklist">
+                <strong>Students should add:</strong><br>
+                <label><input type="checkbox"> An h2 heading</label><br>
+                <label><input type="checkbox"> A paragraph</label><br>
+                <label><input type="checkbox"> A link (can be href="#" for now)</label>
+            </checklist>
+            <teaching-tip class="teaching-tip">
+                💡 Common issues: forgetting to save, not refreshing browser, wrong file open
+            </teaching-tip>
+        </div>
+    </div>
+
+    <!-- VOID ELEMENTS -->
+    <div class="timing-bar">⏰ MINUTES 20-30: VOID ELEMENTS & SEMANTIC HTML</div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 10: Void Elements</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>NEW CONCEPT - EMPHASIZE DIFFERENCE!</strong>
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">GUIDED NOTES ANSWERS:</span><br>
+                • Void elements <strong>do not/don't</strong> have a closing tag<br>
+                • Called "void" because they are <strong>empty/void</strong> of content<br>
+                <br>
+                <strong>Common Void Elements:</strong><br>
+                1. <strong>&lt;br&gt;</strong> - Line break<br>
+                2. <strong>&lt;img&gt;</strong> - Image<br>
+                3. <strong>&lt;hr&gt;</strong> - Horizontal rule<br>
+                4. <strong>&lt;input&gt;</strong> - Form input
+            </div>
+            <teaching-tip class="teaching-tip">
+                💡 Emphasize: These elements ARE the content, not containers FOR content
+            </teaching-tip>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 11: Self-Closing Tags</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <p>Quick note about older syntax</p>
+            <div class="answer-key">
+                <span class="label">Modern HTML uses:</span> <strong>&lt;br&gt;</strong> not &lt;br /&gt;
+            </div>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> Fill in modern syntax preference
+            </notes-reference>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 12: Semantic HTML</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>IMPORTANT CONCEPT - TEST MATERIAL!</strong>
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">Three Benefits (GUIDED NOTES):</span><br>
+                1. SEO: <strong>Search engines understand content better</strong><br>
+                2. Accessibility: <strong>Screen readers can navigate properly</strong><br>
+                3. Maintainability: <strong>Other developers understand your code</strong>
+            </div>
+            <teaching-tip class="teaching-tip">
+                💡 Example: Using &lt;h1&gt; vs &lt;p style="font-size:2em"&gt; - same look, different meaning!
+            </teaching-tip>
+        </div>
+    </div>
+
+    <!-- LIVE DEMO -->
+    <div class="timing-bar">⏰ MINUTES 30-35: LIVE CODING DEMO</div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 13: Live Coding Demo</span>
+            <span class="time-marker">5 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>DEMO TIME - STUDENTS CODE ALONG!</strong>
+            </emphasis-box>
+            <p><strong>Demo Checklist:</strong></p>
+            <ol>
+                <li>Create a new HTML file (demo.html)</li>
+                <li>Show heading hierarchy (h1 → h6)</li>
+                <li>Add paragraphs with &lt;br&gt; tags</li>
+                <li>Add an &lt;hr&gt; tag</li>
+                <li>Show nesting with &lt;strong&gt; and &lt;em&gt;</li>
+                <li>Demonstrate wrong nesting, then fix it</li>
+            </ol>
+            <div class="demo-code">
+&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;h2&gt;Subtitle&lt;/h2&gt;
+&lt;p&gt;This is a paragraph with &lt;strong&gt;bold&lt;/strong&gt; text.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Another paragraph&lt;br&gt;with a line break&lt;/p&gt;
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 14: Common Mistakes</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>STUDENTS FILL IN CORRECTIONS!</strong>
+            </emphasis-box>
+            <div class="answer-key">
+                <span class="label">Correct Versions:</span><br>
+                1. Missing closing: <strong>&lt;p&gt;This will work properly&lt;/p&gt;</strong><br>
+                2. Proper nesting: <strong>&lt;p&gt;&lt;strong&gt;Right!&lt;/strong&gt;&lt;/p&gt;</strong>
+            </div>
+            <teaching-tip class="teaching-tip">
+                💡 Show in VS Code how color coding helps identify these errors
+            </teaching-tip>
+        </div>
+    </div>
+
+    <!-- PRACTICE TIME -->
+    <div class="timing-bar">⏰ MINUTES 35-40: PRACTICE TIME</div>
+
+    <div class="slide-section page-break">
+        <div class="slide-header">
+            <span>SLIDE 15: Practice Time!</span>
+            <span class="time-marker">5 min</span>
+        </div>
+        <div class="slide-content">
+            <activity-instructions class="activity-instructions">
+                <strong>10-MINUTE CHALLENGE:</strong>
+                <p>Walk around actively during this time!</p>
+            </activity-instructions>
+            <checklist class="checklist">
+                <strong>Students must add:</strong><br>
+                <label><input type="checkbox"> 3 heading levels (h1, h2, h3)</label><br>
+                <label><input type="checkbox"> Multiple paragraphs</label><br>
+                <label><input type="checkbox"> A horizontal rule (&lt;hr&gt;)</label><br>
+                <label><input type="checkbox"> Bold (&lt;strong&gt;) text</label><br>
+                <label><input type="checkbox"> Italic (&lt;em&gt;) text</label>
+            </checklist>
+            <teaching-tip class="teaching-tip">
+                💡 If students finish early, have them help neighbors
+            </teaching-tip>
+        </div>
+    </div>
+
+    <!-- HOMEWORK & WRAP-UP -->
+    <div class="timing-bar">⏰ MINUTES 40-50: HOMEWORK & CLOSING</div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 16: Homework Assignment</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <emphasis-box class="emphasis-box">
+                <strong>STUDENTS WRITE DOWN THEIR PLANNED TAGS!</strong>
+            </emphasis-box>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> Homework section - fill in Git commands
+            </notes-reference>
+            <div class="answer-key">
+                <span class="label">Git Commands (for notes):</span><br>
+                • Editor: <strong>VS Code</strong><br>
+                • Stage: <strong>git add .</strong><br>
+                • Commit: <strong>git commit -m "message"</strong><br>
+                • Upload: <strong>git push</strong><br>
+                • Submit on: <strong>D2L</strong>
+            </div>
+            <p><strong>Suggested void elements:</strong> &lt;br&gt;, &lt;hr&gt;, &lt;img&gt;</p>
+            <p><strong>Suggested new tags:</strong> &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;blockquote&gt;, &lt;code&gt;</p>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 17: Resources</span>
+            <span class="time-marker">2 min</span>
+        </div>
+        <div class="slide-content">
+            <p>Point out required vs optional resources</p>
+            <emphasis-box class="emphasis-box">
+                <strong>REMIND:</strong> Watch Kevin Powell video BEFORE next class!
+            </emphasis-box>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 18: Q&A</span>
+            <span class="time-marker">3 min</span>
+        </div>
+        <div class="slide-content">
+            <p><strong>Review Questions to Ask Class:</strong></p>
+            <ol>
+                <li>"Can someone explain the difference between a tag and an element?"</li>
+                <li>"Why don't void elements have closing tags?"</li>
+                <li>"Give me an example of semantic vs non-semantic HTML"</li>
+            </ol>
+            <notes-reference class="notes-reference">
+                <span class="section-label">📝 GUIDED NOTES:</span> Students complete review questions
+            </notes-reference>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 19: Next Class Preview</span>
+            <span class="time-marker">1 min</span>
+        </div>
+        <div class="slide-content">
+            <p>Quick preview - builds on today's foundation</p>
+            <emphasis-box class="emphasis-box">
+                <strong>HOMEWORK REMINDER!</strong> Due before Thursday!
+            </emphasis-box>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>SLIDE 20: Closing</span>
+            <span class="time-marker">1 min</span>
+        </div>
+        <div class="slide-content">
+            <p>End on high energy!</p>
+            <teaching-tip class="teaching-tip">
+                💡 "You're now officially web developers - you can create HTML!"
+            </teaching-tip>
+        </div>
+    </div>
+
+    <!-- POST-CLASS -->
+    <div class="timing-bar">⏰ POST-CLASS REMINDERS</div>
+    
+    <div class="checklist">
+        <h3>After Class:</h3>
+        <label><input type="checkbox"> Post homework reminder on D2L</label><br>
+        <label><input type="checkbox"> Upload slides/notes if sharing</label><br>
+        <label><input type="checkbox"> Note any concepts that need review next class</label><br>
+        <label><input type="checkbox"> Check for early homework submissions</label><br>
+        <label><input type="checkbox"> Prepare HTML Boilerplate materials for Thursday</label>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="slide-section page-break">
+        <div class="slide-header">
+            <span>TROUBLESHOOTING GUIDE</span>
+        </div>
+        <div class="slide-content">
+            <h3>Common Student Issues & Solutions:</h3>
+            <table>
+                <tr>
+                    <th>Issue</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>HTML not displaying correctly</td>
+                    <td>Check: File saved? Browser refreshed? Correct file open?</td>
+                </tr>
+                <tr>
+                    <td>Tags showing in browser</td>
+                    <td>Missing angle brackets or typo in tag name</td>
+                </tr>
+                <tr>
+                    <td>VS Code not recognizing HTML</td>
+                    <td>File must end in .html, check file extension</td>
+                </tr>
+                <tr>
+                    <td>Git push failing</td>
+                    <td>Need to pull first, or not logged in to GitHub</td>
+                </tr>
+                <tr>
+                    <td>Can't find their repository</td>
+                    <td>Check GitHub profile, might be in different folder locally</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- TIMING ADJUSTMENTS -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>TIMING ADJUSTMENTS</span>
+        </div>
+        <div class="slide-content">
+            <h3>If Running Behind:</h3>
+            <ul>
+                <li>Skip Slide 11 (self-closing tags)</li>
+                <li>Shorten Practice Time to 7 minutes</li>
+                <li>Move detailed Git commands to next class</li>
+            </ul>
+            
+            <h3>If Running Ahead:</h3>
+            <ul>
+                <li>Extend practice time</li>
+                <li>Show more HTML elements (lists, tables)</li>
+                <li>Demo a simple multi-element page</li>
+                <li>Preview HTML Boilerplate structure</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- KEY TALKING POINTS -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>KEY TALKING POINTS BY TOPIC</span>
+        </div>
+        <div class="slide-content">
+            <h3>HTML vs CSS vs JavaScript:</h3>
+            <ul>
+                <li>"HTML is the noun, CSS is the adjective, JavaScript is the verb"</li>
+                <li>"You could build a website with just HTML - ugly but functional"</li>
+                <li>"CSS without HTML is like clothes without a body"</li>
+            </ul>
+            
+            <h3>Elements and Tags:</h3>
+            <ul>
+                <li>"Tags are like quotation marks - they come in pairs (usually)"</li>
+                <li>"The browser reads HTML top to bottom, like a book"</li>
+                <li>"Think of elements as boxes or containers"</li>
+            </ul>
+            
+            <h3>Semantic HTML:</h3>
+            <ul>
+                <li>"Google needs to understand your content to rank it"</li>
+                <li>"15% of web users rely on screen readers"</li>
+                <li>"Future you will thank current you for semantic HTML"</li>
+            </ul>
+            
+            <h3>Void Elements:</h3>
+            <ul>
+                <li>"Some elements ARE the content, not containers"</li>
+                <li>"Think of br as pressing Enter on your keyboard"</li>
+                <li>"hr is like drawing a line across your page"</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ASSESSMENT IDEAS -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span>QUICK ASSESSMENT IDEAS</span>
+        </div>
+        <div class="slide-content">
+            <h3>Check Understanding (if time):</h3>
+            <ol>
+                <li><strong>Thumbs up/down:</strong> "Can you identify the three parts of an element?"</li>
+                <li><strong>Think-Pair-Share:</strong> "What's an example of a void element?"</li>
+                <li><strong>Exit Ticket:</strong> "Write one thing you learned, one question you have"</li>
+                <li><strong>Cold Call:</strong> "What's the difference between &lt;strong&gt; and &lt;b&gt;?"</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer" style="margin-top: 40px; padding: 20px; text-align: center; background: #f0f0f0; border: 2px solid #333;">
+        <strong>Remember:</strong> Energy and enthusiasm are contagious!<br>
+        Make HTML feel like the exciting building blocks they are! 🚀
+    </div>
+</body>
+</html>
