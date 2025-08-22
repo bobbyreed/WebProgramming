@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE: How the Web Works | CSCI 4513</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.5in;
+            background: white;
+        }
+        
+        .header {
+            border: 3px double #000;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            page-break-after: avoid;
+        }
+        
+        .header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .header p {
+            font-size: 12pt;
+            margin: 5px 0;
+        }
+        
+        .timing-box {
+            border: 2px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            background: #f0f0f0;
+            page-break-inside: avoid;
+        }
+        
+        .timing-box h2 {
+            font-size: 14pt;
+            margin-bottom: 10px;
+        }
+        
+        .slide-section {
+            border-left: 4px solid #000;
+            padding-left: 20px;
+            margin: 25px 0;
+            page-break-inside: avoid;
+        }
+        
+        .slide-section h2 {
+            font-size: 16pt;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        
+        .slide-section h3 {
+            font-size: 12pt;
+            margin: 15px 0 8px 0;
+            font-weight: bold;
+        }
+        
+        .guided-note {
+            background: #ffff99;
+            border: 2px solid #ff6600;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+            page-break-inside: avoid;
+        }
+        
+        .guided-note::before {
+            content: "📝 GUIDED NOTE: ";
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .key-point {
+            background: #e6f3ff;
+            border-left: 5px solid #0066cc;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            page-break-inside: avoid;
+        }
+        
+        .key-point::before {
+            content: "⭐ KEY POINT: ";
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .activity {
+            background: #e6ffe6;
+            border: 2px dashed #009900;
+            padding: 10px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+        
+        .activity::before {
+            content: "🛠️ ACTIVITY: ";
+            font-weight: bold;
+            color: #009900;
+        }
+        
+        .time-marker {
+            float: right;
+            background: #000;
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 10pt;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .answer {
+            color: #ff0000;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .tip-box {
+            border: 1px solid #666;
+            padding: 10px;
+            margin: 10px 0;
+            background: #f9f9f9;
+            font-size: 11pt;
+            page-break-inside: avoid;
+        }
+        
+        .tip-box::before {
+            content: "💡 Teaching Tip: ";
+            font-weight: bold;
+        }
+        
+        .warning {
+            background: #ffe6e6;
+            border: 2px solid #cc0000;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+            page-break-inside: avoid;
+        }
+        
+        .warning::before {
+            content: "⚠️ IMPORTANT: ";
+            color: #cc0000;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: yellow;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                padding: 0.25in;
+            }
+            
+            .header {
+                page-break-after: always;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE</h1>
+        <h2>How the Web Works</h2>
+        <p>CSCI 4513 - Web Programming | Class 2</p>
+        <p><strong>Duration:</strong> 20-30 minutes</p>
+        <p><strong>Materials Needed:</strong> Slides, Guided Notes Handout, Internet Connection</p>
+    </div>
+
+    <div class="timing-box">
+        <h2>⏱️ Timing Breakdown</h2>
+        <ul>
+            <li><strong>Introduction & Objectives:</strong> 2 minutes (Slides 1-2)</li>
+            <li><strong>Networks & Internet:</strong> 4 minutes (Slides 3-5)</li>
+            <li><strong>Data Transfer:</strong> 3 minutes (Slide 6)</li>
+            <li><strong>IP & DNS:</strong> 4 minutes (Slides 7-8)</li>
+            <li><strong>Client-Server:</strong> 2 minutes (Slide 9)</li>
+            <li><strong>Web Components:</strong> 2 minutes (Slide 10)</li>
+            <li><strong>Google Search Journey:</strong> 5 minutes (Slides 11-14)</li>
+            <li><strong>Security & Modern Web:</strong> 3 minutes (Slides 15-17)</li>
+            <li><strong>Review & Activities:</strong> 3 minutes (Slides 18-20)</li>
+            <li><strong>Buffer/Q&A:</strong> 2-5 minutes</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 1-2 -->
+    <div class="slide-section">
+        <span class="time-marker">2 min</span>
+        <h2>SLIDES 1-2: Introduction & Learning Objectives</h2>
+        
+        <h3>Opening Statement:</h3>
+        <p>"Today we're going behind the scenes of something you use every day - the web. By the end of this class, you'll understand what actually happens when you type google.com and hit enter."</p>
+        
+        <div class="tip-box">
+            Start with energy! This sets the tone for the entire lecture. Consider asking: "Who can guess how many steps happen between typing google.com and seeing the page?"
+        </div>
+        
+        <h3>Key Points to Emphasize:</h3>
+        <ul>
+            <li>This is foundational knowledge for everything we'll build</li>
+            <li>We're going BROAD today, not deep</li>
+            <li>Have guided notes ready - we'll be filling in blanks together</li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 3-5 -->
+    <div class="slide-section">
+        <span class="time-marker">4 min</span>
+        <h2>SLIDES 3-5: Networks and Internet Basics</h2>
+        
+        <h3>Slide 3: What's a Network?</h3>
+        
+        <div class="guided-note">
+            Students fill in: A network is <span class="answer">TWO</span> or more computers connected together to share <span class="answer">RESOURCES</span>
+        </div>
+        
+        <p><strong>Use analogy:</strong> "Your home WiFi is like a small neighborhood, the campus network is like a city, and they all connect to form..."</p>
+        
+        <h3>Slide 4: The Internet</h3>
+        
+        <div class="guided-note">
+            Students fill in: The Internet is a <span class="answer">GLOBAL SYSTEM</span> of <span class="answer">NETWORKS</span>. It's the <span class="answer">INFRASTRUCTURE</span> that carries data.
+        </div>
+        
+        <div class="key-point">
+            EMPHASIZE: Internet ≠ World Wide Web. Use highway (Internet) vs cars (services like Web) analogy.
+        </div>
+        
+        <h3>Slide 5: Key Players</h3>
+        
+        <div class="guided-note">
+            Students complete table:
+            <ul>
+                <li>ISP: <span class="answer">Connects you to the internet / Provides internet access</span></li>
+                <li>Router: <span class="answer">Directs traffic between networks</span></li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            Students often confuse routers and modems. Clarify: Modem = translator (coax/fiber to ethernet), Router = traffic director
+        </div>
+    </div>
+
+    <!-- SLIDE 6 -->
+    <div class="slide-section">
+        <span class="time-marker">3 min</span>
+        <h2>SLIDE 6: Packets</h2>
+        
+        <h3>Essential Concept:</h3>
+        <p><strong>Book shipping analogy:</strong> "Imagine shipping a encyclopedia - would you send the whole thing or individual pages?"</p>
+        
+        <div class="guided-note">
+            Students fill in packet contents:
+            <ol>
+                <li><span class="answer">SOURCE</span> address</li>
+                <li><span class="answer">DESTINATION</span> address</li>
+                <li>Piece of the <span class="answer">DATA</span></li>
+                <li><span class="answer">SEQUENCE</span> number</li>
+            </ol>
+        </div>
+        
+        <div class="guided-note">
+            Practice question answer: <span class="answer">Efficiency (multiple routes), Reliability (resend only lost packets), Speed (parallel paths)</span>
+        </div>
+        
+        <div class="tip-box">
+            Draw on board: Show packets taking different routes to same destination. This visual really helps!
+        </div>
+    </div>
+
+    <!-- SLIDE 7-8 -->
+    <div class="slide-section">
+        <span class="time-marker">4 min</span>
+        <h2>SLIDES 7-8: IP Addresses and DNS</h2>
+        
+        <h3>Slide 7: IP Addresses</h3>
+        
+        <div class="guided-note">
+            An IP address is like a <span class="answer">PHONE</span> number for computers
+            <ul>
+                <li>IPv4: <span class="answer">4</span> numbers (0-255)</li>
+                <li>IPv6: Much longer, <span class="answer">HEXADECIMAL</span> format</li>
+            </ul>
+        </div>
+        
+        <p><strong>Transition question:</strong> "But who memorizes IP addresses? Nobody! That's why we need..."</p>
+        
+        <h3>Slide 8: DNS</h3>
+        
+        <div class="guided-note">
+            DNS is the internet's <span class="answer">PHONE</span> book
+            <br>It translates <span class="answer">DOMAIN</span> names into <span class="answer">IP</span> addresses
+        </div>
+        
+        <div class="guided-note">
+            DNS Process blanks:
+            <ol>
+                <li>You type: <span class="answer">www.okcu.edu (or any domain)</span></li>
+                <li>DNS Server looks up the <span class="answer">IP ADDRESS</span></li>
+                <li>Returns: <span class="answer">104.16.20.146 (example)</span></li>
+                <li>Your browser connects to that <span class="answer">IP/ADDRESS</span></li>
+            </ol>
+        </div>
+        
+        <div class="key-point">
+            Use real example: "Let's look up okcu.edu's IP right now!" (Use nslookup or online tool)
+        </div>
+    </div>
+
+    <!-- SLIDE 9 -->
+    <div class="slide-section">
+        <span class="time-marker">2 min</span>
+        <h2>SLIDE 9: Client-Server Model</h2>
+        
+        <h3>Restaurant Analogy:</h3>
+        <p>"Client is the customer, Server is the waiter/kitchen. Client orders (requests), Server delivers (responds)."</p>
+        
+        <div class="guided-note">
+            Table completion:
+            <ul>
+                <li>Client: <span class="answer">REQUESTS</span> information, Your web <span class="answer">BROWSER</span></li>
+                <li>Server: <span class="answer">PROVIDES</span> information, Hosts <span class="answer">WEBSITES</span></li>
+            </ul>
+        </div>
+        
+        <div class="guided-note">
+            Example interaction:
+            <br>Client says: <span class="answer">"Give me the homepage" or "Send me index.html"</span>
+            <br>Server responds: <span class="answer">"Here's the HTML, CSS, and JavaScript"</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 10 -->
+    <div class="slide-section">
+        <span class="time-marker">2 min</span>
+        <h2>SLIDE 10: Web Components - Critical Distinctions!</h2>
+        
+        <div class="warning">
+            Students ALWAYS confuse these. Spend time here!
+        </div>
+        
+        <div class="guided-note">
+            Definitions to complete:
+            <ol>
+                <li><strong>Web Browser:</strong> <span class="answer">Software to access/view websites</span>
+                    <br>Examples: <span class="answer">Chrome</span>, <span class="answer">Firefox</span>, <span class="answer">Safari</span></li>
+                <li><strong>Search Engine:</strong> <span class="answer">Website that finds other websites</span>
+                    <br>Examples: <span class="answer">Google</span>, <span class="answer">Bing</span>, <span class="answer">DuckDuckGo</span></li>
+                <li><strong>Web Page:</strong> <span class="answer">A single document/file on the web</span></li>
+                <li><strong>Web Server:</strong> <span class="answer">Computer that hosts and serves web pages</span></li>
+            </ol>
+        </div>
+        
+        <div class="tip-box">
+            Quick check: "Is Google Chrome a search engine?" (NO! It's a browser) "Is Google.com a browser?" (NO! It's a search engine website)
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SLIDES 11-14 -->
+    <div class="slide-section">
+        <span class="time-marker">5 min</span>
+        <h2>SLIDES 11-14: The Google Search Journey ⭐</h2>
+        
+        <div class="warning">
+            This is the MOST IMPORTANT section - it ties everything together!
+        </div>
+        
+        <h3>Setup (Slide 11):</h3>
+        <p>"Now let's use everything we've learned to trace what happens when you search Google..."</p>
+        
+        <h3>The Journey (Slides 12-14):</h3>
+        
+        <div class="guided-note">
+            Students fill in steps:
+            <ol>
+                <li>Browser checks its <span class="answer">CACHE</span></li>
+                <li>If not found, browser asks <span class="answer">DNS</span> for IP address</li>
+                <li>DNS returns: <span class="answer">142.250.80.46 (example)</span></li>
+                <li>Browser establishes <span class="answer">CONNECTION</span> with Google's server</li>
+                <li>Google sends back <span class="answer">HTML</span>, CSS, and JavaScript</li>
+                <li>Query is <span class="answer">ENCRYPTED</span> (HTTPS) and sent</li>
+                <li>Google searches its <span class="answer">BILLIONS OF INDEXED</span> pages</li>
+                <li>Results returned in about <span class="answer">0.5</span> seconds!</li>
+            </ol>
+        </div>
+        
+        <div class="key-point">
+            Draw this on the board as you go! Visual learners need to SEE the path of data.
+        </div>
+        
+        <div class="tip-box">
+            Pause after each step: "So far we have DNS lookup... then what? Who remembers about packets?"
+        </div>
+    </div>
+
+    <!-- SLIDE 15 -->
+    <div class="slide-section">
+        <span class="time-marker">1 min</span>
+        <h2>SLIDE 15: HTTPS Security</h2>
+        
+        <h3>Quick Security Lesson:</h3>
+        
+        <div class="guided-note">
+            HTTP vs HTTPS comparison:
+            <ul>
+                <li>HTTP: <span class="answer">UNENCRYPTED</span>, Like <span class="answer">POSTCARDS</span></li>
+                <li>HTTPS: <span class="answer">ENCRYPTED</span>, Like <span class="answer">SEALED ENVELOPES</span></li>
+                <li>HTTP: Anyone can <span class="answer">READ</span></li>
+                <li>HTTPS: Only recipient can <span class="answer">READ/DECRYPT</span></li>
+            </ul>
+        </div>
+        
+        <div class="guided-note">
+            When to look for HTTPS: <span class="answer">When entering passwords, payment info, or any sensitive data</span>
+        </div>
+        
+        <div class="activity">
+            Quick check: "Everyone look at your browser right now - do you see the padlock?"
+        </div>
+    </div>
+
+    <!-- SLIDE 16 -->
+    <div class="slide-section">
+        <span class="time-marker">2 min</span>
+        <h2>SLIDE 16: Browser Check Activity</h2>
+        
+        <div class="activity">
+            Have students visit whatismybrowser.com NOW
+            <br>Students record: Browser name and version
+        </div>
+        
+        <h3>Why This Matters:</h3>
+        <ul>
+            <li>Different browsers = different rendering engines</li>
+            <li>You'll need to test in multiple browsers</li>
+            <li>Chrome DevTools vs Firefox Developer Edition</li>
+        </ul>
+        
+        <div class="tip-box">
+            "Surprised by your version number? Browsers update automatically now - that's why version numbers are so high!"
+        </div>
+    </div>
+
+    <!-- SLIDE 17 -->
+    <div class="slide-section">
+        <span class="time-marker">1 min</span>
+        <h2>SLIDE 17: Internet vs. World Wide Web</h2>
+        
+        <div class="guided-note">
+            Students complete comparison:
+            <ul>
+                <li>Internet: The <span class="answer">INFRASTRUCTURE</span>, Physical <span class="answer">NETWORKS</span>, Since <span class="answer">1960s</span></li>
+                <li>WWW: One <span class="answer">SERVICE</span> on internet, Web pages with <span class="answer">LINKS</span>, Created <span class="answer">1989</span>, Uses <span class="answer">HTTP/HTTPS</span> protocol</li>
+            </ul>
+        </div>
+        
+        <div class="guided-note">
+            Analogy completion: The Web runs ON the Internet, like <span class="answer">cars on a highway / apps on a phone / trains on tracks</span>
+        </div>
+        
+        <div class="key-point">
+            "Email existed before the Web! So did file transfer (FTP). The Web is just one way to use the Internet."
+        </div>
+    </div>
+
+    <!-- SLIDES 18-20 -->
+    <div class="slide-section">
+        <span class="time-marker">3 min</span>
+        <h2>SLIDES 18-20: Review and Wrap-up</h2>
+        
+        <h3>Slide 18: Quick Review</h3>
+        <p>Go through each question - have students answer out loud or to a partner</p>
+        
+        <div class="tip-box">
+            Use "Think-Pair-Share" here: 30 seconds to think, 30 seconds to discuss with neighbor, then share with class
+        </div>
+        
+        <h3>Slide 19: Coming Up Next</h3>
+        <ul>
+            <li>Remind about break time</li>
+            <li>Preview environment setup after break</li>
+            <li>Homework reminder - Discord and GitHub accounts!</li>
+        </ul>
+        
+        <h3>Slide 20: Resources</h3>
+        <p>"These resources are in the Odin Project - you'll be working through them for homework"</p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Additional Activities Section -->
+    <div class="slide-section">
+        <h2>📝 Additional Activities & Assessments</h2>
+        
+        <h3>If Time Permits:</h3>
+        
+        <div class="activity">
+            IP Lookup Activity:
+            <br>Have students visit whatismyipaddress.com
+            <br>Students record their IP and ISP in guided notes
+        </div>
+        
+        <div class="activity">
+            Traceroute Demo (if comfortable):
+            <br>Show tracert google.com (Windows) or traceroute google.com (Mac/Linux)
+            <br>"Look at all the hops your packets take!"
+        </div>
+        
+        <h3>Quick Formative Assessments:</h3>
+        <ul>
+            <li><strong>Thumbs up/down:</strong> "Thumbs up if you understand packets, thumbs down if you need clarification"</li>
+            <li><strong>Exit ticket:</strong> "Write one thing you learned and one question you still have"</li>
+            <li><strong>Pair explain:</strong> "Turn to your neighbor and explain DNS in your own words"</li>
+        </ul>
+    </div>
+
+    <!-- Common Issues Section -->
+    <div class="slide-section">
+        <h2>⚠️ Common Student Confusions & Clarifications</h2>
+        
+        <table>
+            <tr>
+                <th>Common Confusion</th>
+                <th>Clarification to Provide</th>
+            </tr>
+            <tr>
+                <td>Browser = Search Engine</td>
+                <td>Browser is the APP (Chrome), Search Engine is a WEBSITE (google.com)</td>
+            </tr>
+            <tr>
+                <td>Internet = WiFi</td>
+                <td>WiFi is just how you connect wirelessly to your LOCAL network</td>
+            </tr>
+            <tr>
+                <td>One packet = one file</td>
+                <td>Files are broken into MANY packets, each takes its own route</td>
+            </tr>
+            <tr>
+                <td>DNS = Google</td>
+                <td>DNS translates names to IPs. Google is a search engine that finds websites</td>
+            </tr>
+            <tr>
+                <td>Server = Big Computer</td>
+                <td>Server is a ROLE, not a size. Your laptop can be a server!</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="slide-section">
+        <h2>🎯 Key Takeaways Students MUST Understand</h2>
+        
+        <ol>
+            <li><strong>The Internet is infrastructure</strong> - physical networks connected globally</li>
+            <li><strong>Data travels in packets</strong> - small chunks that can take different routes</li>
+            <li><strong>DNS translates names to numbers</strong> - like a phone book for the internet</li>
+            <li><strong>Client requests, Server responds</strong> - the fundamental web interaction</li>
+            <li><strong>Browser ≠ Search Engine</strong> - one is software, one is a website</li>
+            <li><strong>HTTPS = Secure</strong> - always look for the padlock</li>
+            <li><strong>Internet ≠ World Wide Web</strong> - the web is just one service on the internet</li>
+        </ol>
+        
+        <div class="warning">
+            If students leave understanding these 7 points, the lecture was successful!
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="slide-section">
+        <h2>📚 Post-Lecture Notes</h2>
+        
+        <h3>Homework Reminder Script:</h3>
+        <p>"Before next class, make sure you've completed the Odin Project Introduction section. This includes watching those videos I referenced and setting up your Discord and GitHub accounts. We'll be using Git extensively starting next class, so don't skip this!"</p>
+        
+        <h3>Connection to Next Lecture:</h3>
+        <p>"Now that you understand HOW the web works, next we'll set up the TOOLS to build for it. We'll install Linux/WSL, set up Git, and start using the command line."</p>
+        
+        <h3>Assessment Notes:</h3>
+        <div style="border: 1px solid #000; padding: 15px; margin: 15px 0;">
+            <p><strong>Quick Check Questions for End of Class:</strong></p>
+            <ul>
+                <li>What happens first when you type a URL? (DNS lookup)</li>
+                <li>True/False: The Internet and WWW are the same thing (False)</li>
+                <li>What does DNS do? (Translates domain names to IP addresses)</li>
+                <li>Is Chrome a search engine? (No, it's a browser)</li>
+                <li>Why do we use packets? (Efficiency, reliability, multiple routes)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- Final Checklist -->
+    <div class="timing-box">
+        <h2>✅ Pre-Lecture Checklist</h2>
+        <ul>
+            <li>☐ Slides loaded and tested</li>
+            <li>☐ Guided notes printed for all students</li>
+            <li>☐ Internet connection verified</li>
+            <li>☐ whatismybrowser.com accessible</li>
+            <li>☐ Board/markers ready for diagrams</li>
+            <li>☐ Timer/clock visible</li>
+        </ul>
+    </div>
+
+    <div class="timing-box">
+        <h2>🎓 Teaching Reminders</h2>
+        <ul>
+            <li>⏰ Watch your time - easy to go long on DNS explanation</li>
+            <li>🎨 Use the board for packet routing diagram</li>
+            <li>❓ Check for understanding after each major concept</li>
+            <li>💬 Encourage questions but defer deep dives to office hours</li>
+            <li>🔄 Reference back to earlier concepts as you build</li>
+            <li>✍️ Give students time to write in their guided notes</li>
+            <li>🎯 Focus on conceptual understanding over technical details</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border: 2px solid #000;">
+        <h2>Remember: This is their FIRST real technical lecture!</h2>
+        <p>Keep it engaging, use lots of analogies, and check for understanding frequently.</p>
+        <p><strong>Your enthusiasm about these fundamentals sets the tone for the entire course!</strong></p>
+    </div>
+</body>
+</html>
