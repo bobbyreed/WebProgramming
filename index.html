@@ -287,18 +287,33 @@
         }
         
         .lecture-unavailable {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
+            position: relative;
+        }
+        
+        .lecture-unavailable:hover {
+            transform: none !important;
+            border-color: #e0e0e0 !important;
+            box-shadow: 0 2px 5px var(--shadow) !important;
+        }
+        
+        [data-theme="dark"] .lecture-unavailable:hover {
+            border-color: #444 !important;
         }
         
         footer {
             background: linear-gradient(135deg, var(--ocu-true-blue) 0%, var(--ocu-dark-blue) 100%);
             text-align: center;
-            color: white;
+            color: white !important;
             padding: 20px;
             font-size: 1.1em;
             border-radius: 10px;
             margin-top: 40px;
+        }
+        
+        footer p {
+            color: white !important;
         }
         
         @media (max-width: 768px) {
@@ -438,31 +453,57 @@
         { number: 31, title: "Final Exam", date: "2025-12-17", link: "#" }
     ];
     
+    /**
+     * Render lectures with availability logic:
+     * - Lectures are locked until the day before their scheduled date
+     * - Lectures can be explicitly marked as unavailable with available: false
+     * - Visual indicators show completed (green), current week (gold), and locked (grayed out)
+     */
     // Render lectures
     function renderLectures() {
         const grid = document.getElementById('lectures-grid');
         if (!grid) return;
         
         const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset to start of day for accurate comparison
         
         lectures.forEach(lecture => {
             const lectureDate = new Date(lecture.date);
+            lectureDate.setHours(0, 0, 0, 0);
+            
+            // Calculate days until lecture
+            const daysUntilLecture = Math.floor((lectureDate - today) / (1000 * 60 * 60 * 24));
+            
+            // Lecture is available if:
+            // 1. It's explicitly marked as available (not false)
+            // 2. AND it's either today, in the past, or tomorrow (day before)
+            const isLocked = lecture.available === false || daysUntilLecture > 1;
+            
             const isCompleted = lectureDate < today;
-            const daysDiff = Math.abs(lectureDate - today) / (1000 * 60 * 60 * 24);
-            const isCurrent = daysDiff < 7;
+            const isCurrent = daysUntilLecture >= 0 && daysUntilLecture <= 7;
             
             const card = document.createElement('a');
             card.className = 'lecture-card';
             
-            if (isCompleted) card.classList.add('completed');
-            if (isCurrent) card.classList.add('current');
+            if (isCompleted && !isLocked) card.classList.add('completed');
+            if (isCurrent && !isLocked) card.classList.add('current');
             
-            if (lecture.available === false) {
+            if (isLocked) {
                 card.href = '#';
                 card.classList.add('lecture-unavailable');
                 card.onclick = (e) => e.preventDefault();
             } else {
                 card.href = lecture.link;
+            }
+            
+            // Format the status message
+            let statusMessage = '';
+            if (lecture.available === false) {
+                statusMessage = '<div style="color: var(--ocu-gold); font-size: 0.9em; margin-top: 5px;">Coming Soon</div>';
+            } else if (daysUntilLecture > 1) {
+                statusMessage = `<div style="color: var(--text-secondary); font-size: 0.9em; margin-top: 5px;">Available in ${daysUntilLecture} days</div>`;
+            } else if (daysUntilLecture === 1) {
+                statusMessage = '<div style="color: var(--ocu-cyan); font-size: 0.9em; margin-top: 5px;">Available tomorrow</div>';
             }
             
             card.innerHTML = `
@@ -473,7 +514,7 @@
                     day: 'numeric', 
                     year: 'numeric' 
                 })}</div>
-                ${lecture.available === false ? '<div style="color: var(--ocu-gold); font-size: 0.9em; margin-top: 5px;">Coming Soon</div>' : ''}
+                ${statusMessage}
             `;
             
             grid.appendChild(card);
