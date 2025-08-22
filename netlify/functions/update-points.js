@@ -1,41 +1,40 @@
 exports.handler = async (event, context) => {
-    console.log('=== Function Start ===');
-    console.log('Method:', event.httpMethod);
-    console.log('Has token?:', !!process.env.GITHUB_TOKEN);
+    console.log('Function invoked with method:', event.httpMethod);
     
     // CORS headers
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json'
     };
     
     // Handle preflight requests
     if (event.httpMethod === 'OPTIONS') {
-        return { 
-            statusCode: 200, 
-            headers, 
-            body: '' 
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
         };
     }
     
-    // Only allow POST requests
+    // Only accept POST requests
     if (event.httpMethod !== 'POST') {
-        return { 
-            statusCode: 405, 
+        return {
+            statusCode: 405,
             headers,
             body: JSON.stringify({ 
                 success: false,
-                error: 'Method Not Allowed' 
+                error: 'Method not allowed' 
             })
         };
     }
     
-    // Get the GitHub token from environment variable
+    // Get GitHub token from environment
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     
     if (!GITHUB_TOKEN) {
-        console.error('GITHUB_TOKEN not configured in Netlify environment variables');
+        console.error('GitHub token not configured');
         return {
             statusCode: 500,
             headers,
@@ -49,11 +48,8 @@ exports.handler = async (event, context) => {
     // Parse request body
     let data;
     try {
-        data = JSON.parse(event.body);
-        console.log('Action requested:', data.action);
-        console.log('Student ID:', data.studentId);
-        console.log('Has gistId?:', !!data.gistId);
-        console.log('Has updateData?:', !!data.updateData);
+        data = JSON.parse(event.body || '{}');
+        console.log('Request action:', data.action);
     } catch (parseError) {
         console.error('Failed to parse request body:', parseError);
         return {
@@ -66,29 +62,168 @@ exports.handler = async (event, context) => {
         };
     }
     
-    // Validate required fields
-    const { action, studentId, gistId, updateData, masterGistId } = data;
-    
-    if (!action || !studentId) {
-        console.error('Missing required fields - action:', action, 'studentId:', studentId);
-        return {
-            statusCode: 400,
-            headers,
-            body: JSON.stringify({ 
-                success: false,
-                error: 'Missing required fields' 
-            })
-        };
-    }
-    
     const API_BASE = 'https://api.github.com/gists';
+    const { action, studentId, gistId, updateData, masterGistId } = data;
     
     try {
         let response;
         
         switch(action) {
+            case 'cleanup':
+                // New cleanup action to verify and remove invalid gist entries
+                if (!masterGistId) {
+                    return {
+                        statusCode: 400,
+                        headers,
+                        body: JSON.stringify({ 
+                            success: false,
+                            error: 'Master gist ID required for cleanup' 
+                        })
+                    };
+                }
+                
+                console.log('Starting cleanup operation...');
+                
+                // Fetch current master config
+                const masterResp = await fetch(`${API_BASE}/${masterGistId}`, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                
+                if (!masterResp.ok) {
+                    console.error('Failed to fetch master config:', masterResp.status);
+                    return {
+                        statusCode: 500,
+                        headers,
+                        body: JSON.stringify({ 
+                            success: false,
+                            error: 'Failed to fetch master config' 
+                        })
+                    };
+                }
+                
+                const masterData = await masterResp.json();
+                const config = JSON.parse(masterData.files['csci3403-config.json'].content);
+                
+                if (!config.students || Object.keys(config.students).length === 0) {
+                    return {
+                        statusCode: 200,
+                        headers,
+                        body: JSON.stringify({
+                            success: true,
+                            message: 'No students to verify',
+                            removedStudents: [],
+                            totalChecked: 0,
+                            totalRemoved: 0
+                        })
+                    };
+                }
+                
+                const removedStudents = [];
+                const verifiedStudents = {};
+                let totalChecked = 0;
+                
+                // Check each student's gist
+                for (const [sid, gid] of Object.entries(config.students)) {
+                    totalChecked++;
+                    console.log(`Checking student ${sid} with gist ${gid}`);
+                    
+                    try {
+                        // Try to fetch the gist
+                        const checkResp = await fetch(`${API_BASE}/${gid}`, {
+                            headers: {
+                                'Authorization': `token ${GITHUB_TOKEN}`,
+                                'Accept': 'application/vnd.github.v3+json'
+                            }
+                        });
+                        
+                        if (checkResp.ok) {
+                            // Gist exists, keep it
+                            verifiedStudents[sid] = gid;
+                            console.log(`✓ Student ${sid} gist is valid`);
+                        } else if (checkResp.status === 404) {
+                            // Gist not found, mark for removal
+                            removedStudents.push({
+                                studentId: sid,
+                                gistId: gid,
+                                reason: 'Gist not found (404)'
+                            });
+                            console.log(`✗ Student ${sid} gist not found`);
+                        } else {
+                            // Other error, keep it to be safe
+                            verifiedStudents[sid] = gid;
+                            console.log(`? Student ${sid} check returned ${checkResp.status}, keeping`);
+                        }
+                    } catch (checkError) {
+                        // Network error, keep the student to be safe
+                        verifiedStudents[sid] = gid;
+                        console.error(`Error checking ${sid}:`, checkError.message);
+                    }
+                    
+                    // Add a small delay to avoid rate limiting
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                
+                // Update master config if any students were removed
+                if (removedStudents.length > 0) {
+                    config.students = verifiedStudents;
+                    config.lastCleanup = new Date().toISOString();
+                    config.cleanupStats = {
+                        date: new Date().toISOString(),
+                        checked: totalChecked,
+                        removed: removedStudents.length,
+                        remaining: Object.keys(verifiedStudents).length
+                    };
+                    
+                    // Update master gist
+                    const updateResp = await fetch(`${API_BASE}/${masterGistId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            files: {
+                                'csci3403-config.json': {
+                                    content: JSON.stringify(config, null, 2)
+                                }
+                            }
+                        })
+                    });
+                    
+                    if (!updateResp.ok) {
+                        console.error('Failed to update master config:', updateResp.status);
+                        return {
+                            statusCode: 500,
+                            headers,
+                            body: JSON.stringify({ 
+                                success: false,
+                                error: 'Failed to update master config after cleanup' 
+                            })
+                        };
+                    }
+                }
+                
+                console.log(`Cleanup complete: ${removedStudents.length} students removed`);
+                
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: `Cleanup complete: ${removedStudents.length} invalid entries removed`,
+                        removedStudents: removedStudents,
+                        totalChecked: totalChecked,
+                        totalRemoved: removedStudents.length,
+                        totalRemaining: Object.keys(verifiedStudents).length
+                    })
+                };
+                
             case 'updateStudent':
-                // Validate gistId for update
+                // Existing update student logic
                 if (!gistId || gistId === 'undefined') {
                     console.error('Invalid gistId for update:', gistId);
                     return {
@@ -121,9 +256,8 @@ exports.handler = async (event, context) => {
                 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('GitHub API error for update:', response.status, errorText);
+                    console.error('GitHub API error:', response.status, errorText);
                     
-                    // Don't expose GitHub error details
                     return {
                         statusCode: 500,
                         headers,
@@ -134,9 +268,7 @@ exports.handler = async (event, context) => {
                     };
                 }
                 
-                console.log('Update successful');
-                
-                // CRITICAL: Don't return GitHub response
+                console.log('Student data updated successfully');
                 return {
                     statusCode: 200,
                     headers,
@@ -148,19 +280,8 @@ exports.handler = async (event, context) => {
                 };
                 
             case 'createGist':
+                // Existing create gist logic
                 console.log(`Creating new gist for student ${studentId}`);
-                
-                if (!updateData) {
-                    console.error('No data provided for new gist');
-                    return {
-                        statusCode: 400,
-                        headers,
-                        body: JSON.stringify({ 
-                            success: false,
-                            error: 'No data provided' 
-                        })
-                    };
-                }
                 
                 response = await fetch(API_BASE, {
                     method: 'POST',
@@ -170,8 +291,8 @@ exports.handler = async (event, context) => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        description: `CSCI 3403 - Student Data - ${studentId}`,
-                        public: false,
+                        description: `CSCI 3403 - Student Data: ${studentId}`,
+                        public: true,
                         files: {
                             'student-data.json': {
                                 content: JSON.stringify(updateData, null, 2)
@@ -203,7 +324,6 @@ exports.handler = async (event, context) => {
                     try {
                         console.log('Updating master config...');
                         
-                        // Fetch current master config
                         const masterResponse = await fetch(`${API_BASE}/${masterGistId}`, {
                             headers: {
                                 'Authorization': `token ${GITHUB_TOKEN}`,
@@ -211,21 +331,17 @@ exports.handler = async (event, context) => {
                             }
                         });
                         
-                        if (!masterResponse.ok) {
-                            console.error('Failed to fetch master config:', masterResponse.status);
-                            // Don't fail the whole operation
-                        } else {
+                        if (masterResponse.ok) {
                             const masterGist = await masterResponse.json();
-                            const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
+                            const configContent = masterGist.files['csci3403-config.json'].content;
+                            const masterConfig = JSON.parse(configContent);
                             
-                            // Add new student
-                            if (!config.students) {
-                                config.students = {};
+                            if (!masterConfig.students) {
+                                masterConfig.students = {};
                             }
-                            config.students[studentId] = newGistId;
-                            config.lastUpdated = new Date().toISOString();
+                            masterConfig.students[studentId] = newGistId;
+                            masterConfig.lastUpdated = new Date().toISOString();
                             
-                            // Update master gist
                             const updateResponse = await fetch(`${API_BASE}/${masterGistId}`, {
                                 method: 'PATCH',
                                 headers: {
@@ -236,7 +352,7 @@ exports.handler = async (event, context) => {
                                 body: JSON.stringify({
                                     files: {
                                         'csci3403-config.json': {
-                                            content: JSON.stringify(config, null, 2)
+                                            content: JSON.stringify(masterConfig, null, 2)
                                         }
                                     }
                                 })
@@ -244,18 +360,15 @@ exports.handler = async (event, context) => {
                             
                             if (!updateResponse.ok) {
                                 console.error('Failed to update master config:', updateResponse.status);
-                                // Don't fail the whole operation
                             } else {
                                 console.log('Master config updated');
                             }
                         }
                     } catch (masterError) {
                         console.error('Error updating master:', masterError);
-                        // Continue anyway - gist was created
                     }
                 }
                 
-                // Return minimal data with gistId for client storage
                 return {
                     statusCode: 200,
                     headers,
@@ -263,93 +376,7 @@ exports.handler = async (event, context) => {
                         success: true,
                         action: 'create',
                         message: 'Student profile created successfully',
-                        gistId: newGistId  // Client needs this for future updates
-                    })
-                };
-                
-            case 'updateMaster':
-                // This is a standalone master update
-                if (!masterGistId || !gistId) {
-                    console.error('Missing data for master update');
-                    return {
-                        statusCode: 400,
-                        headers,
-                        body: JSON.stringify({ 
-                            success: false,
-                            error: 'Missing required data' 
-                        })
-                    };
-                }
-                
-                console.log(`Updating master config with student ${studentId}`);
-                
-                // Fetch current master config
-                const masterResp = await fetch(`${API_BASE}/${masterGistId}`, {
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                
-                if (!masterResp.ok) {
-                    console.error('Failed to fetch master:', masterResp.status);
-                    return {
-                        statusCode: 500,
-                        headers,
-                        body: JSON.stringify({ 
-                            success: false,
-                            error: 'Failed to update class data' 
-                        })
-                    };
-                }
-                
-                const masterData = await masterResp.json();
-                const configData = JSON.parse(masterData.files['csci3403-config.json'].content);
-                
-                // Add/update student
-                if (!configData.students) {
-                    configData.students = {};
-                }
-                configData.students[studentId] = gistId;
-                configData.lastUpdated = new Date().toISOString();
-                
-                // Update master gist
-                const updateResp = await fetch(`${API_BASE}/${masterGistId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        files: {
-                            'csci3403-config.json': {
-                                content: JSON.stringify(configData, null, 2)
-                            }
-                        }
-                    })
-                });
-                
-                if (!updateResp.ok) {
-                    console.error('Failed to update master:', updateResp.status);
-                    return {
-                        statusCode: 500,
-                        headers,
-                        body: JSON.stringify({ 
-                            success: false,
-                            error: 'Failed to update class data' 
-                        })
-                    };
-                }
-                
-                console.log('Master config updated');
-                return {
-                    statusCode: 200,
-                    headers,
-                    body: JSON.stringify({
-                        success: true,
-                        action: 'updateMaster',
-                        message: 'Class data updated successfully'
+                        gistId: newGistId
                     })
                 };
                 
@@ -366,11 +393,9 @@ exports.handler = async (event, context) => {
         }
         
     } catch (error) {
-        // Log full error server-side only
         console.error('Function error:', error.message);
         console.error('Stack:', error.stack);
         
-        // Return generic error to client
         return {
             statusCode: 500,
             headers,
