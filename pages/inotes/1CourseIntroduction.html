@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE - Day 1: Introduction to Web Programming | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            background: white;
+            border: 3px solid #000;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .time-block {
+            background: #f0f0f0;
+            border: 2px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .time-block h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .time-indicator {
+            background: #000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .notes-alert {
+            background: #ffff99;
+            border: 2px solid #ff6600;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            color: #ff6600;
+        }
+        
+        .answer-key {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .answer-key strong {
+            color: #2e7d32;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+        
+        .demo-note {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-note::before {
+            content: "🖥️ DEMO: ";
+            color: #c2185b;
+            font-weight: bold;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        
+        .slide-ref {
+            background: #333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        
+        .emphasis {
+            background: yellow;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #ddd;
+            font-weight: bold;
+        }
+        
+        .timing-table {
+            background: #fff;
+            margin: 20px 0;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            .time-block {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                page-break-after: avoid;
+            }
+        }
+        
+        .critical {
+            color: red;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .vocab-term {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Instructor Guide</h1>
+        <p><strong>Day 1: Introduction to Web Programming - CSCI 3403</strong></p>
+        <p>Total Class Time: 50 minutes | Date: ________________</p>
+    </div>
+
+    <!-- Timing Overview -->
+    <div class="time-block">
+        <h2>Class Timing Overview</h2>
+        <table class="timing-table">
+            <tr>
+                <th>Time</th>
+                <th>Duration</th>
+                <th>Activity</th>
+                <th>Slides</th>
+            </tr>
+            <tr>
+                <td>0:00-0:05</td>
+                <td>5 min</td>
+                <td>Welcome & Agenda</td>
+                <td>1-2</td>
+            </tr>
+            <tr>
+                <td>0:05-0:10</td>
+                <td>5 min</td>
+                <td>Ice Breaker Setup</td>
+                <td>3-4</td>
+            </tr>
+            <tr>
+                <td>0:10-0:40</td>
+                <td>30 min</td>
+                <td>One-Page Website Challenge</td>
+                <td>5-10</td>
+            </tr>
+            <tr>
+                <td>0:40-0:45</td>
+                <td>5 min</td>
+                <td>Odin Project Overview</td>
+                <td>11-14</td>
+            </tr>
+            <tr>
+                <td>0:45-0:50</td>
+                <td>5 min</td>
+                <td>Homework & Wrap-up</td>
+                <td>15-20</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Section 1: Welcome -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slides 1-2</span> Welcome & Agenda <span class="time-indicator">5 min</span></h2>
+        
+        <div class="notes-alert">
+            Students should write their name and date on guided notes header</div>
+        
+        <h3>Talking Points:</h3>
+        <ul>
+            <li>Welcome students enthusiastically - set positive tone</li>
+            <li>This is a hands-on, project-based course</li>
+            <li>Today's exciting challenge: build a website in 30 minutes!</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Build excitement about the ice breaker. Many students are nervous on day 1 - the quick win of deploying a site helps build confidence.
+        </div>
+    </div>
+
+    <!-- Section 2: Ice Breaker Setup -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slides 3-4</span> Ice Breaker Setup <span class="time-indicator">5 min</span></h2>
+        
+        <div class="notes-alert">
+            Students fill in: "PARTNER'S", "whiteboard", "Professor Reed", "SECRET", "swap"
+        </div>
+        
+        <h3>Setup Instructions:</h3>
+        <ul class="checklist">
+            <li>Have whiteboards/markers ready at front of room</li>
+            <li>Students write topics on whiteboard</li>
+            <li>YOU approve each topic (keep them simple!)</li>
+            <li>Students find partners and swap</li>
+        </ul>
+        
+        <div class="demo-note">
+            Show example topics on board: "Coffee Shop", "Space Cats", "Pizza Reviews", "Gym Tips"
+        </div>
+        
+        <div class="answer-key">
+            <strong>Key Phrase to Emphasize:</strong> "Perfect is the enemy of DONE!"
+        </div>
+        
+        <div class="teaching-tip">
+            Move quickly through pairing. If odd number of students, you can be someone's partner or have a group of 3.
+        </div>
+    </div>
+
+    <!-- Section 3: Project Setup Phase -->
+    <div class="time-block page-break">
+        <h2><span class="slide-ref">Slides 5-6</span> Phase 1: Project Setup <span class="time-indicator">During 30-min challenge</span></h2>
+        
+        <div class="notes-alert">
+            Students fill in Git commands: "mkdir", "cd", "init"</div>
+        
+        <div class="answer-key">
+            <strong>Git Commands (WRITE ON BOARD):</strong><br>
+            mkdir partner-topic-site<br>
+            cd partner-topic-site<br>
+            git init
+        </div>
+        
+        <div class="demo-note">
+            Live demo the GitHub repo creation process on projector</div>
+        
+        <div class="notes-alert">
+            VS Code shortcut: "!" for HTML boilerplate<br>
+            CSS link goes in: "&lt;head&gt;"<br>
+            JavaScript goes before: "&lt;/body&gt;"
+        </div>
+        
+        <div class="teaching-tip">
+            Walk around the room during this phase. Many students will need help with GitHub authentication.
+        </div>
+        
+        <h3>Common Issues to Watch For:</h3>
+        <ul>
+            <li>GitHub authentication problems</li>
+            <li>Forgetting to link CSS/JS files</li>
+            <li>Wrong file names (must be index.html)</li>
+        </ul>
+    </div>
+
+    <!-- Section 4: Development Phase -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slide 7</span> Phase 2: Rapid Development <span class="time-indicator">During 30-min challenge</span></h2>
+        
+        <div class="notes-alert">
+            Time limit: "30" minutes (but this phase is ~15 minutes of it)
+        </div>
+        
+        <h3>Required Elements Checklist:</h3>
+        <ul class="checklist">
+            <li>Meaningful &lt;title&gt; tag</li>
+            <li>Header with site name</li>
+            <li>At least 3 content sections</li>
+            <li>Navigation (even if single page)</li>
+            <li>Footer with your name</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Announce time remaining at: 20 min, 10 min, 5 min, 2 min, 30 seconds
+        </div>
+        
+        <div class="critical">
+            Keep reminding: "Ship it! Don't perfect it!"
+        </div>
+    </div>
+
+    <!-- Section 5: Deployment -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slide 8</span> Phase 3: GitHub Pages Deployment <span class="time-indicator">During 30-min challenge</span></h2>
+        
+        <div class="notes-alert">
+            Git commands: "add", "commit", "branch", "push"<br>
+            Settings location: "Settings"<br>
+            Deploy from: "branch"<br>
+            Branch: "main", folder: "/" or "root"<br>
+            Wait time: "2-3" minutes
+        </div>
+        
+        <div class="answer-key">
+            <strong>Git Push Commands (WRITE ON BOARD):</strong><br>
+            git add .<br>
+            git commit -m "Initial site about [topic]"<br>
+            git branch -M main<br>
+            git push -u origin main
+        </div>
+        
+        <div class="demo-note">
+            Show GitHub Pages settings on projector - walk through each step slowly
+        </div>
+        
+        <div class="teaching-tip">
+            Have students help each other if they finish early. Builds community!
+        </div>
+    </div>
+
+    <!-- Section 6: Custom Domain -->
+    <div class="time-block page-break">
+        <h2><span class="slide-ref">Slide 9</span> Phase 4: Custom Domain <span class="time-indicator">Demo only - 2 min</span></h2>
+        
+        <div class="critical">
+            DO NOT LET STUDENTS ATTEMPT THIS ALONE - Demo only or do together later
+        </div>
+        
+        <div class="notes-alert">
+            Students should just copy the A record IPs for reference
+        </div>
+        
+        <h3>A Records (Write on board):</h3>
+        <div class="answer-key">
+            185.199.108.153<br>
+            185.199.109.153<br>
+            185.199.110.153<br>
+            185.199.111.153
+        </div>
+        
+        <div class="teaching-tip">
+            Explain this is optional and can be done in office hours if interested
+        </div>
+    </div>
+
+    <!-- Section 7: Timer Start -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slide 10</span> Start the Challenge! <span class="time-indicator">30 min total</span></h2>
+        
+        <div class="critical">
+            START THE TIMER NOW - 30:00 countdown
+        </div>
+        
+        <h3>During the Challenge:</h3>
+        <ul class="checklist">
+            <li>Walk around constantly</li>
+            <li>Encourage quick decisions</li>
+            <li>Help with technical blocks only</li>
+            <li>Announce time remaining frequently</li>
+            <li>Keep energy high!</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Play upbeat background music if appropriate. Creates energy and masks individual conversations.
+        </div>
+    </div>
+
+    <!-- Section 8: Odin Project -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slides 11-12</span> The Odin Project Introduction <span class="time-indicator">3 min</span></h2>
+        
+        <div class="notes-alert">
+            Students fill in: "free", "web", "theodinproject"
+        </div>
+        
+        <h3>Key Points to Emphasize:</h3>
+        <ul>
+            <li><span class="emphasis">FREE</span> resource - no textbook needed!</li>
+            <li><span class="emphasis">Project-based</span> - build real things</li>
+            <li><span class="emphasis">Industry-relevant</span> - what employers want</li>
+            <li><span class="emphasis">Active community</span> - Discord for help</li>
+        </ul>
+        
+        <div class="answer-key">
+            <strong>Foundations covers:</strong><br>
+            - HTML: Semantic markup, forms, accessibility<br>
+            - CSS: Flexbox, Grid, responsive design<br>
+            - JavaScript: DOM, events, problem solving<br>
+            - Tools: Git, GitHub, command line
+        </div>
+        
+        <div class="demo-note">
+            Navigate to theodinproject.com on projector - show the Foundations path
+        </div>
+    </div>
+
+    <!-- Section 9: Account Setup -->
+    <div class="time-block page-break">
+        <h2><span class="slide-ref">Slides 13-14</span> Getting Started <span class="time-indicator">2 min</span></h2>
+        
+        <div class="notes-alert">
+            Website: "theodinproject.com"
+        </div>
+        
+        <h3>Learning Path Order:</h3>
+        <ol>
+            <li><span class="vocab-term">Introduction</span> - How course works, mindset</li>
+            <li><span class="vocab-term">Prerequisites</span> - Computer basics, installations</li>
+            <li><span class="vocab-term">Git Basics</span> - Version control</li>
+            <li><span class="vocab-term">HTML & CSS</span> - Building pages</li>
+            <li><span class="vocab-term">JavaScript</span> - Interactivity</li>
+        </ol>
+        
+        <div class="teaching-tip">
+            Mention that we'll go deeper than Odin in some areas, and Odin is supplementary
+        </div>
+    </div>
+
+    <!-- Section 10: Homework -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slides 15-16</span> Thursday's Homework <span class="time-indicator">3 min</span></h2>
+        
+        <div class="critical">
+            STUDENTS MUST COMPLETE ODIN SETUP BEFORE THURSDAY
+        </div>
+        
+        <h3>Homework Components (Have students check boxes):</h3>
+        
+        <h4>1. Odin Introduction Sections:</h4>
+        <ul class="checklist">
+            <li>How This Course Will Work</li>
+            <li>Introduction to Web Development</li>
+            <li>Motivation and Mindset</li>
+            <li>Asking For Help</li>
+            <li>Join the Odin Community</li>
+        </ul>
+        
+        <h4>2. Setup Requirements:</h4>
+        <ul class="checklist">
+            <li>Discord setup</li>
+            <li>GitHub setup</li>
+            <li>Tool installations</li>
+        </ul>
+        
+        <h4>3. One-Page Website:</h4>
+        <ul class="checklist">
+            <li>Finish incomplete tasks</li>
+            <li>Add 3+ sections</li>
+            <li>Style with CSS</li>
+            <li>Add JavaScript</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Tell them to post their site URLs in Discord - creates accountability and community
+        </div>
+    </div>
+
+    <!-- Section 11: Success Tips -->
+    <div class="time-block">
+        <h2><span class="slide-ref">Slides 17-18</span> Resources & Success Tips <span class="time-indicator">2 min</span></h2>
+        
+        <div class="notes-alert">
+            Success tips blanks: "Day", "Others", "Error", "Documentation", "Projects", "Questions"
+        </div>
+        
+        <div class="answer-key">
+            <strong>Success Tips (EMPHASIZE THESE):</strong><br>
+            1. Code Every <span class="emphasis">DAY</span><br>
+            2. Help <span class="emphasis">OTHERS</span><br>
+            3. Read <span class="emphasis">ERROR</span> Messages<br>
+            4. Read <span class="emphasis">DOCUMENTATION</span><br>
+            5. Build <span class="emphasis">PROJECTS</span><br>
+            6. Ask <span class="emphasis">QUESTIONS</span>
+        </div>
+        
+        <h3>Resources to Write on Board:</h3>
+        <ul>
+            <li>theodinproject.com</li>
+            <li>Course website: [your URL]</li>
+            <li>Discord: [invite link]</li>
+            <li>Office hours: [your hours]</li>
+            <li>Email: [your email]</li>
+        </ul>
+    </div>
+
+    <!-- Section 12: Wrap-up -->
+    <div class="time-block page-break">
+        <h2><span class="slide-ref">Slides 19-20</span> Wrap-up & Questions <span class="time-indicator">2 min</span></h2>
+        
+        <h3>Closing Checklist:</h3>
+        <ul class="checklist">
+            <li>Congratulate them on deploying their first site!</li>
+            <li>Remind about Thursday homework</li>
+            <li>Answer any questions</li>
+            <li>Share your contact info</li>
+            <li>End with enthusiasm!</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Have students fill out reflection questions in guided notes if time permits, or assign as homework
+        </div>
+        
+        <h3>Reflection Questions (for guided notes):</h3>
+        <ol>
+            <li>What was most challenging about building the website?</li>
+            <li>What are you most excited to learn?</li>
+            <li>What questions do you still have?</li>
+        </ol>
+    </div>
+
+    <!-- After Class -->
+    <div class="time-block">
+        <h2>After Class Checklist</h2>
+        
+        <ul class="checklist">
+            <li>Check that all students joined Discord</li>
+            <li>Review submitted GitHub repos</li>
+            <li>Send welcome email with reminders</li>
+            <li>Post in Discord with encouragement</li>
+            <li>Prepare Thursday's materials</li>
+        </ul>
+        
+        <h3>Common First-Day Issues to Address:</h3>
+        <ul>
+            <li>Students who couldn't deploy - offer office hours help</li>
+            <li>GitHub authentication issues - send setup guide</li>
+            <li>Missing tools/software - provide installation links</li>
+        </ul>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="time-block">
+        <h2>Quick Reference - Key Terms & Commands</h2>
+        
+        <table>
+            <tr>
+                <th>Command/Term</th>
+                <th>What Students Write</th>
+                <th>When to Emphasize</th>
+            </tr>
+            <tr>
+                <td>mkdir</td>
+                <td>Create directory</td>
+                <td>Project setup</td>
+            </tr>
+            <tr>
+                <td>cd</td>
+                <td>Change directory</td>
+                <td>Project setup</td>
+            </tr>
+            <tr>
+                <td>git init</td>
+                <td>Initialize Git</td>
+                <td>Project setup</td>
+            </tr>
+            <tr>
+                <td>git add .</td>
+                <td>Stage all files</td>
+                <td>Deployment</td>
+            </tr>
+            <tr>
+                <td>git commit -m</td>
+                <td>Save changes</td>
+                <td>Deployment</td>
+            </tr>
+            <tr>
+                <td>git push</td>
+                <td>Upload to GitHub</td>
+                <td>Deployment</td>
+            </tr>
+            <tr>
+                <td>!</td>
+                <td>HTML boilerplate</td>
+                <td>VS Code tip</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Final Notes -->
+    <div class="time-block">
+        <h2>Final Teaching Notes</h2>
+        
+        <div class="critical">
+            MOST IMPORTANT: Keep energy high and celebrate small wins!
+        </div>
+        
+        <h3>Remember:</h3>
+        <ul>
+            <li>This sets the tone for the entire semester</li>
+            <li>Focus on building confidence, not perfection</li>
+            <li>Every student should leave with a deployed site</li>
+            <li>Create a supportive, collaborative environment</li>
+            <li>Your enthusiasm is contagious!</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Take a photo of the class with their sites displayed - great for social media and building class community!
+        </div>
+    </div>
+</body>
+</html>
