@@ -375,6 +375,7 @@
     <header class="admin-header">
         <h1 class="admin-title">🎓 Admin Panel - CSCI 3403</h1>
         <div class="admin-controls">
+            <span id="rateLimitStatus" style="margin-right: 20px; color: var(--ocu-cyan);"></span>
             <span id="admin-name">Prof. Reed</span>
             <button class="control-btn" onclick="adminManager.logout()">Logout</button>
         </div>
@@ -392,8 +393,24 @@
                 </div>
             </div>
             
-            <!-- Control Panel -->
+                            <!-- Control Panel -->
             <div class="main-panel">
+                <!-- Rate Limit Info -->
+                <div class="card" style="background: rgba(255, 193, 7, 0.1); border: 1px solid var(--warning-border);">
+                    <h3 style="color: var(--warning-border); margin-bottom: 10px;">⚡ API Rate Limits</h3>
+                    <p style="font-size: 0.9em; line-height: 1.5;">
+                        GitHub limits unauthenticated requests to <strong>60 per hour</strong>. 
+                        Loading all students or running cleanup uses many requests.
+                        <br><br>
+                        <strong>Tips:</strong>
+                        <ul style="margin-left: 20px; margin-top: 5px;">
+                            <li>Wait for rate limit to reset (every hour)</li>
+                            <li>Use the Netlify function for updates (doesn't count against your limit)</li>
+                            <li>Check the rate limit status in the header before operations</li>
+                        </ul>
+                    </p>
+                </div>
+                
                 <!-- Stats Overview -->
                 <div class="card">
                     <h2 class="card-title">
@@ -531,34 +548,133 @@
                 const adminAuth = localStorage.getItem('csci3403_admin');
                 if (adminAuth) {
                     this.isAdmin = true;
+                    await this.updateRateLimitStatus();
                     await this.loadAllData();
+                    
+                    // Update rate limit status every 30 seconds
+                    setInterval(() => this.updateRateLimitStatus(), 30000);
                 } else {
                     this.showAdminLogin();
                 }
+            }
+            
+            async updateRateLimitStatus() {
+                const rateLimit = await this.checkRateLimit();
+                const statusEl = document.getElementById('rateLimitStatus');
+                
+                if (rateLimit) {
+                    const percentage = (rateLimit.remaining / rateLimit.limit) * 100;
+                    let statusColor = 'var(--ocu-green)';
+                    let statusIcon = '✓';
+                    
+                    if (percentage < 20) {
+                        statusColor = 'var(--danger-border)';
+                        statusIcon = '⚠️';
+                    } else if (percentage < 50) {
+                        statusColor = 'var(--warning-border)';
+                        statusIcon = '⚡';
+                    }
+                    
+                    statusEl.innerHTML = `
+                        <span style="color: ${statusColor}">
+                            ${statusIcon} API: ${rateLimit.remaining}/${rateLimit.limit}
+                        </span>
+                    `;
+                    
+                    if (rateLimit.remaining < 10) {
+                        const resetTime = rateLimit.reset.toLocaleTimeString();
+                        statusEl.title = `Rate limit resets at ${resetTime}`;
+                    }
+                } else {
+                    statusEl.innerHTML = '';
+                }
+            }
+            
+            async checkRateLimit() {
+                try {
+                    const response = await fetch('https://api.github.com/rate_limit');
+                    if (response.ok) {
+                        const data = await response.json();
+                        return {
+                            remaining: data.rate.remaining,
+                            limit: data.rate.limit,
+                            reset: new Date(data.rate.reset * 1000)
+                        };
+                    }
+                } catch (err) {
+                    console.error('Failed to check rate limit:', err);
+                }
+                return null;
             }
             
             async loadAllData() {
                 try {
                     this.showLoading('Loading student data...');
                     
+                    // Check rate limit first
+                    const rateLimit = await this.checkRateLimit();
+                    if (rateLimit && rateLimit.remaining < 10) {
+                        const resetTime = rateLimit.reset.toLocaleTimeString();
+                        this.hideLoading();
+                        this.showRateLimitWarning(rateLimit);
+                        return;
+                    }
+                    
                     // Load master config
                     const response = await fetch(`${this.API_BASE}/${this.MASTER_GIST_ID}`);
+                    
+                    if (response.status === 403) {
+                        this.hideLoading();
+                        const rateLimit = await this.checkRateLimit();
+                        this.showRateLimitWarning(rateLimit);
+                        return;
+                    }
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch master config: ${response.status}`);
+                    }
+                    
                     const gist = await response.json();
                     this.masterConfig = JSON.parse(gist.files['csci3403-config.json'].content);
                     
-                    // Load each student's data
+                    // Load each student's data with rate limit awareness
                     if (this.masterConfig.students) {
-                        for (const [studentId, gistId] of Object.entries(this.masterConfig.students)) {
+                        const studentEntries = Object.entries(this.masterConfig.students);
+                        let loadedCount = 0;
+                        let skippedCount = 0;
+                        
+                        for (const [studentId, gistId] of studentEntries) {
                             try {
+                                // Update loading message
+                                this.showLoading(`Loading student ${loadedCount + 1} of ${studentEntries.length}...`);
+                                
                                 const studentResp = await fetch(`${this.API_BASE}/${gistId}`);
+                                
+                                if (studentResp.status === 403) {
+                                    console.warn(`Rate limited - stopping at student ${loadedCount}`);
+                                    skippedCount = studentEntries.length - loadedCount;
+                                    break;
+                                }
+                                
                                 if (studentResp.ok) {
                                     const studentGist = await studentResp.json();
                                     const studentData = JSON.parse(studentGist.files['student-data.json'].content);
                                     this.students.set(studentId, studentData);
+                                    loadedCount++;
                                 }
+                                
+                                // Add small delay to avoid hitting rate limit
+                                if (loadedCount % 10 === 0) {
+                                    await new Promise(resolve => setTimeout(resolve, 500));
+                                }
+                                
                             } catch (err) {
                                 console.error(`Failed to load student ${studentId}:`, err);
                             }
+                        }
+                        
+                        if (skippedCount > 0) {
+                            this.addActivity(`⚠️ Rate limited: Loaded ${loadedCount} of ${studentEntries.length} students`);
                         }
                     }
                     
@@ -566,15 +682,54 @@
                     this.updateDashboard();
                     this.renderStudents();
                     
+                    // Show warning if not all data loaded
+                    if (this.students.size === 0 && this.masterConfig.students) {
+                        const studentCount = Object.keys(this.masterConfig.students).length;
+                        if (studentCount > 0) {
+                            this.addActivity('⚠️ No student data loaded - likely rate limited');
+                        }
+                    }
+                    
                 } catch (error) {
                     console.error('Failed to load data:', error);
                     this.hideLoading();
-                    alert('Failed to load data. Please refresh the page.');
+                    
+                    if (error.message.includes('403')) {
+                        const rateLimit = await this.checkRateLimit();
+                        this.showRateLimitWarning(rateLimit);
+                    } else {
+                        alert('Failed to load data. Error: ' + error.message);
+                    }
                 }
             }
             
+            showRateLimitWarning(rateLimit) {
+                let message = 'GitHub API rate limit exceeded!\n\n';
+                
+                if (rateLimit) {
+                    const resetTime = rateLimit.reset.toLocaleTimeString();
+                    message += `Remaining requests: ${rateLimit.remaining}/${rateLimit.limit}\n`;
+                    message += `Rate limit resets at: ${resetTime}\n\n`;
+                } else {
+                    message += 'Rate limit resets every hour.\n\n';
+                }
+                
+                message += 'This happens when making too many requests to GitHub.\n';
+                message += 'Please wait a few minutes and try again, or use a GitHub token for higher limits.';
+                
+                alert(message);
+                this.addActivity('⚠️ Rate limited by GitHub API');
+            }
+            
             async cleanupGists() {
-                if (!confirm('This will check all student gist IDs and remove invalid entries. Continue?')) {
+                // Check rate limit before cleanup
+                const rateLimit = await this.checkRateLimit();
+                if (rateLimit && rateLimit.remaining < 20) {
+                    this.showRateLimitWarning(rateLimit);
+                    return;
+                }
+                
+                if (!confirm('This will check all student gist IDs and remove invalid entries.\n\nNote: This uses GitHub API requests. Continue?')) {
                     return;
                 }
                 
@@ -606,9 +761,18 @@
                         // Add to activity log
                         this.addActivity(`Cleanup completed: ${result.totalRemoved} invalid gists removed`);
                         
-                        // Reload data to reflect changes
+                        // Only reload if we have enough rate limit remaining
                         if (result.totalRemoved > 0) {
-                            await this.loadAllData();
+                            const currentRateLimit = await this.checkRateLimit();
+                            if (currentRateLimit && currentRateLimit.remaining > 10) {
+                                await this.loadAllData();
+                            } else {
+                                this.addActivity('⚠️ Skipping reload due to rate limit - refresh later');
+                                // Clear local data since it's now out of sync
+                                this.students.clear();
+                                this.renderStudents();
+                                this.updateDashboard();
+                            }
                         }
                     } else {
                         alert('Cleanup failed: ' + (result.error || 'Unknown error'));
@@ -629,7 +793,12 @@
                 
                 // Show message
                 const messageEl = document.getElementById('cleanupMessage');
-                if (result.totalRemoved > 0) {
+                if (result.rateLimited) {
+                    messageEl.innerHTML = `<strong style="color: var(--warning-border);">
+                        ⚠️ Cleanup was partially completed due to rate limiting.<br>
+                        ${result.totalRemoved} invalid gist(s) were removed.
+                    </strong>`;
+                } else if (result.totalRemoved > 0) {
                     messageEl.innerHTML = `<strong style="color: var(--warning-border);">
                         ${result.totalRemoved} invalid gist(s) were removed from the master config.
                     </strong>`;
