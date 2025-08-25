@@ -264,6 +264,57 @@
             text-align: center;
         }
         
+        /* Achievement Showcase */
+        .achievement-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .achievement {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .achievement-icon {
+            font-size: 2em;
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .achievement-student {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+        
+        .achievement-time {
+            color: var(--text-secondary);
+            font-size: 0.8em;
+        }
+        
+        /* Current User Highlight */
+        .leaderboard-item.current-user {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid var(--gradient-start);
+        }
+        
         /* Back Button */
         .back-button {
             position: fixed;
@@ -324,6 +375,14 @@
         <div class="full-leaderboard">
             <h2 style="margin-bottom: 20px; color: var(--text-primary);">Full Rankings</h2>
             <div id="leaderboard-list">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Achievements Section -->
+        <div class="full-leaderboard" style="margin-top: 30px;">
+            <h2 style="margin-bottom: 20px; color: var(--text-primary);">🎖️ Recent Achievements</h2>
+            <div class="achievement-showcase" id="achievements">
                 <!-- Will be populated by JavaScript -->
             </div>
         </div>
@@ -437,6 +496,83 @@
             }).join('');
             
             document.getElementById('leaderboard-list').innerHTML = leaderboardHTML || '<div class="loading">No students enrolled yet</div>';
+            
+            // Display recent achievements
+            displayRecentAchievements(leaderboardData);
+        }
+        
+        function displayRecentAchievements(students) {
+            // Collect all achievements with timestamps
+            const allAchievements = [];
+            
+            students.forEach(student => {
+                if (student.achievements && Array.isArray(student.achievements)) {
+                    student.achievements.forEach(achievement => {
+                        if (achievement.unlockedAt) {
+                            allAchievements.push({
+                                ...achievement,
+                                studentId: student.studentId,
+                                timestamp: new Date(achievement.unlockedAt)
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Sort by most recent and take top 6
+            allAchievements.sort((a, b) => b.timestamp - a.timestamp);
+            const recentAchievements = allAchievements.slice(0, 6);
+            
+            if (recentAchievements.length === 0) {
+                document.getElementById('achievements').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">
+                        No achievements unlocked yet
+                    </div>
+                `;
+                return;
+            }
+            
+            const achievementsHTML = recentAchievements.map(achievement => {
+                const timeAgo = getTimeAgo(achievement.timestamp);
+                return `
+                    <div class="achievement">
+                        <span class="achievement-icon">${achievement.icon || '🏆'}</span>
+                        <div class="achievement-info">
+                            <div class="achievement-name">${achievement.name}</div>
+                            <div class="achievement-student">${achievement.studentId}</div>
+                            <div class="achievement-time">${timeAgo}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('achievements').innerHTML = achievementsHTML;
+        }
+        
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            let interval = Math.floor(seconds / 31536000);
+            if (interval > 1) return interval + " years ago";
+            if (interval === 1) return "1 year ago";
+            
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) return interval + " months ago";
+            if (interval === 1) return "1 month ago";
+            
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) return interval + " days ago";
+            if (interval === 1) return "1 day ago";
+            
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) return interval + " hours ago";
+            if (interval === 1) return "1 hour ago";
+            
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) return interval + " minutes ago";
+            if (interval === 1) return "1 minute ago";
+            
+            return "Just now";
         }
         
         function displayPodium(topThree) {
