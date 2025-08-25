@@ -361,7 +361,7 @@
             
             <div class="nav-buttons">
                 <a href="./pages/leaderboard.html" class="nav-button">🏆 Leaderboard</a>
-                <a href="./pages/userAchievements.html" class="nav-button">🎖️ Achievements</a>
+                <a href="#" class="nav-button">🎖️ Achievements (Coming Soon)</a>
             </div>
         </header>
         
@@ -420,37 +420,37 @@
     <script>
     // Lectures data
     const lectures = [
-        { number: 1, title: "Course Introduction", date: "2025-08-27", link: "./pages/1CourseIntroduction.html", available: false },
-        { number: 2, title: "How the Web Works", date: "2025-08-29", link: "./pages/2HowTheWebWorks.html" },
-        { number: 3, title: "HTML Elements & Tags", date: "2025-09-03", link: "./pages/3HTMLElementsAndTags.html" },
-        { number: 4, title: "HTML Boilerplate", date: "2025-09-05", link: "./pages/4HTMLBoilerplate.html" },
-        { number: 5, title: "Working with Text", date: "2025-09-10", link: "./pages/5HTMLWorkingWithText.html" },
-        { number: 6, title: "Lists, Links & Images", date: "2025-09-12", link: "./pages/6HTMLListsLinksImages.html" },
-        { number: 7, title: "Writing Good Commits", date: "2025-09-17", link: "./pages/7WritingGoodCommits.html" },
-        { number: 8, title: "Intro to CSS", date: "2025-09-19", link: "./pages/8IntrotoCSS.html" },
-        { number: 9, title: "The Cascade", date: "2025-09-24", link: "./pages/9CSSTheCascade.html" },
-        { number: 10, title: "Browser Developer Tools", date: "2025-09-26", link: "./pages/10BrowserDeveloperTools.html" },
-        { number: 11, title: "The Box Model", date: "2025-10-01", link: "./pages/11CSSTheBoxModel.html" },
-        { number: 12, title: "Block and Inline", date: "2025-10-03", link: "./pages/12CSSBlockandInline.html" },
-        { number: 13, title: "Intro to Flexbox", date: "2025-10-08", link: "./pages/13CSSFlexbox.html" },
-        { number: 14, title: "Flexbox Deep Dive", date: "2025-10-10", link: "./pages/14CSSFlexbox2.html" },
-        { number: 15, title: "Midterm Review", date: "2025-10-15", link: "./pages/15MidtermReview.html" },
-        { number: 16, title: "Landing Page Project", date: "2025-10-17", link: "./pages/16LandingPage.html" },
-        { number: 17, title: "JavaScript Introduction", date: "2025-10-22", link: "./pages/17Javascript.html" },
-        { number: 18, title: "JS Environment Setup", date: "2025-10-24", link: "./pages/18JSEnvironmentSetup.html" },
-        { number: 19, title: "Data Types & Conditionals", date: "2025-10-29", link: "./pages/19JSDataTypesandConditionals.html" },
-        { number: 20, title: "JS Developer Tools", date: "2025-10-31", link: "./pages/20JSDeveloperTools.html" },
-        { number: 21, title: "Functions", date: "2025-11-05", link: "./pages/21JSFunctions.html" },
-        { number: 22, title: "Problem Solving", date: "2025-11-07", link: "./pages/22JSProblemSolving.html" },
-        { number: 23, title: "Errors & Debugging", date: "2025-11-12", link: "./pages/23JSErrorsandCleanCode.html" },
-        { number: 24, title: "Clean Code", date: "2025-11-14", link: "./pages/24JSCleanCode.html" },
-        { number: 25, title: "Loops and Arrays", date: "2025-11-19", link: "./pages/25JSLoopsandArrays.html" },
-        { number: 26, title: "Array Methods", date: "2025-11-21", link: "./pages/26JSArrayMethods.html" },
-        { number: 27, title: "DOM Manipulation", date: "2025-11-26", link: "./pages/27JSDOMManipulation.html" },
-        { number: 28, title: "Events", date: "2025-12-03", link: "./pages/28JSEvents.html" },
-        { number: 29, title: "Objects", date: "2025-12-05", link: "./pages/29JSObjects.html" },
-        { number: 30, title: "Final Review", date: "2025-12-10", link: "./pages/30FinalExamReview.html" },
-        { number: 31, title: "Final Exam", date: "2025-12-17", link: "#" }
+        { number: 1, title: "Course Introduction", date: "2025-08-27", link: "./pages/lectures/1CourseIntroduction.html", available: false },
+        { number: 2, title: "How the Web Works", date: "2025-08-29", link: "./pages/lectures/2HowTheWebWorks.html" },
+        { number: 3, title: "HTML Elements & Tags", date: "2025-09-03", link: "./pages/lectures/3HTMLElementsAndTags.html" },
+        { number: 4, title: "HTML Boilerplate", date: "2025-09-05", link: "./pages/lectures/4HTMLBoilerplate.html" },
+        { number: 5, title: "Working with Text", date: "2025-09-10", link: "./pages/lectures/5HTMLWorkingWithText.html" },
+        { number: 6, title: "Lists, Links & Images", date: "2025-09-12", link: "./pages/lectures/6HTMLListsLinksImages.html" },
+        { number: 7, title: "Writing Good Commits", date: "2025-09-17", link: "./pages/lectures/7WritingGoodCommits.html" },
+        { number: 8, title: "Intro to CSS", date: "2025-09-19", link: "./pages/lectures/8IntrotoCSS.html" },
+        { number: 9, title: "The Cascade", date: "2025-09-24", link: "./pages/lectures/9CSSTheCascade.html" },
+        { number: 10, title: "Browser Developer Tools", date: "2025-09-26", link: "./pages/lectures/10BrowserDeveloperTools.html" },
+        { number: 11, title: "The Box Model", date: "2025-10-01", link: "./pages/lectures/11CSSTheBoxModel.html" },
+        { number: 12, title: "Block and Inline", date: "2025-10-03", link: "./pages/lectures/12CSSBlockandInline.html" },
+        { number: 13, title: "Intro to Flexbox", date: "2025-10-08", link: "./pages/lectures/13CSSFlexbox.html" },
+        { number: 14, title: "Flexbox Deep Dive", date: "2025-10-10", link: "./pages/lectures/14CSSFlexbox2.html" },
+        { number: 15, title: "Midterm Review", date: "2025-10-15", link: "./pages/lectures/15MidtermReview.html" },
+        { number: 16, title: "Landing Page Project", date: "2025-10-17", link: "./pages/lectures/16LandingPage.html" },
+        { number: 17, title: "JavaScript Introduction", date: "2025-10-22", link: "./pages/lectures/17Javascript.html" },
+        { number: 18, title: "JS Environment Setup", date: "2025-10-24", link: "./pages/lectures/18JSEnvironmentSetup.html" },
+        { number: 19, title: "Data Types & Conditionals", date: "2025-10-29", link: "./pages/lectures/19JSDataTypesandConditionals.html" },
+        { number: 20, title: "JS Developer Tools", date: "2025-10-31", link: "./pages/lectures/20JSDeveloperTools.html" },
+        { number: 21, title: "Functions", date: "2025-11-05", link: "./pages/lectures/21JSFunctions.html" },
+        { number: 22, title: "Problem Solving", date: "2025-11-07", link: "./pages/lectures/22JSProblemSolving.html" },
+        { number: 23, title: "Errors & Debugging", date: "2025-11-12", link: "./pages/lectures/23JSErrorsandCleanCode.html" },
+        { number: 24, title: "Clean Code", date: "2025-11-14", link: "./pages/lectures/24JSCleanCode.html" },
+        { number: 25, title: "Loops and Arrays", date: "2025-11-19", link: "./pages/lectures/25JSLoopsandArrays.html" },
+        { number: 26, title: "Array Methods", date: "2025-11-21", link: "./pages/lectures/26JSArrayMethods.html" },
+        { number: 27, title: "DOM Manipulation", date: "2025-11-26", link: "./pages/lectures/27JSDOMManipulation.html" },
+        { number: 28, title: "Events", date: "2025-12-03", link: "./pages/lectures/28JSEvents.html" },
+        { number: 29, title: "Objects", date: "2025-12-05", link: "./pages/lectures/29JSObjects.html" },
+        { number: 30, title: "Final Review", date: "2025-12-10", link: "./pages/lectures/30FinalExamReview.html" },
+        { number: 31, title: "Final Exam", date: "2025-12-17", link: "./pages/lectures/31FinalBoss.html" }
     ];
     
     /**
@@ -475,8 +475,9 @@
             const daysUntilLecture = Math.floor((lectureDate - today) / (1000 * 60 * 60 * 24));
             
             // Lecture is available if:
-            // 1. It's explicitly marked as available (not false)
-            // 2. AND it's either today, in the past, or tomorrow (day before)
+            // 1. It's explicitly mared as available (not false)
+            //AND
+            // 2. AND it's either today, in the past, or tomorrow (dya before)
             const isLocked = lecture.available === false || daysUntilLecture > 1;
             
             const isCompleted = lectureDate < today;
