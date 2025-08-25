@@ -995,7 +995,7 @@
                     
                     // Use the classPin from config as admin PIN
                     // You could also add a separate adminPin field to your config
-                    if (pin === config.classPin) {
+                    if (pin === config.adminPin) {
                         localStorage.setItem('csci3403_admin', 'true');
                         location.reload();
                     } else {
