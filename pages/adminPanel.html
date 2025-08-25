@@ -981,11 +981,29 @@
             async authenticateAdmin() {
                 const pin = document.getElementById('adminPin').value;
                 
-                if (pin === '1337') { // Change this to your admin PIN
-                    localStorage.setItem('csci3403_admin', 'true');
-                    location.reload();
-                } else {
-                    alert('Invalid admin PIN');
+                try {
+                    // Fetch the configuration from master gist
+                    const MASTER_GIST_ID = '0d1ed1373d1b88183b2e94542bbbad1f';
+                    const response = await fetch(`https://api.github.com/gists/${MASTER_GIST_ID}`);
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch configuration');
+                    }
+                    
+                    const gist = await response.json();
+                    const config = JSON.parse(gist.files['csci3403-config.json'].content);
+                    
+                    // Use the classPin from config as admin PIN
+                    // You could also add a separate adminPin field to your config
+                    if (pin === config.classPin) {
+                        localStorage.setItem('csci3403_admin', 'true');
+                        location.reload();
+                    } else {
+                        alert('Invalid admin PIN');
+                    }
+                } catch (error) {
+                    console.error('Authentication error:', error);
+                    alert('Failed to verify PIN. Please try again.');
                 }
             }
             
