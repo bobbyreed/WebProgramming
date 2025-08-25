@@ -788,6 +788,7 @@
                 const gist = await response.json();
                 const studentData = JSON.parse(gist.files['student-data.json'].content);
 
+                // Store both simplified currentUser and full data
                 currentUser = {
                     id: studentId,
                     gistId: gistId,
@@ -799,7 +800,8 @@
                     streak: studentData.streak || 0,
                     activities: studentData.activities || [],
                     lastActive: studentData.lastActive,
-                    joinedDate: studentData.joinedDate
+                    joinedDate: studentData.joinedDate,
+                    fullData: studentData  // Store the complete original data
                 };
 
                 // Update UI
@@ -821,7 +823,8 @@
                         viewedLectures: data.viewedLectures || {},
                         streak: data.streak || 0,
                         activities: data.activities || [],
-                        lastActive: data.lastActive
+                        lastActive: data.lastActive,
+                        fullData: data  // Store whatever we have locally
                     };
                     document.getElementById('userName').textContent = currentUser.name;
                     document.getElementById('userPoints').textContent = currentUser.points;
@@ -1171,80 +1174,80 @@
 
         // Save Showcase
         async function saveShowcase() {
-    if (!currentUser || !currentUser.gistId) {
-        showToast('Error: User data not loaded', 'error');
-        return;
-    }
-
-    const btn = document.querySelector('.save-showcase-btn');
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Saving...';
-
-    try {
-        // Update showcase in user data
-        currentUser.showcase = showcaseSelection.map(a => a.id);
-        
-        // First, fetch the current full student data to preserve all fields
-        const response = await fetch(`${API_BASE}/${currentUser.gistId}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch current data');
-        }
-        
-        const gist = await response.json();
-        const fullStudentData = JSON.parse(gist.files['student-data.json'].content);
-        
-        // Update only the showcase and lastActive fields in the full data
-        fullStudentData.showcase = currentUser.showcase;
-        fullStudentData.lastActive = new Date().toISOString();
-        
-        // Track social activity if not already done
-        if (!fullStudentData.socialActivities) {
-            fullStudentData.socialActivities = {};
-        }
-        fullStudentData.socialActivities.showcaseUpdates = 
-            (fullStudentData.socialActivities.showcaseUpdates || 0) + 1;
-        
-        // Send update via Netlify function
-        const updateResponse = await fetch(FUNCTION_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'updateStudent',
-                studentId: currentUser.id,
-                gistId: currentUser.gistId,
-                updateData: fullStudentData  // Send the complete data
-            })
-        });
-
-        if (!updateResponse.ok) {
-            throw new Error('Failed to save showcase');
-        }
-
-        const result = await updateResponse.json();
-        if (result.success) {
-            showToast('Showcase saved successfully!', 'success');
-            
-            // Update local storage
-            const localData = JSON.parse(localStorage.getItem('csci3403_progress') || '{}');
-            localData.showcase = currentUser.showcase;
-            localStorage.setItem('csci3403_progress', JSON.stringify(localData));
-            
-            // Track social achievement if authManager is available
-            if (window.authManager) {
-                window.authManager.trackSocialActivity('update_showcase');
+            if (!currentUser || !currentUser.gistId) {
+                showToast('Error: User data not loaded', 'error');
+                return;
             }
-        } else {
-            throw new Error(result.error || 'Failed to save');
-        }
 
-    } catch (error) {
-        console.error('Error saving showcase:', error);
-        showToast('Error saving showcase. Please try again.', 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '💾 Save Showcase';
-    }
-}
+            const btn = document.querySelector('.save-showcase-btn');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Saving...';
+
+            try {
+                // Update showcase in user data
+                currentUser.showcase = showcaseSelection.map(a => a.id);
+                
+                // First, fetch the current full student data to preserve all fields
+                const response = await fetch(`${API_BASE}/${currentUser.gistId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch current data');
+                }
+                
+                const gist = await response.json();
+                const fullStudentData = JSON.parse(gist.files['student-data.json'].content);
+                
+                // Update only the showcase and lastActive fields in the full data
+                fullStudentData.showcase = currentUser.showcase;
+                fullStudentData.lastActive = new Date().toISOString();
+                
+                // Track social activity if not already done
+                if (!fullStudentData.socialActivities) {
+                    fullStudentData.socialActivities = {};
+                }
+                fullStudentData.socialActivities.showcaseUpdates = 
+                    (fullStudentData.socialActivities.showcaseUpdates || 0) + 1;
+                
+                // Send update via Netlify function
+                const updateResponse = await fetch(FUNCTION_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'updateStudent',
+                        studentId: currentUser.id,
+                        gistId: currentUser.gistId,
+                        updateData: fullStudentData  // Send the complete data
+                    })
+                });
+
+                if (!updateResponse.ok) {
+                    throw new Error('Failed to save showcase');
+                }
+
+                const result = await updateResponse.json();
+                if (result.success) {
+                    showToast('Showcase saved successfully!', 'success');
+                    
+                    // Update local storage
+                    const localData = JSON.parse(localStorage.getItem('csci3403_progress') || '{}');
+                    localData.showcase = currentUser.showcase;
+                    localStorage.setItem('csci3403_progress', JSON.stringify(localData));
+                    
+                    // Track social achievement if authManager is available
+                    if (window.authManager) {
+                        window.authManager.trackSocialActivity('update_showcase');
+                    }
+                } else {
+                    throw new Error(result.error || 'Failed to save');
+                }
+
+            } catch (error) {
+                console.error('Error saving showcase:', error);
+                showToast('Error saving showcase. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '💾 Save Showcase';
+            }
+        }
 
         if (window.authManager) {
             window.authManager.trackSocialActivity('update_showcase');
