@@ -748,89 +748,176 @@
         });
 
         // Load All Data
-        async function loadAllData() {
-            try {
-                // Load current user
-                await loadCurrentUser();
-                
-                // Load all students for feed
-                await loadAllStudents();
-                
-                // Initialize UI
-                initializeAchievements();
-                displayFeed();
-                setupShowcase();
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-                showToast('Error loading data. Please refresh.', 'error');
-            }
+       async function loadAllData() {
+        try {
+            // Load current user
+            await loadCurrentUser();
+            console.log('Current user loaded, showcase:', currentUser?.showcase);
+            
+            // Load all students for feed
+            await loadAllStudents();
+            
+            // Initialize UI
+            initializeAchievements();
+            displayFeed();
+            setupShowcase();  // This should now properly restore the saved showcase
+            
+        } catch (error) {
+            console.error('Error loading data:', error);
+            showToast('Error loading data. Please refresh.', 'error');
         }
-
+    }
         // Load Current User
         async function loadCurrentUser() {
-            const authData = JSON.parse(localStorage.getItem('csci3403_auth'));
-            const studentId = authData.studentId;
+    const authData = JSON.parse(localStorage.getItem('csci3403_auth'));
+    const studentId = authData.studentId;
 
-            try {
-                // Get student's gist ID from master config
-                const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
-                const masterGist = await masterResponse.json();
-                const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
-                
-                const gistId = config.students[studentId];
-                if (!gistId) {
-                    throw new Error('Student not found in system');
-                }
-
-                // Fetch student data
-                const response = await fetch(`${API_BASE}/${gistId}`);
-                const gist = await response.json();
-                const studentData = JSON.parse(gist.files['student-data.json'].content);
-
-                // Store both simplified currentUser and full data
-                currentUser = {
-                    id: studentId,
-                    gistId: gistId,
-                    name: studentData.name || studentId,
-                    points: studentData.points || 0,
-                    achievements: studentData.achievements || [],
-                    showcase: studentData.showcase || [],
-                    viewedLectures: studentData.viewedLectures || {},
-                    streak: studentData.streak || 0,
-                    activities: studentData.activities || [],
-                    lastActive: studentData.lastActive,
-                    joinedDate: studentData.joinedDate,
-                    fullData: studentData  // Store the complete original data
-                };
-
-                // Update UI
-                document.getElementById('userName').textContent = currentUser.name;
-                document.getElementById('userPoints').textContent = currentUser.points;
-
-            } catch (error) {
-                console.error('Error loading user data:', error);
-                // Fallback to local storage
-                const localData = localStorage.getItem('csci3403_progress');
-                if (localData) {
-                    const data = JSON.parse(localData);
-                    currentUser = {
-                        id: studentId,
-                        name: studentId,
-                        points: data.points || 0,
-                        achievements: data.achievements || [],
-                        showcase: data.showcase || [],
-                        viewedLectures: data.viewedLectures || {},
-                        streak: data.streak || 0,
-                        activities: data.activities || [],
-                        lastActive: data.lastActive,
-                        fullData: data  // Store whatever we have locally
-                    };
-                    document.getElementById('userName').textContent = currentUser.name;
-                    document.getElementById('userPoints').textContent = currentUser.points;
-                }
-            }
+    try {
+        // Get student's gist ID from master config
+        const masterResponse = await fetch(`${API_BASE}/${MASTER_GIST_ID}`);
+        const masterGist = await masterResponse.json();
+        const config = JSON.parse(masterGist.files['csci3403-config.json'].content);
+        
+        const gistId = config.students[studentId];
+        if (!gistId) {
+            throw new Error('Student not found in system');
         }
+
+        // Fetch student data
+        const response = await fetch(`${API_BASE}/${gistId}`);
+        const gist = await response.json();
+        const studentData = JSON.parse(gist.files['student-data.json'].content);
+
+        currentUser = {
+            id: studentId,
+            gistId: gistId,
+            name: studentData.name || studentId,
+            points: studentData.points || 0,
+            achievements: studentData.achievements || [],
+            showcase: studentData.showcase || [],  // This should be an array of IDs
+            viewedLectures: studentData.viewedLectures || {},
+            streak: studentData.streak || 0,
+            activities: studentData.activities || [],
+            lastActive: studentData.lastActive,
+            joinedDate: studentData.joinedDate
+        };
+
+        // Log for debugging
+        console.log('Loaded user showcase:', currentUser.showcase);
+
+        // Update UI
+        document.getElementById('userName').textContent = currentUser.name;
+        document.getElementById('userPoints').textContent = currentUser.points;
+
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        // Fallback to local storage
+        const localData = localStorage.getItem('csci3403_progress');
+        if (localData) {
+            const data = JSON.parse(localData);
+            currentUser = {
+                id: studentId,
+                name: studentId,
+                points: data.points || 0,
+                achievements: data.achievements || [],
+                showcase: data.showcase || [],
+                viewedLectures: data.viewedLectures || {},
+                streak: data.streak || 0,
+                activities: data.activities || [],
+                lastActive: data.lastActive
+            };
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userPoints').textContent = currentUser.points;
+        }
+    }
+}
+
+// Update the saveShowcase function to be more robust:
+async function saveShowcase() {
+    if (!currentUser || !currentUser.gistId) {
+        showToast('Error: User data not loaded', 'error');
+        return;
+    }
+
+    const btn = document.querySelector('.save-showcase-btn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Saving...';
+
+    try {
+        // Update showcase in user data (save as array of IDs)
+        const showcaseIds = showcaseSelection.map(a => a.id);
+        console.log('Saving showcase IDs:', showcaseIds);
+        
+        // First, fetch the current full student data to preserve all fields
+        const response = await fetch(`${API_BASE}/${currentUser.gistId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch current data');
+        }
+        
+        const gist = await response.json();
+        const fullStudentData = JSON.parse(gist.files['student-data.json'].content);
+        
+        // Update the showcase field with IDs
+        fullStudentData.showcase = showcaseIds;
+        fullStudentData.lastActive = new Date().toISOString();
+        
+        // Track social activity
+        if (!fullStudentData.socialActivities) {
+            fullStudentData.socialActivities = {};
+        }
+        fullStudentData.socialActivities.showcaseUpdates = 
+            (fullStudentData.socialActivities.showcaseUpdates || 0) + 1;
+        
+        console.log('Sending update with showcase:', fullStudentData.showcase);
+        
+        // Send update via Netlify function
+        const updateResponse = await fetch(FUNCTION_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'updateStudent',
+                studentId: currentUser.id,
+                gistId: currentUser.gistId,
+                updateData: fullStudentData
+            })
+        });
+
+        if (!updateResponse.ok) {
+            const errorText = await updateResponse.text();
+            console.error('Update response error:', errorText);
+            throw new Error('Failed to save showcase');
+        }
+
+        const result = await updateResponse.json();
+        if (result.success) {
+            // Update currentUser to reflect the saved showcase
+            currentUser.showcase = showcaseIds;
+            
+            showToast('Showcase saved successfully!', 'success');
+            
+            // Update local storage
+            const localData = JSON.parse(localStorage.getItem('csci3403_progress') || '{}');
+            localData.showcase = showcaseIds;
+            localStorage.setItem('csci3403_progress', JSON.stringify(localData));
+            
+            // Track social achievement if authManager is available
+            if (window.authManager && window.authManager.trackSocialActivity) {
+                window.authManager.trackSocialActivity('update_showcase');
+            }
+            
+            console.log('Showcase saved successfully!');
+        } else {
+            throw new Error(result.error || 'Failed to save');
+        }
+
+    } catch (error) {
+        console.error('Error saving showcase:', error);
+        showToast('Error saving showcase. Please try again.', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '💾 Save Showcase';
+    }
+}
 
         // Load All Students
         async function loadAllStudents() {
@@ -1095,6 +1182,55 @@
             const availableContainer = document.getElementById('availableForShowcase');
             const unlockedAchievements = ACHIEVEMENTS.filter(a => checkAchievementUnlocked(a));
             
+            // First, restore the showcase selection from saved data
+            showcaseSelection = [];
+            if (currentUser && currentUser.showcase && Array.isArray(currentUser.showcase)) {
+                // Map saved IDs back to achievement objects
+                currentUser.showcase.forEach(savedId => {
+                    const achievement = ACHIEVEMENTS.find(a => a.id === savedId);
+                    if (achievement && checkAchievementUnlocked(achievement)) {
+                        showcaseSelection.push(achievement);
+                    }
+                });
+                console.log('Restored showcase with', showcaseSelection.length, 'achievements');
+            }
+            
+            if (unlockedAchievements.length === 0) {
+                availableContainer.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+                        Unlock achievements to add them to your showcase
+                    </div>
+                `;
+            } else {
+                availableContainer.innerHTML = '';
+                unlockedAchievements.forEach(achievement => {
+                    const item = document.createElement('div');
+                    item.className = 'selectable-achievement';
+                    
+                    // Check if this achievement is already in the showcase
+                    const isSelected = showcaseSelection.some(a => a.id === achievement.id);
+                    if (isSelected) {
+                        item.classList.add('selected');
+                    }
+                    
+                    item.innerHTML = `
+                        <span style="font-size: 1.5em;">${achievement.icon}</span>
+                        <span>${achievement.name}</span>
+                    `;
+                    item.onclick = () => toggleShowcaseItem(achievement);
+                    availableContainer.appendChild(item);
+                });
+            }
+            
+            // Update the display
+            updateShowcaseDisplay();
+            
+            // Enable save button
+            document.querySelector('.save-showcase-btn').disabled = false;
+        }
+            const availableContainer = document.getElementById('availableForShowcase');
+            const unlockedAchievements = ACHIEVEMENTS.filter(a => checkAchievementUnlocked(a));
+            
             if (unlockedAchievements.length === 0) {
                 availableContainer.innerHTML = `
                     <div style="padding: 20px; text-align: center; color: var(--text-muted);">
@@ -1129,7 +1265,7 @@
             
             // Enable save button
             document.querySelector('.save-showcase-btn').disabled = false;
-        }
+        
 
         // Toggle Showcase Item
         function toggleShowcaseItem(achievement) {
