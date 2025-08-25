@@ -786,6 +786,12 @@
         };
         header.appendChild(refreshBtn);
     });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.authManager) {
+            window.authManager.trackSocialActivity('view_leaderboard');
+        }
+    });
 </script>
 </body>
 </html>
