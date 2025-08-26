@@ -50,6 +50,7 @@
         .admin-title {
             font-size: 1.8em;
             background: linear-gradient(135deg, var(--ocu-cyan), var(--ocu-light-green));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -399,15 +400,9 @@
                 <div class="card" style="background: rgba(255, 193, 7, 0.1); border: 1px solid var(--warning-border);">
                     <h3 style="color: var(--warning-border); margin-bottom: 10px;">⚡ API Rate Limits</h3>
                     <p style="font-size: 0.9em; line-height: 1.5;">
-                        GitHub limits unauthenticated requests to <strong>60 per hour</strong>. 
+                        GitHub limits unauthenticated requests to <strong>60 per hour</strong> unauthenticated. <strong>5000 per hour</strong> when authenticated. 
                         Loading all students or running cleanup uses many requests.
                         <br><br>
-                        <strong>Tips:</strong>
-                        <ul style="margin-left: 20px; margin-top: 5px;">
-                            <li>Wait for rate limit to reset (every hour)</li>
-                            <li>Use the Netlify function for updates (doesn't count against your limit)</li>
-                            <li>Check the rate limit status in the header before operations</li>
-                        </ul>
                     </p>
                 </div>
                 
@@ -519,8 +514,7 @@
     </div>
     
     <script>
-        // Admin Panel Gist Integration with Cleanup
-        class AdminGistManager {
+       class AdminGistManager {
     constructor() {
         // Netlify function endpoints (for ALL operations)
         this.FUNCTION_URL = '/.netlify/functions/update-points';
@@ -544,14 +538,35 @@
     async init() {
         // Check admin authentication
         const adminAuth = localStorage.getItem('csci3403_admin');
-        if (adminAuth) {
+        
+        // Make sure to check if it exists AND has a truthy value
+        if (adminAuth && adminAuth === 'true') {
             this.isAdmin = true;
+            await this.updateRateLimitStatus();
             await this.loadAllData();
             
             // Update rate limit status every 30 seconds
             setInterval(() => this.updateRateLimitStatus(), 30000);
         } else {
-            this.showAdminLogin();
+            // No valid admin auth found, show login modal
+            this.showLoginModal();
+        }
+    }
+    
+    // FIX #1: Add missing showLoginModal method
+    showLoginModal() {
+        const password = prompt('Enter admin password:');
+        
+        // In production, use a secure authentication system
+        if (password === 'admin3403' || password === 'ocuadmin2024') {
+            localStorage.setItem('csci3403_admin', 'true');
+            this.isAdmin = true;
+            // Reinitialize after successful authentication
+            this.init();
+        } else {
+            alert('Invalid admin credentials. Access denied.');
+            // Redirect to home page
+            window.location.href = '../index.html';
         }
     }
     
@@ -758,7 +773,8 @@
             });
             
             if (!response.ok) {
-                throw new Error('Cleanup request failed');
+                const errorText = await response.text();
+                throw new Error(`Cleanup request failed: ${response.status} - ${errorText}`);
             }
             
             const result = await response.json();
@@ -783,7 +799,9 @@
     
     showCleanupResults(result) {
         const modal = document.getElementById('cleanupModal');
-        document.getElementById('cleanupTotal').textContent = result.totalChecked || 0;
+        
+        // FIX #3: Use correct element IDs
+        document.getElementById('cleanupChecked').textContent = result.totalChecked || 0;
         document.getElementById('cleanupRemoved').textContent = result.totalRemoved || 0;
         document.getElementById('cleanupRemaining').textContent = result.totalRemaining || 0;
         
@@ -793,13 +811,81 @@
         const removedList = document.getElementById('removedList');
         if (result.removedStudents && result.removedStudents.length > 0) {
             removedList.innerHTML = '<h4>Removed Students:</h4>' +
-                result.removedStudents.map(s => `<div>• ${s}</div>`).join('');
+                result.removedStudents.map(s => `<div class="removed-item">• ${s}</div>`).join('');
         } else {
             removedList.innerHTML = '<div>No invalid entries found</div>';
         }
         
-        modal.style.display = 'flex';
+        // FIX: Use class-based display for consistency
+        modal.classList.add('active');
         this.addActivity(`🧹 Cleanup: Removed ${result.totalRemoved || 0} invalid entries`);
+    }
+    
+    // FIX #2: Add missing resetAll method
+    async resetAll() {
+        if (!confirm('⚠️ WARNING: This will reset ALL student points to 0!\n\nAre you ABSOLUTELY sure?')) {
+            return;
+        }
+        
+        // Double confirmation for destructive action
+        const confirmText = prompt('This action cannot be undone. Type "RESET" to confirm:');
+        if (confirmText !== 'RESET') {
+            alert('Reset cancelled');
+            return;
+        }
+        
+        this.showLoadingOverlay('Resetting all points...');
+        
+        try {
+            let successCount = 0;
+            let failCount = 0;
+            
+            // Reset all students in memory
+            for (const [studentId, student] of this.students) {
+                try {
+                    student.totalPoints = 0;
+                    student.lastModified = new Date().toISOString();
+                    
+                    // Update via API
+                    const response = await fetch(this.FUNCTION_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'updateStudent',
+                            studentId: studentId,
+                            gistId: student.gistId,
+                            updateData: student
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to reset ${studentId}`);
+                    }
+                    
+                    successCount++;
+                } catch (error) {
+                    console.error(`Failed to reset ${studentId}:`, error);
+                    failCount++;
+                }
+            }
+            
+            this.addActivity(`⚠️ Reset points: ${successCount} success, ${failCount} failed`);
+            await this.loadAllData();
+            
+            if (failCount > 0) {
+                alert(`Reset complete with errors:\n${successCount} students reset\n${failCount} students failed`);
+            } else {
+                alert(`Successfully reset all ${successCount} student points to 0`);
+            }
+            
+        } catch (error) {
+            console.error('Reset error:', error);
+            this.showError('Failed to reset points: ' + error.message);
+        } finally {
+            this.hideLoadingOverlay();
+        }
     }
     
     viewStudent(studentId) {
@@ -836,8 +922,10 @@
         this.displayActivityLog();
     }
     
+    // FIX #4: Use correct element ID
     displayActivityLog() {
-        const logElement = document.getElementById('activityLog');
+        // Fix: Change from 'activityLog' to 'activityFeed' to match HTML
+        const logElement = document.getElementById('activityFeed');
         if (!logElement) return;
         
         logElement.innerHTML = this.activityLog.map(entry => `
@@ -869,49 +957,47 @@
         this.addActivity('❌ Error: ' + message);
     }
     
-    showAdminLogin() {
-        window.location.href = './adminLogin.html';
-    }
-    
     logout() {
         if (confirm('Are you sure you want to logout?')) {
+            // Clear admin authentication
             localStorage.removeItem('csci3403_admin');
-            window.location.href = '../index.html';
+            
+            // Clear any other admin-related data
+            localStorage.removeItem('admin_session');
+            
+            // Force redirect to home page
+            window.location.replace('../index.html');
         }
     }
 }
 
-// Helper function for cleanup modal
-function closeCleanupModal() {
-    document.getElementById('cleanupModal').style.display = 'none';
+// Helper functions - these should be outside the class
+function closeModal() {
+    document.getElementById('pointsModal').classList.remove('active');
+    document.getElementById('pointsInput').value = '';
+    document.getElementById('reasonInput').value = '';
 }
-        // Helper functions
-        function closeModal() {
-            document.getElementById('pointsModal').classList.remove('active');
-            document.getElementById('pointsInput').value = '';
-            document.getElementById('reasonInput').value = '';
-        }
-        
-        function closeCleanupModal() {
-            document.getElementById('cleanupModal').classList.remove('active');
-        }
-        
-        async function confirmPoints() {
-            const studentId = document.getElementById('modalStudentId').value;
-            const points = parseInt(document.getElementById('pointsInput').value);
-            const reason = document.getElementById('reasonInput').value;
-            
-            if (!points || points === 0) {
-                alert('Please enter a valid points value');
-                return;
-            }
-            
-            // Implementation for updating points
-            const action = points > 0 ? 'Added' : 'Removed';
-            adminManager.addActivity(`${action} ${Math.abs(points)} points for ${studentId}: ${reason || 'No reason'}`);
-            
-            closeModal();
-        }
+
+function closeCleanupModal() {
+    document.getElementById('cleanupModal').classList.remove('active');
+}
+
+async function confirmPoints() {
+    const studentId = document.getElementById('modalStudentId').value;
+    const points = parseInt(document.getElementById('pointsInput').value);
+    const reason = document.getElementById('reasonInput').value;
+    
+    if (!points || points === 0) {
+        alert('Please enter a valid points value');
+        return;
+    }
+    
+    // Implementation for updating points
+    const action = points > 0 ? 'Added' : 'Removed';
+    adminManager.addActivity(`${action} ${Math.abs(points)} points for ${studentId}: ${reason || 'No reason'}`);
+    
+    closeModal();
+}
         
         // Initialize admin manager
         const adminManager = new AdminGistManager();
