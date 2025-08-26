@@ -50,6 +50,7 @@
         .admin-title {
             font-size: 1.8em;
             background: linear-gradient(135deg, var(--ocu-cyan), var(--ocu-light-green));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -399,15 +400,9 @@
                 <div class="card" style="background: rgba(255, 193, 7, 0.1); border: 1px solid var(--warning-border);">
                     <h3 style="color: var(--warning-border); margin-bottom: 10px;">⚡ API Rate Limits</h3>
                     <p style="font-size: 0.9em; line-height: 1.5;">
-                        GitHub limits unauthenticated requests to <strong>60 per hour</strong>. 
+                        GitHub limits unauthenticated requests to <strong>60 per hour</strong> unauthenticated. <strong>5000 per hour</strong> when authenticated. 
                         Loading all students or running cleanup uses many requests.
                         <br><br>
-                        <strong>Tips:</strong>
-                        <ul style="margin-left: 20px; margin-top: 5px;">
-                            <li>Wait for rate limit to reset (every hour)</li>
-                            <li>Use the Netlify function for updates (doesn't count against your limit)</li>
-                            <li>Check the rate limit status in the header before operations</li>
-                        </ul>
                     </p>
                 </div>
                 
@@ -551,7 +546,7 @@
             // Update rate limit status every 30 seconds
             setInterval(() => this.updateRateLimitStatus(), 30000);
         } else {
-            this.showAdminLogin();
+            this.showAdminModal();
         }
     }
     
@@ -867,10 +862,6 @@
     showError(message) {
         alert('Error: ' + message);
         this.addActivity('❌ Error: ' + message);
-    }
-    
-    showAdminLogin() {
-        window.location.href = './adminLogin.html';
     }
     
     logout() {
