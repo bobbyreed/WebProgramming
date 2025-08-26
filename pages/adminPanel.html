@@ -537,18 +537,22 @@
     }
     
     async init() {
-        // Check admin authentication
-        const adminAuth = localStorage.getItem('csci3403_admin');
-        if (adminAuth) {
-            this.isAdmin = true;
-            await this.loadAllData();
+            // Check admin authentication
+            const adminAuth = localStorage.getItem('csci3403_admin');
             
-            // Update rate limit status every 30 seconds
-            setInterval(() => this.updateRateLimitStatus(), 30000);
-        } else {
-            this.showAdminModal();
+            // Make sure to check if it exists AND has a truthy value
+            if (adminAuth && adminAuth === 'true') {
+                this.isAdmin = true;
+                await this.updateRateLimitStatus();
+                await this.loadAllData();
+                
+                // Update rate limit status every 30 seconds
+                setInterval(() => this.updateRateLimitStatus(), 30000);
+            } else {
+                // No valid admin auth found, show login modal
+                this.showLoginModal();
+            }
         }
-    }
     
     async loadAllData() {
         this.showLoadingOverlay('Loading all student data...');
@@ -866,8 +870,15 @@
     
     logout() {
         if (confirm('Are you sure you want to logout?')) {
+            // Clear admin authentication
             localStorage.removeItem('csci3403_admin');
-            window.location.href = '../index.html';
+            
+            // clear any other admin-related data
+            localStorage.removeItem('admin_session');
+            
+            // Force redirect to home page
+            // Using replace() prevents back button from returning to admin panel
+            //window.location.replace('../index.html');
         }
     }
 }
