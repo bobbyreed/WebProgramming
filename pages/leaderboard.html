@@ -445,35 +445,56 @@
             }
         }
 
-       function displayLeaderboard(students) {
-            // Convert to array and handle both 'points' and 'totalPoints' field names
+        function displayLeaderboard(students) {
+            // Convert to array and ensure totalPoints is properly calculated
             const leaderboardData = Object.entries(students)
                 .map(([id, data]) => {
-                    // IMPORTANT: Check for both 'points' and 'totalPoints' field names
-                    let actualPoints = data.totalPoints || data.points || 0;
+                    // Calculate totalPoints from multiple sources to ensure accuracy
+                    let calculatedPoints = 0;
                     
-                    // If both are missing or 0, try to calculate from activities
-                    if (actualPoints === 0 && data.viewedLectures) {
-                        // Each lecture is worth 10 points based on your auth.js
-                        const lectureCount = Object.keys(data.viewedLectures).length;
-                        actualPoints = lectureCount * 10;
+                    // 1. Start with stored totalPoints if it exists and is valid
+                    if (typeof data.totalPoints === 'number') {
+                        calculatedPoints = data.totalPoints;
+                    }
+                    
+                    // 2. If totalPoints is missing or invalid, calculate from activities
+                    else if (data.activities && Array.isArray(data.activities)) {
+                        calculatedPoints = data.activities
+                            .filter(activity => activity.points)
+                            .reduce((sum, activity) => sum + (activity.points || 0), 0);
+                    }
+                    
+                    // 3. Fallback: calculate from lectures and achievements
+                    else {
+                        // Each lecture viewed is worth 10 points
+                        const lecturePoints = (data.lecturesViewed?.length || 0) * 10;
                         
-                        // Add achievement points if they exist
-                        if (data.achievements && Array.isArray(data.achievements)) {
-                            // Count achievements (excluding the welcome emoji)
-                            const achievementCount = data.achievements.filter(a => a !== '🆕').length;
-                            // Rough estimate: 25 points per achievement average
-                            actualPoints += achievementCount * 25;
-                        }
+                        // Sum up achievement points
+                        const achievementPoints = (data.achievements || [])
+                            .reduce((sum, achievement) => {
+                                // Handle both achievement structures (ID only vs full object)
+                                if (typeof achievement === 'object' && achievement.points) {
+                                    return sum + achievement.points;
+                                }
+                                // If it's just an ID, look up the achievement definition
+                                const achievementDef = getAchievementDefinition(achievement.id || achievement);
+                                return sum + (achievementDef?.points || 0);
+                            }, 0);
+                        
+                        calculatedPoints = lecturePoints + achievementPoints;
+                    }
+                    
+                    // Log discrepancies for debugging
+                    if (data.totalPoints !== calculatedPoints && data.totalPoints !== undefined) {
+                        console.warn(`Points mismatch for ${id}: stored=${data.totalPoints}, calculated=${calculatedPoints}`);
                     }
                     
                     return {
                         studentId: id,
                         ...data,
-                        totalPoints: actualPoints, // Use the corrected points value
+                        totalPoints: calculatedPoints, // Use calculated points
                         achievements: data.achievements || [],
                         lecturesViewed: data.lecturesViewed || [],
-                        viewedLectures: data.viewedLectures || {},
                         activities: data.activities || []
                     };
                 })
@@ -505,9 +526,6 @@
                 const rank = index + 1;
                 const isCurrentUser = currentUser && JSON.parse(currentUser).studentId === student.studentId;
                 
-                // Count actual lectures viewed (from viewedLectures object)
-                const lectureCount = Object.keys(student.viewedLectures || {}).length;
-                
                 return `
                     <div class="leaderboard-item ${isCurrentUser ? 'current-user' : ''}">
                         <div class="leaderboard-rank">#${rank}</div>
@@ -518,7 +536,7 @@
                             </div>
                             <div class="leaderboard-stats">
                                 Achievements: ${student.achievements.length} | 
-                                Lectures: ${lectureCount} | 
+                                Lectures: ${student.lecturesViewed.length} | 
                                 Points: ${student.totalPoints}
                             </div>
                         </div>
@@ -532,26 +550,27 @@
             // Display recent achievements
             displayRecentAchievements(leaderboardData);
         }
-                // Helper function to get achievement definitions
-                function getAchievementDefinition(achievementId) {
-                    const ACHIEVEMENT_DEFINITIONS = {
-                        'first_steps': { points: 10 },
-                        'quick_learner': { points: 25 },
-                        'dedicated_student': { points: 50 },
-                        'knowledge_seeker': { points: 100 },
-                        'course_master': { points: 500 },
-                        'consistent': { points: 30 },
-                        'week_warrior': { points: 75 },
-                        'unstoppable': { points: 150 },
-                        'legendary_streak': { points: 500 },
-                        'early_bird': { points: 25 },
-                        'night_owl': { points: 25 },
-                        'weekend_warrior': { points: 30 },
-                        'speed_demon': { points: 50 }
-                    };
-                    
-                    return ACHIEVEMENT_DEFINITIONS[achievementId] || { points: 0 };
-                }
+
+        // Helper function to get achievement definitions
+        function getAchievementDefinition(achievementId) {
+            const ACHIEVEMENT_DEFINITIONS = {
+                'first_steps': { points: 10 },
+                'quick_learner': { points: 25 },
+                'dedicated_student': { points: 50 },
+                'knowledge_seeker': { points: 100 },
+                'course_master': { points: 500 },
+                'consistent': { points: 30 },
+                'week_warrior': { points: 75 },
+                'unstoppable': { points: 150 },
+                'legendary_streak': { points: 500 },
+                'early_bird': { points: 25 },
+                'night_owl': { points: 25 },
+                'weekend_warrior': { points: 30 },
+                'speed_demon': { points: 50 }
+            };
+            
+            return ACHIEVEMENT_DEFINITIONS[achievementId] || { points: 0 };
+        }
         
         function displayRecentAchievements(students) {
             // Collect all achievements with timestamps

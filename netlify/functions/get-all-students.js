@@ -107,7 +107,6 @@ exports.handler = async (event, context) => {
                     }
                     
                     const gist = await response.json();
-                    
                     if (gist.files && gist.files['student-data.json']) {
                         const studentData = JSON.parse(gist.files['student-data.json'].content);
                         students[studentId] = {
@@ -122,25 +121,6 @@ exports.handler = async (event, context) => {
                     console.error(`Error fetching ${studentId}:`, error);
                     errors.push({ studentId, error: error.message });
                 }
-
-                if (studentData.points !== undefined && studentData.totalPoints === undefined) {
-        studentData.totalPoints = studentData.points;
-    }
-            // Also ensure viewedLectures exists for backward compatibility
-            if (!studentData.viewedLectures && studentData.lecturesViewed) {
-                studentData.viewedLectures = {};
-                // Convert array to object if needed
-                studentData.lecturesViewed.forEach(lectureNum => {
-                    studentData.viewedLectures[lectureNum] = { views: 1 };
-                });
-            }
-            
-            students[studentId] = {
-                ...studentData,
-                totalPoints: studentData.totalPoints || studentData.points || 0, // Ensure totalPoints exists
-                gistId: gistId,
-                lastUpdated: gist.updated_at
-            };
             });
             
             // Wait for all fetches to complete
