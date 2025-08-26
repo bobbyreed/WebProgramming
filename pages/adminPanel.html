@@ -514,8 +514,7 @@
     </div>
     
     <script>
-        // Admin Panel Gist Integration with Cleanup
-        class AdminGistManager {
+       class AdminGistManager {
     constructor() {
         // Netlify function endpoints (for ALL operations)
         this.FUNCTION_URL = '/.netlify/functions/update-points';
@@ -537,22 +536,39 @@
     }
     
     async init() {
-            // Check admin authentication
-            const adminAuth = localStorage.getItem('csci3403_admin');
+        // Check admin authentication
+        const adminAuth = localStorage.getItem('csci3403_admin');
+        
+        // Make sure to check if it exists AND has a truthy value
+        if (adminAuth && adminAuth === 'true') {
+            this.isAdmin = true;
+            await this.updateRateLimitStatus();
+            await this.loadAllData();
             
-            // Make sure to check if it exists AND has a truthy value
-            if (adminAuth && adminAuth === 'true') {
-                this.isAdmin = true;
-                await this.updateRateLimitStatus();
-                await this.loadAllData();
-                
-                // Update rate limit status every 30 seconds
-                setInterval(() => this.updateRateLimitStatus(), 30000);
-            } else {
-                // No valid admin auth found, show login modal
-                this.showLoginModal();
-            }
+            // Update rate limit status every 30 seconds
+            setInterval(() => this.updateRateLimitStatus(), 30000);
+        } else {
+            // No valid admin auth found, show login modal
+            this.showLoginModal();
         }
+    }
+    
+    // FIX #1: Add missing showLoginModal method
+    showLoginModal() {
+        const password = prompt('Enter admin password:');
+        
+        // In production, use a secure authentication system
+        if (password === 'admin3403' || password === 'ocuadmin2024') {
+            localStorage.setItem('csci3403_admin', 'true');
+            this.isAdmin = true;
+            // Reinitialize after successful authentication
+            this.init();
+        } else {
+            alert('Invalid admin credentials. Access denied.');
+            // Redirect to home page
+            window.location.href = '../index.html';
+        }
+    }
     
     async loadAllData() {
         this.showLoadingOverlay('Loading all student data...');
@@ -757,7 +773,8 @@
             });
             
             if (!response.ok) {
-                throw new Error('Cleanup request failed');
+                const errorText = await response.text();
+                throw new Error(`Cleanup request failed: ${response.status} - ${errorText}`);
             }
             
             const result = await response.json();
@@ -782,7 +799,9 @@
     
     showCleanupResults(result) {
         const modal = document.getElementById('cleanupModal');
-        document.getElementById('cleanupTotal').textContent = result.totalChecked || 0;
+        
+        // FIX #3: Use correct element IDs
+        document.getElementById('cleanupChecked').textContent = result.totalChecked || 0;
         document.getElementById('cleanupRemoved').textContent = result.totalRemoved || 0;
         document.getElementById('cleanupRemaining').textContent = result.totalRemaining || 0;
         
@@ -792,13 +811,81 @@
         const removedList = document.getElementById('removedList');
         if (result.removedStudents && result.removedStudents.length > 0) {
             removedList.innerHTML = '<h4>Removed Students:</h4>' +
-                result.removedStudents.map(s => `<div>• ${s}</div>`).join('');
+                result.removedStudents.map(s => `<div class="removed-item">• ${s}</div>`).join('');
         } else {
             removedList.innerHTML = '<div>No invalid entries found</div>';
         }
         
-        modal.style.display = 'flex';
+        // FIX: Use class-based display for consistency
+        modal.classList.add('active');
         this.addActivity(`🧹 Cleanup: Removed ${result.totalRemoved || 0} invalid entries`);
+    }
+    
+    // FIX #2: Add missing resetAll method
+    async resetAll() {
+        if (!confirm('⚠️ WARNING: This will reset ALL student points to 0!\n\nAre you ABSOLUTELY sure?')) {
+            return;
+        }
+        
+        // Double confirmation for destructive action
+        const confirmText = prompt('This action cannot be undone. Type "RESET" to confirm:');
+        if (confirmText !== 'RESET') {
+            alert('Reset cancelled');
+            return;
+        }
+        
+        this.showLoadingOverlay('Resetting all points...');
+        
+        try {
+            let successCount = 0;
+            let failCount = 0;
+            
+            // Reset all students in memory
+            for (const [studentId, student] of this.students) {
+                try {
+                    student.totalPoints = 0;
+                    student.lastModified = new Date().toISOString();
+                    
+                    // Update via API
+                    const response = await fetch(this.FUNCTION_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'updateStudent',
+                            studentId: studentId,
+                            gistId: student.gistId,
+                            updateData: student
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to reset ${studentId}`);
+                    }
+                    
+                    successCount++;
+                } catch (error) {
+                    console.error(`Failed to reset ${studentId}:`, error);
+                    failCount++;
+                }
+            }
+            
+            this.addActivity(`⚠️ Reset points: ${successCount} success, ${failCount} failed`);
+            await this.loadAllData();
+            
+            if (failCount > 0) {
+                alert(`Reset complete with errors:\n${successCount} students reset\n${failCount} students failed`);
+            } else {
+                alert(`Successfully reset all ${successCount} student points to 0`);
+            }
+            
+        } catch (error) {
+            console.error('Reset error:', error);
+            this.showError('Failed to reset points: ' + error.message);
+        } finally {
+            this.hideLoadingOverlay();
+        }
     }
     
     viewStudent(studentId) {
@@ -835,8 +922,10 @@
         this.displayActivityLog();
     }
     
+    // FIX #4: Use correct element ID
     displayActivityLog() {
-        const logElement = document.getElementById('activityLog');
+        // Fix: Change from 'activityLog' to 'activityFeed' to match HTML
+        const logElement = document.getElementById('activityFeed');
         if (!logElement) return;
         
         logElement.innerHTML = this.activityLog.map(entry => `
@@ -873,47 +962,42 @@
             // Clear admin authentication
             localStorage.removeItem('csci3403_admin');
             
-            // clear any other admin-related data
+            // Clear any other admin-related data
             localStorage.removeItem('admin_session');
             
             // Force redirect to home page
-            // Using replace() prevents back button from returning to admin panel
-            //window.location.replace('../index.html');
+            window.location.replace('../index.html');
         }
     }
 }
 
-// Helper function for cleanup modal
-function closeCleanupModal() {
-    document.getElementById('cleanupModal').style.display = 'none';
+// Helper functions - these should be outside the class
+function closeModal() {
+    document.getElementById('pointsModal').classList.remove('active');
+    document.getElementById('pointsInput').value = '';
+    document.getElementById('reasonInput').value = '';
 }
-        // Helper functions
-        function closeModal() {
-            document.getElementById('pointsModal').classList.remove('active');
-            document.getElementById('pointsInput').value = '';
-            document.getElementById('reasonInput').value = '';
-        }
-        
-        function closeCleanupModal() {
-            document.getElementById('cleanupModal').classList.remove('active');
-        }
-        
-        async function confirmPoints() {
-            const studentId = document.getElementById('modalStudentId').value;
-            const points = parseInt(document.getElementById('pointsInput').value);
-            const reason = document.getElementById('reasonInput').value;
-            
-            if (!points || points === 0) {
-                alert('Please enter a valid points value');
-                return;
-            }
-            
-            // Implementation for updating points
-            const action = points > 0 ? 'Added' : 'Removed';
-            adminManager.addActivity(`${action} ${Math.abs(points)} points for ${studentId}: ${reason || 'No reason'}`);
-            
-            closeModal();
-        }
+
+function closeCleanupModal() {
+    document.getElementById('cleanupModal').classList.remove('active');
+}
+
+async function confirmPoints() {
+    const studentId = document.getElementById('modalStudentId').value;
+    const points = parseInt(document.getElementById('pointsInput').value);
+    const reason = document.getElementById('reasonInput').value;
+    
+    if (!points || points === 0) {
+        alert('Please enter a valid points value');
+        return;
+    }
+    
+    // Implementation for updating points
+    const action = points > 0 ? 'Added' : 'Removed';
+    adminManager.addActivity(`${action} ${Math.abs(points)} points for ${studentId}: ${reason || 'No reason'}`);
+    
+    closeModal();
+}
         
         // Initialize admin manager
         const adminManager = new AdminGistManager();
