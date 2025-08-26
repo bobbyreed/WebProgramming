@@ -166,7 +166,7 @@ exports.handler = async (event, context) => {
                 joinedDate: new Date().toISOString(),
                 lastActive: new Date().toISOString(),
                 lastLogin: new Date().toISOString(),
-                totalPoints: 10, // Welcome bonus
+                points: 10, // Welcome bonus
                 lecturesViewed: [],
                 achievements: [
                     {

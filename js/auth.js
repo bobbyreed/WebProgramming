@@ -147,12 +147,12 @@ class AchievementChecker {
 
     // Check milestone achievements (points-based)
     checkMilestoneAchievements(progress, currentAchievements, newAchievements) {
-        const totalPoints = progress.points || 0;
+        const points = progress.points || 0;
         
         this.ACHIEVEMENTS
             .filter(a => a.type === 'milestone')
             .forEach(achievement => {
-                if (totalPoints >= achievement.threshold && 
+                if (points >= achievement.threshold && 
                     !currentAchievements.includes(achievement.id)) {
                     newAchievements.push(achievement);
                 }

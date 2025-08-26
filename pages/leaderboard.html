@@ -446,18 +446,18 @@
         }
 
         function displayLeaderboard(students) {
-            // Convert to array and ensure totalPoints is properly calculated
+            // Convert to array and ensure points is properly calculated
             const leaderboardData = Object.entries(students)
                 .map(([id, data]) => {
-                    // Calculate totalPoints from multiple sources to ensure accuracy
+                    // Calculate points from multiple sources to ensure accuracy
                     let calculatedPoints = 0;
                     
-                    // 1. Start with stored totalPoints if it exists and is valid
-                    if (typeof data.totalPoints === 'number') {
-                        calculatedPoints = data.totalPoints;
+                    // 1. Start with stored points if it exists and is valid
+                    if (typeof data.points === 'number') {
+                        calculatedPoints = data.points;
                     }
                     
-                    // 2. If totalPoints is missing or invalid, calculate from activities
+                    // 2. If points is missing or invalid, calculate from activities
                     else if (data.activities && Array.isArray(data.activities)) {
                         calculatedPoints = data.activities
                             .filter(activity => activity.points)
@@ -485,29 +485,29 @@
                     }
                     
                     // Log discrepancies for debugging
-                    if (data.totalPoints !== calculatedPoints && data.totalPoints !== undefined) {
-                        console.warn(`Points mismatch for ${id}: stored=${data.totalPoints}, calculated=${calculatedPoints}`);
+                    if (data.points !== calculatedPoints && data.points !== undefined) {
+                        console.warn(`Points mismatch for ${id}: stored=${data.points}, calculated=${calculatedPoints}`);
                     }
                     
                     return {
                         studentId: id,
                         ...data,
-                        totalPoints: calculatedPoints, // Use calculated points
+                        points: calculatedPoints, // Use calculated points
                         achievements: data.achievements || [],
                         lecturesViewed: data.lecturesViewed || [],
                         activities: data.activities || []
                     };
                 })
                 .filter(student => student.studentId) // Remove any invalid entries
-                .sort((a, b) => b.totalPoints - a.totalPoints);
+                .sort((a, b) => b.points - a.points);
             
             // Update stats
             const totalStudents = leaderboardData.length;
-            const totalPoints = leaderboardData.reduce((sum, s) => sum + s.totalPoints, 0);
-            const avgPoints = totalStudents > 0 ? Math.round(totalPoints / totalStudents) : 0;
+            const points = leaderboardData.reduce((sum, s) => sum + s.points, 0);
+            const avgPoints = totalStudents > 0 ? Math.round(points / totalStudents) : 0;
             
             document.getElementById('total-students').textContent = totalStudents;
-            document.getElementById('total-points').textContent = totalPoints.toLocaleString();
+            document.getElementById('total-points').textContent = points.toLocaleString();
             document.getElementById('avg-points').textContent = avgPoints;
             
             // Check if current user is in the leaderboard
@@ -537,10 +537,10 @@
                             <div class="leaderboard-stats">
                                 Achievements: ${student.achievements.length} | 
                                 Lectures: ${student.lecturesViewed.length} | 
-                                Points: ${student.totalPoints}
+                                Points: ${student.points}
                             </div>
                         </div>
-                        <div class="leaderboard-points">${student.totalPoints} pts</div>
+                        <div class="leaderboard-points">${student.points} pts</div>
                     </div>
                 `;
             }).join('');
@@ -657,21 +657,21 @@
                     <div class="podium-place second">
                         <div class="podium-rank">🥈</div>
                         <div class="podium-name">${topThree[1].studentId}</div>
-                        <div class="podium-points">${topThree[1].totalPoints} pts</div>
+                        <div class="podium-points">${topThree[1].points} pts</div>
                     </div>
                 ` : ''}
                 ${topThree[0] ? `
                     <div class="podium-place first">
                         <div class="podium-rank">🥇</div>
                         <div class="podium-name">${topThree[0].studentId}</div>
-                        <div class="podium-points">${topThree[0].totalPoints} pts</div>
+                        <div class="podium-points">${topThree[0].points} pts</div>
                     </div>
                 ` : ''}
                 ${topThree[2] ? `
                     <div class="podium-place third">
                         <div class="podium-rank">🥉</div>
                         <div class="podium-name">${topThree[2].studentId}</div>
-                        <div class="podium-points">${topThree[2].totalPoints} pts</div>
+                        <div class="podium-points">${topThree[2].points} pts</div>
                     </div>
                 ` : ''}
             `;

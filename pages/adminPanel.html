@@ -455,7 +455,7 @@
                             <div class="stat-label">Total Students</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="totalPoints">0</div>
+                            <div class="stat-value" id="points">0</div>
                             <div class="stat-label">Total Points</div>
                         </div>
                         <div class="stat-card">
@@ -756,14 +756,14 @@
                 
                 // Sort students by points
                 const sortedStudents = Array.from(this.students.entries())
-                    .sort((a, b) => (b[1].totalPoints || 0) - (a[1].totalPoints || 0));
+                    .sort((a, b) => (b[1].points || 0) - (a[1].points || 0));
                 
                 studentList.innerHTML = sortedStudents.map(([id, data]) => `
                     <div class="student-item">
                         <div class="student-info">
                             <div class="student-name">${id}</div>
                             <div class="student-meta">
-                                Points: ${data.totalPoints || 0} | 
+                                Points: ${data.points || 0} | 
                                 Lectures: ${data.lecturesViewed ? data.lecturesViewed.length : 0}
                             </div>
                         </div>
@@ -778,16 +778,16 @@
             updateDashboard() {
                 // Update statistics
                 const totalStudents = this.students.size;
-                const totalPoints = Array.from(this.students.values())
-                    .reduce((sum, s) => sum + (s.totalPoints || 0), 0);
-                const avgPoints = totalStudents > 0 ? Math.round(totalPoints / totalStudents) : 0;
+                const points = Array.from(this.students.values())
+                    .reduce((sum, s) => sum + (s.points || 0), 0);
+                const avgPoints = totalStudents > 0 ? Math.round(points / totalStudents) : 0;
                 
                 const totalStudentsEl = document.getElementById('totalStudents');
-                const totalPointsEl = document.getElementById('totalPoints');
+                const pointsEl = document.getElementById('points');
                 const avgPointsEl = document.getElementById('avgPoints');
                 
                 if (totalStudentsEl) totalStudentsEl.textContent = totalStudents;
-                if (totalPointsEl) totalPointsEl.textContent = totalPoints;
+                if (pointsEl) pointsEl.textContent = points;
                 if (avgPointsEl) avgPointsEl.textContent = avgPoints;
             }
             
@@ -795,7 +795,7 @@
                 const student = this.students.get(studentId);
                 if (!student) return;
                 
-                const pointsToAdd = prompt(`Add points to ${studentId}:\nCurrent points: ${student.totalPoints || 0}`, '10');
+                const pointsToAdd = prompt(`Add points to ${studentId}:\nCurrent points: ${student.points || 0}`, '10');
                 if (!pointsToAdd || isNaN(pointsToAdd)) return;
                 
                 const points = parseInt(pointsToAdd);
@@ -804,7 +804,7 @@
                 
                 try {
                     // Update student data
-                    student.totalPoints = (student.totalPoints || 0) + points;
+                    student.points = (student.points || 0) + points;
                     student.lastModified = new Date().toISOString();
                     
                     // Use the update-points function with authentication
@@ -837,7 +837,7 @@
                     console.error('Error adding points:', error);
                     this.showError('Failed to add points: ' + error.message);
                     // Revert the local change
-                    student.totalPoints = (student.totalPoints || 0) - points;
+                    student.points = (student.points || 0) - points;
                 } finally {
                     this.hideLoadingOverlay();
                 }
@@ -940,7 +940,7 @@
                     // Reset all students in memory
                     for (const [studentId, student] of this.students) {
                         try {
-                            student.totalPoints = 0;
+                            student.points = 0;
                             student.lastModified = new Date().toISOString();
                             
                             // Update via API
@@ -991,7 +991,7 @@
                 
                 const details = `
                     Student: ${studentId}
-                    Total Points: ${student.totalPoints || 0}
+                    Total Points: ${student.points || 0}
                     Lectures Viewed: ${student.lecturesViewed ? student.lecturesViewed.length : 0}
                     Achievements: ${student.achievements ? student.achievements.length : 0}
                     Last Login: ${student.lastLogin || 'Never'}

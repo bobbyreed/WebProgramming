@@ -318,7 +318,7 @@
                 <div class="stat-label">Earned</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="totalPoints">0</div>
+                <div class="stat-value" id="points">0</div>
                 <div class="stat-label">Points</div>
             </div>
             <div class="stat-card">
@@ -457,12 +457,12 @@
             const earnedAchievements = selectedStudent.achievements || [];
             const totalBadges = ACHIEVEMENTS.length;
             const earnedCount = earnedAchievements.length;
-            const totalPoints = selectedStudent.totalPoints || 0;
+            const points = selectedStudent.points || 0;
             const completionRate = Math.round((earnedCount / totalBadges) * 100);
             
             document.getElementById('totalBadges').textContent = totalBadges;
             document.getElementById('earnedBadges').textContent = earnedCount;
-            document.getElementById('totalPoints').textContent = totalPoints;
+            document.getElementById('points').textContent = points;
             document.getElementById('completionRate').textContent = completionRate + '%';
             
             // Display badges
@@ -507,7 +507,7 @@
             
             try {
                 // Update student data
-                selectedStudent.totalPoints = (selectedStudent.totalPoints || 0) + parseInt(points);
+                selectedStudent.points = (selectedStudent.points || 0) + parseInt(points);
                 selectedStudent.lastModified = new Date().toISOString();
                 
                 // Send update through authenticated function
