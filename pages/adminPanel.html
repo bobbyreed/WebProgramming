@@ -546,7 +546,7 @@
             // Update rate limit status every 30 seconds
             setInterval(() => this.updateRateLimitStatus(), 30000);
         } else {
-            this.showAdminLogin();
+            this.showAdminModal();
         }
     }
     
@@ -862,10 +862,6 @@
     showError(message) {
         alert('Error: ' + message);
         this.addActivity('❌ Error: ' + message);
-    }
-    
-    showAdminLogin() {
-        window.location.href = './adminPanel.html';
     }
     
     logout() {
