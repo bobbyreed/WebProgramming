@@ -806,6 +806,17 @@
                     // Update student data
                     student.points = (student.points || 0) + points;
                     student.lastModified = new Date().toISOString();
+
+                    if (!student.activities) {
+                            student.activities = [];
+                        }
+                        student.activities.push({
+                            type: 'admin_points',
+                            points: points,
+                            reason: `Admin added ${points} points`,
+                            timestamp: new Date().toISOString(),
+                            addedBy: 'admin'
+                        });
                     
                     // Use the update-points function with authentication
                     const response = await fetch(this.FUNCTION_URL, {
@@ -831,7 +842,9 @@
                     }
                     
                     this.addActivity(`✅ Added ${points} points to ${studentId}`);
-                    await this.loadAllData(); // Refresh all data
+                    setTimeout(async () => {
+                        await this.loadAllData(); // Refresh all data
+                    }, 2000); // 2-second delay for GitHub propagation
                     
                 } catch (error) {
                     console.error('Error adding points:', error);
