@@ -274,6 +274,11 @@ class SimpleGistAuth {
         
         // Check if already authenticated
         this.checkAuthStatus();
+        // queue for pending updates
+        this.updateQueue = [];
+        this.isProcessingQueue = false;
+        this.lastSyncTime = 0;
+        this.SYNC_DEBOUNCE_MS = 1000; // Debounce saves to prevent race conditions
     }
 
     async authenticate(studentId, pin) {
