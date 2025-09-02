@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Errors - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+        
+        .section {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section h2 {
+            color: #ff6b6b;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .full-blank {
+            display: block;
+            width: 100%;
+            border-bottom: 2px solid #333;
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        .error-example {
+            background: #fee;
+            border: 2px solid #f44;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: #c00;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .debug-exercise {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+            background: #f5f5f5;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript Errors - Guided Notes 🐛</h1>
+            <p>CSCI 3403 - Web Programming | Week 8, Day 23</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>🎯 Today's Goal:</strong> Transform from fearing errors to using them as debugging tools!
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="section">
+            <h2>📚 Introduction: Why Errors Are Good</h2>
+            
+            <p><strong>Complete this thought:</strong> Error messages are not your <span class="blank">_______________</span>, 
+            they are your <span class="blank">_______________</span>!</p>
+            
+            <h3>Without error messages, debugging would be:</h3>
+            <ol>
+                <li><span class="blank">_________________________</span></li>
+                <li><span class="blank">_________________________</span></li>
+                <li><span class="blank">_________________________</span></li>
+            </ol>
+        </div>
+
+        <!-- Anatomy of an Error Section -->
+        <div class="section">
+            <h2>🔬 Anatomy of an Error Message</h2>
+            
+            <div class="error-example">
+                Uncaught ReferenceError: c is not defined<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;at script.js:4:13
+            </div>
+            
+            <h3>Label each part of the error message:</h3>
+            <table>
+                <tr>
+                    <th>Part</th>
+                    <th>Example</th>
+                    <th>What It Tells You</th>
+                </tr>
+                <tr>
+                    <td>Error Type</td>
+                    <td>ReferenceError</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Error Message</td>
+                    <td>c is not defined</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>File Name</td>
+                    <td>script.js</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>4:13</td>
+                    <td>Line <span class="blank">____</span>, Column <span class="blank">____</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Types of Errors Section -->
+        <div class="section">
+            <h2>🚨 Three Main Error Types</h2>
+            
+            <h3>1. ReferenceError</h3>
+            <p><strong>Definition:</strong> <span class="long-blank">_________________________________________</span></p>
+            <p><strong>Common Causes:</strong></p>
+            <ul>
+                <li>Typos in <span class="blank">_______________</span> names</li>
+                <li>Using variables before <span class="blank">_______________</span> them</li>
+                <li>Variable is out of <span class="blank">_______________</span></li>
+            </ul>
+            
+            <div class="code-block">
+// Example - Fix this code:
+const userName = "Alice";
+console.log(userNmae);  // What's wrong? <span class="code-blank">_______________</span>
+            </div>
+            
+            <h3>2. SyntaxError</h3>
+            <p><strong>Definition:</strong> <span class="long-blank">_________________________________________</span></p>
+            <p><strong>Common Causes:</strong></p>
+            <ul>
+                <li>Missing <span class="blank">_______________</span>: ( ) { } [ ]</li>
+                <li>Missing <span class="blank">_______________</span>: " " or ' '</li>
+                <li>Missing or extra <span class="blank">_______________</span></li>
+            </ul>
+            
+            <div class="code-block">
+// Example - Add what's missing:
+function helloWorld() {
+    console.log<span class="code-blank">___</span>"Hello World!"<span class="code-blank">___</span>
+}
+            </div>
+            
+            <h3>3. TypeError</h3>
+            <p><strong>Definition:</strong> When you try to use a value in an <span class="blank">_______________</span> way</p>
+            <p><strong>Common Scenarios:</strong></p>
+            <ul>
+                <li>Using wrong <span class="blank">_______________</span> for data type</li>
+                <li>Calling something that's not a <span class="blank">_______________</span></li>
+                <li>Accessing properties on <span class="blank">_______________</span> or <span class="blank">_______________</span></li>
+            </ul>
+            
+            <div class="code-block">
+// Example - Why does this fail?
+const str1 = "Hello";
+const str2 = "World";
+const message = str1.push(str2);  // Error because: <span class="code-blank">_______________________</span>
+            </div>
+        </div>
+
+        <!-- Stack Traces Section -->
+        <div class="section">
+            <h2>📚 Understanding Stack Traces</h2>
+            
+            <p>A stack trace shows the <span class="blank">_______________</span> of function calls that led to the error.</p>
+            
+            <div class="error-example">
+                Uncaught ReferenceError: c is not defined<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;at add (script.js:2:10)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;at print (script.js:6:3)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;at script.js:9:1
+            </div>
+            
+            <h3>Reading the stack trace (fill in the sequence):</h3>
+            <ol>
+                <li>Error occurred in function: <span class="blank">_______________</span> at line <span class="blank">_____</span></li>
+                <li>Which was called by function: <span class="blank">_______________</span> at line <span class="blank">_____</span></li>
+                <li>Which was called from: <span class="blank">_______________</span> at line <span class="blank">_____</span></li>
+            </ol>
+        </div>
+
+        <!-- Debugging Tools Section -->
+        <div class="section">
+            <h2>🛠️ Debugging Tools & Techniques</h2>
+            
+            <h3>Console Methods</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                    <th>When to Use</th>
+                </tr>
+                <tr>
+                    <td>console.log()</td>
+                    <td>Regular output</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>console.error()</td>
+                    <td>Red error style</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>console.table()</td>
+                    <td>Table format</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+                <tr>
+                    <td>console.trace()</td>
+                    <td>Show stack trace</td>
+                    <td><span class="blank">_________________________</span></td>
+                </tr>
+            </table>
+            
+            <h3>The Debugger Statement</h3>
+            <p>Adding <code>debugger;</code> to your code will:</p>
+            <ul>
+                <li><span class="blank">_______________</span> execution at that point</li>
+                <li>Let you inspect all <span class="blank">_______________</span></li>
+                <li>Allow you to step through code <span class="blank">_______________</span> by <span class="blank">_______________</span></li>
+            </ul>
+        </div>
+
+        <!-- Error vs Warning Section -->
+        <div class="section">
+            <h2>⚠️ Errors vs Warnings</h2>
+            
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>🛑 Errors (Red)</th>
+                    <th>⚠️ Warnings (Yellow)</th>
+                </tr>
+                <tr>
+                    <td>Execution</td>
+                    <td><span class="blank">_______________</span> code</td>
+                    <td>Code <span class="blank">_______________</span> running</td>
+                </tr>
+                <tr>
+                    <td>Severity</td>
+                    <td>Must be <span class="blank">_______________</span></td>
+                    <td>Should be <span class="blank">_______________</span></td>
+                </tr>
+                <tr>
+                    <td>Impact</td>
+                    <td><span class="blank">_______________</span> your program</td>
+                    <td>Potential <span class="blank">_______________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Debugging Strategy Section -->
+        <div class="section">
+            <h2>🕵️ Your Debugging Strategy</h2>
+            
+            <h3>The 4-Step Process:</h3>
+            <ol>
+                <li>
+                    <strong>Read:</strong> Don't panic! The error type is <span class="blank">_______________</span> 
+                    and the message is <span class="blank">_______________</span>
+                </li>
+                <li>
+                    <strong>Locate:</strong> Click the <span class="blank">_______________</span> link to jump to the problem
+                </li>
+                <li>
+                    <strong>Understand:</strong> Look at the <span class="blank">_______________</span> around the error
+                </li>
+                <li>
+                    <strong>Research:</strong> Copy the <span class="blank">_______________</span> (not your code) and search
+                </li>
+            </ol>
+            
+            <div class="tip">
+                <strong>💡 Google Search Tips:</strong>
+                <br>Good: "TypeError push is not a function string javascript"
+                <br>Bad: "my code doesn't work help"
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="section">
+            <h2>💻 Practice: Debug This Code!</h2>
+            
+            <div class="debug-exercise">
+                <h3>Find and fix all errors in this shopping cart code:</h3>
+                <div class="code-block">
+const items = [
+    { name: "Shirt" price: 29.99 },      // Error 1: <span class="code-blank">_______________</span>
+    { name: "Pants", price: 49.99 },
+    { name: "Shoes", price: 79.99 }
+];
+
+function calculateTotal(cartItems) {
+    let total = 0;
+    for (item of cartitems) {             // Error 2: <span class="code-blank">_______________</span>
+        total += item.price;
+    }
+    return totl;                          // Error 3: <span class="code-blank">_______________</span>
+}
+
+console.log("Total: $" + calculateTotal(items).toUppercase());  // Error 4: <span class="code-blank">_______________</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Try-Catch Section -->
+        <div class="section">
+            <h2>🛡️ Handling Errors Gracefully</h2>
+            
+            <h3>Try-Catch Syntax</h3>
+            <div class="code-block">
+try {
+    // Code that might <span class="code-blank">_______________</span> an error
+} catch (error) {
+    // Handle the error <span class="code-blank">_______________</span>
+    console.error("Error:", error.message);
+}
+            </div>
+            
+            <p><strong>Use try-catch when:</strong></p>
+            <ul>
+                <li>Dealing with user <span class="blank">_______________</span></li>
+                <li>Making <span class="blank">_______________</span> calls</li>
+                <li>Parsing <span class="blank">_______________</span> or other data</li>
+                <li>Any operation that might <span class="blank">_______________</span></li>
+            </ul>
+        </div>
+
+        <!-- Best Practices Section -->
+        <div class="section">
+            <h2>⭐ Best Practices</h2>
+            
+            <h3>Professional Debugging Tips (check off as discussed):</h3>
+            <div class="practice-box">
+                <ul style="list-style: none;">
+                    <li>☐ Read error messages <span class="blank">_______________</span> before panicking</li>
+                    <li>☐ Fix <span class="blank">_______________</span> error at a time (start with the first)</li>
+                    <li>☐ Use descriptive <span class="blank">_______________</span> names to avoid typos</li>
+                    <li>☐ Test code <span class="blank">_______________</span> (don't write 100 lines then test)</li>
+                    <li>☐ Keep <span class="blank">_______________</span> open while developing</li>
+                    <li>☐ <span class="blank">_______________</span> out code to isolate problems</li>
+                    <li>☐ Take <span class="blank">_______________</span> when stuck (fresh eyes help!)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Reference Section -->
+        <div class="section">
+            <h2>📋 Quick Reference</h2>
+            
+            <h3>Common Error Messages and Solutions</h3>
+            <table>
+                <tr>
+                    <th>Error Message</th>
+                    <th>Likely Cause</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>"is not defined"</td>
+                    <td><span class="blank">_______________</span></td>
+                    <td>Check spelling and scope</td>
+                </tr>
+                <tr>
+                    <td>"is not a function"</td>
+                    <td><span class="blank">_______________</span></td>
+                    <td>Check data type and methods</td>
+                </tr>
+                <tr>
+                    <td>"Unexpected token"</td>
+                    <td><span class="blank">_______________</span></td>
+                    <td>Check brackets and quotes</td>
+                </tr>
+                <tr>
+                    <td>"Cannot read property of undefined"</td>
+                    <td><span class="blank">_______________</span></td>
+                    <td>Check if object exists first</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Review Questions Section -->
+        <div class="section">
+            <h2>🤔 Review Questions</h2>
+            
+            <ol>
+                <li>What are the three main types of JavaScript errors?
+                    <br>1. <span class="blank">_______________</span>
+                    <br>2. <span class="blank">_______________</span>
+                    <br>3. <span class="blank">_______________</span>
+                </li>
+                
+                <li>What two parts of an error message help you find where the error originates?
+                    <br>1. <span class="blank">_______________</span>
+                    <br>2. <span class="blank">_______________</span>
+                </li>
+                
+                <li>What is the key difference between an error and a warning?
+                    <span class="full-blank"></span>
+                </li>
+                
+                <li>Name three console methods besides console.log():
+                    <br>1. <span class="blank">_______________</span>
+                    <br>2. <span class="blank">_______________</span>
+                    <br>3. <span class="blank">_______________</span>
+                </li>
+                
+                <li>What does the debugger statement do?
+                    <span class="full-blank"></span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Assignment Section -->
+        <div class="section">
+            <h2>📝 Tonight's Assignment</h2>
+            
+            <div class="warning-box">
+                <strong>From The Odin Project - Complete these exercises:</strong>
+                <ol>
+                    <li>☐ Read MDN docs on ReferenceError, SyntaxError, TypeError</li>
+                    <li>☐ Work through "What went wrong?" troubleshooting guide</li>
+                    <li>☐ Download and fix the intentionally broken starter code</li>
+                    <li>☐ Practice with console methods (table, trace, time)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes during the lecture:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Remember: Every developer creates errors daily - it's how we learn and improve! 🚀</p>
+            <p>Errors are not failures; they're feedback from your code.</p>
+        </div>
+    </div>
+</body>
+</html>

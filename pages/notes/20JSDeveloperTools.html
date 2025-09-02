@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Developer Tools - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 150px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .checkpoint {
+            margin: 10px 0;
+        }
+        
+        .checkbox {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #667eea;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript Developer Tools - Guided Notes</h1>
+            <p>CSCI 3403 - Web Programming | Day 20</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 Today's Goal:</strong> Master browser DevTools for efficient JavaScript debugging and development
+        </div>
+
+        <!-- Homework Review Section -->
+        <div class="section">
+            <h2>📝 Homework Review: JavaScript Exercises</h2>
+            
+            <h3>Exercise Setup</h3>
+            <p>The javascript-exercises repository uses <span class="blank">________________</span> as its testing framework.</p>
+            <p>To run tests for a specific exercise, use the command: <code>npm test <span class="code-blank">____________</span></code></p>
+            
+            <h3>Exercises Completed</h3>
+            <table>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Key Concept</th>
+                    <th>What I Learned</th>
+                </tr>
+                <tr>
+                    <td>01_helloWorld</td>
+                    <td>Basic function & return</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>02_addNumbers</td>
+                    <td>Parameters & math operations</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>03_numberChecker</td>
+                    <td>Conditionals (if/else)</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>04_mathEquations</td>
+                    <td>Complex calculations</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>05_joinStrings</td>
+                    <td>String manipulation</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Opening DevTools Section -->
+        <div class="section">
+            <h2>🚀 Opening Developer Tools</h2>
+            
+            <h3>Three Ways to Open DevTools:</h3>
+            <ol>
+                <li><strong>Menu Method:</strong> Chrome Menu → <span class="blank">________________</span> → Developer Tools</li>
+                <li><strong>Right-Click Method:</strong> Right-click anywhere → Select "<span class="blank">________________</span>"</li>
+                <li><strong>Keyboard Shortcuts:</strong>
+                    <ul>
+                        <li>Windows/Linux: <span class="blank">________</span> or Ctrl + Shift + <span class="blank">___</span></li>
+                        <li>Mac: Opt + <span class="blank">_____</span> + C</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> Learn the keyboard shortcuts - they'll save you tons of time!
+            </div>
+        </div>
+
+        <!-- DevTools Panels Section -->
+        <div class="section">
+            <h2>🎛️ DevTools Panels Overview</h2>
+            
+            <h3>Essential Panels for JavaScript Development:</h3>
+            <table>
+                <tr>
+                    <th>Panel Name</th>
+                    <th>Primary Use</th>
+                    <th>My Notes</th>
+                </tr>
+                <tr>
+                    <td><strong>Elements</strong></td>
+                    <td>Inspect and edit <span class="blank">________</span> and CSS</td>
+                    <td><span class="long-blank">_____________________</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Console</strong></td>
+                    <td>JavaScript <span class="blank">________</span> and testing</td>
+                    <td><span class="long-blank">_____________________</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Sources</strong></td>
+                    <td>Set breakpoints and <span class="blank">________</span> code</td>
+                    <td><span class="long-blank">_____________________</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Network</strong></td>
+                    <td>Monitor HTTP <span class="blank">________</span></td>
+                    <td><span class="long-blank">_____________________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Elements Panel Section -->
+        <div class="section">
+            <h2>🏗️ Elements Panel</h2>
+            
+            <h3>DOM Manipulation Features:</h3>
+            <div class="practice-box">
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Inspect elements by hovering
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Edit HTML by <span class="blank">________________</span>-clicking text
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Add/remove CSS classes
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Toggle CSS properties using checkboxes
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> View the <span class="blank">________________</span> model
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Force element states (:hover, :active, :focus)
+                </div>
+            </div>
+            
+            <h3>CSS Features:</h3>
+            <p>To add a pseudo-state to an element, right-click and select: <span class="long-blank">_____________________________</span></p>
+            <p>To view all CSS properties alphabetically, click: <span class="long-blank">_____________________________</span></p>
+        </div>
+
+        <!-- Console Panel Section -->
+        <div class="section">
+            <h2>💻 Console Panel</h2>
+            
+            <h3>Essential Console Methods:</h3>
+            <div class="code-block">
+console.<span class="code-blank">________</span>("General output");
+console.<span class="code-blank">________</span>("Warning message");
+console.<span class="code-blank">________</span>("Error message");
+console.<span class="code-blank">________</span>(arrayOfObjects);  // Display as table
+console.<span class="code-blank">________</span>();  // Clear the console
+            </div>
+            
+            <h3>DOM Selection in Console:</h3>
+            <div class="code-block">
+// Select single element
+document.<span class="code-blank">________________</span>('selector');
+
+// Select multiple elements
+document.<span class="code-blank">________________</span>('selector');
+
+// Shortcut for last result
+<span class="code-blank">____</span>
+            </div>
+            
+            <h3>Live DOM Manipulation Practice:</h3>
+            <p>Change an element's text: <code>element.textContent = <span class="code-blank">________________</span></code></p>
+            <p>Change an element's style: <code>element.style.<span class="code-blank">________</span> = 'value'</code></p>
+            <p>Add a new element: <code>document.<span class="code-blank">________________</span>('div')</code></p>
+        </div>
+
+        <!-- Debugging Section -->
+        <div class="section">
+            <h2>🐛 JavaScript Debugging</h2>
+            
+            <h3>Breakpoints</h3>
+            <p>A breakpoint is: <span class="long-blank">_________________________________________</span></p>
+            
+            <h3>Setting Breakpoints:</h3>
+            <ol>
+                <li>Open the <span class="blank">________________</span> panel</li>
+                <li>Find your JavaScript file in the file tree</li>
+                <li>Click on <span class="blank">________________</span> to set a breakpoint</li>
+                <li>Reload the page to trigger the breakpoint</li>
+            </ol>
+            
+            <h3>Debug Controls:</h3>
+            <table>
+                <tr>
+                    <th>Control</th>
+                    <th>Icon</th>
+                    <th>What It Does</th>
+                </tr>
+                <tr>
+                    <td>Resume</td>
+                    <td>▶️</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Step Over</td>
+                    <td>⤵️</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Step Into</td>
+                    <td>⬇️</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>Step Out</td>
+                    <td>⬆️</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+            </table>
+            
+            <h3>Types of Breakpoints:</h3>
+            <ul>
+                <li><strong>Line breakpoints:</strong> <span class="long-blank">_____________________________</span></li>
+                <li><strong>Conditional breakpoints:</strong> <span class="long-blank">_____________________________</span></li>
+                <li><strong>DOM breakpoints:</strong> <span class="long-blank">_____________________________</span></li>
+                <li><strong>Event listener breakpoints:</strong> <span class="long-blank">_____________________________</span></li>
+            </ul>
+        </div>
+
+        <!-- Scope & Watch Section -->
+        <div class="section">
+            <h2>👁️ Scope & Watch Panel</h2>
+            
+            <h3>Scope Panel Shows:</h3>
+            <ul>
+                <li><strong>Local:</strong> Variables in the <span class="blank">________________</span> function</li>
+                <li><strong>Closure:</strong> Variables from <span class="blank">________________</span> functions</li>
+                <li><strong>Global:</strong> Properties of the <span class="blank">________________</span> object</li>
+            </ul>
+            
+            <h3>Watch Expressions:</h3>
+            <p>Purpose: Monitor <span class="long-blank">_____________________________</span> as you debug</p>
+            <p>How to add: Click the + button and enter any <span class="blank">________________</span> expression</p>
+        </div>
+
+        <!-- Device Mode Section -->
+        <div class="section">
+            <h2>📱 Device Mode</h2>
+            
+            <h3>Responsive Testing Features:</h3>
+            <p>Keyboard shortcut to toggle Device Mode: <span class="blank">________</span> + Shift + <span class="blank">___</span></p>
+            
+            <div class="practice-box">
+                <h4>Device Mode Capabilities:</h4>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Simulate different devices (iPhone, iPad, Android)
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Custom viewport sizes
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Rotate orientation
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Throttle network speed
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Capture screenshots
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Touch event simulation
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Issues Section -->
+        <div class="section">
+            <h2>🔧 Common Debugging Scenarios</h2>
+            
+            <h3>Fill in the solutions:</h3>
+            <ol>
+                <li><strong>"undefined is not a function"</strong>
+                    <br>Common cause: <span class="long-blank">_________________________________________</span>
+                    <br>How to debug: <span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li><strong>"Cannot read property of null"</strong>
+                    <br>Common cause: <span class="long-blank">_________________________________________</span>
+                    <br>How to debug: <span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li><strong>Event listeners not working</strong>
+                    <br>Common cause: <span class="long-blank">_________________________________________</span>
+                    <br>How to debug: <span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li><strong>Styles not applying</strong>
+                    <br>Common cause: <span class="long-blank">_________________________________________</span>
+                    <br>How to debug: <span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Performance Tips Section -->
+        <div class="section">
+            <h2>⚡ Performance Measurement</h2>
+            
+            <h3>Timing Code Execution:</h3>
+            <div class="code-block">
+console.<span class="code-blank">________</span>('operationName');
+// Your code here
+console.<span class="code-blank">________</span>('operationName');
+// Output: operationName: XXXms
+            </div>
+            
+            <h3>Quick Performance Checks:</h3>
+            <ul>
+                <li><strong>Network Tab:</strong> Shows <span class="blank">________________</span> requests and load times</li>
+                <li><strong>Performance Tab:</strong> Records <span class="blank">________________</span> timeline</li>
+                <li><strong>Memory Tab:</strong> Identifies <span class="blank">________________</span> leaks</li>
+                <li><strong>Lighthouse:</strong> Provides overall <span class="blank">________________</span> audit</li>
+            </ul>
+        </div>
+
+        <!-- Practice Challenges Section -->
+        <div class="section">
+            <h2>💪 Practice Challenges</h2>
+            
+            <div class="practice-box">
+                <h3>Complete these challenges during class:</h3>
+                
+                <h4>Challenge 1: DOM Inspector</h4>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Find and change a heading's text using Elements panel
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Add a CSS class to an element
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Change the background color of a div
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Force a hover state on a button
+                </div>
+                
+                <h4>Challenge 2: Console Practice</h4>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Select all buttons on the page
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Count the number of links
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Create and append a new paragraph element
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Change the page title using JavaScript
+                </div>
+                
+                <h4>Challenge 3: Debugging</h4>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Set a breakpoint in a JavaScript function
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Step through the function line by line
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Add a watch expression for a variable
+                </div>
+                <div class="checkpoint">
+                    <span class="checkbox">☐</span> Use conditional breakpoint (breaks only when condition is true)
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways Section -->
+        <div class="section">
+            <h2>🎯 Key Takeaways</h2>
+            
+            <h3>The most important things I learned today:</h3>
+            <ol>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+            </ol>
+            
+            <h3>DevTools features I want to practice more:</h3>
+            <ul>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+            </ul>
+        </div>
+
+        <!-- Additional Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes, tips, or questions during the lecture:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="section">
+            <h2>❓ Questions for Review</h2>
+            
+            <ol>
+                <li>What are the three ways to open DevTools?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>What is the difference between Step Over and Step Into when debugging?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>How do you set a conditional breakpoint?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>What console method would you use to display data in a table format?
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>How can you simulate a mobile device in Chrome DevTools?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>🚀 Remember: DevTools mastery = Faster debugging = More time for building cool stuff!</p>
+            <p>Practice using DevTools on every website you visit!</p>
+        </div>
+    </div>
+</body>
+</html>

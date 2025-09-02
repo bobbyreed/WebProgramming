@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Data Types & Conditionals - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 30px -40px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .truthy-box {
+            background: rgba(100, 200, 100, 0.1);
+            border: 2px solid #4CAF50;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .falsy-box {
+            background: rgba(200, 100, 100, 0.1);
+            border: 2px solid #f44336;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript Data Types & Conditionals - Guided Notes</h1>
+            <p>CSCI 3403 - Web Programming | Day 19</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 Today's Exercises:</strong> We'll complete 01_helloWorld and 02_addNumbers together in class. 
+            Exercises 03-05 are homework!
+        </div>
+
+        <!-- Data Types Section -->
+        <div class="section">
+            <h2>🎱 The Eight Data Types</h2>
+            
+            <h3>Fill in the 7 Primitive Data Types:</h3>
+            <ol>
+                <li><code>number</code> - Example: <span class="blank">_________________</span></li>
+                <li><code>string</code> - Example: <span class="blank">_________________</span></li>
+                <li><code>boolean</code> - Values: <span class="blank">_________</span> or <span class="blank">_________</span></li>
+                <li><code><span class="blank">_________________</span></code> - Variable declared but not assigned</li>
+                <li><code><span class="blank">_________________</span></code> - Intentionally empty value</li>
+                <li><code>symbol</code> - Used for: <span class="blank">_________________</span></li>
+                <li><code>bigint</code> - Used for: <span class="blank">_________________</span></li>
+            </ol>
+            
+            <h3>The 1 Non-Primitive Data Type:</h3>
+            <p>8. <code><span class="blank">_________________</span></code> - Includes arrays, functions, and more complex data</p>
+            
+            <div class="tip">
+                <strong>💡 Remember:</strong> Which data type is NOT primitive? <span class="blank">_________________</span>
+            </div>
+        </div>
+
+        <!-- Strings Section -->
+        <div class="section">
+            <h2>📝 Working with Strings</h2>
+            
+            <h3>Three Types of Quotes:</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Symbol</th>
+                    <th>Special Feature</th>
+                </tr>
+                <tr>
+                    <td>Single quotes</td>
+                    <td><span class="blank">_____</span></td>
+                    <td>Basic string</td>
+                </tr>
+                <tr>
+                    <td>Double quotes</td>
+                    <td><span class="blank">_____</span></td>
+                    <td>Basic string</td>
+                </tr>
+                <tr>
+                    <td>Backticks</td>
+                    <td><span class="blank">_____</span></td>
+                    <td>Template literals - allows <span class="blank">_________________</span></td>
+                </tr>
+            </table>
+            
+            <h3>Embedding Variables in Strings:</h3>
+            <div class="code-block">
+let name = "Alice";
+let age = 25;
+// Old way (concatenation):
+let message1 = "Hello, " + <span class="code-blank">_______</span> + "! You are " + <span class="code-blank">_______</span> + " years old.";
+
+// Modern way (template literals):
+let message2 = <span class="code-blank">___</span>Hello, <span class="code-blank">${_______}</span>! You are <span class="code-blank">${_______}</span> years old.<span class="code-blank">___</span>;
+            </div>
+        </div>
+
+        <!-- String Methods Section -->
+        <div class="section">
+            <h2>🔧 Common String Methods</h2>
+            
+            <p>Fill in what each method does:</p>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>What it does</th>
+                    <th>Example Result</th>
+                </tr>
+                <tr>
+                    <td><code>.length</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"Hello".length = <span class="blank">_____</span></td>
+                </tr>
+                <tr>
+                    <td><code>.toUpperCase()</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"hello".toUpperCase() = <span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>.toLowerCase()</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"HELLO".toLowerCase() = <span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>.slice(start, end)</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"JavaScript".slice(0, 4) = <span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>.replace(old, new)</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"Hi there".replace("Hi", "Hey") = <span class="blank">_____________</span></td>
+                </tr>
+                <tr>
+                    <td><code>.indexOf(text)</code></td>
+                    <td><span class="blank">_________________________</span></td>
+                    <td>"Hello World".indexOf("World") = <span class="blank">_____</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Escape Characters Section -->
+        <div class="section">
+            <h2>🚪 Escape Characters</h2>
+            
+            <p>Complete the common escape sequences:</p>
+            <ul>
+                <li><code>\n</code> = <span class="blank">_________________</span></li>
+                <li><code>\t</code> = <span class="blank">_________________</span></li>
+                <li><code>\\</code> = <span class="blank">_________________</span></li>
+                <li><code>\"</code> = <span class="blank">_________________</span></li>
+                <li><code>\'</code> = <span class="blank">_________________</span></li>
+            </ul>
+        </div>
+
+        <!-- Comparison Operators Section -->
+        <div class="section">
+            <h2>⚖️ Comparison Operators</h2>
+            
+            <table>
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td><code>==</code></td>
+                    <td>Equal (loose)</td>
+                    <td>5 == "5"</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>===</code></td>
+                    <td>Equal (strict)</td>
+                    <td>5 === "5"</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>!=</code></td>
+                    <td><span class="blank">_________________</span></td>
+                    <td>5 != 3</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>!==</code></td>
+                    <td><span class="blank">_________________</span></td>
+                    <td>5 !== "5"</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>&gt;</code></td>
+                    <td><span class="blank">_________________</span></td>
+                    <td>10 &gt; 5</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+                <tr>
+                    <td><code>&lt;</code></td>
+                    <td><span class="blank">_________________</span></td>
+                    <td>5 &lt; 10</td>
+                    <td><span class="blank">_________</span></td>
+                </tr>
+            </table>
+            
+            <div class="tip">
+                <strong>⚠️ Best Practice:</strong> Always use <span class="blank">_______</span> for comparisons unless you have a specific reason not to!
+            </div>
+        </div>
+
+        <!-- Logical Operators Section -->
+        <div class="section">
+            <h2>🔀 Logical Operators</h2>
+            
+            <h3>The Three Logical Operators:</h3>
+            <ol>
+                <li><code>&&</code> means <span class="blank">_________</span> - Both conditions must be <span class="blank">_________</span></li>
+                <li><code>||</code> means <span class="blank">_________</span> - At least one condition must be <span class="blank">_________</span></li>
+                <li><code>!</code> means <span class="blank">_________</span> - Flips the boolean value</li>
+            </ol>
+            
+            <div class="practice-box">
+                <h3>Practice: What's the result?</h3>
+                <div class="code-block">
+let age = 25;
+let hasLicense = true;
+let isWeekend = false;
+
+age >= 16 && hasLicense     // Result: <span class="code-blank">_________</span>
+age < 16 || !hasLicense     // Result: <span class="code-blank">_________</span>
+isWeekend || age > 20       // Result: <span class="code-blank">_________</span>
+!(age < 18)                 // Result: <span class="code-blank">_________</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Truthy and Falsy Section -->
+        <div class="section">
+            <h2>✅❌ Truthy vs Falsy Values</h2>
+            
+            <div class="two-column">
+                <div class="falsy-box">
+                    <h3>❌ The 6 Falsy Values (memorize these!):</h3>
+                    <ol>
+                        <li><code><span class="blank">_________</span></code></li>
+                        <li><code><span class="blank">_________</span></code> (the number)</li>
+                        <li><code><span class="blank">_________</span></code> (empty string)</li>
+                        <li><code><span class="blank">_________</span></code></li>
+                        <li><code><span class="blank">_________</span></code></li>
+                        <li><code><span class="blank">_________</span></code> (Not a Number)</li>
+                    </ol>
+                </div>
+                
+                <div class="truthy-box">
+                    <h3>✅ Everything else is Truthy!</h3>
+                    <p>Including:</p>
+                    <ul>
+                        <li>"false" (the string)</li>
+                        <li>"0" (the string)</li>
+                        <li>[] (empty array)</li>
+                        <li>{} (empty object)</li>
+                        <li>Any number except 0</li>
+                        <li>Any non-empty string</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conditionals Section -->
+        <div class="section">
+            <h2>🚦 Conditionals</h2>
+            
+            <h3>If/Else Statement Syntax:</h3>
+            <div class="code-block">
+if (<span class="code-blank">_________condition_________</span>) {
+    // code if true
+} else if (<span class="code-blank">_________another condition_________</span>) {
+    // code if second condition true
+} else {
+    // code if all conditions false
+}
+            </div>
+            
+            <h3>Switch Statement Syntax:</h3>
+            <div class="code-block">
+switch(<span class="code-blank">_________variable_________</span>) {
+    case <span class="code-blank">_________value1_________</span>:
+        // code for value1
+        <span class="code-blank">_________</span>;  // Don't forget this!
+    case <span class="code-blank">_________value2_________</span>:
+        // code for value2
+        <span class="code-blank">_________</span>;
+    default:
+        // code if no match
+}
+            </div>
+            
+            <h3>Ternary Operator Syntax:</h3>
+            <div class="code-block">
+let result = condition ? <span class="code-blank">_____ifTrue_____</span> : <span class="code-blank">_____ifFalse_____</span>;
+
+// Example:
+let message = age >= 18 ? "Adult" : "Minor";
+            </div>
+        </div>
+
+        <!-- Nesting Section -->
+        <div class="section">
+            <h2>🪆 Nesting</h2>
+            
+            <p>What is nesting? <span class="long-blank">_________________________________________</span></p>
+            <p><span class="long-blank">_________________________________________</span></p>
+            
+            <div class="tip">
+                <strong>⚠️ Warning:</strong> Try to keep nesting under <span class="blank">_____</span> levels deep for readability!
+            </div>
+        </div>
+
+        <!-- In-Class Exercise Section -->
+        <div class="section">
+            <h2>💻 In-Class Exercises</h2>
+            
+            <h3>Exercise 1: Hello World</h3>
+            <div class="practice-box">
+                <p>Complete the function to return "Hello, World!":</p>
+                <div class="code-block">
+function helloWorld() {
+    <span class="code-blank">_________________________</span>
+}
+                </div>
+            </div>
+            
+            <h3>Exercise 2: Add Numbers</h3>
+            <div class="practice-box">
+                <p>Complete the function to add two numbers:</p>
+                <div class="code-block">
+function add(a, b) {
+    <span class="code-blank">_________________________</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Homework Section -->
+        <div class="section">
+            <h2>📚 Homework Exercises (Due Next Class)</h2>
+            
+            <table>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Description</th>
+                    <th>Key Concepts</th>
+                </tr>
+                <tr>
+                    <td>03_numberChecker</td>
+                    <td>Check properties of numbers</td>
+                    <td><span class="blank">_________________</span></td>
+                </tr>
+                <tr>
+                    <td>04_mathEquations</td>
+                    <td>Solve math problems</td>
+                    <td><span class="blank">_________________</span></td>
+                </tr>
+                <tr>
+                    <td>05_joinStrings</td>
+                    <td>Concatenate strings</td>
+                    <td><span class="blank">_________________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Quick Reference Section -->
+        <div class="section">
+            <h2>📋 Quick Reference</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Common Patterns:</h3>
+                    <ul>
+                        <li>Check if exists: <code>if (variable) {...}</code></li>
+                        <li>Default value: <code>let x = input || "default"</code></li>
+                        <li>Range check: <code>if (x >= min && x <= max)</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Debugging Tips:</h3>
+                    <ul>
+                        <li>Use <code>console.log()</code> liberally</li>
+                        <li>Check <code>typeof variable</code></li>
+                        <li>Test truthy/falsy with <code>!!value</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes during the lecture:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Remember: The best way to learn JavaScript is by writing JavaScript! 💪</p>
+            <p>Practice these concepts, and don't be afraid to experiment!</p>
+        </div>
+    </div>
+</body>
+</html>

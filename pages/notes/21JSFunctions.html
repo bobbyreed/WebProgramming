@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #1565c0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JavaScript Functions - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Week 11, Day 21</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Goal:</strong> Learn to write reusable code blocks with functions!
+        <br><strong>⏰ Homework:</strong> Complete function exercises and add them to your one-page website
+    </div>
+
+    <!-- Functions Introduction -->
+    <div class="section">
+        <h2>⚡ What Are Functions?</h2>
+        
+        <p>Functions are <span class="blank">_______________</span> blocks of code that can be 
+        <span class="blank">_______________</span> multiple times.</p>
+        
+        <h3>Why Use Functions?</h3>
+        <ul>
+            <li>Write <span class="blank">_______________</span>, use many times</li>
+            <li>Keep code <span class="blank">_______________</span> and organized</li>
+            <li>Easier to <span class="blank">_______________</span> and debug</li>
+            <li>Avoid <span class="blank">_______________</span> code</li>
+        </ul>
+        
+        <div class="tip">
+            <strong>💡 Think of functions like:</strong> A recipe you can follow over and over to get the same result!
+        </div>
+    </div>
+
+    <!-- Function Anatomy -->
+    <div class="section">
+        <h2>🔬 Anatomy of a Function</h2>
+        
+        <div class="code-block">
+function <span class="code-blank">_________</span>(<span class="code-blank">_________</span>) {
+    // Function body
+    return <span class="code-blank">_________</span>;
+}
+        </div>
+        
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>function</code></td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Function Name</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Parameters</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td>Function Body { }</td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+            <tr>
+                <td><code>return</code></td>
+                <td><span class="blank">_________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Parameters vs Arguments -->
+    <div class="section">
+        <h2>📥 Parameters vs Arguments</h2>
+        
+        <div class="code-block">
+// Define function with PARAMETER
+function favoriteAnimal(<span class="code-blank">_________</span>) {
+    return animal + " is my favorite animal!";
+}
+
+// Call function with ARGUMENT
+favoriteAnimal(<span class="code-blank">_________</span>);
+        </div>
+        
+        <p><strong>Parameter:</strong> <span class="long-blank">_________________________________</span></p>
+        <p><strong>Argument:</strong> <span class="long-blank">_________________________________</span></p>
+        
+        <div class="tip">
+            <strong>Memory Trick:</strong> 
+            <br>📌 <strong>P</strong>arameter = <strong>P</strong>laceholder (in definition)
+            <br>📌 <strong>A</strong>rgument = <strong>A</strong>ctual value (when calling)
+        </div>
+    </div>
+
+    <!-- Return Values -->
+    <div class="section">
+        <h2>📤 Return Values</h2>
+        
+        <p>The <code>return</code> statement:</p>
+        <ol>
+            <li>Sends a value <span class="blank">_______________</span> from the function</li>
+            <li><span class="blank">_______________</span> the function execution</li>
+            <li>Makes the function result <span class="blank">_______________</span></li>
+        </ol>
+        
+        <h3>With vs Without Return</h3>
+        <table>
+            <tr>
+                <th>Without Return</th>
+                <th>With Return</th>
+            </tr>
+            <tr>
+                <td>Function performs action</td>
+                <td>Function produces value</td>
+            </tr>
+            <tr>
+                <td>Result is <code>undefined</code></td>
+                <td>Result can be stored/used</td>
+            </tr>
+            <tr>
+                <td>Side effects only</td>
+                <td>Can be chained/composed</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Function Scope -->
+    <div class="section">
+        <h2>🔒 Function Scope</h2>
+        
+        <p><strong>Scope</strong> determines where <span class="blank">_______________</span> can be accessed.</p>
+        
+        <h3>Scope Rules:</h3>
+        <ul>
+            <li><strong>Global Scope:</strong> Variables declared <span class="blank">_______________</span> functions</li>
+            <li><strong>Function Scope:</strong> Variables declared <span class="blank">_______________</span> functions</li>
+            <li><strong>Block Scope:</strong> Variables declared inside <span class="blank">_______________</span></li>
+        </ul>
+        
+        <div class="code-block">
+let globalVar = "I'm global!";
+
+function myFunction() {
+    let localVar = <span class="code-blank">_______________</span>;
+    console.log(globalVar);  // Works? <span class="code-blank">_____</span>
+    console.log(localVar);   // Works? <span class="code-blank">_____</span>
+}
+
+console.log(globalVar);  // Works? <span class="code-blank">_____</span>
+console.log(localVar);   // Works? <span class="code-blank">_____</span>
+        </div>
+    </div>
+
+    <!-- Types of Functions -->
+    <div class="section">
+        <h2>📝 Types of Functions</h2>
+        
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Syntax</th>
+                <th>Key Feature</th>
+            </tr>
+            <tr>
+                <td>Function Declaration</td>
+                <td><code>function name() {}</code></td>
+                <td><span class="blank">_______________</span></td>
+            </tr>
+            <tr>
+                <td>Function Expression</td>
+                <td><code>const name = function() {}</code></td>
+                <td><span class="blank">_______________</span></td>
+            </tr>
+            <tr>
+                <td>Arrow Function</td>
+                <td><code>const name = () => {}</code></td>
+                <td><span class="blank">_______________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Practice Exercises -->
+    <div class="section">
+        <h2>💪 Practice Exercises</h2>
+        
+        <div class="practice-box">
+            <h3>Exercise 1: add7</h3>
+            <p>Write a function that takes one number and returns that number + 7</p>
+            <div class="code-block">
+function add7(<span class="code-blank">_________</span>) {
+    <span class="code-blank">_________________________________</span>
+}
+
+console.log(add7(5));  // Should output: <span class="code-blank">_____</span>
+            </div>
+        </div>
+        
+        <div class="practice-box">
+            <h3>Exercise 2: multiply</h3>
+            <p>Write a function that takes 2 numbers and returns their product</p>
+            <div class="code-block">
+function multiply(<span class="code-blank">_____, _____</span>) {
+    <span class="code-blank">_________________________________</span>
+}
+
+console.log(multiply(3, 4));  // Should output: <span class="code-blank">_____</span>
+            </div>
+        </div>
+        
+        <div class="practice-box">
+            <h3>Exercise 3: capitalize</h3>
+            <p>Write a function that capitalizes only the first letter of a string</p>
+            <div class="code-block">
+function capitalize(str) {
+    return str[0].<span class="code-blank">___________</span>() + 
+           str.slice(1).<span class="code-blank">___________</span>();
+}
+            </div>
+        </div>
+        
+        <div class="practice-box">
+            <h3>Exercise 4: lastLetter</h3>
+            <p>Write a function that returns the last letter of a string</p>
+            <div class="code-block">
+function lastLetter(str) {
+    return str[<span class="code-blank">_______________</span>];
+}
+            </div>
+        </div>
+    </div>
+
+    <!-- Real World Examples -->
+    <div class="section">
+        <h2>🌍 Real World Functions</h2>
+        
+        <p>Complete these common real-world function patterns:</p>
+        
+        <h3>Email Validation</h3>
+        <div class="code-block">
+function isValidEmail(email) {
+    return email.includes('<span class="code-blank">_____</span>') && 
+           email.includes('<span class="code-blank">_____</span>');
+}
+        </div>
+        
+        <h3>Format Currency</h3>
+        <div class="code-block">
+function formatPrice(price) {
+    return '<span class="code-blank">_____</span>' + price.toFixed(<span class="code-blank">_____</span>);
+}
+        </div>
+        
+        <h3>Calculate Age</h3>
+        <div class="code-block">
+function calculateAge(birthYear) {
+    const currentYear = new Date().<span class="code-blank">_______________</span>();
+    return <span class="code-blank">_________________________________</span>;
+}
+        </div>
+    </div>
+
+    <!-- Best Practices -->
+    <div class="section">
+        <h2>⭐ Best Practices Checklist</h2>
+        
+        <h3>✅ DO:</h3>
+        <ul>
+            <li>☐ Use <span class="blank">_______________</span> function names</li>
+            <li>☐ Keep functions <span class="blank">_______________</span> and focused</li>
+            <li>☐ <span class="blank">_______________</span> values instead of just console.log</li>
+            <li>☐ Use <span class="blank">_______________</span> instead of global variables</li>
+        </ul>
+        
+        <h3>❌ DON'T:</h3>
+        <ul>
+            <li>☐ Make functions too <span class="blank">_______________</span></li>
+            <li>☐ Use <span class="blank">_______________</span> names</li>
+            <li>☐ Forget to <span class="blank">_______________</span> values</li>
+            <li>☐ Modify <span class="blank">_______________</span> variables inside functions</li>
+        </ul>
+    </div>
+
+    <!-- Key Concepts Review -->
+    <div class="section">
+        <h2>🎯 Key Concepts Review</h2>
+        
+        <ol>
+            <li>What are functions useful for?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>How do you invoke (call) a function?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What's the difference between parameters and arguments?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What is function scope?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What happens after a return statement?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>When should you use arrow functions?
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Call Stack -->
+    <div class="section">
+        <h2>📚 The Call Stack</h2>
+        
+        <p>When functions call other functions, JavaScript uses a <span class="blank">_______________</span> 
+        to keep track of execution order.</p>
+        
+        <div class="code-block">
+function first() {
+    console.log("First start");
+    second();
+    console.log("First end");
+}
+
+function second() {
+    console.log("Second");
+}
+
+first();
+        </div>
+        
+        <p>Output order:</p>
+        <ol>
+            <li><span class="blank">_______________</span></li>
+            <li><span class="blank">_______________</span></li>
+            <li><span class="blank">_______________</span></li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: Functions are the building blocks of JavaScript! 🚀</p>
+        <p>Practice writing functions - the more you write, the better you'll understand!</p>
+    </div>
+</body>
+</html>

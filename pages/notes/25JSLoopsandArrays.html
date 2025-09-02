@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Loops and Arrays - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box strong {
+            color: #2e7d32;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript: Loops and Arrays - Guided Notes</h1>
+            <p>CS 2083 - Web Programming I | Day 25</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>📚 Today's Resources:</strong> MDN Looping Code, JavaScript.info Arrays, JavaScript30 Array Cardio
+        </div>
+
+        <!-- Loops Section -->
+        <div class="section">
+            <h2>🔁 Loops - Handling Repetition</h2>
+            
+            <h3>Why Do We Need Loops?</h3>
+            <p>Loops allow us to <span class="blank">_______________</span> code multiple times without writing it over and over.</p>
+            <p>Computers are good at repetition because they are <span class="blank">_______________</span> and never get <span class="blank">_______________</span>.</p>
+            
+            <h3>While Loops</h3>
+            <p>A while loop continues executing as long as the condition is <span class="blank">_______________</span>.</p>
+            
+            <div class="code-block">
+let count = 0;
+while (<span class="code-blank">_______________</span>) {
+    console.log(count);
+    <span class="code-blank">_______________</span>; // increment
+}
+            </div>
+            
+            <div class="tip">
+                <strong>⚠️ Warning:</strong> Always ensure your loop condition will eventually become <span class="blank">_______________</span> to avoid infinite loops!
+            </div>
+            
+            <h3>For Loops</h3>
+            <p>For loops have three parts:</p>
+            <ol>
+                <li><strong>Initialization:</strong> <span class="blank">_______________</span></li>
+                <li><strong>Condition:</strong> <span class="blank">_______________</span></li>
+                <li><strong>Update:</strong> <span class="blank">_______________</span></li>
+            </ol>
+            
+            <div class="code-block">
+for (let i = <span class="code-blank">_____</span>; i < <span class="code-blank">_____</span>; i++) {
+    console.log(i);
+}
+            </div>
+            
+            <h3>Loop Control Statements</h3>
+            <table>
+                <tr>
+                    <th>Statement</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>break</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>Exit when condition met</td>
+                </tr>
+                <tr>
+                    <td><code>continue</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>Skip current iteration</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Practice Problems - Loops -->
+        <div class="practice-box">
+            <h3>🏋️ Practice: Write these loops</h3>
+            <ol>
+                <li>Count from 10 to 1 (countdown):
+                    <div class="code-block">
+for (<span class="code-blank">_______________</span>) {
+    console.log(i);
+}
+                    </div>
+                </li>
+                <li>Print only even numbers from 0 to 20:
+                    <div class="code-block">
+for (let i = 0; i <= 20; i++) {
+    if (<span class="code-blank">_______________</span>) {
+        console.log(i);
+    }
+}
+                    </div>
+                </li>
+                <li>Sum of numbers 1 to 100:
+                    <div class="code-block">
+let sum = <span class="code-blank">_____</span>;
+for (let i = 1; i <= 100; i++) {
+    <span class="code-blank">_______________</span>;
+}
+console.log(sum);
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Arrays Section -->
+        <div class="section">
+            <h2>📦 Arrays - Collections of Data</h2>
+            
+            <h3>What is an Array?</h3>
+            <p>An array is an <span class="blank">_______________</span> collection of items stored in a single variable.</p>
+            <p>Arrays are <span class="blank">_______________</span>-indexed, meaning the first element is at index <span class="blank">_____</span>.</p>
+            
+            <h3>Creating and Accessing Arrays</h3>
+            <div class="code-block">
+// Creating an array
+const fruits = ["apple", "banana", "orange"];
+
+// Accessing elements
+console.log(fruits[<span class="code-blank">_____</span>]); // "apple"
+console.log(fruits.length); // <span class="code-blank">_____</span>
+            </div>
+            
+            <h3>Common Array Methods</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                    <th>Returns</th>
+                </tr>
+                <tr>
+                    <td><code>push()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>New length</td>
+                </tr>
+                <tr>
+                    <td><code>pop()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>Removed element</td>
+                </tr>
+                <tr>
+                    <td><code>unshift()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>New length</td>
+                </tr>
+                <tr>
+                    <td><code>shift()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>Removed element</td>
+                </tr>
+            </table>
+            
+            <h3>Looping Through Arrays</h3>
+            <div class="code-block">
+const numbers = [10, 20, 30, 40, 50];
+
+// Traditional for loop
+for (let i = 0; i < <span class="code-blank">_______________</span>; i++) {
+    console.log(numbers[i]);
+}
+
+// For...of loop
+for (const num of <span class="code-blank">_______________</span>) {
+    console.log(num);
+}
+            </div>
+        </div>
+
+        <!-- Array Methods Section -->
+        <div class="section">
+            <h2>✨ Higher-Order Array Methods</h2>
+            
+            <h3>The Big Three Array Methods</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                    <th>Returns</th>
+                </tr>
+                <tr>
+                    <td><code>map()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>New array</td>
+                </tr>
+                <tr>
+                    <td><code>filter()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>New array</td>
+                </tr>
+                <tr>
+                    <td><code>reduce()</code></td>
+                    <td><span class="blank">_______________________</span></td>
+                    <td>Single value</td>
+                </tr>
+            </table>
+            
+            <h3>Map Method</h3>
+            <p>Map <span class="blank">_______________</span> each element and returns a <span class="blank">_______________</span> array.</p>
+            <div class="code-block">
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(num => <span class="code-blank">_______________</span>);
+// Result: [2, 4, 6, 8, 10]
+            </div>
+            
+            <h3>Filter Method</h3>
+            <p>Filter returns elements where the callback returns <span class="blank">_______________</span>.</p>
+            <div class="code-block">
+const numbers = [1, 2, 3, 4, 5, 6];
+const evens = numbers.filter(num => <span class="code-blank">_______________</span>);
+// Result: [2, 4, 6]
+            </div>
+            
+            <h3>Reduce Method</h3>
+            <p>Reduce combines all elements into a <span class="blank">_______________</span> value.</p>
+            <div class="code-block">
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((total, num) => <span class="code-blank">_______________</span>, 0);
+// Result: 15
+            </div>
+            
+            <div class="tip">
+                <strong>💡 Remember:</strong> These methods don't modify the original array - they return a new one!
+            </div>
+        </div>
+
+        <!-- Practice: sumOfTripledEvens -->
+        <div class="practice-box">
+            <h3>🏋️ Challenge: sumOfTripledEvens</h3>
+            <p>Write a function that:</p>
+            <ol>
+                <li>Takes an array of numbers</li>
+                <li>Filters for even numbers</li>
+                <li>Triples each even number</li>
+                <li>Sums the results</li>
+            </ol>
+            
+            <div class="code-block">
+// Using loops
+function sumOfTripledEvens(arr) {
+    let sum = <span class="code-blank">_____</span>;
+    for (let i = 0; i < arr.length; i++) {
+        if (<span class="code-blank">_______________</span>) {
+            sum += <span class="code-blank">_______________</span>;
+        }
+    }
+    return sum;
+}
+
+// Using array methods
+function sumOfTripledEvens(arr) {
+    return arr
+        .filter(<span class="code-blank">_______________</span>)
+        .map(<span class="code-blank">_______________</span>)
+        .reduce(<span class="code-blank">_______________</span>, 0);
+}
+            </div>
+        </div>
+
+        <!-- Method Chaining -->
+        <div class="section">
+            <h2>⛓️ Method Chaining</h2>
+            
+            <h3>Combining Multiple Operations</h3>
+            <p>We can chain array methods together for complex transformations:</p>
+            
+            <div class="code-block">
+const result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    .filter(n => n % 2 === 0)  // Keep: <span class="code-blank">_______________</span>
+    .map(n => n * 3)            // Result: <span class="code-blank">_______________</span>
+    .reduce((sum, n) => sum + n, 0); // Final: <span class="code-blank">_____</span>
+            </div>
+        </div>
+
+        <!-- Common Array Patterns -->
+        <div class="section">
+            <h2>📋 Common Array Patterns</h2>
+            
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>some()</code></td>
+                    <td>Check if <span class="blank">_______</span> element matches</td>
+                    <td><code>arr.some(n => n > 3)</code></td>
+                </tr>
+                <tr>
+                    <td><code>every()</code></td>
+                    <td>Check if <span class="blank">_______</span> elements match</td>
+                    <td><code>arr.every(n => n > 0)</code></td>
+                </tr>
+                <tr>
+                    <td><code>find()</code></td>
+                    <td>Return <span class="blank">_______</span> matching element</td>
+                    <td><code>arr.find(n => n > 3)</code></td>
+                </tr>
+                <tr>
+                    <td><code>indexOf()</code></td>
+                    <td>Return <span class="blank">_______</span> of element</td>
+                    <td><code>arr.indexOf(3)</code></td>
+                </tr>
+                <tr>
+                    <td><code>includes()</code></td>
+                    <td>Check if array <span class="blank">_______</span> element</td>
+                    <td><code>arr.includes(3)</code></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TDD Section -->
+        <div class="section">
+            <h2>🧪 Test-Driven Development (TDD)</h2>
+            
+            <h3>What is TDD?</h3>
+            <p>TDD means writing <span class="blank">_______________</span> before writing <span class="blank">_______________</span>.</p>
+            
+            <h3>The TDD Cycle</h3>
+            <ol>
+                <li>🔴 <strong>Red:</strong> Write a <span class="blank">_______________</span> test</li>
+                <li>🟢 <strong>Green:</strong> Write code to <span class="blank">_______________</span> the test</li>
+                <li>🔄 <strong>Refactor:</strong> <span class="blank">_______________</span> the code</li>
+            </ol>
+            
+            <div class="tip">
+                <strong>💡 Benefits of TDD:</strong>
+                <ul>
+                    <li>Ensures code works correctly</li>
+                    <li>Makes debugging easier</li>
+                    <li>Documents expected behavior</li>
+                    <li>Prevents regression bugs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Assignment Checklist -->
+        <div class="section">
+            <h2>📝 Assignment Checklist</h2>
+            
+            <h3>JavaScript.info Exercises</h3>
+            <ul>
+                <li>☐ Translate border-left-width to borderLeftWidth</li>
+                <li>☐ Filter range</li>
+                <li>☐ Filter range "in place"</li>
+                <li>☐ Sort in decreasing order</li>
+                <li>☐ Copy and sort array</li>
+                <li>☐ Shuffle an array</li>
+                <li>☐ Filter unique array members</li>
+            </ul>
+            
+            <h3>JavaScript30 Challenges</h3>
+            <ul>
+                <li>☐ Array Cardio Day 1</li>
+                <li>☐ Array Cardio Day 2</li>
+            </ul>
+            
+            <h3>JavaScript Exercises</h3>
+            <ul>
+                <li>☐ 06_repeatString</li>
+                <li>☐ 07_reverseString</li>
+                <li>☐ 08_removeFromArray</li>
+                <li>☐ 09_sumAll</li>
+                <li>☐ 10_leapYears</li>
+                <li>☐ 11_tempConversion</li>
+            </ul>
+        </div>
+
+        <!-- Practice Problems -->
+        <div class="practice-box">
+            <h3>🏋️ In-Class Exercise: repeatString</h3>
+            <p>Complete the function that repeats a string a given number of times:</p>
+            
+            <div class="code-block">
+function repeatString(string, num) {
+    // Handle negative numbers
+    if (<span class="code-blank">_______________</span>) {
+        return 'ERROR';
+    }
+    
+    // Your solution here:
+    let result = <span class="code-blank">_____</span>;
+    for (<span class="code-blank">_______________</span>) {
+        <span class="code-blank">_______________</span>;
+    }
+    return result;
+    
+    // Alternative solution using string method:
+    // return <span class="code-blank">_______________</span>;
+}
+
+// Test cases:
+// repeatString('hey', 3)  → 'heyheyhey'
+// repeatString('hello', 0) → ''
+// repeatString('hi', -1)   → 'ERROR'
+            </div>
+        </div>
+
+        <!-- Review Questions -->
+        <div class="section">
+            <h2>🤔 Review Questions</h2>
+            <ol>
+                <li>What is the difference between a while loop and a for loop?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>Why are arrays zero-indexed?
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>What's the difference between map() and forEach()?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>When would you use reduce() instead of a for loop?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+                
+                <li>What does it mean that array methods return a "new array"?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes during the lecture:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Remember: The best way to learn programming is by doing! 💻</p>
+            <p>Practice these concepts and complete all exercises.</p>
+        </div>
+    </div>
+</body>
+</html>

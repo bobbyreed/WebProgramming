@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Variable Declarations - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box strong {
+            color: #2e7d32;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .warning-box strong {
+            color: #c62828;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JavaScript Variable Declarations - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Week 11, Day 22</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Goal:</strong> Master the differences between var, let, and const to write cleaner, more predictable JavaScript code!
+    </div>
+
+    <!-- Historical Context Section -->
+    <div class="section">
+        <h2>📜 Historical Context</h2>
+        
+        <h3>Timeline</h3>
+        <ul>
+            <li>Before ES6 (2015): Only <span class="blank">_________</span> was available</li>
+            <li>ES6/ES2015: Introduced <span class="blank">_________</span> and <span class="blank">_________</span></li>
+        </ul>
+        
+        <h3>Why were new declarations needed?</h3>
+        <p>Problems with var:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Quick Reference Table Section -->
+    <div class="section">
+        <h2>⚖️ Quick Comparison Table</h2>
+        <p>Fill in the characteristics of each declaration type:</p>
+        
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>var</th>
+                <th>let</th>
+                <th>const</th>
+            </tr>
+            <tr>
+                <td><strong>Scope</strong></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td><strong>Can be reassigned?</strong></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td><strong>Can be redeclared?</strong></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td><strong>Hoisted?</strong></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td><strong>Initialized when hoisted?</strong></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Understanding var Section -->
+    <div class="section">
+        <h2>📝 Understanding var</h2>
+        
+        <h3>Scope of var</h3>
+        <p>var is <span class="blank">___________</span>-scoped or <span class="blank">___________</span>-scoped.</p>
+        
+        <div class="code-block">
+var greeting = "hey hi";
+
+function newFunction() {
+    var hello = "hello";
+}
+
+console.log(greeting); // Output: <span class="code-blank">___________</span>
+console.log(hello);    // Output: <span class="code-blank">___________</span>
+        </div>
+        
+        <h3>Hoisting with var</h3>
+        <p>Complete the hoisted version:</p>
+        <div class="practice-box">
+            <p><strong>Original Code:</strong></p>
+            <pre>console.log(greeter);
+var greeter = "say hello";</pre>
+            
+            <p><strong>How JavaScript interprets it:</strong></p>
+            <pre><span class="blank">_____________________</span>
+console.log(greeter); // <span class="blank">___________</span>
+<span class="blank">_____________________</span></pre>
+        </div>
+        
+        <div class="warning-box">
+            <strong>⚠️ The Problem with var:</strong>
+            <p>What happens in this code? Fill in the output:</p>
+            <div class="code-block">
+var greeter = "hey hi";
+var times = 4;
+
+if (times > 3) {
+    var greeter = "say Hello instead";
+}
+
+console.log(greeter); // Output: <span class="code-blank">___________________</span>
+            </div>
+            <p>Why? <span class="long-blank">_________________________________________</span></p>
+        </div>
+    </div>
+
+    <!-- Understanding let Section -->
+    <div class="section">
+        <h2>🎉 Understanding let</h2>
+        
+        <h3>Key Characteristics</h3>
+        <ul>
+            <li>Scope: <span class="blank">___________</span></li>
+            <li>Can be updated? <span class="blank">___________</span></li>
+            <li>Can be re-declared in same scope? <span class="blank">___________</span></li>
+        </ul>
+        
+        <h3>Block Scope Example</h3>
+        <div class="code-block">
+let greeting = "say Hi";
+
+if (true) {
+    let hello = "say Hello";
+    console.log(hello); // Output: <span class="code-blank">___________</span>
+}
+
+console.log(hello); // Output: <span class="code-blank">___________</span>
+        </div>
+        
+        <h3>let vs var - Scope Comparison</h3>
+        <p>Fill in what happens with each declaration:</p>
+        <table>
+            <tr>
+                <th>Scenario</th>
+                <th>With var</th>
+                <th>With let</th>
+            </tr>
+            <tr>
+                <td>Redeclare in same scope</td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td>Update/reassign value</td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td>Declare in different scopes</td>
+                <td><span class="blank">___________</span></td>
+                <td><span class="blank">___________</span></td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Temporal Dead Zone (TDZ):</strong>
+            <p>Definition: <span class="long-blank">_________________________________________</span></p>
+            <p><span class="long-blank">_________________________________________</span></p>
+        </div>
+    </div>
+
+    <!-- Understanding const Section -->
+    <div class="section">
+        <h2>🔒 Understanding const</h2>
+        
+        <h3>Key Rules</h3>
+        <ol>
+            <li>Must be <span class="blank">___________</span> at declaration</li>
+            <li>Cannot be <span class="blank">___________</span></li>
+            <li>Cannot be <span class="blank">___________</span></li>
+            <li>Is <span class="blank">___________</span>-scoped</li>
+        </ol>
+        
+        <h3>const with Objects and Arrays</h3>
+        <div class="practice-box">
+            <p><strong>Important Concept:</strong> With const, the <span class="blank">___________</span> is constant, not the <span class="blank">___________</span>!</p>
+            
+            <div class="code-block">
+const person = {
+    name: "Alice",
+    age: 30
+};
+
+// Can we do this? (Yes/No)
+person.age = 31;        // <span class="code-blank">_____</span>
+person.city = "NYC";    // <span class="code-blank">_____</span>
+person = {};            // <span class="code-blank">_____</span>
+
+const numbers = [1, 2, 3];
+
+// Can we do this? (Yes/No)
+numbers.push(4);        // <span class="code-blank">_____</span>
+numbers[0] = 10;        // <span class="code-blank">_____</span>
+numbers = [4, 5, 6];    // <span class="code-blank">_____</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Practices Section -->
+    <div class="section">
+        <h2>✨ Best Practices & When to Use Each</h2>
+        
+        <h3>Modern JavaScript Guidelines</h3>
+        <ol>
+            <li>Default choice: <span class="blank">___________</span></li>
+            <li>When value needs to change: <span class="blank">___________</span></li>
+            <li>Never use: <span class="blank">___________</span></li>
+        </ol>
+        
+        <h3>Common Use Cases</h3>
+        <p>Choose the best declaration (var/let/const) for each scenario:</p>
+        <table>
+            <tr>
+                <th>Scenario</th>
+                <th>Best Choice</th>
+                <th>Why?</th>
+            </tr>
+            <tr>
+                <td>Configuration values (API_URL)</td>
+                <td><span class="blank">_______</span></td>
+                <td><span class="long-blank">_____________________</span></td>
+            </tr>
+            <tr>
+                <td>Loop counter (i)</td>
+                <td><span class="blank">_______</span></td>
+                <td><span class="long-blank">_____________________</span></td>
+            </tr>
+            <tr>
+                <td>DOM element reference</td>
+                <td><span class="blank">_______</span></td>
+                <td><span class="long-blank">_____________________</span></td>
+            </tr>
+            <tr>
+                <td>User login status</td>
+                <td><span class="blank">_______</span></td>
+                <td><span class="long-blank">_____________________</span></td>
+            </tr>
+            <tr>
+                <td>Mathematical constants</td>
+                <td><span class="blank">_______</span></td>
+                <td><span class="long-blank">_____________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Practice Exercise Section -->
+    <div class="section">
+        <h2>💪 Practice Exercise</h2>
+        
+        <h3>Refactor this code using let and const:</h3>
+        <div class="practice-box">
+            <p><strong>Original Code (using var):</strong></p>
+            <div class="code-block">
+var userAge = 25;
+var userName = "Alice";
+var scores = [85, 92, 78];
+var total = 0;
+
+for (var i = 0; i < scores.length; i++) {
+    total = total + scores[i];
+}
+
+var average = total / scores.length;
+userAge = userAge + 1;
+            </div>
+            
+            <p><strong>Your Refactored Version:</strong></p>
+            <div class="code-block">
+<span class="code-blank">_____</span> userAge = 25;
+<span class="code-blank">_____</span> userName = "Alice";
+<span class="code-blank">_____</span> scores = [85, 92, 78];
+<span class="code-blank">_____</span> total = 0;
+
+for (<span class="code-blank">_____</span> i = 0; i < scores.length; i++) {
+    total = total + scores[i];
+}
+
+<span class="code-blank">_____</span> average = total / scores.length;
+userAge = userAge + 1;
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Pitfalls Section -->
+    <div class="section">
+        <h2>🕳️ Common Pitfalls to Avoid</h2>
+        
+        <ol>
+            <li>
+                <strong>Using var in modern code:</strong>
+                <br>Why avoid? <span class="long-blank">_________________________________________</span>
+            </li>
+            <li>
+                <strong>Using let when const would work:</strong>
+                <br>Why avoid? <span class="long-blank">_________________________________________</span>
+            </li>
+            <li>
+                <strong>Accessing variables before declaration:</strong>
+                <br>What happens? <span class="long-blank">_________________________________________</span>
+            </li>
+            <li>
+                <strong>Confusing const immutability:</strong>
+                <br>Remember: <span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="section">
+        <h2>🎯 Key Takeaways</h2>
+        
+        <h3>Complete these summary statements:</h3>
+        <ol>
+            <li>The main problem with var is: <span class="long-blank">_________________________________________</span></li>
+            <li>Block scope means: <span class="long-blank">_________________________________________</span></li>
+            <li>The Temporal Dead Zone exists for: <span class="long-blank">_________________________________________</span></li>
+            <li>With const objects/arrays, you can: <span class="long-blank">_________________________________________</span></li>
+            <li>The modern best practice is to: <span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="tip">
+            <strong>📌 Remember the Golden Rule:</strong>
+            <p>Use <span class="blank">_________</span> by default, <span class="blank">_________</span> when you need to reassign, and never <span class="blank">_________</span>!</p>
+        </div>
+    </div>
+
+    <!-- Review Questions Section -->
+    <div class="section">
+        <h2>❓ Review Questions</h2>
+        
+        <ol>
+            <li>What will this code output and why?
+                <div class="code-block">
+console.log(x);
+let x = 5;
+                </div>
+                Answer: <span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>Is this code valid? Why or why not?
+                <div class="code-block">
+const arr = [1, 2, 3];
+arr.push(4);
+                </div>
+                Answer: <span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What's the difference between these two loops?
+                <div class="code-block">
+// Loop A
+for (var i = 0; i < 3; i++) { }
+
+// Loop B  
+for (let i = 0; i < 3; i++) { }
+                </div>
+                Answer: <span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or examples from class:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: const doesn't mean immutable, it means the binding is immutable! 🔒</p>
+        <p>Practice makes perfect - experiment with these concepts in your own code!</p>
+    </div>
+</body>
+</html>

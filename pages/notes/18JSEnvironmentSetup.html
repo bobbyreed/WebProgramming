@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 18: JavaScript Environment Setup - Guided Notes</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+        
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border: 2px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .extra-long-blank {
+            display: inline-block;
+            min-width: 400px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        .terminal-box {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        .warning {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning strong {
+            color: #c62828;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+            .footer {
+                color: #666;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JavaScript Environment Setup - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Week 9, Class 18</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>🎯 Today's Goal:</strong> Install Node.js and set up your JavaScript development environment
+    </div>
+
+    <!-- What is Node.js Section -->
+    <div class="section">
+        <h2>🤔 What is Node.js?</h2>
+        
+        <p>Node.js is a JavaScript <span class="blank">_______________</span> environment that allows you to run JavaScript <span class="blank">_______________</span> of your web browser.</p>
+        
+        <h3>Browser JavaScript vs Node.js</h3>
+        <table>
+            <tr>
+                <th>Browser JavaScript</th>
+                <th>Node.js</th>
+            </tr>
+            <tr>
+                <td>Runs in <span class="blank">_______________</span></td>
+                <td>Runs on <span class="blank">_______________</span></td>
+            </tr>
+            <tr>
+                <td>Access to DOM</td>
+                <td>Access to <span class="blank">_______________</span></td>
+            </tr>
+            <tr>
+                <td>Has window object</td>
+                <td>Has <span class="blank">_______________</span> object</td>
+            </tr>
+            <tr>
+                <td>Client-side only</td>
+                <td><span class="blank">_______________</span>-side capable</td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> Node.js lets JavaScript escape the browser sandbox!
+        </div>
+    </div>
+
+    <!-- Why We Need Node.js Section -->
+    <div class="section">
+        <h2>💡 Why Do We Need Node.js?</h2>
+        
+        <p>List 5 reasons why modern web development requires Node.js:</p>
+        <ol>
+            <li>📦 <span class="long-blank">_________________________________________</span></li>
+            <li>🛠️ <span class="long-blank">_________________________________________</span></li>
+            <li>🧪 <span class="long-blank">_________________________________________</span></li>
+            <li>🖥️ <span class="long-blank">_________________________________________</span></li>
+            <li>⚡ <span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Tool Trinity Section -->
+    <div class="section">
+        <h2>🔧 Understanding the Tools</h2>
+        
+        <h3>NVM vs Node vs NPM - Fill in the descriptions:</h3>
+        
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>Full Name</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><strong>NVM</strong> 🔄</td>
+                <td>Node <span class="blank">_______________</span> Manager</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><strong>Node.js</strong> ⚙️</td>
+                <td>JavaScript Runtime</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><strong>NPM</strong> 📦</td>
+                <td>Node <span class="blank">_______________</span> Manager</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+        
+        <div class="warning">
+            <strong>⚠️ Don't Confuse:</strong> NVM manages <span class="blank">_______________</span> versions. 
+            NPM manages <span class="blank">_______________</span>. They sound similar but do different things!
+        </div>
+    </div>
+
+    <!-- Installation Benefits Section -->
+    <div class="section">
+        <h2>📋 Why Use NVM Instead of Direct Installation?</h2>
+        
+        <p>List 3 advantages of using NVM:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Pre-Installation Check Section -->
+    <div class="section">
+        <h2>🔍 Pre-Installation Check</h2>
+        
+        <p>Check if Node is already installed by running these commands:</p>
+        
+        <div class="terminal-box">
+            $ node <span class="code-blank">_______________</span><br>
+            $ which <span class="code-blank">_______________</span>
+        </div>
+        
+        <p>If you see "command not found", Node is <span class="blank">_______________</span> installed.</p>
+        <p>If you see a version number like v20.11.0, Node <span class="blank">_______________</span> installed.</p>
+    </div>
+
+    <!-- Installation Steps Section -->
+    <div class="section">
+        <h2>💻 Installation Steps</h2>
+        
+        <h3>Choose Your Operating System:</h3>
+        <p>☐ Linux &nbsp;&nbsp;&nbsp; ☐ macOS &nbsp;&nbsp;&nbsp; ☐ Windows (WSL)</p>
+        
+        <h3>Step 1: Install NVM</h3>
+        <div class="practice-box">
+            <p><strong>For Linux:</strong></p>
+            <div class="code-block">
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+            </div>
+            
+            <p><strong>For macOS (with Homebrew):</strong></p>
+            <div class="code-block">
+                brew install nvm
+            </div>
+            
+            <p>✅ Check: After installation, close and reopen your terminal!</p>
+        </div>
+        
+        <h3>Step 2: Verify NVM Installation</h3>
+        <div class="terminal-box">
+            $ nvm --version
+        </div>
+        <p>You should see a version number like: <span class="blank">_______________</span></p>
+        
+        <h3>Step 3: Install Node.js</h3>
+        <div class="terminal-box">
+            $ nvm install <span class="code-blank">_______________</span>
+        </div>
+        <p>What does LTS stand for? <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>Step 4: Set Node Version</h3>
+        <div class="terminal-box">
+            $ nvm use <span class="code-blank">_______________</span><br>
+            $ nvm alias default <span class="code-blank">_______________</span>
+        </div>
+        
+        <h3>Step 5: Verify Installation</h3>
+        <p>Record your versions:</p>
+        <ul>
+            <li>Node version (node -v): <span class="blank">_______________</span></li>
+            <li>NPM version (npm -v): <span class="blank">_______________</span></li>
+        </ul>
+    </div>
+
+    <!-- NVM Commands Section -->
+    <div class="section">
+        <h2>📝 Essential NVM Commands</h2>
+        
+        <p>Complete the command descriptions:</p>
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>What it does</th>
+            </tr>
+            <tr>
+                <td><code>nvm list</code></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><code>nvm list-remote</code></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><code>nvm install 18.19.0</code></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><code>nvm use 18.19.0</code></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td><code>nvm alias default 20.11.0</code></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Node Console Section -->
+    <div class="section">
+        <h2>💻 The Node Console (REPL)</h2>
+        
+        <p>REPL stands for: <span class="blank">_______________</span>-<span class="blank">_______________</span>-<span class="blank">_______________</span> Loop</p>
+        
+        <h3>REPL Commands:</h3>
+        <ul>
+            <li>Start REPL: <code>node</code></li>
+            <li>Exit REPL: <code><span class="blank">_______________</span></code></li>
+            <li>Show help: <code><span class="blank">_______________</span></code></li>
+            <li>Save session: <code><span class="blank">_______________</span> filename.js</code></li>
+            <li>Clear context: <code><span class="blank">_______________</span></code></li>
+        </ul>
+        
+        <div class="practice-box">
+            <h3>📝 Practice Exercise:</h3>
+            <p>In the Node REPL, create a function that reverses a string:</p>
+            <div class="code-block">
+                function reverseString(str) {
+                    <br>&nbsp;&nbsp;// Your code here:
+                    <br>&nbsp;&nbsp;<span class="extra-long-blank">_________________________________________</span>
+                    <br>}
+            </div>
+        </div>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div class="section">
+        <h2>🔧 Common Issues & Solutions</h2>
+        
+        <table>
+            <tr>
+                <th>Problem</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>"nvm: command not found"</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>"Permission denied" with npm</td>
+                <td>Never use <span class="blank">_______________</span> with npm!</td>
+            </tr>
+            <tr>
+                <td>Node version keeps resetting</td>
+                <td>Set a default: <code>nvm alias <span class="blank">_______________</span> node</code></td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Golden Rule:</strong> When in doubt, <span class="long-blank">_________________________________________</span>!
+        </div>
+    </div>
+
+    <!-- NPM Preview Section -->
+    <div class="section">
+        <h2>📦 Quick NPM Preview</h2>
+        
+        <p>Complete these common NPM commands:</p>
+        <ul>
+            <li>Initialize new project: <code>npm init <span class="blank">_______________</span></code></li>
+            <li>Install a package: <code>npm <span class="blank">_______________</span> package-name</code></li>
+            <li>Install dev dependency: <code>npm install <span class="blank">_______________</span> package-name</code></li>
+            <li>Run a script: <code>npm <span class="blank">_______________</span> script-name</code></li>
+        </ul>
+    </div>
+
+    <!-- Development vs Deployment Section -->
+    <div class="section">
+        <h2>🚀 Development vs Deployment</h2>
+        
+        <h3>Node.js Development Benefits:</h3>
+        <p>List 3 ways Node.js makes development easier:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <h3>Deployment Considerations:</h3>
+        <p>List 3 challenges you might face when deploying Node.js applications:</p>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="warning">
+            <strong>⚠️ Remember:</strong> "It works on my machine!" → "It works in production!" requires careful planning!
+        </div>
+    </div>
+
+    <!-- Best Practices Section -->
+    <div class="section">
+        <h2>✅ Best Practices Checklist</h2>
+        
+        <p>Check off as you implement each practice:</p>
+        <ul style="list-style: none;">
+            <li><span class="checkbox"></span> Always use NVM for version management</li>
+            <li><span class="checkbox"></span> Stick to LTS versions for important projects</li>
+            <li><span class="checkbox"></span> Commit package-lock.json to git</li>
+            <li><span class="checkbox"></span> Never commit <span class="blank">_______________</span> folder</li>
+            <li><span class="checkbox"></span> Use .nvmrc files in projects</li>
+            <li><span class="checkbox"></span> Learn about environment variables early</li>
+            <li><span class="checkbox"></span> Understand dependencies vs devDependencies</li>
+        </ul>
+    </div>
+
+    <!-- Review Questions Section -->
+    <div class="section">
+        <h2>📝 Review Questions</h2>
+        
+        <ol>
+            <li>What is the main difference between Node.js and browser JavaScript?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>Why should we use NVM instead of installing Node directly?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What's the difference between NVM and NPM?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+            
+            <li>What command exits the Node REPL?
+                <br><span class="blank">_______________</span>
+            </li>
+            
+            <li>What does LTS stand for and why is it important?
+                <br><span class="long-blank">_________________________________________</span>
+                <br><span class="long-blank">_________________________________________</span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes, questions, or observations:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📚 Homework</h2>
+        <p><strong>Create a simple Node.js script that reads a file and counts words!</strong></p>
+        <p>Requirements:</p>
+        <ul>
+            <li>Create a new file called <code>wordCounter.js</code></li>
+            <li>Use Node's built-in <code>fs</code> module</li>
+            <li>Read a text file</li>
+            <li>Count and display the number of words</li>
+            <li>Handle errors gracefully</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Great work setting up your JavaScript environment! 🚀</p>
+        <p>Remember: Every senior developer started exactly where you are now!</p>
+    </div>
+</body>
+</html>

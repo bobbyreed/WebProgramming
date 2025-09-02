@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Clean Code - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .header p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box strong {
+            color: #2e7d32;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .bad-example {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .good-example {
+            background: #e8f5e9;
+            border: 2px solid #66bb6a;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JavaScript Clean Code - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Day 24</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Focus:</strong> Writing code for humans + Rock Paper Scissors Project work session
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="section">
+        <h2>📖 The Reality of Programming</h2>
+        
+        <h3>How Developers Spend Their Time</h3>
+        <p>Writing code: <span class="blank">________</span> %</p>
+        <p>Reading code: <span class="blank">________</span> %</p>
+        
+        <p>We read code written by:</p>
+        <ul>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Clean Code Principles Section -->
+    <div class="section">
+        <h2>✨ What Makes Code "Clean"?</h2>
+        
+        <p>Clean code is:</p>
+        <ol>
+            <li><strong>Readable:</strong> <span class="long-blank">_________________________________________</span></li>
+            <li><strong>Consistent:</strong> <span class="long-blank">_________________________________________</span></li>
+            <li><strong>Meaningful:</strong> <span class="long-blank">_________________________________________</span></li>
+            <li><strong>Simple:</strong> <span class="long-blank">_________________________________________</span></li>
+            <li><strong>Maintainable:</strong> <span class="long-blank">_________________________________________</span></li>
+        </ol>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> You're writing for <span class="blank">_______________</span>, not just computers!
+        </div>
+    </div>
+
+    <!-- Naming Conventions Section -->
+    <div class="section">
+        <h2>🏷️ Naming Variables & Functions</h2>
+        
+        <h3>JavaScript Naming Convention</h3>
+        <p>JavaScript uses <span class="blank">_______________</span> case for variables and functions.</p>
+        
+        <h3>camelCase Rules:</h3>
+        <ul>
+            <li>First word: <span class="blank">_______________________</span></li>
+            <li>Following words: <span class="blank">_______________________</span></li>
+            <li>No <span class="blank">___________</span> or <span class="blank">___________</span></li>
+        </ul>
+
+        <h3>Variables vs Functions</h3>
+        <table>
+            <tr>
+                <th>Variables (Things)</th>
+                <th>Functions (Actions)</th>
+            </tr>
+            <tr>
+                <td>Start with <span class="blank">___________</span> or <span class="blank">___________</span></td>
+                <td>Start with <span class="blank">___________</span></td>
+            </tr>
+            <tr>
+                <td>Example: userName, isActive</td>
+                <td>Example: calculateTotal, sendEmail</td>
+            </tr>
+        </table>
+
+        <div class="practice-box">
+            <h4>Practice: Fix these variable names</h4>
+            <p>x = <span class="long-blank">_______________________</span></p>
+            <p>temp = <span class="long-blank">_______________________</span></p>
+            <p>data = <span class="long-blank">_______________________</span></p>
+        </div>
+    </div>
+
+    <!-- Consistency Section -->
+    <div class="section">
+        <h2>📚 Consistency in Code</h2>
+        
+        <h3>Pick ONE word for ONE concept</h3>
+        <div class="comparison-table">
+            <div class="bad-example">
+                <strong>❌ Inconsistent</strong>
+                <ul>
+                    <li>getUserData()</li>
+                    <li>fetchPlayerInfo()</li>
+                    <li>retrieveAccountDetails()</li>
+                </ul>
+            </div>
+            <div class="good-example">
+                <strong>✅ Consistent</strong>
+                <ul>
+                    <li>getUser<span class="blank">_____</span>()</li>
+                    <li>getPlayer<span class="blank">_____</span>()</li>
+                    <li>getAccount<span class="blank">_____</span>()</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Magic Numbers Section -->
+    <div class="section">
+        <h2>🎩 Avoiding "Magic Numbers"</h2>
+        
+        <p>Magic numbers are: <span class="long-blank">_________________________________________</span></p>
+        
+        <h3>How to Fix Magic Numbers:</h3>
+        <div class="code-block">
+// Bad:
+setTimeout(stopTimer, 3600000);
+
+// Good:
+const <span class="code-blank">_______________</span> = 60 * 60 * 1000;
+setTimeout(stopTimer, <span class="code-blank">_______________</span>);
+        </div>
+
+        <div class="tip">
+            <strong>Convention:</strong> Use <span class="blank">_______________</span> for true constants that never change
+        </div>
+    </div>
+
+    <!-- Formatting Section -->
+    <div class="section">
+        <h2>📏 Code Formatting</h2>
+        
+        <h3>Indentation</h3>
+        <p>Choose ONE style and stick with it:</p>
+        <ul>
+            <li>Option 1: <span class="blank">___________</span> spaces</li>
+            <li>Option 2: <span class="blank">___________</span> spaces</li>
+            <li>Option 3: <span class="blank">___________</span></li>
+        </ul>
+        
+        <h3>Line Length</h3>
+        <p>Keep lines under approximately <span class="blank">_____</span> characters</p>
+        
+        <h3>Semicolons</h3>
+        <p>JavaScript can automatically insert semicolons, but this can cause <span class="blank">___________</span></p>
+        <p><strong>Recommendation:</strong> <span class="long-blank">_________________________________________</span></p>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="section">
+        <h2>💬 Writing Good Comments</h2>
+        
+        <h3>BAD Comments (Avoid These!):</h3>
+        <ol>
+            <li>Using comments for <span class="blank">_______________</span> control (use Git instead!)</li>
+            <li>Leaving <span class="blank">_______________</span> code</li>
+            <li>Comments that explain <span class="blank">_______________</span> instead of <span class="blank">_______________</span></li>
+        </ol>
+        
+        <h3>GOOD Comments:</h3>
+        <ul>
+            <li>Explain <span class="blank">_______________</span> logic</li>
+            <li>Clarify <span class="blank">_______________</span> logic</li>
+            <li>Warn about <span class="blank">_______________</span> cases</li>
+            <li>Document <span class="blank">_______________</span> decisions were made</li>
+        </ul>
+
+        <div class="practice-box">
+            <h4>Practice: Write a good comment for this function</h4>
+            <div class="code-block">
+function calculateBMI(height, weight) {
+    // <span class="long-blank">_________________________________________</span>
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters * heightInMeters);
+    return bmi;
+}
+            </div>
+        </div>
+    </div>
+
+    <!-- Rock Paper Scissors Section -->
+    <div class="section">
+        <h2>✂️📄🪨 Rock Paper Scissors Project</h2>
+        
+        <h3>Clean Code Function Names</h3>
+        <ul>
+            <li>get<span class="blank">_______________</span>Choice()</li>
+            <li>get<span class="blank">_______________</span>Choice()</li>
+            <li>play<span class="blank">_______________</span>()</li>
+            <li>play<span class="blank">_______________</span>()</li>
+        </ul>
+        
+        <h3>Project Requirements</h3>
+        <ol>
+            <li>Random computer choice: <span class="long-blank">_________________________________________</span></li>
+            <li>Get human choice using: <span class="blank">_______________</span></li>
+            <li>Play <span class="blank">_____</span> rounds</li>
+            <li>Track <span class="blank">_______________</span></li>
+            <li>Declare <span class="blank">_______________</span></li>
+        </ol>
+
+        <h3>Workflow Steps</h3>
+        <table>
+            <tr>
+                <th>Step</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>1. Plan</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>2. Write</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>3. Test</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>4. Commit</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="section">
+        <h2>📋 Key Takeaways</h2>
+        
+        <h3>Remember These Principles:</h3>
+        <ul>
+            <li>📖 Code is read more than it's <span class="blank">_______________</span></li>
+            <li>🏷️ Names should be <span class="blank">_______________</span></li>
+            <li>📏 <span class="blank">_______________</span> > Personal preference</li>
+            <li>💬 Comments explain <span class="blank">_____</span>, not <span class="blank">_____</span></li>
+            <li>🔄 <span class="blank">_______________</span> as you learn</li>
+        </ul>
+        
+        <div class="tip">
+            <strong>Quote to Remember:</strong><br>
+            "Any fool can write code that a computer can understand.<br>
+            Good programmers write code that <span class="blank">_______________</span> can understand."<br>
+            - Martin Fowler
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: Clean code is a journey, not a destination! 🚀</p>
+        <p>Focus on gradual improvement, not perfection.</p>
+    </div>
+</body>
+</html>
