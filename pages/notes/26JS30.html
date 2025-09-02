@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS30 Array Cardio - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .tip strong {
+            color: #856404;
+        }
+
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+
+            .blank,
+            .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JavaScript30: Array Cardio - Guided Notes</h1>
+            <p>CS 2083 - Web Programming I | Day 27</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>🎯 Learning Objectives:</strong> Master JavaScript array methods through hands-on practice with
+            filter(), map(), sort(), reduce(), and more!
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="section">
+            <h2>📚 Introduction to JavaScript30</h2>
+
+            <h3>Who is Wes Bos?</h3>
+            <p>Wes Bos is a <span class="blank">_______________</span> developer, speaker, and <span
+                    class="blank">_______________</span> from Canada.</p>
+
+            <h3>The JavaScript30 Philosophy</h3>
+            <p>Complete the quote: "There is no formation without <span class="blank">_______________</span>."</p>
+            <p>The solution to getting better at JavaScript: Build <span class="blank">_______________</span>. Lots of
+                <span class="blank">_______________</span>.</p>
+
+            <div class="tip">
+                <strong>💡 Key Point:</strong> JavaScript30 uses NO frameworks, NO libraries - just vanilla JavaScript!
+            </div>
+        </div>
+
+        <!-- Array Methods Overview -->
+        <div class="section">
+            <h2>🔧 Array Methods Overview</h2>
+
+            <h3>The Big Four Methods</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose</th>
+                        <th>Returns</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>filter()</strong></td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                        <td>New array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>map()</strong></td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                        <td>New array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>sort()</strong></td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                        <td>Same array (mutates!)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>reduce()</strong></td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                        <td>Single value</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Array Cardio Day 1 Exercises -->
+        <div class="section">
+            <h2>💪 Array Cardio Day 1 - Exercises</h2>
+
+            <h3>Exercise 1: Filter - Inventors born in the 1500s</h3>
+            <div class="code-block">
+                const fifteen = inventors.filter(inventor =>
+                <span class="code-blank">_____________________</span>
+                );
+            </div>
+            <p>What condition checks if someone was born in the 1500s?</p>
+            <p>Answer: year >= <span class="blank">________</span> AND year < <span class="blank">________</span></p>
+
+            <h3>Exercise 2: Map - Full Names</h3>
+            <div class="code-block">
+                const fullNames = inventors.map(inventor =>
+                <span class="code-blank">_____________________</span>
+                );
+            </div>
+            <p>How do we combine first and last names with template literals?</p>
+
+            <h3>Exercise 3: Sort - By Birthdate</h3>
+            <div class="code-block">
+                const ordered = inventors.sort((a, b) =>
+                <span class="code-blank">_____________________</span>
+                );
+            </div>
+            <p>Sorting rule: Return <span class="blank">____</span> if a should come after b, <span
+                    class="blank">____</span> if before</p>
+
+            <h3>Exercise 4: Reduce - Total Years Lived</h3>
+            <div class="code-block">
+                const totalYears = inventors.reduce((total, inventor) => {
+                return <span class="code-blank">_____________________</span>;
+                }, 0);
+            </div>
+            <p>Formula for lifespan: <span class="blank">_______________</span> - <span
+                    class="blank">_______________</span></p>
+
+            <h3>Exercise 5: Sort by Years Lived</h3>
+            <p>Combine concepts: Calculate lifespan DURING sorting!</p>
+            <div class="code-block">
+                const oldest = inventors.sort((a, b) => {
+                const lastGuy = <span class="code-blank">_____________________</span>;
+                const nextGuy = <span class="code-blank">_____________________</span>;
+                return lastGuy > nextGuy ? -1 : 1;
+                });
+            </div>
+        </div>
+
+        <!-- Advanced Exercises -->
+        <div class="section">
+            <h2>🎯 Advanced Array Challenges</h2>
+
+            <h3>Exercise 7: Sort People by Last Name</h3>
+            <p>Challenge: Names are in "Last, First" format!</p>
+            <div class="code-block">
+                const [aLast, aFirst] = lastOne.<span class="code-blank">___________</span>(', ');
+            </div>
+            <p>What method splits a string into an array? <span class="blank">_______________</span></p>
+
+            <h3>Exercise 8: Count Instances with Reduce</h3>
+            <p>Build an object that counts occurrences:</p>
+            <div class="code-block">
+                const transportation = data.reduce((obj, item) => {
+                if (!obj[item]) {
+                obj[item] = <span class="code-blank">_____</span>;
+                }
+                obj[item]<span class="code-blank">_____</span>;
+                return obj;
+                }, <span class="code-blank">_____</span>);
+            </div>
+            <p>Initial value for reduce when building an object: <span class="blank">_____</span></p>
+        </div>
+
+        <!-- Array Cardio Day 2 -->
+        <div class="section">
+            <h2>💪💪 Array Cardio Day 2 - Discovery Methods</h2>
+
+            <h3>New Methods to Learn</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Returns</th>
+                        <th>Use When</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>some()</strong></td>
+                        <td>Boolean</td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>every()</strong></td>
+                        <td>Boolean</td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>find()</strong></td>
+                        <td>Single item</td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>findIndex()</strong></td>
+                        <td>Number</td>
+                        <td><span class="long-blank">_________________________________________</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>some() vs every()</h3>
+            <p>• some() returns true if <span class="blank">_______________</span> element passes the test</p>
+            <p>• every() returns true if <span class="blank">_______________</span> elements pass the test</p>
+
+            <h3>find() vs filter()</h3>
+            <p>• filter() returns <span class="blank">_______________</span> of all matches</p>
+            <p>• find() returns <span class="blank">_______________</span> the first match</p>
+
+            <h3>The Spread Operator (...)</h3>
+            <p>Create a new array without mutation:</p>
+            <div class="code-block">
+                const newComments = [
+                ...comments.slice(0, index),
+                ...comments.slice(<span class="code-blank">_______________</span>)
+                ];
+            </div>
+        </div>
+
+        <!-- Method Chaining -->
+        <div class="section">
+            <h2>⛓️ Method Chaining</h2>
+
+            <h3>Combining Multiple Operations</h3>
+            <div class="code-block">
+                const result = numbers
+                .filter(num => num % 2 === 0) // Step 1: <span class="code-blank">_______________</span>
+                .map(num => num * 3) // Step 2: <span class="code-blank">_______________</span>
+                .reduce((sum, num) => sum + num, 0); // Step 3: <span class="code-blank">_______________</span>
+            </div>
+
+            <p>Benefits of chaining:</p>
+            <ol>
+                <li><span class="long-blank">_________________________________________</span></li>
+                <li><span class="long-blank">_________________________________________</span></li>
+            </ol>
+        </div>
+
+        <!-- Common Patterns -->
+        <div class="section">
+            <h2>🎨 Common Real-World Patterns</h2>
+
+            <h3>Shopping Cart Total</h3>
+            <div class="code-block">
+                const total = cart.reduce((sum, item) =>
+                sum + (item.<span class="code-blank">_______</span> * item.<span class="code-blank">_______</span>), 0
+                );
+            </div>
+
+            <h3>Search Filter</h3>
+            <div class="code-block">
+                const results = products.filter(product =>
+                product.name.<span class="code-blank">_______________</span>().includes(searchTerm)
+                );
+            </div>
+
+            <h3>Check Permissions</h3>
+            <div class="code-block">
+                const canEdit = user.roles.<span class="code-blank">_______</span>(role =>
+                role === 'admin' || role === 'editor'
+                );
+            </div>
+        </div>
+
+        <!-- Debugging Tips -->
+        <div class="section">
+            <h2>🐛 Debugging Array Methods</h2>
+
+            <h3>Pro Debugging Tips</h3>
+            <ol>
+                <li>Use <span class="blank">_______________</span> for better visualization of objects</li>
+                <li>Add console.log() inside methods to check <span class="blank">_______________</span> steps</li>
+                <li>Break complex chains into <span class="blank">_______________</span> variables</li>
+                <li>Use <span class="blank">_______________</span> variable names</li>
+            </ol>
+        </div>
+
+        <!-- Practice Problems -->
+        <div class="practice-box">
+            <h3>💪 Practice Problems - Try These!</h3>
+            <ol>
+                <li><strong>Easy:</strong> Filter numbers > 10 from [5, 12, 8, 130, 44]
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+
+                <li><strong>Medium:</strong> Calculate average age from people array
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br>Hint: Use reduce then divide by <span class="blank">_______________</span>
+                </li>
+
+                <li><strong>Hard:</strong> Chain methods to find top 3 expensive items under $100
+                    <br>Steps needed:
+                    <br>1. Filter: <span class="long-blank">_________________________________________</span>
+                    <br>2. Sort: <span class="long-blank">_________________________________________</span>
+                    <br>3. Slice: <span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="section">
+            <h2>🎯 Key Takeaways</h2>
+            <ol>
+                <li>Array methods are <span class="blank">_______________</span> tools for data manipulation</li>
+                <li>Most methods don't <span class="blank">_______________</span> the original array</li>
+                <li><span class="blank">_______________</span> methods creates readable pipelines</li>
+                <li>Practice with <span class="blank">_______________</span> data builds confidence</li>
+                <li>console.<span class="blank">_______________</span>() is your debugging friend</li>
+            </ol>
+
+            <div class="tip">
+                <strong>Remember Wes Bos's Advice:</strong> "Just put in the work and you will get better!"
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes, examples, or questions:</p>
+            <br>
+            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <!-- Homework -->
+        <div class="section">
+            <h2>📚 Homework</h2>
+            <div class="practice-box">
+                <h3>Complete These Tasks:</h3>
+                <ol>
+                    <li>✅ Finish both ArrayCardioDay1 and ArrayCardioDay2 exercises</li>
+                    <li>✅ Use at least 3 array methods in your next assignment</li>
+                    <li>✅ Optional: Start more JavaScript30 challenges at JavaScript30.com</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Keep practicing! Build things. Lots of things! 🚀</p>
+            <p>Remember: The best way to learn is by doing.</p>
+        </div>
+    </div>
+</body>
+
+</html>

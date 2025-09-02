@@ -223,7 +223,15 @@ exports.handler = async (event, context) => {
                 };
                 
             case 'updateStudent':
-                // Existing update student logic
+                if (updateData && typeof updateData.points !== 'number') {
+                        updateData.points = parseInt(updateData.points) || 0;
+                    }
+                    
+                    // Ensure we're not accidentally overwriting with undefined
+                    if (updateData.points === undefined || updateData.points === null) {
+                        console.error('Warning: Points field is missing in update data');
+                        updateData.points = 0;
+                    }
                 if (!gistId || gistId === 'undefined') {
                     console.error('Invalid gistId for update:', gistId);
                     return {

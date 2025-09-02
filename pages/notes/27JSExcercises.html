@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Exercises - Guided Notes | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0075BF 0%, #003768 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #0075BF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #0075BF;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section h3 {
+            color: #003768;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #0075BF;
+        }
+
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .tip strong {
+            color: #856404;
+        }
+
+        .exercise-box {
+            background: #f0f8ff;
+            border: 2px dashed #0075BF;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .recognition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .recognition-table th,
+        .recognition-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .recognition-table th {
+            background: #0075BF;
+            color: white;
+        }
+
+        .recognition-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .solution-space {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+
+            .blank,
+            .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>JavaScript Exercises - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Day 29, December 2nd</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Today's Exercises:</strong> repeatString, reverseString, removeFromArray, sumAll, leapYears,
+        tempConversion<br>
+        <strong>🏆 Recognition Categories:</strong> First Complete | Most Creative | Cleanest Code | Shortest Solution
+    </div>
+
+    <!-- Setup Section -->
+    <div class="section">
+        <h2>🛠️ Setup & Testing</h2>
+
+        <h3>Repository Information</h3>
+        <p>Repository URL: <span class="long-blank">_________________________________________</span></p>
+        <p>Test Command: npm test <span class="blank">_______________</span></p>
+
+        <h3>Key Commands</h3>
+        <ul>
+            <li>Run all tests: <span class="blank">_______________</span></li>
+            <li>Run specific test: npm test <span class="blank">_______________</span></li>
+            <li>View test file: Look in <span class="blank">_______________</span> folder</li>
+        </ul>
+    </div>
+
+    <!-- Exercise 1: repeatString -->
+    <div class="section">
+        <h2>🔁 Exercise 1: repeatString</h2>
+
+        <h3>Function Signature</h3>
+        <div class="code-block">
+            function repeatString(<span class="code-blank">_______</span>, <span class="code-blank">_______</span>) {
+            // Your implementation
+            }
+        </div>
+
+        <h3>Test Cases</h3>
+        <ul>
+            <li>repeatString('hey', 3) returns: <span class="blank">_______________</span></li>
+            <li>repeatString('hello', 0) returns: <span class="blank">_______________</span></li>
+            <li>repeatString('hi', -1) returns: <span class="blank">_______________</span></li>
+        </ul>
+
+        <h3>Implementation Notes</h3>
+        <p>Edge case to handle: <span class="long-blank">_________________________________________</span></p>
+        <p>Method I'll use: <span class="long-blank">_________________________________________</span></p>
+
+        <div class="exercise-box">
+            <strong>My Solution:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise 2: reverseString -->
+    <div class="section">
+        <h2>🔄 Exercise 2: reverseString</h2>
+
+        <h3>Function Signature</h3>
+        <div class="code-block">
+            function reverseString(<span class="code-blank">_______</span>) {
+            // Your implementation
+            }
+        </div>
+
+        <h3>Test Cases</h3>
+        <ul>
+            <li>reverseString('hello') returns: <span class="blank">_______________</span></li>
+            <li>reverseString('hello there') returns: <span class="long-blank">_____________________</span></li>
+            <li>reverseString('') returns: <span class="blank">_______________</span></li>
+        </ul>
+
+        <h3>Approach Options</h3>
+        <p>☐ Use split(), reverse(), join()</p>
+        <p>☐ Use a for loop backwards</p>
+        <p>☐ Use recursion</p>
+        <p>☐ Other: <span class="long-blank">_________________________________________</span></p>
+
+        <div class="exercise-box">
+            <strong>My Solution:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise 3: removeFromArray -->
+    <div class="section">
+        <h2>🗑️ Exercise 3: removeFromArray</h2>
+
+        <h3>Function Signature</h3>
+        <div class="code-block">
+            function removeFromArray(<span class="code-blank">_______</span>, ...<span
+                class="code-blank">_______</span>) {
+            // Your implementation
+            }
+        </div>
+
+        <h3>Key Concept</h3>
+        <p>This function accepts <span class="blank">_______________</span> number of arguments to remove.</p>
+        <p>I can access extra arguments using: <span class="long-blank">_____________________</span></p>
+
+        <h3>Test Cases</h3>
+        <ul>
+            <li>removeFromArray([1, 2, 3, 4], 3) returns: <span class="blank">_______________</span></li>
+            <li>removeFromArray([1, 2, 3, 4], 3, 2) returns: <span class="blank">_______________</span></li>
+        </ul>
+
+        <div class="tip">
+            <strong>Hint:</strong> Consider using the filter() method or rest parameters (...)
+        </div>
+
+        <div class="exercise-box">
+            <strong>My Solution:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise 4: sumAll -->
+    <div class="section">
+        <h2>➕ Exercise 4: sumAll</h2>
+
+        <h3>Function Requirements</h3>
+        <p>Sum all integers from <span class="blank">_______________</span> to <span
+                class="blank">_______________</span> (inclusive)</p>
+
+        <h3>Validation Checks</h3>
+        <p>☐ Check for negative numbers → return <span class="blank">_______________</span></p>
+        <p>☐ Check for non-numbers → return <span class="blank">_______________</span></p>
+        <p>☐ Handle first > second → <span class="long-blank">_____________________</span></p>
+
+        <h3>Test Cases</h3>
+        <ul>
+            <li>sumAll(1, 4) returns: <span class="blank">_______________</span> (show work: ____________)</li>
+            <li>sumAll(123, 1) returns: <span class="blank">_______________</span></li>
+            <li>sumAll(-10, 4) returns: <span class="blank">_______________</span></li>
+        </ul>
+
+        <div class="exercise-box">
+            <strong>My Solution:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise 5: leapYears -->
+    <div class="section">
+        <h2>📅 Exercise 5: leapYears</h2>
+
+        <h3>Leap Year Rules</h3>
+        <ol>
+            <li>Year divisible by 4? → <span class="blank">_______________</span></li>
+            <li>EXCEPT: Year divisible by 100? → <span class="blank">_______________</span></li>
+            <li>EXCEPT EXCEPT: Year divisible by 400? → <span class="blank">_______________</span></li>
+        </ol>
+
+        <h3>Test Cases - Trace Through Logic</h3>
+        <table class="recognition-table">
+            <tr>
+                <th>Year</th>
+                <th>÷ 4?</th>
+                <th>÷ 100?</th>
+                <th>÷ 400?</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>2000</td>
+                <td>___</td>
+                <td>___</td>
+                <td>___</td>
+                <td>_______</td>
+            </tr>
+            <tr>
+                <td>1900</td>
+                <td>___</td>
+                <td>___</td>
+                <td>___</td>
+                <td>_______</td>
+            </tr>
+            <tr>
+                <td>2004</td>
+                <td>___</td>
+                <td>___</td>
+                <td>___</td>
+                <td>_______</td>
+            </tr>
+        </table>
+
+        <div class="exercise-box">
+            <strong>My Solution:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise 6: tempConversion -->
+    <div class="section">
+        <h2>🌡️ Exercise 6: tempConversion</h2>
+
+        <h3>Conversion Formulas</h3>
+        <p>Celsius to Fahrenheit: F = <span class="blank">_______</span> × <span class="blank">_______</span> + <span
+                class="blank">_______</span></p>
+        <p>Fahrenheit to Celsius: C = (<span class="blank">_______</span> - <span class="blank">_______</span>) × <span
+                class="blank">_______</span></p>
+
+        <h3>Rounding Requirement</h3>
+        <p>Round to <span class="blank">_______</span> decimal place(s)</p>
+        <p>Rounding method: <span class="long-blank">_________________________________________</span></p>
+
+        <h3>Test Cases</h3>
+        <ul>
+            <li>convertToCelsius(32) returns: <span class="blank">_______________</span></li>
+            <li>convertToCelsius(100) returns: <span class="blank">_______________</span></li>
+            <li>convertToFahrenheit(0) returns: <span class="blank">_______________</span></li>
+            <li>convertToFahrenheit(100) returns: <span class="blank">_______________</span></li>
+        </ul>
+
+        <div class="exercise-box">
+            <strong>My Solutions:</strong>
+            <div class="solution-space">
+                <br><br><br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recognition Tracking -->
+    <div class="section">
+        <h2>🏆 Recognition Tracking</h2>
+
+        <table class="recognition-table">
+            <tr>
+                <th>Exercise</th>
+                <th>🥇 First Complete</th>
+                <th>🎨 Most Creative</th>
+                <th>✨ Cleanest Code</th>
+                <th>📏 Shortest Solution</th>
+            </tr>
+            <tr>
+                <td>repeatString</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+            <tr>
+                <td>reverseString</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+            <tr>
+                <td>removeFromArray</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+            <tr>
+                <td>sumAll</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+            <tr>
+                <td>leapYears</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+            <tr>
+                <td>tempConversion</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+                <td>________________</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Key Concepts -->
+    <div class="section">
+        <h2>💡 Key JavaScript Concepts Used Today</h2>
+
+        <h3>String Methods</h3>
+        <ul>
+            <li>.repeat() - <span class="long-blank">_________________________________________</span></li>
+            <li>.split() - <span class="long-blank">_________________________________________</span></li>
+            <li>.reverse() - <span class="long-blank">_________________________________________</span></li>
+            <li>.join() - <span class="long-blank">_________________________________________</span></li>
+        </ul>
+
+        <h3>Array Methods</h3>
+        <ul>
+            <li>.filter() - <span class="long-blank">_________________________________________</span></li>
+            <li>.includes() - <span class="long-blank">_________________________________________</span></li>
+            <li>.indexOf() - <span class="long-blank">_________________________________________</span></li>
+        </ul>
+
+        <h3>Important Operators</h3>
+        <ul>
+            <li>... (rest/spread) - <span class="long-blank">_________________________________________</span></li>
+            <li>% (modulo) - <span class="long-blank">_________________________________________</span></li>
+            <li>=== vs == - <span class="long-blank">_________________________________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Problem-Solving Strategies -->
+    <div class="section">
+        <h2>🎯 Problem-Solving Strategies</h2>
+
+        <h3>My Approach Checklist</h3>
+        <p>☐ Read the test file first to understand requirements</p>
+        <p>☐ Identify edge cases from test examples</p>
+        <p>☐ Start with the simplest solution that works</p>
+        <p>☐ Refactor for cleanliness/efficiency after tests pass</p>
+        <p>☐ Consider multiple approaches before coding</p>
+
+        <h3>Debugging Tips I Learned</h3>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Additional Notes -->
+    <div class="section">
+        <h2>📝 Additional Notes & Reflections</h2>
+        <p>Use this space for any additional notes, alternative solutions, or insights from class discussion:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+
+        <h3>Questions for Further Study</h3>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <div class="footer">
+        <p>Great work today! Keep practicing! 🚀</p>
+        <p>Remember: The best way to learn programming is by writing code!</p>
+        <p><strong>Next Class:</strong> Project: Etch-a-Sketch</p>
+    </div>
+</body>
+
+</html>

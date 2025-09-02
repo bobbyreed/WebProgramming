@@ -39,7 +39,6 @@ This repository contains the complete course website for a web programming cours
 - **GitHub Gists**: Student data storage using public/private gist architecture
 - **Netlify Functions**: Serverless functions for secure data updates
 - **GitHub Pages**: Primary hosting platform
-- **Custom Domain**: Professional URL with SSL
 
 ## 📁 Project Structure
 
@@ -47,10 +46,21 @@ This repository contains the complete course website for a web programming cours
 /
 ├── index.html                 # Main course homepage
 ├── pages/                     # Lecture slides and content
-│   ├── 1CourseIntro.html    # Course introduction
-│   ├── 2HowTheWebWorks.html # Internet fundamentals
-│   ├── 3HTMLElementsAndTags.html
-│   ├── ...                   # 32 total lecture files
+|   |-- lectures/
+│      ├── 1CourseIntro.html    # Course introduction
+│      ├── 2HowTheWebWorks.html # Internet fundamentals
+│      ├── 3HTMLElementsAndTags.html
+│      ├── ...                   # 32 total lecture files
+|   |-- notes/
+│      ├── 1CourseIntro.html    # Course introduction
+│      ├── 2HowTheWebWorks.html # Internet fundamentals
+│      ├── 3HTMLElementsAndTags.html
+│      ├── ...                   # 32 total lecture files
+|  |-- inotes/   #Instructor notes
+│      ├── 1CourseIntro.html    # Course introduction
+│      ├── 2HowTheWebWorks.html # Internet fundamentals
+│      ├── 3HTMLElementsAndTags.html
+│      ├── ...                   # 32 total lecture files
 │   ├── leaderboard.html      # Student ranking system
 │   └── achievementBadges.html # Gamification page
 ├── styles/

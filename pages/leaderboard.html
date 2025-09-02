@@ -398,6 +398,7 @@
         
         async function fetchLeaderboard() {
             try {
+                
                 // Show loading state
                 document.getElementById('leaderboard-list').innerHTML = `
                     <div class="loading">
@@ -408,7 +409,7 @@
                 
                 // Fetch all student data through authenticated function
                 console.log('Fetching leaderboard data from authenticated endpoint...');
-                const response = await fetch(FUNCTION_URL);
+                const response = await fetch(`${FUNCTION_URL}?t=${Date.now()}`);
                 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data: ${response.status}`);
@@ -451,38 +452,24 @@
                 .map(([id, data]) => {
                     // Calculate points from multiple sources to ensure accuracy
                     let calculatedPoints = 0;
-                    
-                    // 1. Start with stored points if it exists and is valid
-                    if (typeof data.points === 'number') {
-                        calculatedPoints = data.points;
-                    }
-                    
-                    // 2. If points is missing or invalid, calculate from activities
-                    else if (data.activities && Array.isArray(data.activities)) {
-                        calculatedPoints = data.activities
-                            .filter(activity => activity.points)
-                            .reduce((sum, activity) => sum + (activity.points || 0), 0);
-                    }
-                    
-                    // 3. Fallback: calculate from lectures and achievements
-                    else {
-                        // Each lecture viewed is worth 10 points
-                        const lecturePoints = (data.lecturesViewed?.length || 0) * 10;
-                        
-                        // Sum up achievement points
-                        const achievementPoints = (data.achievements || [])
-                            .reduce((sum, achievement) => {
-                                // Handle both achievement structures (ID only vs full object)
-                                if (typeof achievement === 'object' && achievement.points) {
-                                    return sum + achievement.points;
-                                }
-                                // If it's just an ID, look up the achievement definition
-                                const achievementDef = getAchievementDefinition(achievement.id || achievement);
-                                return sum + (achievementDef?.points || 0);
-                            }, 0);
-                        
-                        calculatedPoints = lecturePoints + achievementPoints;
-                    }
+
+// Start with direct points value if it exists
+if (typeof data.points === 'number' && data.points > 0) {
+    calculatedPoints = data.points;
+}
+
+// If we need to calculate from activities (for backward compatibility)
+if ((!calculatedPoints || calculatedPoints === 0) && data.activities && Array.isArray(data.activities)) {
+    const activityPoints = data.activities
+        .filter(activity => activity.points)
+        .reduce((sum, activity) => sum + (activity.points || 0), 0);
+    
+    // Use the higher value between stored points and calculated points
+    calculatedPoints = Math.max(calculatedPoints, activityPoints);
+}
+
+// Final fallback
+calculatedPoints = calculatedPoints || 0;
                     
                     // Log discrepancies for debugging
                     if (data.points !== calculatedPoints && data.points !== undefined) {

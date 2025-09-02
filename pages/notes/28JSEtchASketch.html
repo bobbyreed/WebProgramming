@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation & Events - Guided Notes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: -40px -40px 30px -40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 20px 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .long-blank {
+            display: inline-block;
+            min-width: 250px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .tip strong {
+            color: #856404;
+        }
+
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .checkbox-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checkbox-list li::before {
+            content: "☐ ";
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+
+            .blank,
+            .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DOM Manipulation & Events - Guided Notes</h1>
+            <p>CSCI 3403 - Web Programming | Day 27</p>
+            <p>Name: _________________________________ Date: _____________</p>
+        </div>
+
+        <div class="info-box">
+            <strong>🎯 Today's Goals:</strong> Master DOM manipulation, create dynamic elements, and handle user events
+            to make web pages interactive!
+        </div>
+
+        <!-- Section 1: DOM Basics -->
+        <div class="section">
+            <h2>🌳 Understanding the DOM</h2>
+
+            <h3>What is the DOM?</h3>
+            <p>The DOM stands for <span class="blank">_________________</span> and is a
+                <span class="blank">_________________</span>-like representation of your HTML.
+            </p>
+
+            <h3>Nodes vs Elements</h3>
+            <p>• <strong>Nodes:</strong> <span class="long-blank">_________________________________________</span></p>
+            <p>• <strong>Elements:</strong> <span class="long-blank">_________________________________________</span>
+            </p>
+
+            <h3>DOM Relationships</h3>
+            <p>Fill in the relationships in this HTML structure:</p>
+            <div class="code-block">
+                &lt;div id="container"&gt; ← This is the <span class="code-blank">_________</span>
+                &lt;div class="display"&gt;&lt;/div&gt; ← These are <span class="code-blank">_________</span>
+                &lt;div class="controls"&gt;&lt;/div&gt; ← and <span class="code-blank">_________</span> to each other
+                &lt;/div&gt;
+            </div>
+        </div>
+
+        <!-- Section 2: Selecting Elements -->
+        <div class="section">
+            <h2>🎯 Selecting Elements</h2>
+
+            <h3>Query Selectors</h3>
+            <p>Complete the code to select elements:</p>
+
+            <div class="code-block">
+                // Select ONE element by ID
+                const header = document.<span class="code-blank">_______________</span>("#header");
+
+                // Select ONE element by class
+                const button = document.<span class="code-blank">_______________</span>(".btn-primary");
+
+                // Select ALL divs (returns NodeList)
+                const allDivs = document.<span class="code-blank">_______________</span>("div");
+            </div>
+
+            <div class="tip">
+                <strong>Remember:</strong> querySelector returns <span class="blank">_______</span> element,
+                querySelectorAll returns a <span class="blank">_____________</span>
+            </div>
+
+            <h3>Navigating Relationships</h3>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>What it selects</th>
+                </tr>
+                <tr>
+                    <td>element.firstElementChild</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>element.lastElementChild</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>element.nextElementSibling</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>element.parentElement</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Section 3: Creating Elements -->
+        <div class="section">
+            <h2>🏗️ Creating & Modifying Elements</h2>
+
+            <h3>The Creation Process</h3>
+            <p>Number these steps in the correct order:</p>
+            <ul class="checkbox-list">
+                <li>_____ Add the element to the DOM with appendChild()</li>
+                <li>_____ Create element in memory with createElement()</li>
+                <li>_____ Add content, classes, and attributes</li>
+            </ul>
+
+            <h3>Complete the Code</h3>
+            <div class="code-block">
+                // Step 1: Create element
+                const newDiv = document.<span class="code-blank">_______________</span>("div");
+
+                // Step 2: Add text content
+                newDiv.<span class="code-blank">_______________</span> = "Hello World!";
+
+                // Step 3: Add a class
+                newDiv.classList.<span class="code-blank">_______</span>("message");
+
+                // Step 4: Add to page
+                container.<span class="code-blank">_______________</span>(newDiv);
+            </div>
+        </div>
+
+        <!-- Section 4: Modifying Elements -->
+        <div class="section">
+            <h2>✨ Element Manipulation Methods</h2>
+
+            <h3>Match the Method to its Purpose</h3>
+            <p>Draw lines to connect each method with what it does:</p>
+
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>element.textContent = "text"</td>
+                    <td>Add/remove/toggle CSS classes</td>
+                </tr>
+                <tr>
+                    <td>element.classList.toggle()</td>
+                    <td>Remove element from DOM</td>
+                </tr>
+                <tr>
+                    <td>element.style.color = "blue"</td>
+                    <td>Add plain text (safe)</td>
+                </tr>
+                <tr>
+                    <td>element.remove()</td>
+                    <td>Add HTML content (use sparingly)</td>
+                </tr>
+                <tr>
+                    <td>element.innerHTML = "&lt;p&gt;Hi&lt;/p&gt;"</td>
+                    <td>Apply inline styles</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Best Practice:</strong> Use <span class="blank">_______________</span> for text
+                content instead of innerHTML to avoid security risks!
+            </div>
+        </div>
+
+        <!-- Section 5: Events -->
+        <div class="section">
+            <h2>🎪 Event Handling</h2>
+
+            <h3>Three Ways to Add Events</h3>
+            <p>Rate each method (❌ = Bad, ⚠️ = OK, ✅ = Best):</p>
+
+            <ul class="checkbox-list">
+                <li>_____ HTML: &lt;button onclick="alert('Hi')"&gt;</li>
+                <li>_____ Property: button.onclick = function() {...}</li>
+                <li>_____ addEventListener: button.addEventListener('click', function() {...})</li>
+            </ul>
+
+            <h3>addEventListener Syntax</h3>
+            <div class="code-block">
+                button.addEventListener("<span class="code-blank">_______</span>", (e) => {
+                // e is the <span class="code-blank">_______</span> object
+                console.log(e.<span class="code-blank">_______</span>); // The element that was clicked
+                e.target.style.background = "blue";
+                });
+            </div>
+
+            <h3>Common Events</h3>
+            <p>List 5 common events you might use:</p>
+            <ol>
+                <li>_________________________________</li>
+                <li>_________________________________</li>
+                <li>_________________________________</li>
+                <li>_________________________________</li>
+                <li>_________________________________</li>
+            </ol>
+        </div>
+
+        <!-- Section 6: Event Object -->
+        <div class="section">
+            <h2>📦 The Event Object</h2>
+
+            <h3>Useful Event Properties</h3>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>What it contains</th>
+                </tr>
+                <tr>
+                    <td>e.type</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>e.target</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>e.preventDefault()</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+                <tr>
+                    <td>e.stopPropagation()</td>
+                    <td><span class="long-blank">_____________________________</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Practice Exercise -->
+        <div class="section">
+            <h2>💻 Practice Exercise</h2>
+
+            <div class="practice-box">
+                <h3>Build This Structure with JavaScript Only:</h3>
+                <p>Create the following HTML structure using DOM manipulation:</p>
+                <div class="code-block">
+                    &lt;div id="container"&gt;
+                    &lt;p style="color: red"&gt;Hey I'm red!&lt;/p&gt;
+                    &lt;h3 style="color: blue"&gt;I'm a blue h3!&lt;/h3&gt;
+                    &lt;div style="border: 1px solid black; background: pink"&gt;
+                    &lt;h1&gt;I'm in a div&lt;/h1&gt;
+                    &lt;p&gt;ME TOO!&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;/div&gt;
+                </div>
+
+                <p><strong>Your Code:</strong> (Write your solution below)</p>
+                <div style="min-height: 200px; border: 2px dashed #ccc; padding: 10px; background: #fafafa;">
+                    <br><br><br><br><br><br><br><br>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script Placement -->
+        <div class="section">
+            <h2>📍 Script Placement</h2>
+
+            <h3>Where should you put your &lt;script&gt; tag?</h3>
+
+            <p><strong>Option 1:</strong> At the end of body because:
+                <br><span class="long-blank">_________________________________________</span>
+            </p>
+
+            <p><strong>Option 2:</strong> In the head with the <span class="blank">_________</span> attribute because:
+                <br><span class="long-blank">_________________________________________</span>
+            </p>
+        </div>
+
+        <!-- Etch-a-Sketch Project -->
+        <div class="section">
+            <h2>🎨 Project: Etch-a-Sketch</h2>
+
+            <h3>Project Requirements Checklist:</h3>
+            <ul class="checkbox-list">
+                <li>Create a 16x16 grid of square divs</li>
+                <li>Use JavaScript to create the divs (not HTML)</li>
+                <li>Use Flexbox for the grid layout</li>
+                <li>Add hover effect to change square colors</li>
+                <li>Add button to resize the grid</li>
+                <li>Limit user input to maximum 100</li>
+                <li>Keep the same total grid size when resizing</li>
+            </ul>
+
+            <h3>Bonus Features:</h3>
+            <ul class="checkbox-list">
+                <li>Random RGB colors on each hover</li>
+                <li>Progressive darkening (10% each pass)</li>
+                <li>Clear/reset button</li>
+                <li>Color picker for custom colors</li>
+            </ul>
+        </div>
+
+        <!-- Review Questions -->
+        <div class="section">
+            <h2>📝 Review Questions</h2>
+
+            <ol>
+                <li>What's the difference between querySelector and querySelectorAll?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+
+                <li>Why is addEventListener preferred over onclick?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+
+                <li>What is event bubbling?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+
+                <li>When should you use textContent vs innerHTML?
+                    <br><span class="long-blank">_________________________________________</span>
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+
+                <li>How do you convert a NodeList to an array?
+                    <br><span class="long-blank">_________________________________________</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="section">
+            <h2>📝 Additional Notes</h2>
+            <p>Use this space for any additional notes during the lecture:</p>
+            <br>
+            <div style="min-height: 250px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+                <br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Remember: The DOM is your playground - experiment and have fun! 🚀</p>
+            <p>Practice makes perfect - build something after class!</p>
+        </div>
+    </div>
+</body>
+
+</html>
