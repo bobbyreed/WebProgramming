@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSTRUCTOR GUIDE - Class 7: Writing Good Commits & Recipe Project</title>
+    <title>INSTRUCTOR GUIDE - Class 6: Lists, Links & Images</title>
     <style>
         * {
             margin: 0;
@@ -92,6 +92,16 @@
             font-weight: bold;
         }
         
+        .live-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        
         h2 {
             font-size: 18pt;
             margin: 20px 0 10px 0;
@@ -121,15 +131,6 @@
             border: 1px solid #ccc;
         }
         
-        .code-block {
-            background: #f0f0f0;
-            border: 1px solid #000;
-            padding: 10px;
-            margin: 10px 0;
-            font-family: 'Courier New', monospace;
-            white-space: pre-wrap;
-        }
-        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -151,6 +152,13 @@
             page-break-after: always;
         }
         
+        .student-activity {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
         @media print {
             body {
                 font-size: 11pt;
@@ -165,412 +173,472 @@
 <body>
     <div class="header">
         <h1>INSTRUCTOR GUIDE</h1>
-        <h2>Class 7: Writing Good Commits & Recipe Project</h2>
-        <p>CSCI 4513 - Web Programming | Week 4</p>
-        <p><strong>Total Time: 45-50 minutes</strong></p>
+        <h2>Class 6: Lists, Links & Images</h2>
+        <p>CSCI 3403 - Web Programming | Week 3</p>
+        <p><strong>Total Time: 50 minutes</strong></p>
     </div>
 
     <div class="timing-box">
         <h3>⏰ CLASS TIMING BREAKDOWN</h3>
         <ul>
             <li><strong>0:00-0:02</strong> - Welcome & Agenda (Slides 1-2)</li>
-            <li><strong>0:02-0:20</strong> - Git Commits Lesson (Slides 3-10)</li>
-            <li><strong>0:20-0:25</strong> - Recipe Project Overview (Slides 11-13)</li>
-            <li><strong>0:25-0:30</strong> - Live Demo Setup (Slides 14-17)</li>
-            <li><strong>0:30-0:50</strong> - Work Session (Slides 18-19)</li>
-            <li><strong>0:50-0:55</strong> - Wrap-up & Submission (Slides 20-24)</li>
+            <li><strong>0:02-0:12</strong> - Lists (Slides 3-7)</li>
+            <li><strong>0:12-0:27</strong> - Links (Slides 8-14)</li>
+            <li><strong>0:27-0:42</strong> - Images (Slides 15-19)</li>
+            <li><strong>0:42-0:50</strong> - Practice & Wrap-up (Slides 20-25)</li>
         </ul>
     </div>
 
     <div class="warning">
-        <p>⚠️ CRITICAL REMINDERS:</p>
+        <p>⚠️ PREPARATION CHECKLIST:</p>
         <ul>
-            <li>Have VS Code and terminal ready for live demo</li>
-            <li>Create a sample GitHub repository beforehand as backup</li>
-            <li>Recipe Project is due TOMORROW evening!</li>
-            <li>Students should have guided notes ready</li>
+            <li>Create sample HTML file for live demos</li>
+            <li>Have placeholder images ready</li>
+            <li>Test all file paths before class</li>
+            <li>Prepare Recipe Project preview materials</li>
+            <li>Check that students can access free image resources</li>
         </ul>
     </div>
 
-    <h2>PART 1: WRITING GOOD COMMITS (Slides 1-10)</h2>
+    <h2>PART 1: LISTS (Slides 3-7) - 10 minutes</h2>
 
-    <!-- Slide 1-2 -->
+    <!-- Slide 3: Lists Introduction -->
     <div class="slide-section">
-        <div class="slide-header">Slides 1-2: Introduction & Agenda (2 min)</div>
+        <div class="slide-header">Slide 3: Lists Introduction (2 min)</div>
         <div class="talking-points">
-            <strong>Quick Start:</strong>
+            <strong>Opening Hook:</strong>
             <ul>
-                <li>Welcome students, ensure they have guided notes</li>
-                <li>Emphasize Recipe Project due tomorrow</li>
-                <li>Today is hands-on - they'll leave with progress on project</li>
+                <li>Ask: "Who's made a to-do list today?" - Connect to real life</li>
+                <li>Show website examples: Amazon (shopping lists), Netflix (watch lists)</li>
+                <li>Emphasize: Lists are THE most common HTML element after paragraphs</li>
             </ul>
+        </div>
+        <div class="emphasis">
+            KEY POINT: Two types - Unordered (bullets) and Ordered (numbers)
         </div>
     </div>
 
-    <!-- Slide 3 -->
+    <!-- Slide 4: Unordered Lists -->
     <div class="slide-section">
-        <div class="slide-header">Slide 3: Why Commit Messages Matter (3 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES ANSWERS - Students fill in 3 reasons:</strong>
-            <ol>
-                <li><span class="emphasis">Job Applications - Employers look at GitHub</span></li>
-                <li><span class="emphasis">Team Collaboration/Bug Tracking</span></li>
-                <li><span class="emphasis">Future reference (6 months later)</span></li>
-            </ol>
-        </div>
+        <div class="slide-header">Slide 4: Unordered Lists (2 min)</div>
+        <div class="live-code">LIVE DEMO - Type this with students:
+&lt;ul&gt;
+    &lt;li&gt;Milk&lt;/li&gt;
+    &lt;li&gt;Eggs&lt;/li&gt;
+    &lt;li&gt;Bread&lt;/li&gt;
+    &lt;li&gt;Coffee&lt;/li&gt;
+&lt;/ul&gt;</div>
         <div class="talking-points">
-            <strong>Key Points to Emphasize:</strong>
+            <strong>Teaching Points:</strong>
             <ul>
-                <li>Tell story about reviewing candidate's GitHub with commits like "asdfasdf"</li>
-                <li>This is the EASIEST way to stand out as a junior developer</li>
-                <li><span class="emphasis">STRESS: "commit history"</span> for notes blank</li>
+                <li>ul = "Unordered List"</li>
+                <li>li = "List Item"</li>
+                <li>Show in browser immediately</li>
+                <li>Point out automatic bullets</li>
             </ul>
         </div>
     </div>
 
-    <!-- Slide 4 -->
+    <!-- Slide 5: Ordered Lists -->
     <div class="slide-section">
-        <div class="slide-header">Slide 4: Bad Commit Examples (2 min)</div>
-        <div class="talking-points">
-            <strong>Read each bad example out loud with dramatic effect!</strong>
-            <ul>
-                <li>Ask: "What's wrong with 'fix bug'?" - Wait for responses</li>
-                <li>Point out: No context, no why, unprofessional</li>
-                <li>Mention: These are REAL examples from student projects</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Slide 5 -->
-    <div class="slide-section">
-        <div class="slide-header">Slide 5: Anatomy of Good Commit (3 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES ANSWERS:</strong>
-            <ul>
-                <li>Subject Line: <span class="emphasis">WHAT</span> you did</li>
-                <li>Character limit: <span class="emphasis">50-72</span> characters</li>
-                <li>Body: <span class="emphasis">WHY</span> you did it and <span class="emphasis">HOW</span> it solves</li>
-                <li>Leave a <span class="emphasis">blank</span> line between subject and body</li>
-            </ul>
-        </div>
-        <div class="talking-points">
-            <strong>Walk through the example slowly:</strong>
-            <ul>
-                <li>Subject: Clear, specific action</li>
-                <li>Blank line (emphasize this!)</li>
-                <li>Body: Context and reasoning</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Slide 6 -->
-    <div class="slide-section">
-        <div class="slide-header">Slide 6: Bad vs Good Comparison (2 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES - Students analyze:</strong>
-            <p>Bad problems: No context, vague, unclear what was fixed</p>
-            <p>Good improvements: Specific, explains issue, provides context</p>
-        </div>
-    </div>
-
-    <!-- Slide 7 -->
-    <div class="slide-section">
-        <div class="slide-header">Slide 7: When to Commit (2 min)</div>
-        <div class="talking-points">
-            <strong>Video game save point analogy works great!</strong>
-            <ul>
-                <li>Have students check ALL boxes in guided notes</li>
-                <li>Emphasize: "Commit early and often"</li>
-                <li>Warning about broken code - use branches or WIP</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Slide 8 -->
-    <div class="slide-section">
-        <div class="slide-header">Slide 8: The 7 Rules (3 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES ANSWERS - Fill in blanks:</strong>
-            <ol>
-                <li>Separate with <span class="emphasis">blank line</span></li>
-                <li>Limit to <span class="emphasis">50-72</span> characters</li>
-                <li><span class="emphasis">Capitalize</span> the subject line</li>
-                <li>Don't end with <span class="emphasis">period</span></li>
-                <li>Use <span class="emphasis">imperative</span> mood</li>
-                <li>Wrap at <span class="emphasis">72</span> characters</li>
-                <li>Explain <span class="emphasis">what</span> and <span class="emphasis">why</span></li>
-            </ol>
-        </div>
-        <div class="talking-points">
-            <strong>Test tip:</strong> "If applied, this commit will..." - Write on board!</li>
-        </div>
-    </div>
-
-    <!-- Slide 9 -->
-    <div class="slide-section">
-        <div class="slide-header">Slide 9: Multi-line Commits (2 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES ANSWERS:</strong>
-            <ul>
-                <li>Command: <span class="emphasis">git commit</span> (no -m flag)</li>
-                <li>Opens: <span class="emphasis">VS Code</span></li>
-            </ul>
-        </div>
+        <div class="slide-header">Slide 5: Ordered Lists (2 min)</div>
         <div class="demo-box">
-            <strong>QUICK DEMO:</strong> Show this live if possible - open VS Code with git commit
+            <strong>Quick Switch Demo:</strong>
+            Change the shopping list from &lt;ul&gt; to &lt;ol&gt; to show instant numbering
+        </div>
+        <div class="talking-points">
+            <strong>Emphasize:</strong>
+            <ul>
+                <li>Use for steps, rankings, sequences</li>
+                <li>Numbers automatically update if you reorder items</li>
+                <li>Ask: "What would happen if we deleted step 2?" (numbers auto-adjust!)</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Slide 10 -->
+    <!-- Slide 6: List Comparison -->
     <div class="slide-section">
-        <div class="slide-header">Slide 10: Practice Exercise (2 min)</div>
+        <div class="slide-header">Slide 6: Lists Side by Side (2 min)</div>
         <div class="answer-key">
-            <strong>PRACTICE ANSWERS - Example improvements:</strong>
-            <ul>
-                <li>"css changes" → "Update CSS grid layout for recipe cards"</li>
-                <li>"oops" → "Revert accidental deletion of index.html"</li>
-                <li>"FINALLY!!!!" → "Fix image path preventing photos from loading"</li>
-                <li>"stuff" → "Add navigation links between recipe pages"</li>
-            </ul>
+            <strong>Quick Quiz Questions:</strong>
+            <ol>
+                <li>Recipe ingredients? → <span class="emphasis">Unordered</span></li>
+                <li>Recipe steps? → <span class="emphasis">Ordered</span></li>
+                <li>Navigation menu? → <span class="emphasis">Unordered</span></li>
+                <li>Top 10 movies? → <span class="emphasis">Ordered</span></li>
+            </ol>
+        </div>
+        <div class="warning">
+            Common Mistake: Students forget &lt;li&gt; tags - emphasize BOTH are needed!
+        </div>
+    </div>
+
+    <!-- Slide 7: Nested Lists -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 7: Nested Lists (2 min)</div>
+        <div class="demo-box">
+            <strong>Build Together:</strong> Create a grocery list with categories
         </div>
         <div class="talking-points">
-            <strong>Have 2-3 students share their improvements</strong>
+            <strong>Key Points:</strong>
+            <ul>
+                <li>Indent nested lists for readability</li>
+                <li>Can mix ordered inside unordered (and vice versa)</li>
+                <li>No limit to nesting depth (but be reasonable)</li>
+            </ul>
         </div>
     </div>
 
     <div class="page-break"></div>
 
-    <h2>PART 2: RECIPE PROJECT (Slides 11-24)</h2>
+    <h2>PART 2: LINKS (Slides 8-14) - 15 minutes</h2>
 
-    <!-- Slide 11-12 -->
+    <!-- Slide 8-9: Links Introduction -->
     <div class="slide-section">
-        <div class="slide-header">Slides 11-12: Project Requirements (3 min)</div>
-        <div class="answer-key">
-            <strong>GUIDED NOTES ANSWERS:</strong>
+        <div class="slide-header">Slides 8-9: Links Introduction & Anchor Element (3 min)</div>
+        <div class="talking-points">
+            <strong>The "Web" Concept:</strong>
             <ul>
-                <li>Main <span class="emphasis">index</span> page</li>
-                <li>At least <span class="emphasis">3</span> recipe pages</li>
-                <li>Folders for <span class="emphasis">recipes</span> and <span class="emphasis">images</span></li>
-                <li>Links between <span class="emphasis">all</span> pages</li>
-                <li>Title using <span class="emphasis">h1</span> tag</li>
-                <li>Image with <span class="emphasis">alt</span> attribute</li>
-                <li>Description in <span class="emphasis">p</span> tag</li>
-                <li>Ingredients: <span class="emphasis">ul</span> (unordered)</li>
-                <li>Steps: <span class="emphasis">ol</span> (ordered)</li>
-                <li>Link back to <span class="emphasis">main/index page</span></li>
+                <li>Draw a web on the board - show interconnected pages</li>
+                <li>Links are the threads that connect everything</li>
+                <li>Without links, we'd have isolated pages</li>
             </ul>
         </div>
-        <div class="warning">
-            <strong>EMPHASIZE:</strong> Due TOMORROW evening on D2L!
+        <div class="live-code">CRITICAL DEMO - Show broken vs working link:
+&lt;a&gt;This doesn't work&lt;/a&gt;
+&lt;a href="https://www.google.com"&gt;This works!&lt;/a&gt;</div>
+        <div class="emphasis">
+            STRESS: href attribute is REQUIRED for links to work!
         </div>
     </div>
 
-    <!-- Slide 13 -->
+    <!-- Slide 10: HTML Attributes -->
     <div class="slide-section">
-        <div class="slide-header">Slide 13: File Structure (2 min)</div>
+        <div class="slide-header">Slide 10: HTML Attributes (2 min)</div>
         <div class="answer-key">
-            <strong>GUIDED NOTES - File structure blanks:</strong>
+            <strong>Attribute Structure:</strong>
+            <p>attribute="value" - always in opening tag!</p>
+        </div>
+        <div class="talking-points">
+            <strong>Common Attributes We'll Use Today:</strong>
             <ul>
-                <li><span class="emphasis">index</span>.html</li>
-                <li>Three recipe files: <span class="emphasis">[recipe-name]</span>.html</li>
-                <li><span class="emphasis">images</span> folder</li>
+                <li><code>href</code> - hypertext reference (links)</li>
+                <li><code>src</code> - source (images)</li>
+                <li><code>alt</code> - alternative text (accessibility)</li>
+                <li><code>target</code> - where to open</li>
+                <li><code>rel</code> - relationship (security)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 11: Absolute vs Relative -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 11: Absolute vs. Relative Links (3 min)</div>
+        <div class="answer-key">
+            <strong>Quick Reference:</strong>
+            <ul>
+                <li>Absolute: <span class="emphasis">https://www.site.com/page.html</span></li>
+                <li>Relative same folder: <span class="emphasis">page.html</span></li>
+                <li>Relative subfolder: <span class="emphasis">folder/page.html</span></li>
+                <li>Relative parent: <span class="emphasis">../page.html</span></li>
+            </ul>
+        </div>
+        <div class="demo-box">
+            <strong>Analogy:</strong> Absolute = full street address | Relative = "next door" or "upstairs"
+        </div>
+    </div>
+
+    <!-- Slide 12: File Paths -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 12: File Path Navigation (3 min)</div>
+        <div class="live-code">PROJECT STRUCTURE TO DRAW:
+project/
+├── index.html (YOU ARE HERE)
+├── about.html
+├── pages/
+│   ├── contact.html
+│   └── portfolio.html
+└── images/
+    └── logo.png</div>
+        <div class="student-activity">
+            <strong>Practice Together:</strong>
+            <ol>
+                <li>From index to contact: <span class="emphasis">pages/contact.html</span></li>
+                <li>From contact to index: <span class="emphasis">../index.html</span></li>
+                <li>From contact to logo: <span class="emphasis">../images/logo.png</span></li>
+            </ol>
+        </div>
+        <div class="warning">
+            Common Error: Forgetting ../ to go up directories
+        </div>
+    </div>
+
+    <!-- Slide 13-14: Security -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 13-14: Link Security (4 min)</div>
+        <div class="warning">
+            <strong>SECURITY DEMONSTRATION:</strong>
+            <p>Show tabnabbing attack diagram (draw on board)</p>
+            <ol>
+                <li>User clicks link with target="_blank"</li>
+                <li>New tab opens malicious site</li>
+                <li>Malicious site changes original tab</li>
+                <li>User returns to phishing page</li>
+            </ol>
+        </div>
+        <div class="answer-key">
+            <strong>Security Solution:</strong>
+            <p><span class="emphasis">rel="noopener noreferrer"</span></p>
+            <ul>
+                <li>noopener = blocks window.opener</li>
+                <li>noreferrer = hides referrer + includes noopener</li>
+            </ul>
+        </div>
+        <div class="demo-box">
+            Always use this pattern:
+            <code>target="_blank" rel="noopener noreferrer"</code>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>PART 3: IMAGES (Slides 15-19) - 15 minutes</h2>
+
+    <!-- Slide 15-16: Images Introduction -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 15-16: Images & Attributes (4 min)</div>
+        <div class="live-code">BASIC IMAGE SYNTAX:
+&lt;img src="path/to/image.jpg" alt="Description"&gt;
+
+WITH SIZE:
+&lt;img src="image.jpg" alt="Cat" width="400" height="300"&gt;</div>
+        <div class="warning">
+            <strong>CRITICAL Points:</strong>
+            <ul>
+                <li>img is VOID element - no closing tag!</li>
+                <li>BOTH src and alt are REQUIRED</li>
+                <li>alt text is NOT optional (accessibility law!)</li>
             </ul>
         </div>
         <div class="talking-points">
-            <strong>Draw on board!</strong> Show the folder hierarchy visually
+            <strong>Why alt text matters - Personal story:</strong>
+            <p>Share example of screen reader user or slow connection scenario</p>
         </div>
     </div>
 
-    <!-- Slides 14-17: Live Demo -->
+    <!-- Slide 17: Image Formats -->
     <div class="slide-section">
-        <div class="slide-header">Slides 14-17: Live Demo Setup (5 min)</div>
+        <div class="slide-header">Slide 17: Image Formats (3 min)</div>
+        <div class="answer-key">
+            <strong>Format Quick Guide:</strong>
+            <table>
+                <tr>
+                    <th>Use Case</th>
+                    <th>Format</th>
+                    <th>Why</th>
+                </tr>
+                <tr>
+                    <td>Photos</td>
+                    <td><span class="emphasis">JPEG</span></td>
+                    <td>Best compression for photos</td>
+                </tr>
+                <tr>
+                    <td>Logos</td>
+                    <td><span class="emphasis">PNG or SVG</span></td>
+                    <td>Transparency/scalability</td>
+                </tr>
+                <tr>
+                    <td>Simple animations</td>
+                    <td><span class="emphasis">GIF</span></td>
+                    <td>Universal support</td>
+                </tr>
+                <tr>
+                    <td>Icons</td>
+                    <td><span class="emphasis">SVG</span></td>
+                    <td>Tiny file size, scales perfectly</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Slide 18: File Organization -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 18: Image Organization (3 min)</div>
         <div class="demo-box">
-            <strong>🎬 LIVE CODING DEMO - DO THIS TOGETHER:</strong>
+            <strong>CREATE THIS STRUCTURE LIVE:</strong>
             <ol>
-                <li><strong>Terminal Commands:</strong></li>
+                <li>Create images folder</li>
+                <li>Add subfolders for organization</li>
+                <li>Show good naming: "team-photo.jpg" not "IMG_1234.jpg"</li>
             </ol>
-            <div class="code-block">mkdir odin-recipes
-cd odin-recipes
-git init
-touch index.html
-mkdir recipes images
-code .</div>
+        </div>
+        <div class="warning">
+            File names are case-sensitive on most web servers!
+            photo.jpg ≠ Photo.jpg
+        </div>
+    </div>
+
+    <!-- Slide 19: Copyright -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 19: Image Copyright (5 min)</div>
+        <div class="student-activity">
+            <strong>LIVE DEMO - Find Free Images:</strong>
+            <ol>
+                <li>Go to Unsplash.com</li>
+                <li>Search for "coffee"</li>
+                <li>Download and add to project</li>
+                <li>Show how to give attribution</li>
+            </ol>
+        </div>
+        <div class="answer-key">
+            <strong>Free Image Sites:</strong>
+            <ul>
+                <li>Unsplash.com - No attribution required</li>
+                <li>Pexels.com - No attribution required</li>
+                <li>Pixabay.com - Check individual licenses</li>
+                <li>Google Images → Tools → Usage Rights → Creative Commons</li>
+            </ul>
+        </div>
+        <div class="warning">
+            LEGAL WARNING: Using copyrighted images = potential lawsuit!
+        </div>
+    </div>
+
+    <h2>PART 4: PRACTICE & WRAP-UP (Slides 20-25) - 8 minutes</h2>
+
+    <!-- Slide 20: Complete Example -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 20: Complete Example (2 min)</div>
+        <div class="demo-box">
+            <strong>BUILD THIS TOGETHER:</strong>
+            Show how lists, links, and images work together in a recipe card
+        </div>
+        <div class="talking-points">
+            <strong>Point Out:</strong>
+            <ul>
+                <li>Unordered list for ingredients</li>
+                <li>Ordered list for steps</li>
+                <li>Image with proper alt text</li>
+                <li>Link back to main page</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 21: Practice Exercise -->
+    <div class="slide-section">
+        <div class="slide-header">Slide 21: Practice Time (4 min)</div>
+        <div class="student-activity">
+            <strong>10-MINUTE EXERCISE:</strong>
+            <p>Students create "About Me" page</p>
             
-            <ol start="2">
-                <li><strong>Create index.html together</strong> - Have students follow along</li>
-                <li><strong>Create one recipe file together</strong></li>
-                <li><strong>Make first commit:</strong> "Initial commit with project structure"</li>
-                <li><strong>GitHub:</strong> Show how to create repo and connect</li>
-            </ol>
-        </div>
-        
-        <div class="answer-key">
-            <strong>HTML TEMPLATE BLANKS:</strong>
-            <ul>
-                <li>lang="<span class="emphasis">en</span>"</li>
-                <li>charset="<span class="emphasis">UTF-8</span>"</li>
-                <li><span class="emphasis">title</span> tags</li>
-                <li><span class="emphasis">ul</span> for list</li>
-                <li>href="<span class="emphasis">recipes/[name].html</span>"</li>
-                <li><span class="emphasis">src</span>="../images/..." <span class="emphasis">alt</span>="..."</li>
-                <li><span class="emphasis">a href</span>="../index.html"</li>
-            </ul>
-        </div>
-        
-        <div class="warning">
-            <strong>Common Issues to Mention:</strong>
-            <ul>
-                <li>File paths: ../ goes UP a directory</li>
-                <li>Case sensitivity: Image.jpg ≠ image.jpg</li>
-                <li>Missing .html extensions</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Slide 18-19: Work Session -->
-    <div class="slide-section">
-        <div class="slide-header">Slides 18-19: Work Session (20 min)</div>
-        <div class="timing-box">
-            <strong>⏰ START 20-MINUTE TIMER ON SCREEN</strong>
-            <p>Click the timer button on slide 19!</p>
-        </div>
-        
-        <div class="talking-points">
-            <strong>During Work Session:</strong>
-            <ul>
-                <li>Walk around actively - don't sit at desk</li>
-                <li>Check each student has project started</li>
-                <li>Common issues to watch for:
-                    <ul>
-                        <li>Not initializing git</li>
-                        <li>Wrong file structure</li>
-                        <li>Broken image paths</li>
-                        <li>Missing closing tags</li>
-                    </ul>
-                </li>
-                <li>5-minute warning at 15 minutes</li>
-                <li>Last 2 minutes: "Commit what you have!"</li>
-            </ul>
-        </div>
-        
-        <div class="answer-key">
-            <strong>Git Commands Order (Guided Notes):</strong>
+            <strong>Requirements Checklist:</strong>
             <ol>
-                <li>Make changes to files</li>
-                <li>git status</li>
-                <li>git add .</li>
-                <li>git commit</li>
-                <li>git push origin main</li>
+                <li>☑ Unordered list (hobbies)</li>
+                <li>☑ Ordered list (top 3 movies)</li>
+                <li>☑ External link (favorite site)</li>
+                <li>☑ Image with alt text</li>
+                <li>☑ Link with target="_blank" and security attributes</li>
             </ol>
         </div>
-    </div>
-
-    <!-- Slides 20-24: Wrap-up -->
-    <div class="slide-section">
-        <div class="slide-header">Slides 20-24: Submission & Wrap-up (5 min)</div>
-        <div class="answer-key">
-            <strong>Final Guided Notes Answers:</strong>
-            <ul>
-                <li>Test <span class="emphasis">every</span> link</li>
-                <li>Verify <span class="emphasis">every</span> image</li>
-                <li>Missing closing <span class="emphasis">tags</span></li>
-                <li>File <span class="emphasis">.html</span> extension</li>
-            </ul>
-        </div>
-        
-        <div class="warning">
-            <strong>FINAL REMINDERS - Say these out loud:</strong>
-            <ol>
-                <li>"Recipe Project due TOMORROW evening on D2L"</li>
-                <li>"Submit your GitHub repository link, not files"</li>
-                <li>"Test everything before submitting"</li>
-                <li>"Make meaningful commits as you work"</li>
-            </ol>
-        </div>
-        
         <div class="talking-points">
-            <strong>If time remains:</strong>
+            <strong>While Students Work:</strong>
             <ul>
-                <li>Show a good example from a previous semester</li>
-                <li>Preview Thursday's CSS introduction</li>
-                <li>Continue work session</li>
-                <li>Individual help for struggling students</li>
+                <li>Walk around and check progress</li>
+                <li>Common issues: missing alt text, wrong file paths</li>
+                <li>Help with image downloads if needed</li>
             </ul>
         </div>
     </div>
 
-    <div class="page-break"></div>
+    <!-- Slide 22-25: Wrap-up -->
+    <div class="slide-section">
+        <div class="slide-header">Slides 22-25: Common Mistakes, Preview & Summary (2 min)</div>
+        <div class="answer-key">
+            <strong>Common Mistakes Quick Review:</strong>
+            <ul>
+                <li>Missing href on links</li>
+                <li>Missing alt on images</li>
+                <li>Not using &lt;li&gt; inside lists</li>
+                <li>Forgetting security on target="_blank"</li>
+                <li>Using absolute paths for local files</li>
+            </ul>
+        </div>
+        <div class="demo-box">
+            <strong>Recipe Project Preview:</strong>
+            <p>Show example from previous semester if available</p>
+            <p>Emphasize: They'll use EVERYTHING from today!</p>
+        </div>
+    </div>
 
     <h2>TROUBLESHOOTING GUIDE</h2>
     
     <table>
         <tr>
-            <th>Common Problem</th>
-            <th>Quick Solution</th>
-            <th>Teaching Moment</th>
-        </tr>
-        <tr>
-            <td>Git not initialized</td>
-            <td><code>git init</code> in project folder</td>
-            <td>Always start with git init</td>
-        </tr>
-        <tr>
-            <td>Images broken</td>
-            <td>Check: ../ paths, file extensions, case</td>
-            <td>Relative vs absolute paths</td>
+            <th>Problem</th>
+            <th>Quick Fix</th>
+            <th>Prevention</th>
         </tr>
         <tr>
             <td>Links not working</td>
-            <td>Add .html, check folder structure</td>
-            <td>File paths in HTML</td>
+            <td>Check href attribute exists</td>
+            <td>Always test links</td>
         </tr>
         <tr>
-            <td>Can't push to GitHub</td>
-            <td>Check remote: <code>git remote -v</code></td>
-            <td>Local vs remote repositories</td>
+            <td>Images not showing</td>
+            <td>Check path and file extension</td>
+            <td>Use lowercase, no spaces</td>
         </tr>
         <tr>
-            <td>VS Code won't open for commit</td>
-            <td>Use <code>git commit -m</code> as backup</td>
-            <td>Git editor configuration</td>
+            <td>Lists look wrong</td>
+            <td>Ensure &lt;li&gt; inside &lt;ul&gt;/&lt;ol&gt;</td>
+            <td>Proper nesting</td>
+        </tr>
+        <tr>
+            <td>Path confusion</td>
+            <td>Draw folder structure</td>
+            <td>Use ./ for clarity</td>
+        </tr>
+        <tr>
+            <td>Copyright concerns</td>
+            <td>Use Unsplash/Pexels</td>
+            <td>Bookmark free sites</td>
         </tr>
     </table>
 
-    <h2>SAMPLE COMMIT MESSAGES FOR DEMO</h2>
+    <h2>ASSESSMENT CHECKLIST</h2>
     
-    <div class="code-block">1. Initial commit with project structure
-
-2. Add index page with recipe links
-
-3. Add lasagna recipe with ingredients and steps
-
-4. Add pizza and taco recipes
-
-5. Add images for all recipes
-
-6. Fix broken navigation links
-
-7. Update recipe descriptions for clarity</div>
-
-    <h2>POST-CLASS CHECKLIST</h2>
-    
+    <p><strong>By end of class, students should be able to:</strong></p>
     <ul>
-        <li>☐ Remind about tomorrow's deadline (send D2L announcement)</li>
-        <li>☐ Post any helpful links or resources discussed</li>
-        <li>☐ Note students who need extra help</li>
-        <li>☐ Prepare for CSS introduction next class</li>
-        <li>☐ Check D2L submission folder is set up correctly</li>
+        <li>☐ Create both types of lists</li>
+        <li>☐ Properly nest list items</li>
+        <li>☐ Create working links with href</li>
+        <li>☐ Distinguish absolute vs relative paths</li>
+        <li>☐ Navigate file structures with ../</li>
+        <li>☐ Add security to external links</li>
+        <li>☐ Insert images with src and alt</li>
+        <li>☐ Choose appropriate image formats</li>
+        <li>☐ Find and use free images legally</li>
     </ul>
 
-    <h2>NOTES SECTION</h2>
-    <div style="border: 1px dashed #000; min-height: 200px; padding: 10px; margin-top: 20px;">
-        <p><em>Space for instructor notes during/after class:</em></p>
-        <br><br><br><br><br><br><br>
+    <h2>POST-CLASS REMINDERS</h2>
+    
+    <ul>
+        <li>☐ Post practice exercise solution</li>
+        <li>☐ Share free image resource links</li>
+        <li>☐ Prepare Recipe Project materials for next class</li>
+        <li>☐ Check that all students completed the exercise</li>
+        <li>☐ Note any students struggling with file paths (need extra help)</li>
+    </ul>
+
+    <h2>INSTRUCTOR NOTES</h2>
+    <div style="border: 1px dashed #000; min-height: 150px; padding: 10px; margin-top: 20px;">
+        <p><em>Space for class-specific notes:</em></p>
+        <br><br><br><br><br>
     </div>
 
     <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
-        <p><strong>Remember: Your enthusiasm about good commits is contagious!</strong></p>
-        <p>Students will care about this if you show them why it matters for their careers.</p>
+        <p><strong>Remember: This is foundation week - be patient and thorough!</strong></p>
+        <p>Next Class: Recipe Project Work Session</p>
     </div>
 </body>
 </html>
