@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Intro - Instructor Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            border: 3px solid #333;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            page-break-after: avoid;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .timing-box {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .slide-section {
+            border: 1px solid #666;
+            padding: 15px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        
+        .slide-header {
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+        
+        .answer-key {
+            background: #ffffcc;
+            border: 2px solid #ff9900;
+            padding: 10px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+        
+        .answer-key h4 {
+            color: #ff6600;
+            margin-bottom: 8px;
+            text-decoration: underline;
+        }
+        
+        .teaching-tip {
+            background: #e6f3ff;
+            border-left: 5px solid #0066cc;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            page-break-inside: avoid;
+        }
+        
+        .emphasis {
+            background: #ffeeee;
+            border: 2px dashed #cc0000;
+            padding: 10px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+        
+        .emphasis strong {
+            color: #cc0000;
+        }
+        
+        .demo-code {
+            background: #f5f5f5;
+            border: 1px solid #999;
+            padding: 10px;
+            font-family: monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            page-break-inside: avoid;
+        }
+        
+        .activity {
+            background: #f0fff0;
+            border: 2px solid #009900;
+            padding: 10px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            border: 1px solid #666;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                padding: 10px;
+            }
+            
+            .page-break {
+                page-break-after: always;
+            }
+            
+            .slide-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE: CSS Foundations - Intro to CSS</h1>
+        <p><strong>CSCI 4513 - Week 4, Class 8</strong></p>
+        <p>Duration: 40-50 minutes | Includes hands-on exercises</p>
+    </div>
+
+    <div class="timing-box">
+        <h3>⏱️ CLASS TIMING BREAKDOWN</h3>
+        <ul>
+            <li><strong>0-5 min:</strong> Introduction & Recipe Project Reminder</li>
+            <li><strong>5-15 min:</strong> CSS Fundamentals & Syntax</li>
+            <li><strong>15-25 min:</strong> Selectors Deep Dive</li>
+            <li><strong>25-30 min:</strong> Properties & Adding CSS to HTML</li>
+            <li><strong>30-50 min:</strong> Hands-on Exercises (may continue next class)</li>
+        </ul>
+    </div>
+
+    <!-- OPENING SECTION -->
+    <h2>📍 OPENING (Slides 1-3)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Slide 2: Recipe Project Reminder</div>
+        
+        <div class="emphasis">
+            <strong>⚠️ CRITICAL EMPHASIS:</strong> Start with this! Make sure everyone knows the Recipe Project is due TONIGHT!
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Teaching Tip:</strong> Ask for a show of hands - who's already submitted? Who needs quick help? Offer to stay 2-3 minutes after class for emergency questions.
+        </div>
+        
+        <ul>
+            <li>Write "DUE TONIGHT" on the board</li>
+            <li>Remind them: GitHub link on D2L</li>
+            <li>Quick check: "Any showstopper issues?"</li>
+        </ul>
+    </div>
+
+    <!-- CSS FUNDAMENTALS SECTION -->
+    <h2>📍 CSS FUNDAMENTALS (Slides 4-8)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Slide 5: What is CSS?</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS - Students Fill In:</h4>
+            <ul>
+                <li>CSS stands for <span class="highlight">Cascading</span> Style Sheets</li>
+                <li>CSS describes <span class="highlight">how</span> HTML elements should be displayed</li>
+                <li>HTML = The <span class="highlight">skeleton/structure</span></li>
+                <li>CSS = The <span class="highlight">skin & clothes/style</span></li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Teaching Tip:</strong> Use the house analogy: HTML is the frame/walls, CSS is the paint/decorations. Show a plain HTML page vs styled page if possible.
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">Slide 7: CSS Basic Syntax</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS - Students Fill In:</h4>
+            <ul>
+                <li>Basic syntax: <span class="highlight">selector</span> { <span class="highlight">property</span>: <span class="highlight">value</span>; }</li>
+                <li>Properties and values separated by <span class="highlight">: (colon)</span></li>
+                <li>Declarations end with <span class="highlight">; (semicolon)</span></li>
+            </ul>
+        </div>
+
+        <div class="demo-code">
+LIVE CODE EXAMPLE:
+p {
+    color: red;      /* point out each part */
+    font-size: 16px; /* no space before px! */
+}
+        </div>
+        
+        <div class="emphasis">
+            <strong>EMPHASIZE:</strong> Semicolons are CRITICAL! Missing semicolon = broken CSS. This WILL be on the test!
+        </div>
+    </div>
+
+    <!-- SELECTORS SECTION -->
+    <h2>📍 SELECTORS (Slides 9-18)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Slides 9-13: Basic Selectors</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS - Selector Table:</h4>
+            <table>
+                <tr>
+                    <th>Selector Type</th>
+                    <th>Symbol</th>
+                    <th>What it Selects</th>
+                </tr>
+                <tr>
+                    <td>Universal</td>
+                    <td><span class="highlight">*</span></td>
+                    <td><span class="highlight">Everything on the page</span></td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>(none)</td>
+                    <td><span class="highlight">All elements of that type</span></td>
+                </tr>
+                <tr>
+                    <td>Class</td>
+                    <td><span class="highlight">. (period)</span></td>
+                    <td><span class="highlight">Elements with that class</span></td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><span class="highlight"># (hashtag)</span></td>
+                    <td><span class="highlight">The ONE element with that ID</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="activity">
+            <strong>QUICK ACTIVITY:</strong> Write on board:
+            <ul>
+                <li>.warning</li>
+                <li>#header</li>
+                <li>p</li>
+            </ul>
+            Ask: "Which symbol for which type?"
+        </div>
+        
+        <div class="emphasis">
+            <strong>KEY POINT for Notes:</strong>
+            <ul>
+                <li>Classes can be used <span class="highlight">multiple</span> times</li>
+                <li>IDs can only be used <span class="highlight">once</span> per page</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">Slides 15-17: Advanced Selectors</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS:</h4>
+            <ul>
+                <li><strong>Grouping:</strong> Applies same styles to <span class="highlight">multiple</span> selectors</li>
+                <li><strong>Chaining:</strong> Elements must have <span class="highlight">ALL/both</span> specified criteria</li>
+                <li><strong>Chaining syntax:</strong> .alert<span class="highlight">.</span>warning (no space!)</li>
+                <li><strong>Descendant:</strong> Selects elements <span class="highlight">nested inside/within</span> other elements</li>
+                <li><strong>Descendant syntax:</strong> .container <span class="highlight">(space)</span> p</li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Teaching Tip:</strong> CRITICAL distinction - 
+            <ul>
+                <li>NO SPACE = chaining (must have both)</li>
+                <li>SPACE = descendant (one inside the other)</li>
+            </ul>
+            Write both on board and circle the space/no-space
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">Slide 18: Quick Practice</div>
+        
+        <div class="activity">
+            <strong>INTERACTIVE MOMENT:</strong> Have students write answers in notes, then reveal:
+            <ol>
+                <li>p → All paragraph elements</li>
+                <li>.warning → Elements with class "warning"</li>
+                <li>#header → Element with id "header"</li>
+                <li>div p → Paragraphs inside divs</li>
+                <li>.alert.urgent → Elements with BOTH classes</li>
+                <li>h1, h2, h3 → All three heading types</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- PROPERTIES SECTION -->
+    <h2>📍 CSS PROPERTIES (Slides 19-21)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Slides 19-20: Color & Typography</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS:</h4>
+            <ul>
+                <li>color property changes: <span class="highlight">text color</span></li>
+                <li>background-color changes: <span class="highlight">background color</span></li>
+                <li>font-family sets: <span class="highlight">font/typeface</span></li>
+                <li>font-size sets: <span class="highlight">size of text</span></li>
+                <li>font-weight sets: <span class="highlight">boldness</span></li>
+                <li>text-align aligns text: <span class="highlight">horizontally</span></li>
+            </ul>
+        </div>
+        
+        <div class="demo-code">
+LIVE DEMO:
+p {
+    color: blue;           /* text color */
+    background-color: yellow;
+    font-family: Arial, sans-serif;  /* ALWAYS have fallback! */
+    font-size: 16px;      /* NO SPACE before px */
+    font-weight: bold;    /* or use 700 */
+}
+        </div>
+        
+        <div class="emphasis">
+            <strong>COMMON MISTAKE:</strong> Students often write "font-size: 16 px;" with a space. This breaks! Emphasize: NO SPACE before units!
+        </div>
+    </div>
+
+    <div class="slide-section">
+        <div class="slide-header">Slide 21: Image Sizing</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWER:</h4>
+            <p>To maintain aspect ratio, set width and height to <span class="highlight">auto</span></p>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Teaching Tip:</strong> Show what happens when you set both width AND height to fixed values - image distortion! Then show width + height: auto.
+        </div>
+    </div>
+
+    <!-- ADDING CSS SECTION -->
+    <h2>📍 ADDING CSS TO HTML (Slides 22-25)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Three Methods Overview</div>
+        
+        <div class="answer-key">
+            <h4>🔑 GUIDED NOTES ANSWERS:</h4>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Where CSS Goes</th>
+                </tr>
+                <tr>
+                    <td>External</td>
+                    <td><span class="highlight">Separate .css file</span></td>
+                </tr>
+                <tr>
+                    <td>Internal</td>
+                    <td><span class="highlight">In &lt;style&gt; tags in &lt;head&gt;</span></td>
+                </tr>
+                <tr>
+                    <td>Inline</td>
+                    <td><span class="highlight">In style attribute on element</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="answer-key">
+            <h4>🔑 External CSS Link Syntax:</h4>
+            <ul>
+                <li>&lt;link <span class="highlight">rel</span>="stylesheet" <span class="highlight">href</span>="styles.css"&gt;</li>
+            </ul>
+            
+            <h4>🔑 Internal CSS:</h4>
+            <ul>
+                <li>Uses &lt;<span class="highlight">style</span>&gt; tags</li>
+            </ul>
+            
+            <h4>🔑 Inline CSS:</h4>
+            <ul>
+                <li>Uses <span class="highlight">style</span>="..." attribute</li>
+            </ul>
+        </div>
+        
+        <div class="emphasis">
+            <strong>STRESS THIS:</strong> External CSS is BEST PRACTICE! Use for all projects. Internal = sometimes okay. Inline = avoid!
+        </div>
+    </div>
+
+    <!-- EXERCISES SECTION -->
+    <h2>📍 HANDS-ON EXERCISES (Slides 26-27)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Exercise Setup & Execution</div>
+        
+        <div class="activity">
+            <strong>SETUP STEPS (Do Together):</strong>
+            <ol>
+                <li>Everyone open terminal/Git Bash</li>
+                <li>Navigate to workspace folder</li>
+                <li>Clone repository (write URL on board)</li>
+                <li>cd into css-exercises/foundations/intro-to-css</li>
+                <li>Open in VS Code</li>
+            </ol>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Exercise Approach:</strong>
+            <ul>
+                <li>Do first exercise (01-css-methods) together as a class</li>
+                <li>Let them try 02-class-id-selectors independently (5 min)</li>
+                <li>Review solution together</li>
+                <li>Continue pattern: try alone → review together</li>
+            </ul>
+        </div>
+        
+        <div class="emphasis">
+            <strong>TIME MANAGEMENT:</strong> You likely won't finish all 5 exercises. That's okay! Tell them: "We'll continue these next class. Do what you can at home for practice."
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- PRACTICE PROBLEMS SECTION -->
+    <h2>📍 GUIDED NOTES PRACTICE PROBLEMS</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Practice Exercises Answers</div>
+        
+        <div class="answer-key">
+            <h4>🔑 Selector Practice Answers:</h4>
+            <ol>
+                <li>All paragraphs: <span class="highlight">p</span></li>
+                <li>Elements with class "warning": <span class="highlight">.warning</span></li>
+                <li>Element with ID "footer": <span class="highlight">#footer</span></li>
+                <li>All h1, h2, and h3 elements: <span class="highlight">h1, h2, h3</span></li>
+                <li>Paragraphs inside divs: <span class="highlight">div p</span></li>
+                <li>Elements with both "alert" and "urgent" classes: <span class="highlight">.alert.urgent</span></li>
+            </ol>
+        </div>
+        
+        <div class="answer-key">
+            <h4>🔑 Fix the CSS (3 Errors):</h4>
+            <p>Original:</p>
+            <div class="demo-code">p {
+    color red;        /* ERROR 1 */
+    font-size: 16 px; /* ERROR 2 */
+    background-color: blue  /* ERROR 3 */
+}</div>
+            <p><strong>Errors:</strong></p>
+            <ol>
+                <li><span class="highlight">Missing colon after "color"</span></li>
+                <li><span class="highlight">Space between "16" and "px"</span></li>
+                <li><span class="highlight">Missing semicolon after "blue"</span></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- KEY CONCEPTS REVIEW -->
+    <h2>📍 KEY CONCEPTS REVIEW ANSWERS</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Fill-in-the-Blank Review</div>
+        
+        <div class="answer-key">
+            <h4>🔑 Complete Answer Key:</h4>
+            <ol>
+                <li>CSS stands for <span class="highlight">Cascading Style Sheets</span></li>
+                <li>Three parts of CSS rule: <span class="highlight">selector, property, value</span></li>
+                <li>To select a class: <span class="highlight">. (period)</span></li>
+                <li>To select an ID: <span class="highlight"># (hashtag)</span></li>
+                <li>Best way to add CSS: <span class="highlight">External</span></li>
+                <li>Classes: <span class="highlight">multiple</span> times, IDs: <span class="highlight">one</span> time</li>
+                <li>Multiple selectors separated with: <span class="highlight">, (comma)</span></li>
+                <li>Nested elements use: <span class="highlight">space/descendant combinator</span></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- COMMON ISSUES SECTION -->
+    <h2>⚠️ COMMON STUDENT ISSUES TO WATCH FOR</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Troubleshooting Guide</div>
+        
+        <ul>
+            <li><strong>Forgetting semicolons:</strong> CSS stops working - check this first!</li>
+            <li><strong>Space before px:</strong> "16 px" doesn't work, must be "16px"</li>
+            <li><strong>Wrong selector symbol:</strong> Using # for class or . for ID</li>
+            <li><strong>Confusing chaining vs descendant:</strong> No space vs space</li>
+            <li><strong>Not saving files:</strong> Remind to save CSS file before refreshing browser</li>
+            <li><strong>Wrong file path:</strong> href="styles.css" assumes same folder</li>
+            <li><strong>Case sensitivity:</strong> Class names are case-sensitive!</li>
+        </ul>
+    </div>
+
+    <!-- CLOSING SECTION -->
+    <h2>📍 CLOSING & HOMEWORK (Slides 28-30)</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Wrap-Up Checklist</div>
+        
+        <div class="emphasis">
+            <strong>FINAL REMINDERS (Write on board):</strong>
+            <ol>
+                <li>🚨 RECIPE PROJECT DUE TONIGHT!</li>
+                <li>Finish CSS exercises at home if needed</li>
+                <li>Read about CSS Cascade for next class</li>
+                <li>Optional: Try adding CSS to Recipe Project</li>
+            </ol>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Next Class Preview:</strong> "Next time we'll learn about the 'Cascade' in CSS - what happens when multiple styles conflict? CSS has rules for which one wins!"
+        </div>
+        
+        <div class="activity">
+            <strong>Exit Ticket (if time):</strong> "Write down one selector type you learned today and show me on your way out."
+        </div>
+    </div>
+
+    <!-- ADDITIONAL NOTES -->
+    <h2>📝 ADDITIONAL INSTRUCTOR NOTES</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Teaching Strategies</div>
+        
+        <h3>Engagement Techniques:</h3>
+        <ul>
+            <li>Live code examples - make intentional errors and fix them</li>
+            <li>Use student names in examples (.sarah-style, #johns-header)</li>
+            <li>Show real websites and inspect their CSS</li>
+            <li>Celebrate small wins during exercises</li>
+        </ul>
+        
+        <h3>If Running Behind:</h3>
+        <ul>
+            <li>Skip slide 6 (Life Without CSS)</li>
+            <li>Combine slides 15-16 (grouping/chaining)</li>
+            <li>Start exercises, continue next class</li>
+        </ul>
+        
+        <h3>If Time Permits:</h3>
+        <ul>
+            <li>Show CSS Zen Garden website</li>
+            <li>Demo browser DevTools inspector</li>
+            <li>Preview cascade/specificity concept</li>
+        </ul>
+        
+        <h3>Assessment Opportunities:</h3>
+        <ul>
+            <li>Check understanding during selector practice (slide 18)</li>
+            <li>Walk around during exercises - note common mistakes</li>
+            <li>Use guided notes as formative assessment</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- QUICK REFERENCE -->
+    <h2>🔍 QUICK REFERENCE FOR BOARD WORK</h2>
+    
+    <div class="slide-section">
+        <div class="slide-header">Write on Board During Class</div>
+        
+        <div class="demo-code">
+BEGINNING OF CLASS:
+━━━━━━━━━━━━━━━━━━━
+🚨 RECIPE PROJECT DUE TONIGHT! 🚨
+Submit on D2L → GitHub link
+━━━━━━━━━━━━━━━━━━━
+
+CSS SYNTAX:
+selector {
+    property: value;
+}
+
+SELECTORS:
+* = universal (everything)
+p = type (all paragraphs)
+.class = class (period)
+#id = ID (hashtag)
+
+NO SPACE = chaining = .alert.warning
+SPACE = descendant = div p
+
+THREE WAYS TO ADD CSS:
+1. External (BEST!) → &lt;link&gt; tag
+2. Internal → &lt;style&gt; tags
+3. Inline (avoid) → style="..."
+        </div>
+    </div>
+
+    <div class="footer" style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #333;">
+        <p><strong>Remember:</strong> This is their first exposure to CSS - keep it fun and visual!</p>
+        <p>Emphasize that CSS is where creativity happens in web development.</p>
+        <p><strong>Don't forget to remind about Recipe Project multiple times!</strong></p>
+    </div>
+</body>
+</html>

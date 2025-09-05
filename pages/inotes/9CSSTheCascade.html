@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cascade - Instructor Guide | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            border: 3px solid #333;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .timing-box {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .slide-section {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #666;
+            page-break-inside: avoid;
+        }
+        
+        .slide-number {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            border: 2px solid #f57c00;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            font-weight: bold;
+            color: #d84315;
+        }
+        
+        .answer-key {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .answer-key::before {
+            content: "✓ ANSWER: ";
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            font-weight: bold;
+            color: #1565c0;
+        }
+        
+        .demo-box {
+            background: #fce4ec;
+            border: 1px solid #c2185b;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-box::before {
+            content: "🖥️ DEMO: ";
+            font-weight: bold;
+            color: #880e4f;
+        }
+        
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .emphasis {
+            background: yellow;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        
+        .time-marker {
+            float: right;
+            background: #666;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            .slide-section {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                border: 2px solid black;
+            }
+            
+            body {
+                font-size: 11pt;
+            }
+            
+            .notes-alert {
+                border: 2px solid black;
+                background: white;
+            }
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #333;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSS CASCADE - INSTRUCTOR GUIDE</h1>
+            <p><strong>CSCI 4513 - Week 5, Class 9</strong></p>
+            <p>Total Time: 40-50 minutes | 31 Slides</p>
+            <p>Exercise: 01-cascade-fix (20 minutes)</p>
+        </div>
+
+        <div class="timing-box">
+            <h2>⏱️ Suggested Timing</h2>
+            <ul>
+                <li><strong>Introduction & Setup:</strong> 5 minutes (Slides 1-3)</li>
+                <li><strong>Core Concepts:</strong> 20 minutes (Slides 4-18)</li>
+                <li><strong>Practice & Examples:</strong> 5 minutes (Slides 19-21)</li>
+                <li><strong>Exercise Time:</strong> 20 minutes (Slides 22-25)</li>
+                <li><strong>Wrap-up & Review:</strong> 5 minutes (Slides 26-31)</li>
+            </ul>
+        </div>
+
+        <!-- Slides 1-3: Introduction -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 1-3</span>
+            <span class="time-marker">5 min</span>
+            <h2>Introduction & Learning Objectives</h2>
+            
+            <div class="teaching-tip">
+                Start with energy! The cascade is often where students get frustrated with CSS.
+            </div>
+            
+            <h3>Key Points:</h3>
+            <ul>
+                <li>Quick recap of last class (selectors, syntax)</li>
+                <li>Today: Understanding the "C" in CSS</li>
+                <li>Set expectation: This will make CSS predictable!</li>
+            </ul>
+            
+            <div class="notes-alert">
+                Students should write their name and date on guided notes now.
+            </div>
+        </div>
+
+        <!-- Slides 4-6: The Problem & Definition -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 4-6</span>
+            <span class="time-marker">3 min</span>
+            <h2>What is the Cascade?</h2>
+            
+            <div class="notes-alert">
+                Students fill in definition section:
+                <ul>
+                    <li>The cascade is CSS's <span class="emphasis">conflict</span> resolution system</li>
+                    <li>It determines which CSS rules get <span class="emphasis">applied</span> to HTML elements</li>
+                </ul>
+            </div>
+            
+            <div class="teaching-tip">
+                Use the "waterfall" analogy - styles flow down and the strongest survive
+            </div>
+            
+            <h3>Sources of CSS (students fill in):</h3>
+            <div class="answer-key">
+                1. Browser <span class="emphasis">default</span> styles<br>
+                2. Your <span class="emphasis">CSS</span> files<br>
+                3. Multiple <span class="emphasis">selectors</span> targeting same element<br>
+                4. <span class="emphasis">Inline</span> styles (in HTML)
+            </div>
+            
+            <div class="demo-box">
+                Show a quick example of conflicting rules in DevTools
+            </div>
+        </div>
+
+        <!-- Slide 6: Three Main Factors -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDE 6</span>
+            <span class="time-marker">2 min</span>
+            <h2>The Three Main Factors</h2>
+            
+            <div class="notes-alert">
+                Students complete the table - EMPHASIZE each factor name:
+            </div>
+            
+            <div class="answer-key">
+                Factor 1: <span class="emphasis">Specificity</span><br>
+                Factor 2: <span class="emphasis">Inheritance</span><br>
+                Factor 3: <span class="emphasis">Rule Order</span>
+            </div>
+            
+            <div class="teaching-tip">
+                Write these three on the board - they'll reference them throughout class
+            </div>
+        </div>
+
+        <!-- Slides 7-13: Specificity -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 7-13</span>
+            <span class="time-marker">8 min</span>
+            <h2>Factor #1: SPECIFICITY</h2>
+            
+            <div class="notes-alert">
+                Students fill in the hierarchy (CRITICAL - they must get this order right!):
+            </div>
+            
+            <div class="answer-key">
+                1. <span class="emphasis">Inline</span> styles - Value: 1000<br>
+                2. <span class="emphasis">ID</span> selectors - Value: 100<br>
+                3. <span class="emphasis">Class</span> selectors - Value: 10<br>
+                4. <span class="emphasis">Type</span> selectors - Value: 1
+            </div>
+            
+            <h3>Important Rule to Emphasize:</h3>
+            <div class="answer-key">
+                1 ID beats <span class="emphasis">1000</span> classes<br>
+                1 class beats <span class="emphasis">1000</span> type selectors
+            </div>
+            
+            <div class="teaching-tip">
+                Use hand gestures showing hierarchy - hold hand high for inline, lower for each level
+            </div>
+            
+            <h3>Practice Calculations (Slide 12):</h3>
+            <div class="notes-alert">
+                Have students calculate these WITH you:
+            </div>
+            
+            <div class="answer-key">
+                1. <code>p</code> = <span class="emphasis">1</span><br>
+                2. <code>.header</code> = <span class="emphasis">10</span><br>
+                3. <code>#main</code> = <span class="emphasis">100</span><br>
+                4. <code>.nav .item</code> = <span class="emphasis">20</span><br>
+                5. <code>#header .nav li</code> = <span class="emphasis">111</span><br>
+                6. <code>div.highlight#main</code> = <span class="emphasis">111</span>
+            </div>
+            
+            <div class="demo-box">
+                Use online specificity calculator to verify answers
+            </div>
+            
+            <h3>What DOESN'T Add (Slide 13):</h3>
+            <div class="answer-key">
+                Universal selector: <span class="emphasis">*</span><br>
+                Combinators: <span class="emphasis">></span>, <span class="emphasis">+</span>, 
+                <span class="emphasis">~</span>, and <span class="emphasis">(space)</span>
+            </div>
+        </div>
+
+        <!-- Slides 9-10: Specificity Examples -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 9-10</span>
+            <span class="time-marker">3 min</span>
+            <h2>Specificity Examples Analysis</h2>
+            
+            <h3>Example 1 (Two Classes):</h3>
+            <div class="notes-alert">
+                Students calculate and determine winner:
+            </div>
+            
+            <div class="answer-key">
+                Rule 1: .subsection = <span class="emphasis">10</span><br>
+                Rule 2: .main .list = <span class="emphasis">20</span><br>
+                Winner: <span class="emphasis">Rule 2</span><br>
+                Why: <span class="emphasis">Two class selectors (20) beats one class selector (10)</span>
+            </div>
+            
+            <h3>Example 2 (ID vs Classes):</h3>
+            <div class="answer-key">
+                Rule 1: #subsection = <span class="emphasis">100</span><br>
+                Rule 2: .main .list = <span class="emphasis">20</span><br>
+                Winner: <span class="emphasis">Rule 1</span><br>
+                Why: <span class="emphasis">ID selector (100) beats two class selectors (20)</span>
+            </div>
+            
+            <div class="teaching-tip">
+                Show these live in browser - seeing is believing!
+            </div>
+        </div>
+
+        <!-- Slides 14-15: Inheritance -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 14-15</span>
+            <span class="time-marker">4 min</span>
+            <h2>Factor #2: INHERITANCE</h2>
+            
+            <div class="notes-alert">
+                Students list properties that inherit:
+            </div>
+            
+            <h3>Properties That Inherit:</h3>
+            <div class="answer-key">
+                Typography: <span class="emphasis">color</span>, <span class="emphasis">font-family</span>, 
+                <span class="emphasis">font-size</span><br>
+                Text properties: <span class="emphasis">text-align</span>, <span class="emphasis">text-transform</span><br>
+                List properties: <span class="emphasis">list-style</span>
+            </div>
+            
+            <h3>Properties That DON'T Inherit:</h3>
+            <div class="answer-key">
+                Box model: <span class="emphasis">margin</span>, <span class="emphasis">padding</span>, 
+                <span class="emphasis">border</span><br>
+                <span class="emphasis">Background</span> properties<br>
+                <span class="emphasis">Position</span> and display
+            </div>
+            
+            <div class="teaching-tip">
+                Mnemonic: "Text flows down, boxes don't"
+            </div>
+            
+            <h3>Key Rule:</h3>
+            <div class="answer-key">
+                Direct styling ALWAYS beats <span class="emphasis">inheritance</span>!
+            </div>
+            
+            <h3>Inheritance Example:</h3>
+            <div class="notes-alert">
+                Walk through this slowly - it's counterintuitive:
+            </div>
+            
+            <div class="answer-key">
+                Text color: <span class="emphasis">blue</span><br>
+                Why: <span class="emphasis">Direct styling (.child) beats inherited styling even though #parent has higher specificity</span>
+            </div>
+        </div>
+
+        <!-- Slides 16-17: Rule Order -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 16-17</span>
+            <span class="time-marker">3 min</span>
+            <h2>Factor #3: RULE ORDER</h2>
+            
+            <div class="notes-alert">
+                Students fill in the tie-breaker conditions:
+            </div>
+            
+            <div class="answer-key">
+                When two rules have:<br>
+                ✓ Same <span class="emphasis">specificity</span><br>
+                ✓ Both are <span class="emphasis">direct</span> (not inherited)<br>
+                Then: The <span class="emphasis">last</span> rule wins!
+            </div>
+            
+            <h3>Rule Order Example:</h3>
+            <div class="answer-key">
+                Text color: <span class="emphasis">yellow</span><br>
+                Why: <span class="emphasis">.warning comes after .alert in the CSS file</span>
+            </div>
+            
+            <div class="teaching-tip">
+                EMPHASIZE: HTML class order doesn't matter - only CSS file order!
+            </div>
+        </div>
+
+        <!-- Slide 18: Complete Algorithm -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDE 18</span>
+            <span class="time-marker">2 min</span>
+            <h2>The Complete Cascade Algorithm</h2>
+            
+            <div class="notes-alert">
+                Students complete the algorithm steps:
+            </div>
+            
+            <div class="answer-key">
+                1. Collect all <span class="emphasis">rules</span> targeting the element<br>
+                2. Check <span class="emphasis">specificity</span> - higher wins!<br>
+                3. If tied, check <span class="emphasis">direct</span> vs inherited<br>
+                4. If still tied, <span class="emphasis">last</span> rule wins!
+            </div>
+            
+            <div class="teaching-tip">
+                Have class recite this together - repetition helps!
+            </div>
+        </div>
+
+        <!-- Slides 19-21: Best Practices & DevTools -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 19-21</span>
+            <span class="time-marker">3 min</span>
+            <h2>Best Practices & DevTools Demo</h2>
+            
+            <h3>Best Practices (students fill in):</h3>
+            <div class="answer-key">
+                Do's:<br>
+                - Keep specificity <span class="emphasis">low</span><br>
+                - Use <span class="emphasis">classes</span> for styling (not IDs)<br>
+                - Organize CSS from <span class="emphasis">general</span> to specific<br>
+                - Use DevTools to <span class="emphasis">debug</span> cascade issues<br><br>
+                
+                Don'ts:<br>
+                - Avoid <span class="emphasis">inline</span> styles<br>
+                - Don't use <span class="emphasis">IDs</span> for styling<br>
+                - Minimize use of <span class="emphasis">!important</span><br>
+                - Don't make selectors overly <span class="emphasis">specific</span>
+            </div>
+            
+            <div class="demo-box">
+                LIVE DEMO: Open Recipe Project in DevTools<br>
+                Show: Crossed-out styles, specificity on hover, computed values
+            </div>
+            
+            <div class="notes-alert">
+                Students complete DevTools section:
+                <ul>
+                    <li>Applied styles (<span class="emphasis">winning</span>)</li>
+                    <li>Overridden styles (<span class="emphasis">crossed</span> out)</li>
+                    <li>Source file and <span class="emphasis">line</span> number</li>
+                    <li><span class="emphasis">Computed</span> final values</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slides 22-25: Exercise Time -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 22-25</span>
+            <span class="time-marker">20 min</span>
+            <h2>EXERCISE: 01-cascade-fix</h2>
+            
+            <div class="notes-alert">
+                Students fill in setup commands:
+            </div>
+            
+            <div class="answer-key">
+                git clone <span class="emphasis">https://github.com/TheOdinProject/css-exercises.git</span><br>
+                cd css-exercises/foundations/cascade/<span class="emphasis">01-cascade-fix</span>
+            </div>
+            
+            <h3>During Exercise Time:</h3>
+            <ul>
+                <li>✓ Walk around and help students</li>
+                <li>✓ Look for common mistakes</li>
+                <li>✓ Give hints without solutions</li>
+                <li>✓ 10-minute warning</li>
+                <li>✓ 5-minute warning</li>
+            </ul>
+            
+            <div class="teaching-tip">
+                Common issues students face:
+                <ul>
+                    <li>Not understanding that order matters</li>
+                    <li>Adding unnecessary complexity</li>
+                    <li>Forgetting about inheritance</li>
+                </ul>
+            </div>
+            
+            <div class="notes-alert">
+                Students document their problems and solutions in the Exercise Notes section
+            </div>
+        </div>
+
+        <!-- Slide 26: Knowledge Check -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDE 26</span>
+            <span class="time-marker">2 min</span>
+            <h2>Quick Knowledge Check</h2>
+            
+            <div class="teaching-tip">
+                Do this as a rapid-fire Q&A with the class
+            </div>
+            
+            <div class="answer-key">
+                1. Which has higher specificity: .header .nav or #nav?<br>
+                   Answer: <span class="emphasis">#nav (100 > 20)</span><br><br>
+                
+                2. Does margin inherit from parent elements?<br>
+                   Answer: <span class="emphasis">No, margin doesn't inherit</span><br><br>
+                
+                3. If two rules have the same specificity, which wins?<br>
+                   Answer: <span class="emphasis">The last one in the CSS file</span><br><br>
+                
+                4. What's the specificity of div.highlight#main?<br>
+                   Answer: <span class="emphasis">111 (1 ID + 1 class + 1 type)</span>
+            </div>
+        </div>
+
+        <!-- Practice Problems -->
+        <div class="slide-section">
+            <span class="slide-number">PRACTICE PROBLEMS</span>
+            <span class="time-marker">If time allows</span>
+            <h2>Guided Notes Practice Problems</h2>
+            
+            <h3>Problem 1: Predict the Color</h3>
+            <div class="answer-key">
+                Answer: <span class="emphasis">green</span><br>
+                Explanation: <span class="emphasis">All three rules have same specificity (10), but .text is direct styling on the element, so it wins over inherited #container. Between .box p and .text, both are direct but .text comes last in CSS.</span>
+            </div>
+            
+            <h3>Problem 2: Calculate Specificity</h3>
+            <div class="answer-key">
+                <code>body #wrapper .container ul li</code><br>
+                IDs: <span class="emphasis">1</span>, Classes: <span class="emphasis">1</span>, 
+                Types: <span class="emphasis">3</span>, Total: <span class="emphasis">113</span><br><br>
+                
+                <code>nav > ul > li > a.active</code><br>
+                IDs: <span class="emphasis">0</span>, Classes: <span class="emphasis">1</span>, 
+                Types: <span class="emphasis">4</span>, Total: <span class="emphasis">14</span>
+            </div>
+        </div>
+
+        <!-- Slides 27-31: Wrap-up -->
+        <div class="slide-section">
+            <span class="slide-number">SLIDES 27-31</span>
+            <span class="time-marker">3 min</span>
+            <h2>Wrap-up & Homework</h2>
+            
+            <h3>Key Takeaways (students complete):</h3>
+            <div class="answer-key">
+                1. The cascade resolves <span class="emphasis">conflicts between CSS rules</span><br>
+                2. Specificity is calculated by counting <span class="emphasis">IDs, classes, and type selectors</span><br>
+                3. Direct styling always beats <span class="emphasis">inheritance</span><br>
+                4. When specificity is equal, the <span class="emphasis">last</span> rule wins<br>
+                5. The best practice is to keep specificity <span class="emphasis">low</span>
+            </div>
+            
+            <h3>Homework Assignment:</h3>
+            <ul>
+                <li>Complete cascade exercise if not finished</li>
+                <li>Read "The CSS Cascade" article</li>
+                <li>Watch Kevin Powell's video</li>
+                <li>Try CSS Specificity Calculator</li>
+                <li>Apply to Recipe Project</li>
+            </ul>
+            
+            <div class="teaching-tip">
+                End on a high note - they've conquered one of CSS's trickiest concepts!
+            </div>
+        </div>
+
+        <!-- Additional Teaching Notes -->
+        <div class="slide-section">
+            <h2>🎯 Additional Teaching Notes</h2>
+            
+            <h3>Common Student Struggles:</h3>
+            <ul>
+                <li><strong>Inheritance confusion:</strong> Students often think higher specificity on parent always wins</li>
+                <li><strong>HTML class order:</strong> Many think order in class="alert warning" matters</li>
+                <li><strong>Over-specific selectors:</strong> They tend to add too much specificity to "fix" problems</li>
+                <li><strong>!important abuse:</strong> Watch for students using this as first solution</li>
+            </ul>
+            
+            <h3>Engagement Strategies:</h3>
+            <ul>
+                <li>Use student names in examples</li>
+                <li>Have students predict outcomes before revealing</li>
+                <li>Get volunteers to explain their reasoning</li>
+                <li>Use real websites to show cascade in action</li>
+            </ul>
+            
+            <h3>If Running Behind:</h3>
+            <ul>
+                <li>Skip slides 27 (Real-World Scenarios)</li>
+                <li>Reduce exercise time to 15 minutes</li>
+                <li>Make practice problems homework</li>
+            </ul>
+            
+            <h3>If Time Permits:</h3>
+            <ul>
+                <li>Show more DevTools features</li>
+                <li>Debug a student's Recipe Project live</li>
+                <li>Discuss CSS methodologies (BEM, etc.)</li>
+                <li>Preview CSS custom properties</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>End of Instructor Guide - CSS Cascade Lecture</p>
+            <p>Remember: Keep energy high - this is where CSS clicks for many students!</p>
+        </div>
+    </div>
+</body>
+</html>
