@@ -1,659 +1,734 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Foundations - The Box Model - CSCI 3403</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-    <link rel="stylesheet" href="../../styles/presentation.css">
+    <title>CSS Box Model - Instructor Guide</title>
     <style>
-        /* Custom styles for box model visualization */
-        .box-model-demo {
-            width: 300px;
-            margin: 30px auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: white;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 30px;
-            border: 10px solid #764ba2;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .timing-overview {
             background: #f0f4f8;
-            position: relative;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
         }
         
-        .box-model-visual {
+        .timing-overview h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .timing-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .timing-table th, .timing-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .timing-table th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .slide-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            page-break-inside: avoid;
+        }
+        
+        .slide-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            margin: 30px auto;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
         }
         
-        .box-layer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .margin-box {
-            background: rgba(255, 200, 100, 0.3);
-            padding: 30px;
-            border: 2px dashed #ff9800;
-        }
-        
-        .border-box {
-            background: rgba(118, 75, 162, 0.3);
-            padding: 20px;
-            border: 2px solid #764ba2;
-        }
-        
-        .padding-box {
-            background: rgba(102, 126, 234, 0.3);
-            padding: 20px;
-            border: 2px dashed #667eea;
-        }
-        
-        .content-box {
-            background: #fff;
-            padding: 20px;
-            border: 2px solid #333;
+        .slide-number {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-weight: bold;
         }
         
-        .interactive-box {
-            width: 200px;
-            height: 100px;
-            background: #667eea;
+        .time-badge {
+            background: #764ba2;
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
         }
         
-        .box-sizing-demo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
+        .notes-alert {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
         }
         
-        .demo-container {
-            text-align: center;
+        .notes-alert h4 {
+            color: #856404;
+            margin-bottom: 8px;
         }
         
-        .sizing-box {
-            width: 200px;
+        .notes-alert ul {
+            margin-left: 20px;
+        }
+        
+        .notes-alert li {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin: 15px 0;
+        }
+        
+        .teaching-tip strong {
+            color: #1565c0;
+        }
+        
+        .demo-box {
+            background: #f5f5f5;
+            border: 1px dashed #999;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .emphasis {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .activity-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .activity-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        
+        .prep-checklist {
+            background: #fff;
+            border: 2px solid #667eea;
             padding: 20px;
-            border: 10px solid #764ba2;
-            background: #f0f4f8;
-            margin: 10px auto;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .prep-checklist h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        
+        .prep-checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .questions-section {
+            background: #fce4ec;
+            border: 1px solid #e91e63;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .questions-section h3 {
+            color: #c2185b;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+            
+            .slide-section {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid #333;
+            }
+            
+            .notes-alert {
+                border: 2px solid #000;
+            }
         }
     </style>
 </head>
-
 <body>
-    <div class="presentation-container">
-        <div class="timer" id="timer">
-            Class 11 - The Box Model <button class="home"><a href="../../index.html">Home</a></button>
-        </div>
+    <div class="header">
+        <h1>CSS Box Model - Instructor Guide</h1>
+        <p>CSCI 4513 - Class 11 (40-50 minutes)</p>
+        <p>Complete teaching guide with guided notes integration</p>
+    </div>
 
-        <!-- Slide 1: Title -->
-        <div class="slide active">
-            <h1>CSS Foundations</h1>
-            <h2>The Box Model <span class="emoji">📦</span></h2>
-            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
-            <p style="font-size: 1.3em;">Week 6, Class 11</p>
-            <p style="margin-top: auto; font-style: italic;">Today: The most fundamental CSS concept! 🎯</p>
-        </div>
+    <div class="prep-checklist">
+        <h2>Pre-Class Checklist</h2>
+        <label><input type="checkbox"> VS Code ready with HTML/CSS demo files</label><br>
+        <label><input type="checkbox"> Browser DevTools accessible</label><br>
+        <label><input type="checkbox"> Guided notes distributed to students</label><br>
+        <label><input type="checkbox"> Slides loaded and tested</label><br>
+        <label><input type="checkbox"> Timer visible for pacing</label><br>
+        <label><input type="checkbox"> MDN Box Model Challenge link ready</label>
+    </div>
 
-        <!-- Slide 2: Learning Objectives -->
-        <div class="slide">
-            <h1>Today's Learning Objectives</h1>
-            <ul style="font-size: 1.4em; line-height: 2;">
-                <li>🎯 Understand that everything is a box</li>
-                <li>🎯 Master the box model components</li>
-                <li>🎯 Control element sizing with padding, border, margin</li>
-                <li>🎯 Learn box-sizing: border-box</li>
-                <li>🎯 Understand margin collapsing</li>
-                <li>🎯 Center elements horizontally</li>
-            </ul>
-        </div>
+    <div class="timing-overview">
+        <h2>⏱️ Timing Overview</h2>
+        <table class="timing-table">
+            <tr>
+                <th>Section</th>
+                <th>Slides</th>
+                <th>Time</th>
+                <th>Running Total</th>
+            </tr>
+            <tr>
+                <td>Introduction & Objectives</td>
+                <td>1-3</td>
+                <td>3 min</td>
+                <td>3 min</td>
+            </tr>
+            <tr>
+                <td>Everything is a Box</td>
+                <td>4-7</td>
+                <td>8 min</td>
+                <td>11 min</td>
+            </tr>
+            <tr>
+                <td>Box Model Components</td>
+                <td>8-12</td>
+                <td>10 min</td>
+                <td>21 min</td>
+            </tr>
+            <tr>
+                <td>Live Demo</td>
+                <td>13</td>
+                <td>5 min</td>
+                <td>26 min</td>
+            </tr>
+            <tr>
+                <td>Box-Sizing</td>
+                <td>14-17</td>
+                <td>8 min</td>
+                <td>34 min</td>
+            </tr>
+            <tr>
+                <td>Margin Collapsing & Centering</td>
+                <td>18-19</td>
+                <td>5 min</td>
+                <td>39 min</td>
+            </tr>
+            <tr>
+                <td>Practice Activity</td>
+                <td>20</td>
+                <td>5 min</td>
+                <td>44 min</td>
+            </tr>
+            <tr>
+                <td>Wrap-up & Homework</td>
+                <td>21-30</td>
+                <td>6 min</td>
+                <td>50 min</td>
+            </tr>
+        </table>
+    </div>
 
-        <!-- Slide 3: Recap -->
-        <div class="slide">
-            <h1>Quick Recap</h1>
-            <h3>Our CSS Journey So Far:</h3>
+    <!-- SLIDE 1-3: Introduction -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 1-3</span>
+            <span class="time-badge">3 minutes</span>
+        </div>
+        <h3>Introduction & Learning Objectives</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Page 1</h4>
             <ul>
-                <li>✅ Introduction to CSS</li>
-                <li>✅ Selectors and properties</li>
-                <li>✅ The Cascade and specificity</li>
-                <li>✅ Browser developer tools</li>
+                <li>Students fill in: <span class="emphasis">Date and Name</span></li>
+                <li>Review Learning Objectives - DON'T have them fill these in yet</li>
+                <li>They'll complete objectives as we cover each topic</li>
             </ul>
-            <h3 style="margin-top: 40px;">Today's Focus:</h3>
-            <p style="font-size: 1.4em;"><span class="highlight">Layout fundamentals - How elements take up space!</span></p>
         </div>
-
-        <!-- Slide 4: The Truth About Web Pages -->
-        <div class="slide">
-            <h1>The #1 CSS Concept <span class="emoji">🤯</span></h1>
-            <h2 style="font-size: 2em; text-align: center; margin: 60px 0;">
-                Everything on a webpage is a<br>
-                <span class="highlight">RECTANGULAR BOX</span>
-            </h2>
-            <p style="text-align: center; font-size: 1.4em;">Yes, even circles!</p>
+        
+        <div class="teaching-tip">
+            <strong>Opening Hook:</strong> "Today we learn THE most important CSS concept. If you master this, everything else in CSS becomes easier!"
         </div>
+        
+        <p><strong>Key Points:</strong></p>
+        <ul>
+            <li>Emphasize this is foundational - not optional knowledge</li>
+            <li>Many developers struggle because they skip this</li>
+            <li>JavaScript skills are meaningless without layout skills</li>
+        </ul>
+    </div>
 
-        <!-- Slide 5: Seeing the Boxes -->
-        <div class="slide">
-            <h1>Let's See the Boxes! <span class="emoji">👀</span></h1>
-            <div class="code-example">
-                <span class="tag">*</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">outline</span>: <span class="value">2px solid red</span>;<br>
-                }
-            </div>
-            <div class="activity-box">
-                <h3>Try It Now!</h3>
-                <p>Open DevTools on any website:</p>
-                <ol>
-                    <li>Right-click → Inspect</li>
-                    <li>In Styles panel, click the + button</li>
-                    <li>Add the CSS above</li>
-                    <li>Watch the magic happen!</li>
-                </ol>
-            </div>
-            <p style="margin-top: 30px; text-align: center;">Every element is contained in a box!</p>
+    <!-- SLIDE 4-7: Everything is a Box -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 4-7</span>
+            <span class="time-badge">8 minutes</span>
         </div>
-
-        <!-- Slide 6: The Box Model Introduction -->
-        <div class="slide">
-            <h1>The Box Model <span class="emoji">📦</span></h1>
-            <div class="box-model-visual">
-                <div class="box-layer margin-box">
-                    <div class="box-layer border-box">
-                        <div class="box-layer padding-box">
-                            <div class="content-box">
-                                Content
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 1.3em;">Every box has four parts!</p>
+        <h3>The Fundamental Truth: Everything is a Box</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - "The Fundamental Truth" Section</h4>
+            <ul>
+                <li>Students write: <span class="emphasis">"RECTANGULAR BOX"</span></li>
+                <li>In code block: <span class="emphasis">"2px"</span> and <span class="emphasis">"red"</span></li>
+                <li>Have them complete Learning Objective #1: <span class="emphasis">"box"</span></li>
+            </ul>
         </div>
-
-        <!-- Slide 7: Box Model Components -->
-        <div class="slide">
-            <h1>Box Model Components</h1>
-            <h2>From Inside to Outside:</h2>
-            <ol style="font-size: 1.4em; line-height: 2;">
-                <li><strong style="color: #333;">Content:</strong> The actual content (text, images)</li>
-                <li><strong style="color: #667eea;">Padding:</strong> Space between content and border</li>
-                <li><strong style="color: #764ba2;">Border:</strong> The edge of the box</li>
-                <li><strong style="color: #ff9800;">Margin:</strong> Space outside the border</li>
+        
+        <div class="activity-box">
+            <h4>🎯 Live Activity (Slide 5)</h4>
+            <p><strong>Do Together:</strong></p>
+            <ol>
+                <li>Open any popular website (Amazon, YouTube, etc.)</li>
+                <li>Open DevTools together</li>
+                <li>Add the outline CSS in Styles panel</li>
+                <li>Let students see the "magic" happen</li>
+                <li>Point out that even round profile pictures are in rectangular boxes!</li>
             </ol>
-            <div class="tip-box">
-                <strong>Memory Trick:</strong> "Content Pads the Border from the Margin" (CPBM)
-            </div>
         </div>
-
-        <!-- Slide 8: Content Area -->
-        <div class="slide">
-            <h1>1. Content <span class="emoji">📝</span></h1>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">300px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">height</span>: <span class="value">150px</span>;<br>
-                }
-            </div>
-            <div class="demo-container">
-                <div style="width: 300px; height: 150px; background: #f0f4f8; margin: 30px auto; display: flex; align-items: center; justify-content: center; border: 2px solid #ddd;">
-                    300px × 150px content
-                </div>
-            </div>
-            <ul>
-                <li>The innermost part of the box</li>
-                <li>Where your text and images live</li>
-                <li>Size controlled by width and height</li>
-            </ul>
-        </div>
-
-        <!-- Slide 9: Padding -->
-        <div class="slide">
-            <h1>2. Padding <span class="emoji">🛡️</span></h1>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
-                &nbsp;&nbsp;<span class="comment">/* or individually: */</span><br>
-                &nbsp;&nbsp;<span class="attribute">padding-top</span>: <span class="value">10px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">padding-right</span>: <span class="value">20px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">padding-bottom</span>: <span class="value">10px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">padding-left</span>: <span class="value">20px</span>;<br>
-                }
-            </div>
-            <ul>
-                <li>Creates space INSIDE the border</li>
-                <li>Background color extends into padding</li>
-                <li>Makes content easier to read</li>
-                <li>Can't be negative</li>
-            </ul>
-        </div>
-
-        <!-- Slide 10: Padding Shorthand -->
-        <div class="slide">
-            <h1>Padding Shorthand <span class="emoji">⚡</span></h1>
-            <div class="comparison-table">
-                <div class="comparison-card">
-                    <h3>4 Values</h3>
-                    <div class="code-example" style="font-size: 0.9em;">
-                        <span class="attribute">padding</span>: <span class="value">10px 20px 30px 40px</span>;<br>
-                        <span class="comment">/* top right bottom left */</span><br>
-                        <span class="comment">/* Clockwise from top! */</span>
-                    </div>
-                </div>
-                <div class="comparison-card">
-                    <h3>2 Values</h3>
-                    <div class="code-example" style="font-size: 0.9em;">
-                        <span class="attribute">padding</span>: <span class="value">10px 20px</span>;<br>
-                        <span class="comment">/* vertical horizontal */</span><br>
-                        <span class="comment">/* top/bottom left/right */</span>
-                    </div>
-                </div>
-            </div>
-            <div class="tip-box">
-                <strong>Remember:</strong> Think of a clock! Start at 12 and go clockwise.
-            </div>
-        </div>
-
-        <!-- Slide 11: Border -->
-        <div class="slide">
-            <h1>3. Border <span class="emoji">🔲</span></h1>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">5px solid #764ba2</span>;<br>
-                &nbsp;&nbsp;<span class="comment">/* width style color */</span><br><br>
-                &nbsp;&nbsp;<span class="comment">/* or separately: */</span><br>
-                &nbsp;&nbsp;<span class="attribute">border-width</span>: <span class="value">5px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">border-style</span>: <span class="value">solid</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">border-color</span>: <span class="value">#764ba2</span>;<br>
-                }
-            </div>
-            <h3>Border Styles:</h3>
-            <ul>
-                <li>solid, dashed, dotted, double, none</li>
-                <li>Adds to the total size of the element</li>
-                <li>Can have different styles per side</li>
-            </ul>
-        </div>
-
-        <!-- Slide 12: Margin -->
-        <div class="slide">
-            <h1>4. Margin <span class="emoji">🌊</span></h1>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">20px</span>;<br>
-                &nbsp;&nbsp;<span class="comment">/* Creates space OUTSIDE the border */</span><br><br>
-                &nbsp;&nbsp;<span class="comment">/* Center horizontally: */</span><br>
-                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">0 auto</span>;<br>
-                }
-            </div>
-            <ul>
-                <li>Space between elements</li>
-                <li>Can be negative (pulls elements closer)</li>
-                <li>Transparent - shows parent's background</li>
-                <li><code>auto</code> value for centering</li>
-            </ul>
-        </div>
-
-        <!-- Slide 13: Live Demo -->
-        <div class="slide">
-            <h1>Live Demo Time! <span class="emoji">🎬</span></h1>
-            <div class="activity-box">
-                <h3>Let's Build a Box Together</h3>
-                <p>We'll create a card component with:</p>
-                <ul>
-                    <li>Content area with text</li>
-                    <li>Padding for breathing room</li>
-                    <li>A nice border</li>
-                    <li>Margin to separate from other elements</li>
-                </ul>
-            </div>
-            <p style="margin-top: 30px;">Open VS Code and follow along!</p>
-        </div>
-
-        <!-- Slide 14: The Box Sizing Problem -->
-        <div class="slide">
-            <h1>The Box-Sizing Problem <span class="emoji">😤</span></h1>
-            <p style="font-size: 1.4em;">You set width: 200px, but your box is 260px wide!</p>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">200px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">10px solid black</span>;<br>
-                }
-            </div>
-            <div class="visual-example">
-                <p><strong>Actual width:</strong></p>
-                <p>200px (content) + 40px (padding) + 20px (border) = <span class="highlight">260px</span></p>
-            </div>
-            <p style="margin-top: 30px;">This is the default <code>content-box</code> behavior!</p>
-        </div>
-
-        <!-- Slide 15: Border-Box Solution -->
-        <div class="slide">
-            <h1>The Border-Box Solution! <span class="emoji">✨</span></h1>
-            <div class="code-example">
-                <span class="tag">.box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">box-sizing</span>: <span class="value">border-box</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">200px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">10px solid black</span>;<br>
-                }
-            </div>
-            <div class="visual-example">
-                <p><strong>With border-box:</strong></p>
-                <p>Total width = <span class="highlight">200px</span> (includes padding and border!)</p>
-            </div>
-            <div class="tip-box">
-                <strong>Pro Tip:</strong> Width now means the TOTAL width, not just content!
-            </div>
-        </div>
-
-        <!-- Slide 16: Universal Border-Box -->
-        <div class="slide">
-            <h1>Set Border-Box for Everything! <span class="emoji">🌍</span></h1>
-            <div class="code-example">
-                <span class="comment">/* Add this to the top of your CSS! */</span><br>
-                <span class="tag">*</span>, <span class="tag">*::before</span>, <span class="tag">*::after</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">box-sizing</span>: <span class="value">border-box</span>;<br>
-                }
-            </div>
-            <h3>Why use border-box?</h3>
-            <ul>
-                <li>More intuitive sizing</li>
-                <li>Easier to calculate layouts</li>
-                <li>Industry standard practice</li>
-                <li>Prevents unexpected overflow</li>
-            </ul>
-            <div class="warning-box">
-                <strong>Always</strong> include this in your projects from now on!
-            </div>
-        </div>
-
-        <!-- Slide 17: Box-Sizing Comparison -->
-        <div class="slide">
-            <h1>Content-Box vs Border-Box</h1>
-            <div class="box-sizing-demo">
-                <div class="demo-container">
-                    <h3>content-box (default)</h3>
-                    <div class="sizing-box">
-                        width: 200px
-                    </div>
-                    <p>Actual: 260px wide</p>
-                    <p style="font-size: 0.9em;">200 + 40 (padding) + 20 (border)</p>
-                </div>
-                <div class="demo-container">
-                    <h3>border-box</h3>
-                    <div class="sizing-box" style="box-sizing: border-box;">
-                        width: 200px
-                    </div>
-                    <p>Actual: 200px wide</p>
-                    <p style="font-size: 0.9em;">Padding and border included!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 18: Margin Collapsing -->
-        <div class="slide">
-            <h1>Margin Collapsing <span class="emoji">🤝</span></h1>
-            <p style="font-size: 1.4em;">When vertical margins meet, they collapse!</p>
-            <div class="code-example">
-                <span class="tag">.box1</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">margin-bottom</span>: <span class="value">30px</span>;<br>
-                }<br><br>
-                <span class="tag">.box2</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">margin-top</span>: <span class="value">20px</span>;<br>
-                }
-            </div>
-            <div class="visual-example">
-                <p>Space between boxes = <strong>30px</strong> (not 50px!)</p>
-                <p>The larger margin wins!</p>
-            </div>
-            <div class="tip-box">
-                <strong>Note:</strong> Only happens with vertical margins, not horizontal!
-            </div>
-        </div>
-
-        <!-- Slide 19: Centering with Margin Auto -->
-        <div class="slide">
-            <h1>Centering Elements <span class="emoji">🎯</span></h1>
-            <h2>The Classic Technique: margin: auto</h2>
-            <div class="code-example">
-                <span class="tag">.centered-box</span> {<br>
-                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">500px</span>;<br>
-                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">0 auto</span>;<br>
-                &nbsp;&nbsp;<span class="comment">/* top/bottom: 0, left/right: auto */</span><br>
-                }
-            </div>
-            <div class="interactive-box" style="width: 400px; margin: 30px auto;">
-                Centered!
-            </div>
-            <div class="warning-box">
-                <strong>Requirements:</strong> Element must have a defined width!
-            </div>
-        </div>
-
-        <!-- Slide 20: Practice Activity -->
-        <div class="slide">
-            <h1>Quick Practice <span class="emoji">💪</span></h1>
-            <div class="activity-box">
-                <h3>10-Minute Challenge</h3>
-                <p>Create a card component with:</p>
-                <ol>
-                    <li>Width of 300px</li>
-                    <li>20px padding all around</li>
-                    <li>3px solid border (your choice of color)</li>
-                    <li>Centered on the page</li>
-                    <li>Use border-box sizing</li>
-                </ol>
-            </div>
-            <div class="code-example">
-                <span class="comment">/* Starter code */</span><br>
-                <span class="tag">.card</span> {<br>
-                &nbsp;&nbsp;<span class="comment">/* Your styles here */</span><br>
-                }
-            </div>
-        </div>
-
-        <!-- Slide 21: DevTools Box Model -->
-        <div class="slide">
-            <h1>DevTools Box Model Viewer <span class="emoji">🔍</span></h1>
-            <div class="activity-box">
-                <h3>Let's Explore!</h3>
-                <ol>
-                    <li>Right-click any element → Inspect</li>
-                    <li>Look for the "Box Model" diagram</li>
-                    <li>Hover over different sections</li>
-                    <li>See the measurements for each part</li>
-                </ol>
-            </div>
-            <div class="tip-box">
-                <strong>Colors in DevTools:</strong>
-                <ul>
-                    <li>Blue = Content</li>
-                    <li>Green = Padding</li>
-                    <li>Yellow/Orange = Border</li>
-                    <li>Orange/Pink = Margin</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 22: Common Use Cases -->
-        <div class="slide">
-            <h1>When to Use What? <span class="emoji">🤔</span></h1>
-            <div class="comparison-table">
-                <div class="comparison-card">
-                    <h3>Use Padding</h3>
-                    <ul>
-                        <li>Space inside a button</li>
-                        <li>Text breathing room</li>
-                        <li>Card/container spacing</li>
-                        <li>Background needs to extend</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h3>Use Margin</h3>
-                    <ul>
-                        <li>Space between elements</li>
-                        <li>Centering blocks</li>
-                        <li>Creating gaps in layouts</li>
-                        <li>Pushing elements apart</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 23: Advanced Tips -->
-        <div class="slide">
-            <h1>Pro Tips <span class="emoji">💡</span></h1>
-            <ul style="font-size: 1.3em; line-height: 2;">
-                <li>🎯 Negative margins can overlap elements</li>
-                <li>🎯 <code>margin: auto</code> only works horizontally by default</li>
-                <li>🎯 Padding percentages are based on width (even vertical!)</li>
-                <li>🎯 <code>outline</code> doesn't affect layout (unlike border)</li>
-                <li>🎯 Use DevTools to experiment with values</li>
-            </ul>
-            <div class="tip-box">
-                <strong>Debug Tip:</strong> Can't figure out spacing? Add temporary background colors!
-            </div>
-        </div>
-
-        <!-- Slide 24: Common Mistakes -->
-        <div class="slide">
-            <h1>Avoid These Mistakes! <span class="emoji">⚠️</span></h1>
-            <ul>
-                <li>❌ Forgetting <code>box-sizing: border-box</code></li>
-                <li>❌ Using padding when you need margin (or vice versa)</li>
-                <li>❌ Not setting width when using <code>margin: auto</code></li>
-                <li>❌ Fighting margin collapse instead of working with it</li>
-                <li>❌ Using only pixels - explore %, em, rem</li>
-                <li>❌ Ignoring the DevTools box model viewer</li>
-            </ul>
-        </div>
-
-        <!-- Slide 25: Homework Assignment -->
-        <div class="slide">
-            <h1>Homework Assignment <span class="emoji">📚</span></h1>
-            <h2>Due: Before Next Class</h2>
-            <div class="activity-box">
-                <h3>Your Tasks:</h3>
-                <ol>
-                    <li>Complete the MDN Box Model Challenge:<br>
-                        <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Box_Model_Tasks" style="color: white;">MDN Box Model Tasks</a>
-                    </li>
-                    <li>Add your completed Box Model challenge to your one-page website</li>
-                    <li>Use:
-                        <ul>
-                            <li>All four box model properties</li>
-                            <li>border-box sizing</li>
-                            <li>Center at least one element</li>
-                        </ul>
-                    </li>
-                </ol>
-            </div>
-            <p style="margin-top: 30px;">Push to GitHub and submit link on D2L!</p>
-        </div>
-
-        <!-- Slide 26: Practice Resources -->
-        <div class="slide">
-            <h1>Extra Practice Resources <span class="emoji">📖</span></h1>
-            <h3>Videos to Watch:</h3>
-            <ul>
-                <li>Learn CSS Box Model In 8 Minutes</li>
-                <li>box-sizing: border-box (EASY!)</li>
-            </ul>
-            <h3>Articles to Read:</h3>
-            <ul>
-                <li>MDN's lesson on the box model</li>
-                <li>CSS Tricks: Margins</li>
-            </ul>
-            <h3>Interactive:</h3>
-            <ul>
-                <li>Scrimba Box Model course</li>
-                <li>CSS Diner (for selector practice)</li>
-            </ul>
-        </div>
-
-        <!-- Slide 27: Knowledge Check -->
-        <div class="slide">
-            <h1>Knowledge Check <span class="emoji">✅</span></h1>
-            <h3>Can you answer these?</h3>
-            <ul style="font-size: 1.2em;">
-                <li>What's the order from inside to outside?</li>
-                <li>What does box-sizing: border-box do?</li>
-                <li>Margin or padding for space between elements?</li>
-                <li>Margin or padding for space inside an element?</li>
-                <li>How do you center an element horizontally?</li>
-                <li>What is margin collapsing?</li>
-            </ul>
-            <div class="tip-box" style="margin-top: 30px;">
-                <p>If unsure about any, review the slides or ask me!</p>
-            </div>
-        </div>
-
-        <!-- Slide 28: Next Class Preview -->
-        <div class="slide">
-            <h1>Next Class Preview</h1>
-            <h2>CSS Foundations: Block and Inline</h2>
-            <ul style="font-size: 1.3em;">
-                <li>Display property</li>
-                <li>Block vs inline vs inline-block</li>
-                <li>How elements flow on the page</li>
-                <li>More layout fundamentals</li>
-            </ul>
-            <div class="visual-example" style="margin-top: 50px;">
-                <p style="font-size: 1.3em;">Building on today's box model knowledge! 🏗️</p>
-            </div>
-        </div>
-
-        <!-- Slide 29: Summary -->
-        <div class="slide">
-            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
-            <ul style="font-size: 1.3em; line-height: 2;">
-                <li>✅ Everything is a rectangular box</li>
-                <li>✅ Content → Padding → Border → Margin</li>
-                <li>✅ Always use box-sizing: border-box</li>
-                <li>✅ Margins collapse vertically</li>
-                <li>✅ margin: auto centers elements</li>
-                <li>✅ DevTools is your best friend</li>
-            </ul>
-            <div class="demo-box" style="margin-top: 40px;">
-                <p>Master the box model = Master CSS layout!</p>
-            </div>
-        </div>
-
-        <!-- Slide 30: Closing -->
-        <div class="slide">
-            <h1>Excellent Work! <span class="emoji">🌟</span></h1>
-            <h2>You Now Understand CSS Fundamentals!</h2>
-            <p style="font-size: 1.4em; margin-top: 40px;">The box model is THE foundation</p>
-            <p style="font-size: 1.4em;">Practice with DevTools</p>
-            <p style="font-size: 1.4em;">Experiment and break things!</p>
-            <div class="visual-example" style="margin-top: 50px;">
-                <p style="font-size: 1.3em;">See you Thursday! 👋</p>
-                <p>Don't forget your homework!</p>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="navigation">
-            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
-            <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
-            </span>
-            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        
+        <div class="teaching-tip">
+            <strong>Common Question:</strong> "But what about circles?" 
+            <br>Answer: Show that circles still occupy rectangular space in layout. The rendering is round, but the layout box is rectangular.
         </div>
     </div>
 
-    <script src="../../js/presentation.js"></script>
-</body>
+    <!-- SLIDE 8-12: Box Model Components -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 8-12</span>
+            <span class="time-badge">10 minutes</span>
+        </div>
+        <h3>The Four Box Model Components</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - "Box Model Components" Section</h4>
+            <p><strong>Students fill in the four components (in order):</strong></p>
+            <ol>
+                <li><span class="emphasis">Content</span></li>
+                <li><span class="emphasis">Padding</span></li>
+                <li><span class="emphasis">Border</span></li>
+                <li><span class="emphasis">Margin</span></li>
+            </ol>
+            <p><strong>Memory Trick:</strong> Let them create their own or use <span class="emphasis">"CPBM"</span></p>
+        </div>
+        
+        <div class="demo-box">
+            <strong>Visual Demo:</strong>
+            <ul>
+                <li>Draw nested boxes on whiteboard/screen</li>
+                <li>Use different colors for each layer</li>
+                <li>Show actual measurements</li>
+            </ul>
+        </div>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Properties Sections</h4>
+            <p><strong>For each component, students fill in:</strong></p>
+            <ul>
+                <li><strong>Content:</strong> <span class="emphasis">width</span>, <span class="emphasis">height</span></li>
+                <li><strong>Padding:</strong> <span class="emphasis">"INSIDE"</span>, <span class="emphasis">"extends"</span></li>
+                <li><strong>Padding shorthand:</strong> All values in clockwise order</li>
+                <li><strong>Border styles:</strong> <span class="emphasis">dashed, dotted</span></li>
+                <li><strong>Margin:</strong> <span class="emphasis">"OUTSIDE"</span>, <span class="emphasis">"negative"</span></li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Padding Shorthand Tip:</strong> Use hand gestures showing clockwise motion from 12 o'clock. Have students trace a clock in the air!
+        </div>
+    </div>
 
+    <!-- SLIDE 13: Live Demo -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slide 13</span>
+            <span class="time-badge">5 minutes</span>
+        </div>
+        <h3>Live Coding Demo</h3>
+        
+        <div class="activity-box">
+            <h4>🎯 Build a Card Component Together</h4>
+            <p><strong>Code to build:</strong></p>
+            <div class="code-example">
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 3px solid #667eea;
+    margin: 20px;
+    background: #f0f4f8;
+}
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Do This:</strong>
+            <ol>
+                <li>Start with just content (no styles)</li>
+                <li>Add width/height - show the change</li>
+                <li>Add padding - show background extends</li>
+                <li>Add border - show it's outside padding</li>
+                <li>Add margin - show spacing from other elements</li>
+                <li>Use DevTools to inspect each layer!</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- SLIDE 14-17: Box-Sizing -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 14-17</span>
+            <span class="time-badge">8 minutes</span>
+        </div>
+        <h3>The Box-Sizing Problem & Solution</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - "Box-Sizing Property" Section</h4>
+            <p><strong>The Problem calculation:</strong></p>
+            <ul>
+                <li>Students calculate: <span class="emphasis">200 + 40 + 20 = 260px</span></li>
+            </ul>
+            <p><strong>The Solution:</strong></p>
+            <ul>
+                <li>Fill in: <span class="emphasis">"padding"</span> and <span class="emphasis">"border"</span></li>
+                <li>Universal selector code: <span class="emphasis">"border-box"</span></li>
+                <li>Learning Objective: <span class="emphasis">"box-sizing"</span></li>
+            </ul>
+        </div>
+        
+        <div class="demo-box">
+            <strong>Visual Comparison:</strong>
+            <p>Create two identical boxes side-by-side:</p>
+            <ul>
+                <li>Left: content-box (default) - measure actual width</li>
+                <li>Right: border-box - measure actual width</li>
+                <li>Show the difference is dramatic!</li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Emphasize:</strong> "From now on, ALWAYS start your CSS with the universal border-box rule. This is industry standard!"
+        </div>
+    </div>
+
+    <!-- SLIDE 18-19: Margin Collapsing & Centering -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 18-19</span>
+            <span class="time-badge">5 minutes</span>
+        </div>
+        <h3>Margin Collapsing & Centering</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Margin Sections</h4>
+            <p><strong>Margin Collapsing:</strong></p>
+            <ul>
+                <li>They meet and: <span class="emphasis">"collapse"</span></li>
+                <li>30px + 20px = <span class="emphasis">"30"</span>px</li>
+                <li>Rule: <span class="emphasis">"larger"</span> margin wins</li>
+                <li>Only with: <span class="emphasis">"vertical"</span> margins</li>
+            </ul>
+            <p><strong>Centering Trick:</strong></p>
+            <ul>
+                <li>Must have: specific <span class="emphasis">width value</span></li>
+                <li>margin: 0 <span class="emphasis">"auto"</span></li>
+                <li>Learning Objective: <span class="emphasis">"margin: auto"</span></li>
+            </ul>
+        </div>
+        
+        <div class="demo-box">
+            <strong>Quick Demo:</strong>
+            <ul>
+                <li>Show two boxes with margins - measure the gap</li>
+                <li>Show centered element with margin: auto</li>
+                <li>Show what happens WITHOUT a width (doesn't work!)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 20: Practice Activity -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slide 20</span>
+            <span class="time-badge">5 minutes</span>
+        </div>
+        <h3>Quick Practice Activity</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - "Quick Practice" Section</h4>
+            <p>Students complete the .card CSS rule with actual values</p>
+        </div>
+        
+        <div class="activity-box">
+            <h4>🎯 10-Minute Challenge</h4>
+            <p><strong>Solution they should reach:</strong></p>
+            <div class="code-example">
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 3px solid [their color];
+    margin: 0 auto;  /* Centered! */
+    box-sizing: border-box;
+}
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Walk around:</strong> Check that students are adding box-sizing and using margin: auto correctly
+        </div>
+    </div>
+
+    <!-- SLIDE 21-24: DevTools and Tips -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 21-24</span>
+            <span class="time-badge">4 minutes</span>
+        </div>
+        <h3>DevTools, Use Cases, and Common Mistakes</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Remaining Sections</h4>
+            <p><strong>DevTools colors:</strong></p>
+            <ul>
+                <li>Blue = <span class="emphasis">Content</span></li>
+                <li>Green = <span class="emphasis">Padding</span></li>
+                <li>Yellow/Orange = <span class="emphasis">Border</span></li>
+                <li>Orange/Pink = <span class="emphasis">Margin</span></li>
+            </ul>
+            <p><strong>When to use (have them think and write):</strong></p>
+            <ul>
+                <li>Padding examples: buttons, cards, text breathing room</li>
+                <li>Margin examples: spacing between elements, centering</li>
+            </ul>
+            <p><strong>Common Mistakes to fill in:</strong></p>
+            <ul>
+                <li><span class="emphasis">box-sizing: border-box</span></li>
+                <li><span class="emphasis">margin</span></li>
+                <li><span class="emphasis">width</span></li>
+                <li><span class="emphasis">margin</span></li>
+                <li><span class="emphasis">pixels</span></li>
+            </ul>
+        </div>
+        
+        <div class="demo-box">
+            <strong>DevTools Demo:</strong>
+            <ol>
+                <li>Inspect the card we built</li>
+                <li>Hover over each colored section</li>
+                <li>Modify values in real-time</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- SLIDE 25-27: Homework and Knowledge Check -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 25-27</span>
+            <span class="time-badge">3 minutes</span>
+        </div>
+        <h3>Homework Assignment & Knowledge Check</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Homework Section</h4>
+            <p><strong>Students fill in:</strong></p>
+            <ul>
+                <li>Add to: <span class="emphasis">"one-page website"</span></li>
+                <li>Use all <span class="emphasis">"four"</span> properties</li>
+                <li>Implement <span class="emphasis">"border-box"</span> sizing</li>
+                <li>Center at least <span class="emphasis">"one"</span> element</li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Homework Emphasis:</strong>
+            <ul>
+                <li>MDN challenge is comprehensive - start early!</li>
+                <li>Must integrate into their one-page website</li>
+                <li>Will build on this next class (Block and Inline)</li>
+            </ul>
+        </div>
+        
+        <div class="questions-section">
+            <h3>Knowledge Check Answers</h3>
+            <ol>
+                <li><strong>Order:</strong> Content → Padding → Border → Margin</li>
+                <li><strong>border-box:</strong> Makes width include padding and border</li>
+                <li><strong>Space between:</strong> Margin</li>
+                <li><strong>Center:</strong> Set width, then margin: 0 auto</li>
+                <li><strong>Collapsing:</strong> Vertical margins combine, larger wins</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- SLIDE 28-30: Wrap-up -->
+    <div class="slide-section">
+        <div class="slide-header">
+            <span class="slide-number">Slides 28-30</span>
+            <span class="time-badge">3 minutes</span>
+        </div>
+        <h3>Summary and Closing</h3>
+        
+        <div class="notes-alert">
+            <h4>📝 GUIDED NOTES ALERT - Final Sections</h4>
+            <p><strong>Students complete:</strong></p>
+            <ul>
+                <li>Knowledge Check questions (self-assessment)</li>
+                <li>Three key takeaways (their own words)</li>
+                <li>Additional notes section</li>
+            </ul>
+        </div>
+        
+        <div class="teaching-tip">
+            <strong>Closing Message:</strong>
+            <ul>
+                <li>"You now have THE foundation of CSS layout"</li>
+                <li>"Practice with DevTools on every website you visit"</li>
+                <li>"Next class builds directly on this - don't miss it!"</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>🎯 Quick Reference: All Guided Notes Fill-ins</h2>
+    <div class="demo-box">
+        <h3>Master List of Answers Students Should Have:</h3>
+        <ol>
+            <li><strong>Everything is a:</strong> rectangular box</li>
+            <li><strong>Four components:</strong> Content, Padding, Border, Margin</li>
+            <li><strong>Padding:</strong> INSIDE the border, background extends</li>
+            <li><strong>Margin:</strong> OUTSIDE the border, can be negative</li>
+            <li><strong>Border shorthand:</strong> width style color</li>
+            <li><strong>Box-sizing:</strong> border-box (includes padding and border in width)</li>
+            <li><strong>Universal selector:</strong> *, *::before, *::after</li>
+            <li><strong>Margin collapse:</strong> Vertical margins, larger wins</li>
+            <li><strong>Centering:</strong> width + margin: 0 auto</li>
+            <li><strong>DevTools colors:</strong> Blue=content, Green=padding, Yellow=border, Orange=margin</li>
+        </ol>
+    </div>
+
+    <h2>💡 Teaching Reminders</h2>
+    <div class="teaching-tip">
+        <ul>
+            <li><strong>Energy Check:</strong> This is foundational but can be dry - keep energy high!</li>
+            <li><strong>Visual Learning:</strong> Use DevTools constantly - seeing is believing</li>
+            <li><strong>Repetition:</strong> Say "border-box" at least 10 times during class</li>
+            <li><strong>Practical Focus:</strong> Every concept should have a "when would I use this?"</li>
+            <li><strong>Debugging:</strong> Show common mistakes and how to fix them</li>
+        </ul>
+    </div>
+
+    <h2>📋 Post-Class Checklist</h2>
+    <div class="prep-checklist">
+        <label><input type="checkbox"> Students have completed guided notes</label><br>
+        <label><input type="checkbox"> Homework assignment is clear</label><br>
+        <label><input type="checkbox"> MDN challenge link shared</label><br>
+        <label><input type="checkbox"> Reminded about GitHub submission</label><br>
+        <label><input type="checkbox"> Preview of next class (Block and Inline)</label>
+    </div>
+
+    <div class="questions-section">
+        <h3>Anticipated Student Questions</h3>
+        <ul>
+            <li><strong>Q:</strong> "Why doesn't margin: auto work vertically?"
+                <br><strong>A:</strong> It does with flexbox/grid, but in normal flow, vertical space is calculated differently. We'll cover this in positioning lessons.</li>
+            
+            <li><strong>Q:</strong> "Can padding be a percentage?"
+                <br><strong>A:</strong> Yes! And it's always based on the WIDTH, even for vertical padding.</li>
+            
+            <li><strong>Q:</strong> "Why do margins collapse?"
+                <br><strong>A:</strong> It's designed to create consistent spacing in text documents. Think paragraphs - you want consistent space, not double.</li>
+            
+            <li><strong>Q:</strong> "What about outline?"
+                <br><strong>A:</strong> Outline doesn't affect layout - it's drawn on top. Great for debugging!</li>
+        </ul>
+    </div>
+</body>
 </html>

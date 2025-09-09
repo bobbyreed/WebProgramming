@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block and Inline - Guided Notes</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+        }
+        
+        .info-box {
+            background: #e8f4f9;
+            border-left: 4px solid #00669b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-top: 0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .block-demo {
+            background: #e0e7ff;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #667eea;
+        }
+        
+        .inline-demo {
+            background: #fce7f3;
+            padding: 2px 6px;
+            border: 1px solid #ec4899;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CSS Block and Inline Elements - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Day 12</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>📚 Learning Objectives:</strong> Understand Normal Flow, differentiate between block and inline elements, know when to use divs and spans, apply display properties effectively
+    </div>
+
+    <!-- Normal Flow Section -->
+    <div class="section">
+        <h2>🌊 Normal Flow</h2>
+        
+        <h3>Definition</h3>
+        <p>Normal flow is <span class="long-blank">_________________________________________</span></p>
+        <p><span class="long-blank">_________________________________________</span></p>
+        
+        <h3>Key Concepts of Normal Flow</h3>
+        <ol>
+            <li>Elements render in <span class="blank">_________________</span> order</li>
+            <li>Block elements stack <span class="blank">_________________</span></li>
+            <li>Inline elements flow <span class="blank">_________________</span></li>
+            <li>No <span class="blank">_________________</span> unless positioned</li>
+        </ol>
+    </div>
+
+    <!-- Display Property Section -->
+    <div class="section">
+        <h2>🎨 The Display Property</h2>
+        
+        <h3>Common Display Values</h3>
+        <div class="code-block">
+/* Fill in what each does: */
+display: <span class="code-blank">________</span>;  /* Elements stack vertically */
+display: <span class="code-blank">________</span>;  /* Elements flow horizontally */
+display: <span class="code-blank">________</span>;  /* Best of both worlds */
+display: <span class="code-blank">________</span>;  /* Hides the element completely */
+display: flex;              /* Coming next lesson! */
+        </div>
+    </div>
+
+    <!-- Block Elements Section -->
+    <div class="section">
+        <h2>📦 Block Elements</h2>
+        
+        <h3>Characteristics (Check all that apply)</h3>
+        <ul style="list-style: none;">
+            <li>☐ Start on a new line</li>
+            <li>☐ Take up full width available</li>
+            <li>☐ Stack vertically</li>
+            <li>☐ Can have width and height set</li>
+            <li>☐ All margin/padding sides work</li>
+            <li>☐ Flow with text content</li>
+            <li>☐ Only take necessary space</li>
+        </ul>
+        
+        <h3>Common Block Elements</h3>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Elements (List 3-4)</th>
+            </tr>
+            <tr>
+                <td>Structural</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Headings</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Lists</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+        
+        <div class="example-box">
+            <strong>Draw how these block elements would display:</strong>
+            <pre>&lt;div&gt;First Block&lt;/div&gt;
+&lt;p&gt;Second Block&lt;/p&gt;
+&lt;h3&gt;Third Block&lt;/h3&gt;</pre>
+            <div style="min-height: 100px; border: 1px dashed #ccc; margin-top: 10px;">
+                <!-- Student draws here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Inline Elements Section -->
+    <div class="section">
+        <h2>➡️ Inline Elements</h2>
+        
+        <h3>Characteristics (Check all that apply)</h3>
+        <ul style="list-style: none;">
+            <li>☐ Start on a new line</li>
+            <li>☐ Take up full width available</li>
+            <li>☐ Stack vertically</li>
+            <li>☐ Can have width and height set</li>
+            <li>☐ All margin/padding sides work</li>
+            <li>☐ Flow with text content</li>
+            <li>☐ Only take necessary space</li>
+        </ul>
+        
+        <h3>Common Inline Elements</h3>
+        <p>List 6 inline elements:</p>
+        <ol>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+            <li><span class="blank">_________________</span></li>
+        </ol>
+        
+        <div class="tip">
+            <strong>⚠️ Warning:</strong> Vertical padding/margin on inline elements 
+            <span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- Comparison Section -->
+    <div class="section">
+        <h2>⚖️ Block vs Inline Comparison</h2>
+        
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Block</th>
+                <th>Inline</th>
+            </tr>
+            <tr>
+                <td>Line breaks?</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Default width</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Can set width/height?</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Vertical margin/padding</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Inline-Block Section -->
+    <div class="section">
+        <h2>🎯 Inline-Block: The Middle Ground</h2>
+        
+        <p>Inline-block elements combine features of both:</p>
+        <ul>
+            <li>From inline: <span class="long-blank">_________________________________________</span></li>
+            <li>From block: <span class="long-blank">_________________________________________</span></li>
+        </ul>
+        
+        <div class="code-block">
+/* When would you use inline-block? */
+.navigation-item {
+    display: <span class="code-blank">________________</span>;
+    padding: 10px 20px;  /* Why does this work now? */
+    margin: 5px;         /* <span class="code-blank">_________________________</span> */
+}
+        </div>
+    </div>
+
+    <!-- Divs and Spans Section -->
+    <div class="section">
+        <h2>📦 Generic Containers: Divs and Spans</h2>
+        
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>&lt;div&gt;</th>
+                <th>&lt;span&gt;</th>
+            </tr>
+            <tr>
+                <td>Default display</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Semantic meaning</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td>Common use</td>
+                <td><span class="long-blank">_________________________</span></td>
+                <td><span class="long-blank">_________________________</span></td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>Best Practice:</strong> Always use semantic HTML first! Only use div/span when
+            <span class="long-blank">_________________________________________</span>
+        </div>
+    </div>
+
+    <!-- Practice Problems Section -->
+    <div class="section">
+        <h2>💻 Practice Problems</h2>
+        
+        <h3>1. Identify the Display Type</h3>
+        <p>Write 'block', 'inline', or 'inline-block' for each scenario:</p>
+        <ol>
+            <li>Navigation links that sit side-by-side: <span class="blank">_________________</span></li>
+            <li>Main content container: <span class="blank">_________________</span></li>
+            <li>Bold text within a paragraph: <span class="blank">_________________</span></li>
+            <li>Cards in a horizontal layout: <span class="blank">_________________</span></li>
+            <li>Page header: <span class="blank">_________________</span></li>
+        </ol>
+        
+        <h3>2. Fix the CSS</h3>
+        <div class="code-block">
+/* This inline element needs vertical spacing. How do you fix it? */
+span.badge {
+    <span class="code-blank">_______________________</span>
+    padding: 10px 15px;
+    margin: 10px 5px;
+}
+        </div>
+        
+        <h3>3. Predict the Output</h3>
+        <p>How many lines will this render on?</p>
+        <div class="code-block">
+&lt;div&gt;Line 1&lt;/div&gt;
+&lt;span&gt;Line 2&lt;/span&gt;
+&lt;span&gt;Line 3&lt;/span&gt;
+&lt;div&gt;Line 4&lt;/div&gt;
+        </div>
+        <p>Answer: <span class="blank">_______</span> lines</p>
+        <p>Explanation: <span class="long-blank">_________________________________________</span></p>
+    </div>
+
+    <!-- Quick Reference Section -->
+    <div class="section">
+        <h2>📋 Quick Reference</h2>
+        
+        <h3>Changing Display Property</h3>
+        <div class="code-block">
+/* Override any element's default display */
+.make-block { display: block; }
+.make-inline { display: inline; }
+.make-inline-block { display: inline-block; }
+.hide-element { display: none; }
+        </div>
+        
+        <h3>Common Gotchas to Remember</h3>
+        <ul>
+            <li>Inline elements with vertical padding: <span class="long-blank">_________________________</span></li>
+            <li>Gaps between inline-blocks caused by: <span class="blank">_________________</span></li>
+            <li>To center inline elements: <span class="long-blank">_________________________</span></li>
+            <li>To center block elements: <span class="long-blank">_________________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="section">
+        <h2>📚 Homework</h2>
+        
+        <h3>Part 1: CSS Exercises</h3>
+        <p>Complete from The Odin Project repository:</p>
+        <ul>
+            <li>☐ 01-margin-and-padding-1</li>
+            <li>☐ 02-margin-and-padding-2</li>
+        </ul>
+        <p>Repository: <code>TheOdinProject/css-exercises/foundations/block-and-inline</code></p>
+        
+        <h3>Part 2: Style Your Recipe Page</h3>
+        <ul>
+            <li>☐ Add external CSS file</li>
+            <li>☐ Practice with display properties</li>
+            <li>☐ Experiment with colors and typography</li>
+        </ul>
+        
+        <h3>Resources to Review</h3>
+        <ul>
+            <li>☐ MDN: Normal Flow</li>
+            <li>☐ W3Schools: HTML Block and Inline Elements</li>
+            <li>☐ Digital Ocean: Inline vs Inline-block Display</li>
+        </ul>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Remember: The best way to learn CSS is by doing! 🚀</p>
+        <p>Next lesson: Flexbox - Modern Layouts!</p>
+    </div>
+</body>
+</html>

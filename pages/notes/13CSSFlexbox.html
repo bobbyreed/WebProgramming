@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Flexbox - Guided Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: #fffbf0;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box strong {
+            color: #e67e22;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .long-blank {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 2px solid #333;
+            margin: 0 5px;
+        }
+        
+        .extra-long-blank {
+            display: block;
+            width: 100%;
+            border-bottom: 2px solid #333;
+            margin: 10px 0;
+            min-height: 25px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid #f8f8f2;
+            margin: 0 5px;
+            color: #66d9ef;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .practice-box {
+            background: #f0f8ff;
+            border: 2px dashed #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: #f5f5f5;
+            border: 2px dashed #667eea;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .flex-item-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            border-radius: 5px;
+        }
+        
+        .homework-box {
+            background: linear-gradient(135deg, #ff6b6b, #ff8787);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .homework-box h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                background: none;
+                color: black;
+                border: 2px solid black;
+            }
+            .blank, .code-blank {
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Introduction to Flexbox - Guided Notes</h1>
+        <p>CSCI 3403 - Web Programming | Day 13</p>
+        <p>Name: _________________________________ Date: _____________</p>
+    </div>
+
+    <div class="info-box">
+        <strong>🎯 Today's Goal:</strong> Master the fundamentals of Flexbox positioning - the modern way to layout web pages!
+    </div>
+
+    <!-- Flexbox Overview Section -->
+    <div class="section">
+        <h2>📦 What is Flexbox?</h2>
+        
+        <p>Flexbox stands for <span class="blank">_________________</span> Box Layout</p>
+        
+        <h3>Why Flexbox was Revolutionary:</h3>
+        <p>Before Flexbox, developers used:</p>
+        <ul>
+            <li>Tables for layout (Problem: <span class="blank">_________________</span>)</li>
+            <li>Floats (Problem: <span class="blank">_________________</span>)</li>
+            <li>Positioning (Problem: <span class="blank">_________________</span>)</li>
+            <li>Inline-block (Problem: <span class="blank">_________________</span>)</li>
+        </ul>
+        
+        <h3>What Flexbox Provides:</h3>
+        <ol>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+            <li><span class="long-blank">_________________________________________</span></li>
+        </ol>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <div class="section">
+        <h2>🎨 Core Concepts</h2>
+        
+        <h3>The Two Key Players:</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>CSS Property</th>
+                <th>What It Does</th>
+            </tr>
+            <tr>
+                <td>Flex Container (Parent)</td>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>Flex Items (Children)</td>
+                <td>Automatic</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>💡 Remember:</strong> Only <span class="blank">_________________</span> children become flex items!
+        </div>
+        
+        <h3>Basic Flexbox Code:</h3>
+        <div class="code-block">
+            .container {
+                <span class="code-blank">_________</span>: flex;
+            }
+            
+            /* Children automatically become flex items! */
+        </div>
+    </div>
+
+    <!-- Properties Section -->
+    <div class="section">
+        <h2>🛠️ Flexbox Properties</h2>
+        
+        <h3>Container Properties (Applied to Parent):</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Common Values</th>
+                <th>What It Controls</th>
+            </tr>
+            <tr>
+                <td>flex-direction</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Main axis direction</td>
+            </tr>
+            <tr>
+                <td>justify-content</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Alignment on main axis</td>
+            </tr>
+            <tr>
+                <td>align-items</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Alignment on cross axis</td>
+            </tr>
+            <tr>
+                <td>flex-wrap</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Allow items to wrap</td>
+            </tr>
+            <tr>
+                <td>gap</td>
+                <td><span class="blank">_________________</span></td>
+                <td>Space between items</td>
+            </tr>
+        </table>
+        
+        <h3>Item Properties (Applied to Children):</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Default Value</th>
+                <th>What It Controls</th>
+            </tr>
+            <tr>
+                <td>flex-grow</td>
+                <td><span class="blank">_____</span></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>flex-shrink</td>
+                <td><span class="blank">_____</span></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>flex-basis</td>
+                <td><span class="blank">_____</span></td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+            <tr>
+                <td>align-self</td>
+                <td>auto</td>
+                <td><span class="long-blank">_________________________________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Axes Section -->
+    <div class="section">
+        <h2>📐 Understanding Axes</h2>
+        
+        <h3>Main Axis vs Cross Axis</h3>
+        
+        <p>When flex-direction is <strong>row</strong> (default):</p>
+        <ul>
+            <li>Main axis runs: <span class="blank">_________________</span></li>
+            <li>Cross axis runs: <span class="blank">_________________</span></li>
+        </ul>
+        
+        <p>When flex-direction is <strong>column</strong>:</p>
+        <ul>
+            <li>Main axis runs: <span class="blank">_________________</span></li>
+            <li>Cross axis runs: <span class="blank">_________________</span></li>
+        </ul>
+        
+        <div class="tip">
+            <strong>🎯 Key Rule:</strong> 
+            justify-content works on the <span class="blank">_________________</span> axis,
+            align-items works on the <span class="blank">_________________</span> axis
+        </div>
+    </div>
+
+    <!-- Common Patterns Section -->
+    <div class="section">
+        <h2>🎨 Common Flexbox Patterns</h2>
+        
+        <h3>1. Perfect Centering</h3>
+        <div class="code-block">
+            .center-everything {
+                display: <span class="code-blank">_________</span>;
+                justify-content: <span class="code-blank">_________</span>;
+                align-items: <span class="code-blank">_________</span>;
+            }
+        </div>
+        
+        <h3>2. Navigation Bar (Logo - Nav - Button)</h3>
+        <div class="code-block">
+            .navbar {
+                display: <span class="code-blank">_________</span>;
+                justify-content: <span class="code-blank">_________</span>;
+                align-items: <span class="code-blank">_________</span>;
+            }
+        </div>
+        
+        <h3>3. Card Layout with Wrapping</h3>
+        <div class="code-block">
+            .card-container {
+                display: <span class="code-blank">_________</span>;
+                flex-wrap: <span class="code-blank">_________</span>;
+                gap: <span class="code-blank">_________</span>;
+            }
+        </div>
+    </div>
+
+    <!-- Practice Exercise Section -->
+    <div class="section">
+        <h2>💻 Practice Exercise: Build a Header</h2>
+        
+        <div class="practice-box">
+            <h3>Challenge Requirements:</h3>
+            <ul>
+                <li>Logo on the left</li>
+                <li>Navigation links in the center</li>
+                <li>Login button on the right</li>
+                <li>Everything vertically centered</li>
+            </ul>
+            
+            <h3>Your Solution:</h3>
+            <div class="code-block">
+                .header {
+                    display: <span class="code-blank">_________</span>;
+                    justify-content: <span class="code-blank">_________</span>;
+                    align-items: <span class="code-blank">_________</span>;
+                    padding: <span class="code-blank">_________</span>;
+                }
+                
+                .nav {
+                    display: <span class="code-blank">_________</span>;
+                    gap: <span class="code-blank">_________</span>;
+                }
+            </div>
+        </div>
+        
+        <h3>Sketch Your Layout:</h3>
+        <div style="min-height: 150px; border: 2px dashed #667eea; padding: 10px; background: #fafafa; border-radius: 5px;">
+            <p style="color: #999; text-align: center;">Draw your header layout here</p>
+            <br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Common Gotchas Section -->
+    <div class="section">
+        <h2>⚠️ Common Flexbox Gotchas</h2>
+        
+        <ol>
+            <li>
+                <strong>Margin Collapse:</strong> 
+                <span class="extra-long-blank"></span>
+            </li>
+            <li>
+                <strong>Properties that don't work on flex items:</strong> 
+                <span class="blank">_________</span>, 
+                <span class="blank">_________</span>, 
+                <span class="blank">_________</span>
+            </li>
+            <li>
+                <strong>Default flex-shrink value:</strong> 
+                <span class="blank">_____</span> 
+                (What does this mean? <span class="long-blank">_________________________________________</span>)
+            </li>
+            <li>
+                <strong>Only direct children:</strong> 
+                <span class="extra-long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- DevTools Tips Section -->
+    <div class="section">
+        <h2>🛠️ DevTools Tips for Flexbox</h2>
+        
+        <p>Essential DevTools features for debugging Flexbox:</p>
+        <ol>
+            <li>Look for the <span class="blank">_________________</span> badge in Elements panel</li>
+            <li>Use the <span class="blank">_________________</span> tab to see flex properties</li>
+            <li>Check <span class="blank">_________________</span> styles to see actual values</li>
+            <li>Use <span class="blank">_________________</span> editing to test changes</li>
+        </ol>
+        
+        <div class="tip">
+            <strong>Pro Tip:</strong> If something isn't working, <span class="blank">_________________</span> it first!
+        </div>
+    </div>
+
+    <!-- Real-World Applications Section -->
+    <div class="section">
+        <h2>🌍 Real-World Applications</h2>
+        
+        <h3>Where You'll Use Flexbox:</h3>
+        <table>
+            <tr>
+                <th>UI Components</th>
+                <th>Responsive Design</th>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+            <tr>
+                <td><span class="blank">_________________</span></td>
+                <td><span class="blank">_________________</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="section">
+        <h2>🎯 Key Takeaways</h2>
+        
+        <h3>Complete these statements:</h3>
+        <ol>
+            <li>
+                To create a flex container, I use: 
+                <span class="extra-long-blank"></span>
+            </li>
+            <li>
+                Direct children automatically become: 
+                <span class="extra-long-blank"></span>
+            </li>
+            <li>
+                For horizontal alignment on the main axis, I use: 
+                <span class="extra-long-blank"></span>
+            </li>
+            <li>
+                For vertical alignment on the cross axis, I use: 
+                <span class="extra-long-blank"></span>
+            </li>
+            <li>
+                Elements can be both a flex container AND: 
+                <span class="extra-long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Homework Section -->
+    <div class="homework-box">
+        <h3>📚 HOMEWORK REMINDER</h3>
+        <p style="font-size: 1.2em; margin: 10px 0;">
+            Complete The Odin Project section:
+        </p>
+        <p style="font-size: 1.5em; font-weight: bold;">
+            "Flexbox - Growing and Shrinking"
+        </p>
+        <p style="margin-top: 10px;">Due before next class!</p>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="section">
+        <h2>📚 Resources</h2>
+        
+        <h3>Interactive Learning:</h3>
+        <ul>
+            <li>Flexbox Froggy: <span class="long-blank">_________________________________________</span></li>
+            <li>Flexbox Defense: <span class="long-blank">_________________________________________</span></li>
+        </ul>
+        
+        <h3>Documentation:</h3>
+        <ul>
+            <li>MDN Flexbox Guide: <span class="long-blank">_________________________________________</span></li>
+            <li>CSS-Tricks Complete Guide: <span class="long-blank">_________________________________________</span></li>
+        </ul>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>📝 Additional Notes</h2>
+        <p>Use this space for any additional notes during the lecture:</p>
+        <br>
+        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Great work today! You're mastering modern CSS layouts! 🚀</p>
+        <p>Remember: Practice makes perfect - experiment with Flexbox!</p>
+    </div>
+</body>
+</html>
