@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Foundations - The Box Model - CSCI 3403</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <style>
+        /* Custom styles for box model visualization */
+        .box-model-demo {
+            width: 300px;
+            margin: 30px auto;
+            padding: 30px;
+            border: 10px solid #764ba2;
+            background: #f0f4f8;
+            position: relative;
+        }
+        
+        .box-model-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+        }
+        
+        .box-layer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .margin-box {
+            background: rgba(255, 200, 100, 0.3);
+            padding: 30px;
+            border: 2px dashed #ff9800;
+        }
+        
+        .border-box {
+            background: rgba(118, 75, 162, 0.3);
+            padding: 20px;
+            border: 2px solid #764ba2;
+        }
+        
+        .padding-box {
+            background: rgba(102, 126, 234, 0.3);
+            padding: 20px;
+            border: 2px dashed #667eea;
+        }
+        
+        .content-box {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #333;
+            font-weight: bold;
+        }
+        
+        .interactive-box {
+            width: 200px;
+            height: 100px;
+            background: #667eea;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+        
+        .box-sizing-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .demo-container {
+            text-align: center;
+        }
+        
+        .sizing-box {
+            width: 200px;
+            padding: 20px;
+            border: 10px solid #764ba2;
+            background: #f0f4f8;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">
+            Class 11 - The Box Model <button class="home"><a href="../../index.html">Home</a></button>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>CSS Foundations</h1>
+            <h2>The Box Model <span class="emoji">📦</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 6, Class 11</p>
+            <p style="margin-top: auto; font-style: italic;">Today: The most fundamental CSS concept! 🎯</p>
+        </div>
+
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 Understand that everything is a box</li>
+                <li>🎯 Master the box model components</li>
+                <li>🎯 Control element sizing with padding, border, margin</li>
+                <li>🎯 Learn box-sizing: border-box</li>
+                <li>🎯 Understand margin collapsing</li>
+                <li>🎯 Center elements horizontally</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Recap -->
+        <div class="slide">
+            <h1>Quick Recap</h1>
+            <h3>Our CSS Journey So Far:</h3>
+            <ul>
+                <li>✅ Introduction to CSS</li>
+                <li>✅ Selectors and properties</li>
+                <li>✅ The Cascade and specificity</li>
+                <li>✅ Browser developer tools</li>
+            </ul>
+            <h3 style="margin-top: 40px;">Today's Focus:</h3>
+            <p style="font-size: 1.4em;"><span class="highlight">Layout fundamentals - How elements take up space!</span></p>
+        </div>
+
+        <!-- Slide 4: The Truth About Web Pages -->
+        <div class="slide">
+            <h1>The #1 CSS Concept <span class="emoji">🤯</span></h1>
+            <h2 style="font-size: 2em; text-align: center; margin: 60px 0;">
+                Everything on a webpage is a<br>
+                <span class="highlight">RECTANGULAR BOX</span>
+            </h2>
+            <p style="text-align: center; font-size: 1.4em;">Yes, even circles!</p>
+        </div>
+
+        <!-- Slide 5: Seeing the Boxes -->
+        <div class="slide">
+            <h1>Let's See the Boxes! <span class="emoji">👀</span></h1>
+            <div class="code-example">
+                <span class="tag">*</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">outline</span>: <span class="value">2px solid red</span>;<br>
+                }
+            </div>
+            <div class="activity-box">
+                <h3>Try It Now!</h3>
+                <p>Open DevTools on any website:</p>
+                <ol>
+                    <li>Right-click → Inspect</li>
+                    <li>In Styles panel, click the + button</li>
+                    <li>Add the CSS above</li>
+                    <li>Watch the magic happen!</li>
+                </ol>
+            </div>
+            <p style="margin-top: 30px; text-align: center;">Every element is contained in a box!</p>
+        </div>
+
+        <!-- Slide 6: The Box Model Introduction -->
+        <div class="slide">
+            <h1>The Box Model <span class="emoji">📦</span></h1>
+            <div class="box-model-visual">
+                <div class="box-layer margin-box">
+                    <div class="box-layer border-box">
+                        <div class="box-layer padding-box">
+                            <div class="content-box">
+                                Content
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.3em;">Every box has four parts!</p>
+        </div>
+
+        <!-- Slide 7: Box Model Components -->
+        <div class="slide">
+            <h1>Box Model Components</h1>
+            <h2>From Inside to Outside:</h2>
+            <ol style="font-size: 1.4em; line-height: 2;">
+                <li><strong style="color: #333;">Content:</strong> The actual content (text, images)</li>
+                <li><strong style="color: #667eea;">Padding:</strong> Space between content and border</li>
+                <li><strong style="color: #764ba2;">Border:</strong> The edge of the box</li>
+                <li><strong style="color: #ff9800;">Margin:</strong> Space outside the border</li>
+            </ol>
+            <div class="tip-box">
+                <strong>Memory Trick:</strong> "Content Pads the Border from the Margin" (CPBM)
+            </div>
+        </div>
+
+        <!-- Slide 8: Content Area -->
+        <div class="slide">
+            <h1>1. Content <span class="emoji">📝</span></h1>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">300px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">height</span>: <span class="value">150px</span>;<br>
+                }
+            </div>
+            <div class="demo-container">
+                <div style="width: 300px; height: 150px; background: #f0f4f8; margin: 30px auto; display: flex; align-items: center; justify-content: center; border: 2px solid #ddd;">
+                    300px × 150px content
+                </div>
+            </div>
+            <ul>
+                <li>The innermost part of the box</li>
+                <li>Where your text and images live</li>
+                <li>Size controlled by width and height</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Padding -->
+        <div class="slide">
+            <h1>2. Padding <span class="emoji">🛡️</span></h1>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="comment">/* or individually: */</span><br>
+                &nbsp;&nbsp;<span class="attribute">padding-top</span>: <span class="value">10px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">padding-right</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">padding-bottom</span>: <span class="value">10px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">padding-left</span>: <span class="value">20px</span>;<br>
+                }
+            </div>
+            <ul>
+                <li>Creates space INSIDE the border</li>
+                <li>Background color extends into padding</li>
+                <li>Makes content easier to read</li>
+                <li>Can't be negative</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Padding Shorthand -->
+        <div class="slide">
+            <h1>Padding Shorthand <span class="emoji">⚡</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>4 Values</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+                        <span class="attribute">padding</span>: <span class="value">10px 20px 30px 40px</span>;<br>
+                        <span class="comment">/* top right bottom left */</span><br>
+                        <span class="comment">/* Clockwise from top! */</span>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h3>2 Values</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+                        <span class="attribute">padding</span>: <span class="value">10px 20px</span>;<br>
+                        <span class="comment">/* vertical horizontal */</span><br>
+                        <span class="comment">/* top/bottom left/right */</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Think of a clock! Start at 12 and go clockwise.
+            </div>
+        </div>
+
+        <!-- Slide 11: Border -->
+        <div class="slide">
+            <h1>3. Border <span class="emoji">🔲</span></h1>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">5px solid #764ba2</span>;<br>
+                &nbsp;&nbsp;<span class="comment">/* width style color */</span><br><br>
+                &nbsp;&nbsp;<span class="comment">/* or separately: */</span><br>
+                &nbsp;&nbsp;<span class="attribute">border-width</span>: <span class="value">5px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">border-style</span>: <span class="value">solid</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">border-color</span>: <span class="value">#764ba2</span>;<br>
+                }
+            </div>
+            <h3>Border Styles:</h3>
+            <ul>
+                <li>solid, dashed, dotted, double, none</li>
+                <li>Adds to the total size of the element</li>
+                <li>Can have different styles per side</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: Margin -->
+        <div class="slide">
+            <h1>4. Margin <span class="emoji">🌊</span></h1>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="comment">/* Creates space OUTSIDE the border */</span><br><br>
+                &nbsp;&nbsp;<span class="comment">/* Center horizontally: */</span><br>
+                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">0 auto</span>;<br>
+                }
+            </div>
+            <ul>
+                <li>Space between elements</li>
+                <li>Can be negative (pulls elements closer)</li>
+                <li>Transparent - shows parent's background</li>
+                <li><code>auto</code> value for centering</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Live Demo -->
+        <div class="slide">
+            <h1>Live Demo Time! <span class="emoji">🎬</span></h1>
+            <div class="activity-box">
+                <h3>Let's Build a Box Together</h3>
+                <p>We'll create a card component with:</p>
+                <ul>
+                    <li>Content area with text</li>
+                    <li>Padding for breathing room</li>
+                    <li>A nice border</li>
+                    <li>Margin to separate from other elements</li>
+                </ul>
+            </div>
+            <p style="margin-top: 30px;">Open VS Code and follow along!</p>
+        </div>
+
+        <!-- Slide 14: The Box Sizing Problem -->
+        <div class="slide">
+            <h1>The Box-Sizing Problem <span class="emoji">😤</span></h1>
+            <p style="font-size: 1.4em;">You set width: 200px, but your box is 260px wide!</p>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">200px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">10px solid black</span>;<br>
+                }
+            </div>
+            <div class="visual-example">
+                <p><strong>Actual width:</strong></p>
+                <p>200px (content) + 40px (padding) + 20px (border) = <span class="highlight">260px</span></p>
+            </div>
+            <p style="margin-top: 30px;">This is the default <code>content-box</code> behavior!</p>
+        </div>
+
+        <!-- Slide 15: Border-Box Solution -->
+        <div class="slide">
+            <h1>The Border-Box Solution! <span class="emoji">✨</span></h1>
+            <div class="code-example">
+                <span class="tag">.box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">box-sizing</span>: <span class="value">border-box</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">200px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">padding</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">border</span>: <span class="value">10px solid black</span>;<br>
+                }
+            </div>
+            <div class="visual-example">
+                <p><strong>With border-box:</strong></p>
+                <p>Total width = <span class="highlight">200px</span> (includes padding and border!)</p>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Width now means the TOTAL width, not just content!
+            </div>
+        </div>
+
+        <!-- Slide 16: Universal Border-Box -->
+        <div class="slide">
+            <h1>Set Border-Box for Everything! <span class="emoji">🌍</span></h1>
+            <div class="code-example">
+                <span class="comment">/* Add this to the top of your CSS! */</span><br>
+                <span class="tag">*</span>, <span class="tag">*::before</span>, <span class="tag">*::after</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">box-sizing</span>: <span class="value">border-box</span>;<br>
+                }
+            </div>
+            <h3>Why use border-box?</h3>
+            <ul>
+                <li>More intuitive sizing</li>
+                <li>Easier to calculate layouts</li>
+                <li>Industry standard practice</li>
+                <li>Prevents unexpected overflow</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Always</strong> include this in your projects from now on!
+            </div>
+        </div>
+
+        <!-- Slide 17: Box-Sizing Comparison -->
+        <div class="slide">
+            <h1>Content-Box vs Border-Box</h1>
+            <div class="box-sizing-demo">
+                <div class="demo-container">
+                    <h3>content-box (default)</h3>
+                    <div class="sizing-box">
+                        width: 200px
+                    </div>
+                    <p>Actual: 260px wide</p>
+                    <p style="font-size: 0.9em;">200 + 40 (padding) + 20 (border)</p>
+                </div>
+                <div class="demo-container">
+                    <h3>border-box</h3>
+                    <div class="sizing-box" style="box-sizing: border-box;">
+                        width: 200px
+                    </div>
+                    <p>Actual: 200px wide</p>
+                    <p style="font-size: 0.9em;">Padding and border included!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Margin Collapsing -->
+        <div class="slide">
+            <h1>Margin Collapsing <span class="emoji">🤝</span></h1>
+            <p style="font-size: 1.4em;">When vertical margins meet, they collapse!</p>
+            <div class="code-example">
+                <span class="tag">.box1</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">margin-bottom</span>: <span class="value">30px</span>;<br>
+                }<br><br>
+                <span class="tag">.box2</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">margin-top</span>: <span class="value">20px</span>;<br>
+                }
+            </div>
+            <div class="visual-example">
+                <p>Space between boxes = <strong>30px</strong> (not 50px!)</p>
+                <p>The larger margin wins!</p>
+            </div>
+            <div class="tip-box">
+                <strong>Note:</strong> Only happens with vertical margins, not horizontal!
+            </div>
+        </div>
+
+        <!-- Slide 19: Centering with Margin Auto -->
+        <div class="slide">
+            <h1>Centering Elements <span class="emoji">🎯</span></h1>
+            <h2>The Classic Technique: margin: auto</h2>
+            <div class="code-example">
+                <span class="tag">.centered-box</span> {<br>
+                &nbsp;&nbsp;<span class="attribute">width</span>: <span class="value">500px</span>;<br>
+                &nbsp;&nbsp;<span class="attribute">margin</span>: <span class="value">0 auto</span>;<br>
+                &nbsp;&nbsp;<span class="comment">/* top/bottom: 0, left/right: auto */</span><br>
+                }
+            </div>
+            <div class="interactive-box" style="width: 400px; margin: 30px auto;">
+                Centered!
+            </div>
+            <div class="warning-box">
+                <strong>Requirements:</strong> Element must have a defined width!
+            </div>
+        </div>
+
+        <!-- Slide 20: Practice Activity -->
+        <div class="slide">
+            <h1>Quick Practice <span class="emoji">💪</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Challenge</h3>
+                <p>Create a card component with:</p>
+                <ol>
+                    <li>Width of 300px</li>
+                    <li>20px padding all around</li>
+                    <li>3px solid border (your choice of color)</li>
+                    <li>Centered on the page</li>
+                    <li>Use border-box sizing</li>
+                </ol>
+            </div>
+            <div class="code-example">
+                <span class="comment">/* Starter code */</span><br>
+                <span class="tag">.card</span> {<br>
+                &nbsp;&nbsp;<span class="comment">/* Your styles here */</span><br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 21: DevTools Box Model -->
+        <div class="slide">
+            <h1>DevTools Box Model Viewer <span class="emoji">🔍</span></h1>
+            <div class="activity-box">
+                <h3>Let's Explore!</h3>
+                <ol>
+                    <li>Right-click any element → Inspect</li>
+                    <li>Look for the "Box Model" diagram</li>
+                    <li>Hover over different sections</li>
+                    <li>See the measurements for each part</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Colors in DevTools:</strong>
+                <ul>
+                    <li>Blue = Content</li>
+                    <li>Green = Padding</li>
+                    <li>Yellow/Orange = Border</li>
+                    <li>Orange/Pink = Margin</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 22: Common Use Cases -->
+        <div class="slide">
+            <h1>When to Use What? <span class="emoji">🤔</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Use Padding</h3>
+                    <ul>
+                        <li>Space inside a button</li>
+                        <li>Text breathing room</li>
+                        <li>Card/container spacing</li>
+                        <li>Background needs to extend</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Use Margin</h3>
+                    <ul>
+                        <li>Space between elements</li>
+                        <li>Centering blocks</li>
+                        <li>Creating gaps in layouts</li>
+                        <li>Pushing elements apart</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23: Advanced Tips -->
+        <div class="slide">
+            <h1>Pro Tips <span class="emoji">💡</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🎯 Negative margins can overlap elements</li>
+                <li>🎯 <code>margin: auto</code> only works horizontally by default</li>
+                <li>🎯 Padding percentages are based on width (even vertical!)</li>
+                <li>🎯 <code>outline</code> doesn't affect layout (unlike border)</li>
+                <li>🎯 Use DevTools to experiment with values</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Debug Tip:</strong> Can't figure out spacing? Add temporary background colors!
+            </div>
+        </div>
+
+        <!-- Slide 24: Common Mistakes -->
+        <div class="slide">
+            <h1>Avoid These Mistakes! <span class="emoji">⚠️</span></h1>
+            <ul>
+                <li>❌ Forgetting <code>box-sizing: border-box</code></li>
+                <li>❌ Using padding when you need margin (or vice versa)</li>
+                <li>❌ Not setting width when using <code>margin: auto</code></li>
+                <li>❌ Fighting margin collapse instead of working with it</li>
+                <li>❌ Using only pixels - explore %, em, rem</li>
+                <li>❌ Ignoring the DevTools box model viewer</li>
+            </ul>
+        </div>
+
+        <!-- Slide 25: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Assignment <span class="emoji">📚</span></h1>
+            <h2>Due: Before Next Class</h2>
+            <div class="activity-box">
+                <h3>Your Tasks:</h3>
+                <ol>
+                    <li>Complete the MDN Box Model Challenge:<br>
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Box_Model_Tasks" style="color: white;">MDN Box Model Tasks</a>
+                    </li>
+                    <li>Add your completed Box Model challenge to your one-page website</li>
+                    <li>Use:
+                        <ul>
+                            <li>All four box model properties</li>
+                            <li>border-box sizing</li>
+                            <li>Center at least one element</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <p style="margin-top: 30px;">Push to GitHub and submit link on D2L!</p>
+        </div>
+
+        <!-- Slide 26: Practice Resources -->
+        <div class="slide">
+            <h1>Extra Practice Resources <span class="emoji">📖</span></h1>
+            <h3>Videos to Watch:</h3>
+            <ul>
+                <li>Learn CSS Box Model In 8 Minutes</li>
+                <li>box-sizing: border-box (EASY!)</li>
+            </ul>
+            <h3>Articles to Read:</h3>
+            <ul>
+                <li>MDN's lesson on the box model</li>
+                <li>CSS Tricks: Margins</li>
+            </ul>
+            <h3>Interactive:</h3>
+            <ul>
+                <li>Scrimba Box Model course</li>
+                <li>CSS Diner (for selector practice)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 27: Knowledge Check -->
+        <div class="slide">
+            <h1>Knowledge Check <span class="emoji">✅</span></h1>
+            <h3>Can you answer these?</h3>
+            <ul style="font-size: 1.2em;">
+                <li>What's the order from inside to outside?</li>
+                <li>What does box-sizing: border-box do?</li>
+                <li>Margin or padding for space between elements?</li>
+                <li>Margin or padding for space inside an element?</li>
+                <li>How do you center an element horizontally?</li>
+                <li>What is margin collapsing?</li>
+            </ul>
+            <div class="tip-box" style="margin-top: 30px;">
+                <p>If unsure about any, review the slides or ask me!</p>
+            </div>
+        </div>
+
+        <!-- Slide 28: Next Class Preview -->
+        <div class="slide">
+            <h1>Next Class Preview</h1>
+            <h2>CSS Foundations: Block and Inline</h2>
+            <ul style="font-size: 1.3em;">
+                <li>Display property</li>
+                <li>Block vs inline vs inline-block</li>
+                <li>How elements flow on the page</li>
+                <li>More layout fundamentals</li>
+            </ul>
+            <div class="visual-example" style="margin-top: 50px;">
+                <p style="font-size: 1.3em;">Building on today's box model knowledge! 🏗️</p>
+            </div>
+        </div>
+
+        <!-- Slide 29: Summary -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Everything is a rectangular box</li>
+                <li>✅ Content → Padding → Border → Margin</li>
+                <li>✅ Always use box-sizing: border-box</li>
+                <li>✅ Margins collapse vertically</li>
+                <li>✅ margin: auto centers elements</li>
+                <li>✅ DevTools is your best friend</li>
+            </ul>
+            <div class="demo-box" style="margin-top: 40px;">
+                <p>Master the box model = Master CSS layout!</p>
+            </div>
+        </div>
+
+        <!-- Slide 30: Closing -->
+        <div class="slide">
+            <h1>Excellent Work! <span class="emoji">🌟</span></h1>
+            <h2>You Now Understand CSS Fundamentals!</h2>
+            <p style="font-size: 1.4em; margin-top: 40px;">The box model is THE foundation</p>
+            <p style="font-size: 1.4em;">Practice with DevTools</p>
+            <p style="font-size: 1.4em;">Experiment and break things!</p>
+            <div class="visual-example" style="margin-top: 50px;">
+                <p style="font-size: 1.3em;">See you Thursday! 👋</p>
+                <p>Don't forget your homework!</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script src="../../js/presentation.js"></script>
+</body>
+
+</html>

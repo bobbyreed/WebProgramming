@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Foundations - Browser Developer Tools - CSCI 3403</title>
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <style>
+        /* Lecture-specific styles */
+        .devtools-demo {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        .keyboard-shortcut {
+            display: inline-block;
+            background: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-family: monospace;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        
+        .panel-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .panel-card {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .strike-through {
+            text-decoration: line-through;
+            color: #999;
+        }
+        
+        .live-demo-area {
+            border: 3px dashed #667eea;
+            padding: 30px;
+            border-radius: 15px;
+            background: #f0f4f8;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        /* Demo elements for inspection */
+        .demo-element {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-element:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .inspect-me {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">Class 10 - Browser Developer Tools
+             <button class="home"><a href="../../index.html">Home</a></button>
+        </div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>CSS Foundations</h1>
+            <h2>Browser Developer Tools <span class="emoji">🔍</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 5, Class 10</p>
+            <p style="margin-top: auto; font-style: italic;">Your most powerful debugging weapon! 🛠️</p>
+        </div>
+        
+        <!-- Slide 2: Why DevTools Matter -->
+        <div class="slide">
+            <h1>Why Browser DevTools? <span class="emoji">🤔</span></h1>
+            <h2>The Web Developer's Swiss Army Knife</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🐛 <strong>Debug:</strong> Find and fix CSS/HTML issues instantly</li>
+                <li>🎨 <strong>Experiment:</strong> Test styles without editing files</li>
+                <li>🔍 <strong>Inspect:</strong> See how other websites are built</li>
+                <li>📏 <strong>Measure:</strong> Check spacing, colors, fonts</li>
+                <li>📱 <strong>Responsive:</strong> Test different screen sizes</li>
+                <li>⚡ <strong>Performance:</strong> Identify slow-loading resources</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Industry Reality:</strong> You'll spend 50% of your time in DevTools!
+            </div>
+        </div>
+        
+        <!-- Slide 3: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 Open and navigate Chrome DevTools</li>
+                <li>🎯 Inspect and select specific elements</li>
+                <li>🎯 Understand the Elements panel layout</li>
+                <li>🎯 Read and modify CSS in real-time</li>
+                <li>🎯 Use the DOM tree effectively</li>
+                <li>🎯 Debug CSS issues using DevTools</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Hands-On Class:</strong> Have Chrome open and ready!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Opening DevTools -->
+        <div class="slide">
+            <h1>Three Ways to Open DevTools <span class="emoji">🚪</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>1. Right-Click Method</h3>
+                    <p>Right-click any element → "Inspect"</p>
+                    <p style="color: #667eea;">Opens DevTools focused on that element!</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>2. Keyboard Shortcut</h3>
+                    <p><span class="keyboard-shortcut">F12</span></p>
+                    <p>or</p>
+                    <p><span class="keyboard-shortcut">Ctrl+Shift+I</span> (Win/Linux)</p>
+                    <p><span class="keyboard-shortcut">Cmd+Option+I</span> (Mac)</p>
+                </div>
+            </div>
+            <div class="comparison-card" style="margin-top: 20px;">
+                <h3>3. Chrome Menu</h3>
+                <p>⋮ Menu → More Tools → Developer Tools</p>
+                <p style="color: #999;">The slowest way, but it's there!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 5: DevTools Layout Overview -->
+        <div class="slide">
+            <h1>DevTools Layout Overview <span class="emoji">🗺️</span></h1>
+            <div class="panel-preview">
+                <div class="panel-card">
+                    <h3>Elements Panel 📄</h3>
+                    <ul>
+                        <li>HTML DOM tree</li>
+                        <li>Live element structure</li>
+                        <li>Add/edit/delete elements</li>
+                    </ul>
+                </div>
+                <div class="panel-card">
+                    <h3>Styles Panel 🎨</h3>
+                    <ul>
+                        <li>All CSS rules for selected element</li>
+                        <li>Computed styles</li>
+                        <li>Box model visualization</li>
+                    </ul>
+                </div>
+                <div class="panel-card">
+                    <h3>Console 💻</h3>
+                    <ul>
+                        <li>JavaScript errors/logs</li>
+                        <li>Run JS commands</li>
+                        <li>Debug output</li>
+                    </ul>
+                </div>
+                <div class="panel-card">
+                    <h3>Network 🌐</h3>
+                    <ul>
+                        <li>Loading times</li>
+                        <li>Failed resources</li>
+                        <li>Request/response data</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Today's Focus:</strong> Elements and Styles panels - your CSS debugging headquarters!
+            </div>
+        </div>
+        
+        <!-- Slide 6: Live Demo 1 - Basic Inspection -->
+        <div class="slide">
+            <h1>Demo 1: Basic Element Inspection <span class="emoji">🔍</span></h1>
+            <div class="live-demo-area">
+                <h2>Let's Inspect This Page!</h2>
+                <div class="demo-element">
+                    <h3>I'm a demo element!</h3>
+                    <p>Right-click me and select "Inspect"</p>
+                </div>
+                <button class="inspect-me">Inspect Me!</button>
+                <span class="inspect-me" style="background: #4ecdc4;">And Me!</span>
+                <div class="inspect-me" style="background: #f7b731;">Me Too!</div>
+            </div>
+            <div class="activity-box">
+                <h3>Follow Along:</h3>
+                <ol>
+                    <li>Right-click any element above</li>
+                    <li>Click "Inspect"</li>
+                    <li>Notice how DevTools highlights the element</li>
+                    <li>Look at the HTML in Elements panel</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 7: The Element Selector Tool -->
+        <div class="slide">
+            <h1>The Element Selector Tool <span class="emoji">🎯</span></h1>
+            <div class="devtools-demo">
+                <p>🔍 Click the selector icon (or press <span class="keyboard-shortcut">Ctrl+Shift+C</span>)</p>
+            </div>
+            <h3>How it works:</h3>
+            <ol style="font-size: 1.2em;">
+                <li>Click the selector icon in DevTools (top-left corner)</li>
+                <li>Hover over any element on the page</li>
+                <li>See live highlighting with dimensions</li>
+                <li>Click to select and inspect that element</li>
+            </ol>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> The selector shows margin (orange) and padding (green) visually!
+            </div>
+            <div class="activity-box">
+                <h3>Try it now:</h3>
+                <p>Use the selector tool to inspect 3 different elements on this page</p>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Understanding the DOM Tree -->
+        <div class="slide">
+            <h1>The DOM Tree <span class="emoji">🌳</span></h1>
+            <div class="code-example">
+                &lt;body&gt;
+                  &lt;div class="container"&gt;
+                    &lt;header&gt;
+                      &lt;h1&gt;My Website&lt;/h1&gt;
+                      &lt;nav&gt;...&lt;/nav&gt;
+                    &lt;/header&gt;
+                    &lt;main&gt;
+                      &lt;section&gt;...&lt;/section&gt;
+                    &lt;/main&gt;
+                  &lt;/div&gt;
+                &lt;/body&gt;
+            </div>
+            <h3>Navigation Tips:</h3>
+            <ul>
+                <li>▶️ Click arrows to expand/collapse elements</li>
+                <li>Double-click to edit text directly</li>
+                <li>Right-click for more options (delete, duplicate, etc.)</li>
+                <li>Drag elements to reorder them!</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Remember:</strong> Changes in DevTools are temporary - refresh and they're gone!
+            </div>
+        </div>
+        
+        <!-- Slide 9: The Styles Panel -->
+        <div class="slide">
+            <h1>Understanding the Styles Panel <span class="emoji">🎨</span></h1>
+            <div class="devtools-demo">
+                <p>element.style { }</p>
+                <p>.my-class {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                &nbsp;&nbsp;<span class="strike-through">color: red;</span><br>
+                }</p>
+                <p>inherited from body {<br>
+                &nbsp;&nbsp;font-family: Arial;<br>
+                }</p>
+            </div>
+            <h3>What you'll see:</h3>
+            <ul>
+                <li>📝 <strong>element.style:</strong> Inline styles (highest priority)</li>
+                <li>🎯 <strong>Matched CSS Rules:</strong> All rules that apply</li>
+                <li>❌ <strong>Strikethrough:</strong> Overridden styles</li>
+                <li>👨‍👩‍👧 <strong>Inherited:</strong> Styles from parent elements</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 10: Demo 2 - Modifying Styles -->
+        <div class="slide">
+            <h1>Demo 2: Live Style Editing <span class="emoji">✏️</span></h1>
+            <div class="live-demo-area">
+                <div id="style-demo" style="background: #667eea; color: white; padding: 20px; border-radius: 10px;">
+                    <h3>Change My Styles!</h3>
+                    <p>Use DevTools to modify me</p>
+                </div>
+            </div>
+            <div class="activity-box">
+                <h3>Let's modify together:</h3>
+                <ol>
+                    <li>Inspect the blue box above</li>
+                    <li>In Styles panel, click on the background color</li>
+                    <li>Change it to <code>#ff6b6b</code></li>
+                    <li>Add a new property: <code>transform: rotate(5deg)</code></li>
+                    <li>Disable/enable properties with checkboxes</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Keyboard Shortcuts in Styles:</strong>
+                <span class="keyboard-shortcut">↑↓</span> change values |
+                <span class="keyboard-shortcut">Tab</span> next property |
+                <span class="keyboard-shortcut">Esc</span> cancel
+            </div>
+        </div>
+        
+        <!-- Slide 11: Adding New CSS Rules -->
+        <div class="slide">
+            <h1>Adding New CSS Rules <span class="emoji">➕</span></h1>
+            <h3>Three ways to add styles:</h3>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>1. element.style</h3>
+                    <p>Click in the empty <code>element.style {}</code> block</p>
+                    <p>Adds inline styles to that specific element</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>2. Existing Selector</h3>
+                    <p>Click inside any existing CSS rule</p>
+                    <p>Add new properties to that rule</p>
+                </div>
+            </div>
+            <div class="comparison-card" style="margin-top: 20px;">
+                <h3>3. New Rule Button (+)</h3>
+                <p>Click the + button in Styles panel</p>
+                <p>Creates a new CSS rule with auto-generated selector</p>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Great for testing, but copy working CSS to your actual files!
+            </div>
+        </div>
+        
+        <!-- Slide 12: Color Picker & Tools -->
+        <div class="slide">
+            <h1>Built-in Developer Tools <span class="emoji">🛠️</span></h1>
+            <h3>Click on any color value to open:</h3>
+            <ul style="font-size: 1.2em;">
+                <li>🎨 <strong>Color Picker:</strong> Visual color selection</li>
+                <li>👁️ <strong>Eyedropper:</strong> Pick colors from anywhere on screen</li>
+                <li>📊 <strong>Color Format Toggle:</strong> HEX → RGB → HSL</li>
+                <li>♿ <strong>Contrast Ratio:</strong> Accessibility checker</li>
+            </ul>
+            <h3>Other helpful tools:</h3>
+            <ul style="font-size: 1.2em;">
+                <li>📐 <strong>Box Shadow Editor:</strong> Visual shadow builder</li>
+                <li>🔄 <strong>Animation Inspector:</strong> Slow down/pause animations</li>
+                <li>📏 <strong>Rulers:</strong> Enable from Settings → Preferences</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 13: Demo 3 - Complex Example -->
+        <div class="slide">
+            <h1>Demo 3: Real-World Debugging <span class="emoji">🐛</span></h1>
+            <div class="live-demo-area">
+                <style>
+                    .broken-layout {
+                        background: #f0f0f0;
+                        padding: 20px;
+                        margin: 10px;
+                    }
+                    .broken-layout h3 {
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+                    .broken-layout p {
+                        color: #666;
+                        line-height: 1.6;
+                    }
+                    .broken-layout button {
+                        background: #667eea;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                    }
+                </style>
+                <div class="broken-layout">
+                    <h3 style="color: red !important;">Why am I red? 🤔</h3>
+                    <p style="font-size: 12px;">My text is too small!</p>
+                    <button style="background: gray;">I should be purple!</button>
+                </div>
+            </div>
+            <div class="activity-box">
+                <h3>Debug Challenge:</h3>
+                <p>Use DevTools to find out:</p>
+                <ol>
+                    <li>Why is the heading red instead of #333?</li>
+                    <li>What's making the paragraph text small?</li>
+                    <li>Why isn't the button purple (#667eea)?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 14: The Box Model Visualizer -->
+        <div class="slide">
+            <h1>Box Model in DevTools <span class="emoji">📦</span></h1>
+            <div class="visual-example">
+                <h3>In the Styles panel, scroll down to find:</h3>
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="display: inline-block; background: #f0f0f0; padding: 20px; border: 2px solid #333;">
+                        <div style="background: #e0e0e0; padding: 15px;">
+                            <div style="background: #d0d0d0; padding: 10px;">
+                                <div style="background: #667eea; color: white; padding: 20px;">
+                                    Content
+                                </div>
+                                <small>Padding</small>
+                            </div>
+                            <small>Border</small>
+                        </div>
+                        <small>Margin</small>
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>🟦 <strong>Blue:</strong> Content area</li>
+                <li>🟩 <strong>Green:</strong> Padding</li>
+                <li>🟨 <strong>Yellow:</strong> Border</li>
+                <li>🟧 <strong>Orange:</strong> Margin</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Hover over the box model to highlight that area on the page!
+            </div>
+        </div>
+        
+        <!-- Slide 15: Computed Styles Tab -->
+        <div class="slide">
+            <h1>The Computed Tab <span class="emoji">🧮</span></h1>
+            <h3>Shows the FINAL computed values</h3>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Styles Tab</h3>
+                    <ul>
+                        <li>Shows all CSS rules</li>
+                        <li>Shows overrides</li>
+                        <li>Shows source files</li>
+                        <li>Can have conflicts</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Computed Tab</h3>
+                    <ul>
+                        <li>Shows final values only</li>
+                        <li>Alphabetically sorted</li>
+                        <li>Shows inherited values</li>
+                        <li>Shows winning rule</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>When to use Computed:</strong> When you need to know the ACTUAL value being applied, not the rules fighting for control!
+            </div>
+        </div>
+        
+        <!-- Slide 16: Console & document.querySelector -->
+        <div class="slide">
+            <h1>Quick Console Magic <span class="emoji">🎩</span></h1>
+            <h3>Selecting elements with JavaScript:</h3>
+            <div class="code-example">
+                // Select by ID
+                document.querySelector('#myId')
+                
+                // Select by class
+                document.querySelector('.myClass')
+                
+                // Select all matching elements
+                document.querySelectorAll('p')
+                
+                // Quick shortcuts in console
+                $0  // Currently selected element
+                $('selector')  // Short for document.querySelector
+                $$('selector')  // Short for document.querySelectorAll
+            </div>
+            <div class="activity-box">
+                <h3>Try in Console:</h3>
+                <ol>
+                    <li>Open Console tab</li>
+                    <li>Type: <code>document.querySelector('h1')</code></li>
+                    <li>Type: <code>$0.style.color = 'red'</code></li>
+                    <li>See the magic happen!</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 17: Practice Activity 1 -->
+        <div class="slide">
+            <h1>Practice Activity 1: Element Hunt <span class="emoji">🔍</span></h1>
+            <div class="activity-box">
+                <h3>10-Minute Challenge</h3>
+                <p>Visit any popular website (CNN, Amazon, etc.) and:</p>
+                <ol>
+                    <li>Use the selector tool to find:
+                        <ul>
+                            <li>The main navigation menu</li>
+                            <li>The largest image on the page</li>
+                            <li>A button or link</li>
+                        </ul>
+                    </li>
+                    <li>For each element, identify:
+                        <ul>
+                            <li>Its HTML tag</li>
+                            <li>Its main CSS class</li>
+                            <li>Its font-size and color</li>
+                        </ul>
+                    </li>
+                    <li>Change at least 3 CSS properties</li>
+                    <li>Take a screenshot of your changes!</li>
+                </ol>
+            </div>
+            <button onclick="startTimer(10)" style="margin-top: 20px;">Start 10-Minute Timer</button>
+        </div>
+        
+        <!-- Slide 18: Practice Activity 2 -->
+        <div class="slide">
+            <h1>Practice Activity 2: CSS Detective <span class="emoji">🕵️</span></h1>
+            <div class="activity-box">
+                <h3>Partner Activity (5 minutes each)</h3>
+                <p>In pairs, take turns:</p>
+                <ol>
+                    <li><strong>Partner A:</strong> Opens their one-page website</li>
+                    <li><strong>Partner B:</strong> Uses DevTools to:
+                        <ul>
+                            <li>Find an element with conflicting CSS (strikethrough)</li>
+                            <li>Identify which rule is "winning"</li>
+                            <li>Add a new CSS property</li>
+                            <li>Change an existing color or size</li>
+                        </ul>
+                    </li>
+                    <li>Switch roles after 5 minutes</li>
+                    <li>Share one interesting finding with the class</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Common DevTools Shortcuts -->
+        <div class="slide">
+            <h1>Essential Keyboard Shortcuts <span class="emoji">⌨️</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Opening DevTools</h3>
+                    <p><span class="keyboard-shortcut">F12</span> Open DevTools</p>
+                    <p><span class="keyboard-shortcut">Ctrl+Shift+C</span> Inspect element</p>
+                    <p><span class="keyboard-shortcut">Ctrl+Shift+J</span> Open Console</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>While in DevTools</h3>
+                    <p><span class="keyboard-shortcut">Ctrl+F</span> Search in panel</p>
+                    <p><span class="keyboard-shortcut">Esc</span> Toggle console drawer</p>
+                    <p><span class="keyboard-shortcut">Ctrl+]</span> Next panel</p>
+                </div>
+            </div>
+            <div class="comparison-table" style="margin-top: 20px;">
+                <div class="comparison-card">
+                    <h3>In Styles Panel</h3>
+                    <p><span class="keyboard-shortcut">↑↓</span> Increment values</p>
+                    <p><span class="keyboard-shortcut">Shift+↑↓</span> ±10</p>
+                    <p><span class="keyboard-shortcut">Alt+↑↓</span> ±0.1</p>
+                </div>
+                <div class="comparison-card">
+                    <h3>Mac Equivalents</h3>
+                    <p>Replace <span class="keyboard-shortcut">Ctrl</span> with <span class="keyboard-shortcut">Cmd</span></p>
+                    <p>Replace <span class="keyboard-shortcut">Alt</span> with <span class="keyboard-shortcut">Option</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 20: Responsive Design Mode -->
+        <div class="slide">
+            <h1>Bonus: Responsive Design Mode <span class="emoji">📱</span></h1>
+            <div class="devtools-demo">
+                <p>Click the device icon 📱 or press <span class="keyboard-shortcut">Ctrl+Shift+M</span></p>
+            </div>
+            <h3>Test your site on different devices:</h3>
+            <ul>
+                <li>📱 iPhone, iPad, Android devices</li>
+                <li>💻 Different desktop sizes</li>
+                <li>🔄 Rotate between portrait/landscape</li>
+                <li>🌐 Throttle network speed</li>
+                <li>📸 Capture screenshots</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Coming Soon:</strong> We'll dive deep into responsive design in a few weeks!
+            </div>
+        </div>
+        
+        <!-- Slide 21: Homework Assignment -->
+        <div class="slide">
+            <h1>Homework Assignment <span class="emoji">📚</span></h1>
+            <h2>Due: Before Next Class</h2>
+            <div class="activity-box">
+                <h3>Complete The Odin Project Readings:</h3>
+                <ol>
+                    <li>📖 Chrome DevTools Overview</li>
+                    <li>📖 Open Chrome DevTools</li>
+                    <li>📖 Get Started With Viewing And Changing The DOM</li>
+                    <li>📖 View and Change CSS (with interactive exercises!)</li>
+                </ol>
+            </div>
+            <div class="activity-box" style="margin-top: 20px;">
+                <h3>Practice Exercise:</h3>
+                <p>Using DevTools on your one-page website:</p>
+                <ol>
+                    <li>Find and fix any CSS conflicts (strikethrough styles)</li>
+                    <li>Experiment with 5 new CSS properties</li>
+                    <li>Use the color picker to create a new color scheme</li>
+                    <li>Take screenshots of before/after</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 22: Pro Tips -->
+        <div class="slide">
+            <h1>Pro Developer Tips <span class="emoji">💡</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🎯 <strong>Copy Working CSS:</strong> Right-click → Copy → Copy styles</li>
+                <li>🔍 <strong>Search Everything:</strong> Ctrl+Shift+F searches all files</li>
+                <li>📸 <strong>Screenshot Element:</strong> Right-click element → Capture node screenshot</li>
+                <li>🎨 <strong>Force States:</strong> Toggle :hover, :active, :focus states</li>
+                <li>📝 <strong>Edit HTML:</strong> Double-click or F2 to edit HTML directly</li>
+                <li>🚀 <strong>Dock Position:</strong> Undock DevTools for more space</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Remember:</strong> DevTools changes are temporary! Always copy successful changes to your actual CSS files!
+            </div>
+        </div>
+        
+        <!-- Slide 23: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h2>You Can Now:</h2>
+            <ul style="font-size: 1.3em;">
+                <li>✅ Open and navigate Chrome DevTools confidently</li>
+                <li>✅ Inspect any element on any website</li>
+                <li>✅ Understand CSS cascade through strikethrough</li>
+                <li>✅ Edit CSS in real-time for testing</li>
+                <li>✅ Use the box model visualizer</li>
+                <li>✅ Debug CSS conflicts effectively</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Next Class:</strong> The Cascade - How CSS rules fight and win!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 24: Q&A and Practice -->
+        <div class="slide">
+            <h1>Questions & Open Practice <span class="emoji">🤔</span></h1>
+            <h2>Common Questions:</h2>
+            <ul style="font-size: 1.2em;">
+                <li>How do I save my DevTools changes permanently?</li>
+                <li>Why are some styles crossed out?</li>
+                <li>Can I edit JavaScript in DevTools too?</li>
+                <li>How do I inspect hover states?</li>
+                <li>What's the difference between Styles and Computed?</li>
+            </ul>
+            <div class="activity-box" style="margin-top: 40px;">
+                <h3>Remaining Time:</h3>
+                <p>Practice with DevTools on your own site or explore other websites!</p>
+                <p>I'll walk around to help with questions.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 25: Closing -->
+        <div class="slide">
+            <h1>You're Now a DevTools Ninja! <span class="emoji">🥷</span></h1>
+            <div class="demo-box">
+                <h2>Remember:</h2>
+                <p style="font-size: 1.4em;">DevTools is your best friend in web development!</p>
+                <p style="font-size: 1.3em;">The more you use it, the faster you'll debug.</p>
+            </div>
+            <div class="tip-box" style="margin-top: 40px;">
+                <p><strong>Challenge for this week:</strong></p>
+                <p>Use DevTools to inspect every website you visit!</p>
+                <p>Try to understand how they built their layouts.</p>
+            </div>
+            <div class="visual-example" style="margin-top: 40px;">
+                <p style="font-size: 1.3em;">See you next class for CSS Cascade! 🌊</p>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+    
+    <script src="../../js/presentation.js"></script>
+    <script>
+        // Timer functionality
+        let timerInterval;
+        function startTimer(minutes) {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            let seconds = minutes * 60;
+            const timerDisplay = document.getElementById('timer');
+            
+            timerInterval = setInterval(() => {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                timerDisplay.textContent = `Timer: ${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                if (seconds === 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = 'Time\'s up!';
+                    // Play a sound or alert
+                    alert('Time\'s up!');
+                }
+                seconds--;
+            }, 1000);
+        }
+        
+        // Additional demo functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Make demo elements interactive
+            const demoElements = document.querySelectorAll('.inspect-me');
+            demoElements.forEach(el => {
+                el.addEventListener('click', () => {
+                    alert('Right-click me and select "Inspect" instead!');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
