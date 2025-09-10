@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm Review - Instructor Guide | CSCI 3403</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            border: 3px solid #000;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            page-break-after: avoid;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .pre-class {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #999;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            font-size: 1.4em;
+        }
+        
+        h3 {
+            margin: 15px 0 10px 0;
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        
+        .time-marker {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .slide-ref {
+            background: #e3f2fd;
+            padding: 5px 10px;
+            border-left: 4px solid #2196f3;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            padding: 10px;
+            border: 2px solid #f57c00;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            color: #ff6600;
+        }
+        
+        .answer-key {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .answer-key strong {
+            color: #2e7d32;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            color: #1976d2;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .demo-note {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-note::before {
+            content: "🖥️ DEMO: ";
+            color: #c2185b;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #d32f2f;
+            font-weight: bold;
+        }
+        
+        .emphasis::before {
+            content: "⚠️ EMPHASIZE: ";
+            color: #d32f2f;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        
+        .practice-answer {
+            background: #f5f5f5;
+            border: 1px dashed #666;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                border: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MIDTERM REVIEW - INSTRUCTOR GUIDE</h1>
+        <p><strong>CSCI 3403 - Web Programming | Week 8, Class 15</strong></p>
+        <p><strong>Duration:</strong> 40-50 minutes | <strong>32 Slides Total</strong></p>
+        <p>This guide highlights all guided notes fill-ins and provides answer keys</p>
+    </div>
+
+    <div class="pre-class">
+        <h2>PRE-CLASS CHECKLIST</h2>
+        <ul class="checklist">
+            <li>Print guided notes for any students who need them</li>
+            <li>Have VS Code ready with sample code snippets</li>
+            <li>Open browser with DevTools ready for demos</li>
+            <li>Have Git Bash/Terminal open</li>
+            <li>Test projector/screen sharing</li>
+            <li>Remind students about GitHub profile README extra credit</li>
+        </ul>
+    </div>
+
+    <!-- Opening Section -->
+    <div class="section">
+        <h2>OPENING (Slides 1-2)</h2>
+        <div class="time-marker">0:00 - 0:03</div>
+        
+        <div class="slide-ref">Slide 1: Title</div>
+        <ul>
+            <li>Welcome students to midterm review</li>
+            <li>Ensure everyone has guided notes</li>
+            <li>Mention extra credit opportunity</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 2: Today's Topics</div>
+        <div class="emphasis">This is comprehensive - we'll move quickly but stop me with questions!</div>
+        <ul>
+            <li>HTML, Git/GitHub, CLI, CSS, Flexbox</li>
+            <li>Point out the topic cards on screen</li>
+        </ul>
+    </div>
+
+    <!-- HTML Section -->
+    <div class="section">
+        <h2>HTML FOUNDATIONS (Slides 3-7)</h2>
+        <div class="time-marker">0:03 - 0:10</div>
+        
+        <div class="slide-ref">Slide 3: HTML Overview</div>
+        <div class="notes-alert">Students fill in: HyperText, structure, structure</div>
+        <div class="answer-key">
+            <strong>ANSWERS:</strong><br>
+            • HyperText Markup Language<br>
+            • structure and meaning<br>
+            • structure (NOT appearance)
+        </div>
+        
+        <div class="slide-ref">Slide 4: Elements & Tags</div>
+        <div class="notes-alert">Students fill in: opening, closing, and 3 void elements</div>
+        <div class="answer-key">
+            <strong>ANSWERS:</strong><br>
+            • opening tag<br>
+            • closing tag<br>
+            • Void elements: img, br, input, hr, meta, link (any 3)
+        </div>
+        
+        <div class="slide-ref">Slide 5: HTML Boilerplate</div>
+        <div class="notes-alert">Students complete the boilerplate code</div>
+        <div class="answer-key">
+            <strong>ANSWERS:</strong><br>
+            • DOCTYPE<br>
+            • lang<br>
+            • charset<br>
+            • title (both opening and closing)<br>
+            • body (both opening and closing)
+        </div>
+        <div class="teaching-tip">Have students type ! + Tab shortcut along with you</div>
+        
+        <div class="slide-ref">Slide 6: Working with Text</div>
+        <div class="notes-alert">Students fill in element purposes table</div>
+        <div class="answer-key">
+            <strong>TABLE ANSWERS:</strong><br>
+            • h1-h6: Headings<br>
+            • p: Paragraphs<br>
+            • strong: Bold/important text<br>
+            • em: Italic/emphasized text<br>
+            • ul/ol: Unordered and ordered lists<br>
+            • a href: Links/anchors<br>
+            • img: Images
+        </div>
+        
+        <div class="slide-ref">Slide 7: Lists, Links, Images</div>
+        <div class="demo-note">Quick demo of creating a list with linked images</div>
+    </div>
+
+    <!-- Git/GitHub Section -->
+    <div class="section">
+        <h2>GIT & GITHUB (Slides 8-11)</h2>
+        <div class="time-marker">0:10 - 0:18</div>
+        
+        <div class="slide-ref">Slide 8: Git vs GitHub</div>
+        <div class="notes-alert">Students complete comparison table</div>
+        <div class="answer-key">
+            <strong>TABLE ANSWERS:</strong><br>
+            Git:<br>
+            • Version control system<br>
+            • locally<br>
+            <br>
+            GitHub:<br>
+            • hosting<br>
+            • Remote
+        </div>
+        
+        <div class="slide-ref">Slide 9: Git Commands</div>
+        <div class="notes-alert">Students fill in command names</div>
+        <div class="answer-key">
+            <strong>COMMANDS:</strong><br>
+            • git init<br>
+            • git add<br>
+            • git commit<br>
+            • git push<br>
+            • git pull<br>
+            • git status<br>
+            • git log
+        </div>
+        <div class="teaching-tip">Use the workflow visual to show how commands connect</div>
+        
+        <div class="slide-ref">Slide 10: Git Workflow</div>
+        <div class="notes-alert">Students number workflow in order</div>
+        <div class="answer-key">
+            <strong>CORRECT ORDER:</strong><br>
+            1. Working Directory<br>
+            2. Staging Area<br>
+            3. Local Repository<br>
+            4. Remote Repository (GitHub)
+        </div>
+        
+        <div class="slide-ref">Slide 11: Good Commits</div>
+        <div class="notes-alert">Students fill in commit message rules</div>
+        <div class="answer-key">
+            <strong>ANSWERS:</strong><br>
+            • imperative mood<br>
+            • 50-72 characters<br>
+            • what and why
+        </div>
+        <div class="practice-answer">
+            <strong>Practice commit example:</strong> "Add navigation menu to header"
+        </div>
+        <div class="emphasis">Good commits are like leaving breadcrumbs for your future self!</div>
+    </div>
+
+    <!-- CLI Section -->
+    <div class="section">
+        <h2>COMMAND LINE INTERFACE (Slides 12-13)</h2>
+        <div class="time-marker">0:18 - 0:22</div>
+        
+        <div class="slide-ref">Slide 12: Why CLI?</div>
+        <div class="notes-alert">Students fill in benefits</div>
+        <div class="answer-key">
+            <strong>ANSWERS:</strong><br>
+            • Faster<br>
+            • powerful<br>
+            • Automation<br>
+            • professional
+        </div>
+        
+        <div class="slide-ref">Slide 13: Essential Commands</div>
+        <div class="notes-alert">Students complete command functions table</div>
+        <div class="answer-key">
+            <strong>COMMAND FUNCTIONS:</strong><br>
+            • pwd: Print working directory<br>
+            • ls: List files and directories<br>
+            • cd folder: Change directory<br>
+            • cd ..: Go up one directory<br>
+            • mkdir: Create new directory<br>
+            • touch: Create new file<br>
+            • rm: Remove file
+        </div>
+        <div class="demo-note">Quick terminal demo - navigate, create folder, create file</div>
+    </div>
+
+    <!-- CSS Section -->
+    <div class="section">
+        <h2>CSS FOUNDATIONS (Slides 14-19)</h2>
+        <div class="time-marker">0:22 - 0:32</div>
+        
+        <div class="slide-ref">Slide 14: CSS Overview</div>
+        <div class="notes-alert">Students complete CSS syntax</div>
+        <div class="answer-key">
+            <strong>SYNTAX:</strong><br>
+            selector {<br>
+            &nbsp;&nbsp;property: value;<br>
+            }
+        </div>
+        <div class="notes-alert">Students fill in three ways to add CSS</div>
+        <div class="answer-key">
+            <strong>THREE WAYS:</strong><br>
+            1. Inline: style="color: red;"<br>
+            2. Internal: &lt;style&gt;<br>
+            3. External: &lt;link rel="stylesheet" href="style.css"&gt;
+        </div>
+        
+        <div class="slide-ref">Slide 15: CSS Selectors</div>
+        <div class="notes-alert">Students complete selector symbols</div>
+        <div class="answer-key">
+            <strong>SELECTOR SYNTAX:</strong><br>
+            • Type: p (no symbol)<br>
+            • Class: . (period)<br>
+            • ID: # (hash)
+        </div>
+        
+        <div class="slide-ref">Slide 16-17: The Cascade</div>
+        <div class="notes-alert">Students fill in cascade factors and specificity values</div>
+        <div class="answer-key">
+            <strong>CASCADE FACTORS:</strong><br>
+            1. Specificity<br>
+            2. Inheritance<br>
+            3. Rule Order<br>
+            <br>
+            <strong>SPECIFICITY VALUES:</strong><br>
+            • Inline: 1000<br>
+            • ID: 100<br>
+            • Class: 10<br>
+            • Type: 1
+        </div>
+        <div class="practice-answer">
+            <strong>Practice calculation #header .nav li a:</strong><br>
+            IDs: 1 × 100 = 100<br>
+            Classes: 1 × 10 = 10<br>
+            Types: 2 × 1 = 2<br>
+            Total: 112
+        </div>
+        
+        <div class="slide-ref">Slide 18-19: Box Model</div>
+        <div class="notes-alert">Students label box model layers</div>
+        <div class="answer-key">
+            <strong>BOX MODEL (inside to outside):</strong><br>
+            1. Content<br>
+            2. Padding<br>
+            3. Border<br>
+            4. Margin
+        </div>
+        <div class="notes-alert">Students fill in box-sizing value</div>
+        <div class="answer-key">
+            <strong>ANSWER:</strong> border-box (includes padding and border in width)
+        </div>
+        <div class="emphasis">Always use box-sizing: border-box! It makes life easier!</div>
+        <div class="teaching-tip">Draw the box model on the board if possible</div>
+    </div>
+
+    <!-- Flexbox Section -->
+    <div class="section">
+        <h2>FLEXBOX (Slides 20-23)</h2>
+        <div class="time-marker">0:32 - 0:38</div>
+        
+        <div class="slide-ref">Slide 20: Flexbox Introduction</div>
+        <div class="notes-alert">Students complete display property</div>
+        <div class="answer-key">
+            <strong>ANSWER:</strong> display: flex;
+        </div>
+        
+        <div class="slide-ref">Slide 21: Container Properties</div>
+        <div class="notes-alert">Students fill in property purposes and values</div>
+        <div class="answer-key">
+            <strong>FLEXBOX PROPERTIES:</strong><br>
+            • flex-direction: row (default)<br>
+            • justify-content: main axis<br>
+            • justify-content values: space-around, space-evenly<br>
+            • align-items: cross axis<br>
+            • align-items values: stretch, flex-end
+        </div>
+        
+        <div class="slide-ref">Slide 22: Item Properties</div>
+        <div class="notes-alert">Students complete flex properties</div>
+        <div class="answer-key">
+            <strong>FLEX ITEM PROPERTIES:</strong><br>
+            • flex-grow: grow<br>
+            • flex-shrink: shrink<br>
+            • flex-basis: initial<br>
+            • flex: 1 means grow: 1, shrink: 1, basis: 0
+        </div>
+        
+        <div class="slide-ref">Slide 23: Common Patterns</div>
+        <div class="notes-alert">Students complete centering code</div>
+        <div class="answer-key">
+            <strong>CENTER EVERYTHING:</strong><br>
+            .center {<br>
+            &nbsp;&nbsp;display: flex;<br>
+            &nbsp;&nbsp;justify-content: center;<br>
+            &nbsp;&nbsp;align-items: center;<br>
+            }
+        </div>
+        <div class="demo-note">Show flexbox centering in browser DevTools</div>
+    </div>
+
+    <!-- Review & Practice Section -->
+    <div class="section">
+        <h2>STUDY TIPS & PRACTICE (Slides 24-31)</h2>
+        <div class="time-marker">0:38 - 0:48</div>
+        
+        <div class="slide-ref">Slide 24: Study Tips</div>
+        <p>Review the checklist with students - emphasize hands-on practice</p>
+        
+        <div class="slide-ref">Slide 25: Common Mistakes</div>
+        <div class="notes-alert">Students complete "Do This Instead" column</div>
+        <div class="answer-key">
+            <strong>CORRECT PRACTICES:</strong><br>
+            • Always close your tags<br>
+            • Use hyphens or underscores (no spaces)<br>
+            • Commit after each feature<br>
+            • Use external CSS files<br>
+            • Use proper HTML elements
+        </div>
+        
+        <div class="slide-ref">Slide 28: Practice Questions</div>
+        <div class="practice-answer">
+            <strong>PRACTICE ANSWERS:</strong><br>
+            1. Classes are reusable (.class), IDs are unique (#id)<br>
+            2. margin: auto; (on a block element with width)<br>
+            3. Stages all changes in current directory<br>
+            4. Padding is inside border, margin is outside<br>
+            5. display: flex;<br>
+            6. Elements without closing tags: img, br, input, hr, meta<br>
+            7. ID > Class > Type, higher specificity wins<br>
+            8. mkdir directoryname
+        </div>
+        
+        <div class="slide-ref">Slide 29: Extra Credit Reminder</div>
+        <div class="emphasis">GitHub Profile README - Great practice with Markdown!</div>
+        
+        <div class="slide-ref">Slides 30-32: Resources & Q&A</div>
+        <ul>
+            <li>Leave time for questions</li>
+            <li>Review any concepts students are unsure about</li>
+            <li>Remind about office hours if needed</li>
+        </ul>
+    </div>
+
+    <!-- Closing Section -->
+    <div class="section">
+        <h2>CLOSING & POST-CLASS</h2>
+        <div class="time-marker">0:48 - 0:50</div>
+        
+        <h3>Final Reminders</h3>
+        <ul>
+            <li>Midterm format and duration</li>
+            <li>What to bring (if anything)</li>
+            <li>Study resources available</li>
+            <li>Office hours before exam</li>
+        </ul>
+        
+        <h3>Post-Class Checklist</h3>
+        <ul class="checklist">
+            <li>Post guided notes answer key online (optional)</li>
+            <li>Send reminder about GitHub README extra credit</li>
+            <li>Update D2L with any additional resources mentioned</li>
+            <li>Note topics that need more coverage on exam</li>
+            <li>Prepare midterm materials</li>
+        </ul>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="section">
+        <h2>QUICK REFERENCE - KEY POINTS TO EMPHASIZE</h2>
+        
+        <h3>Most Important Concepts</h3>
+        <ol>
+            <li><strong>HTML:</strong> Structure vs. Presentation (semantic HTML)</li>
+            <li><strong>Git:</strong> The workflow from working directory to GitHub</li>
+            <li><strong>CSS Cascade:</strong> Specificity calculation (students struggle here)</li>
+            <li><strong>Box Model:</strong> The order and box-sizing: border-box</li>
+            <li><strong>Flexbox:</strong> Parent-child relationship, main vs. cross axis</li>
+        </ol>
+        
+        <h3>Common Student Confusion Points</h3>
+        <ul>
+            <li>Difference between Git and GitHub</li>
+            <li>When to use margin vs. padding</li>
+            <li>CSS specificity calculations</li>
+            <li>Flexbox justify-content vs. align-items</li>
+            <li>Void elements (which ones and why)</li>
+        </ul>
+        
+        <h3>If Running Short on Time</h3>
+        <p>Priority topics (don't skip):</p>
+        <ol>
+            <li>HTML boilerplate structure</li>
+            <li>Git workflow</li>
+            <li>CSS cascade/specificity</li>
+            <li>Box model</li>
+            <li>Basic flexbox</li>
+        </ol>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>INSTRUCTOR NOTES</h2>
+        <div style="border: 1px dashed #000; min-height: 200px; padding: 10px; margin-top: 20px;">
+            <p><em>Space for your notes during/after class:</em></p>
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: This is their last chance to ask questions before the midterm!</strong></p>
+        <p>Be encouraging - they've learned a lot in just 8 weeks!</p>
+    </div>
+</body>
+</html>

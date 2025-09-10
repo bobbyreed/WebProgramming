@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE - CSS Block and Inline Elements (Day 12)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: white;
+        }
+        
+        h1 {
+            background: #000;
+            color: white;
+            padding: 20px;
+            margin: -20px -20px 20px -20px;
+            text-align: center;
+        }
+        
+        h2 {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin: 20px 0 10px 0;
+            border-left: 10px solid #667eea;
+        }
+        
+        h3 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+            margin: 15px 0 10px 0;
+        }
+        
+        .slide-ref {
+            background: #333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            border-left: 5px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            color: #ff6600;
+        }
+        
+        .answer-key {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .answer-key strong {
+            color: #2e7d32;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            color: #1976d2;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .demo-note {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-note::before {
+            content: "🖥️ DEMO: ";
+            color: #c2185b;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #d32f2f;
+        }
+        
+        .emphasis::before {
+            content: "⚠️ EMPHASIZE: ";
+            font-weight: bold;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        
+        .time-box {
+            background: #f5f5f5;
+            border: 2px solid #999;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .activity-box {
+            background: #fff3e0;
+            border: 2px dashed #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .activity-box::before {
+            content: "👥 ACTIVITY: ";
+            font-weight: bold;
+            color: #ff6600;
+        }
+        
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-radius: 5px;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+            .pagebreak {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>INSTRUCTOR GUIDE - CSS Block and Inline Elements (Day 12)</h1>
+    
+    <div class="time-box">
+        Total Time: 40-50 minutes | 30 slides
+    </div>
+
+    <h2>PRE-CLASS CHECKLIST</h2>
+    <ul class="checklist">
+        <li>Guided notes printed and ready for distribution</li>
+        <li>Test slide navigation (arrow keys and buttons)</li>
+        <li>Open DevTools for live demonstrations</li>
+        <li>Have example HTML file ready for display property changes</li>
+        <li>Check CSS exercises repository is accessible</li>
+        <li>Review student Recipe Projects for styling examples</li>
+    </ul>
+
+    <h2>OPENING (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 1-3</span> Introduction & Learning Objectives</h3>
+    
+    <div class="teaching-tip">
+        Start with a visual: Show a poorly laid out webpage vs a well-structured one. Ask: "What makes the difference?"
+    </div>
+    
+    <p><strong>Key Points to Cover:</strong></p>
+    <ul>
+        <li>Review box model from last class (every element is a box)</li>
+        <li>Today: How boxes interact with each other</li>
+        <li>This is fundamental - everything in CSS layout builds on this</li>
+    </ul>
+
+    <div class="notes-alert">
+        Students should fill in their name and date on guided notes
+    </div>
+
+    <h2>NORMAL FLOW (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 4-5</span> Understanding Normal Flow</h3>
+    
+    <div class="notes-alert">
+        Students fill in: "the default way browsers lay out HTML elements without any CSS positioning"
+    </div>
+    
+    <div class="answer-key">
+        <strong>Key Concepts Answers:</strong><br>
+        1. Elements render in HTML order<br>
+        2. Block elements stack vertically<br>
+        3. Inline elements flow horizontally<br>
+        4. No overlapping unless positioned
+    </div>
+    
+    <div class="demo-note">
+        Show a simple HTML file with NO CSS - demonstrate that elements still have default display behaviors
+    </div>
+
+    <h2>DISPLAY PROPERTY (3 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDE 6</span> The Display Property</h3>
+    
+    <div class="notes-alert">
+        Students fill in display values:<br>
+        - display: block; /* Elements stack vertically */<br>
+        - display: inline; /* Elements flow horizontally */<br>
+        - display: inline-block; /* Best of both worlds */<br>
+        - display: none; /* Hides the element completely */
+    </div>
+    
+    <div class="teaching-tip">
+        Emphasize that we can CHANGE any element's default display - this is powerful!
+    </div>
+
+    <h2>BLOCK ELEMENTS (8 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 7-9</span> Block Elements Deep Dive</h3>
+    
+    <div class="notes-alert">
+        Students check these characteristics for block elements:
+        ✓ Start on a new line
+        ✓ Take up full width available
+        ✓ Stack vertically
+        ✓ Can have width and height set
+        ✓ All margin/padding sides work
+    </div>
+    
+    <div class="answer-key">
+        <strong>Common Block Elements:</strong><br>
+        Structural: div, section, article, header, footer, main, nav<br>
+        Headings: h1, h2, h3, h4, h5, h6<br>
+        Content: p, blockquote, pre<br>
+        Lists: ul, ol, li
+    </div>
+    
+    <div class="demo-note">
+        Live code three divs with different background colors. Show how they stack and take full width even with small content.
+    </div>
+    
+    <div class="emphasis">
+        Block elements are like paragraphs in a document - each starts on its own line!
+    </div>
+
+    <h2>INLINE ELEMENTS (8 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 10-12</span> Inline Elements Deep Dive</h3>
+    
+    <div class="notes-alert">
+        Students check these characteristics for inline elements:
+        ✓ Flow with text content
+        ✓ Only take necessary space
+        (Leave unchecked: start on new line, take full width, can set width/height, etc.)
+    </div>
+    
+    <div class="answer-key">
+        <strong>Common Inline Elements (any 6):</strong><br>
+        span, a, strong, em, img, button, input, label, code, small, br, cite
+    </div>
+    
+    <div class="demo-note">
+        Create a paragraph with multiple inline elements (span, strong, em, a). Show how they flow within the text.
+    </div>
+
+    <h3><span class="slide-ref">SLIDES 13-14</span> ⚠️ CRITICAL CONCEPT: Inline Padding/Margin</h3>
+    
+    <div class="emphasis">
+        SPEND TIME HERE! This is a common source of confusion and bugs.
+    </div>
+    
+    <div class="notes-alert">
+        Students fill in: "don't push other elements away / can cause overlapping"
+    </div>
+    
+    <div class="demo-note">
+        MUST DEMONSTRATE: Add large vertical padding to a span. Show how it overlaps lines above and below!
+    </div>
+    
+    <div class="teaching-tip">
+        Tell students: "If you remember ONE thing about inline elements, remember that vertical spacing doesn't work normally!"
+    </div>
+
+    <h2>COMPARISON (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDE 13</span> Block vs Inline Comparison Table</h3>
+    
+    <div class="notes-alert">
+        Students complete comparison table:
+    </div>
+    
+    <div class="answer-key">
+        <strong>Table Answers:</strong><br>
+        Line breaks? Block: Yes (before & after) | Inline: No<br>
+        Default width: Block: 100% | Inline: Content-based<br>
+        Can set width/height? Block: Yes | Inline: No<br>
+        Vertical margin/padding: Block: Works normally | Inline: Problematic
+    </div>
+
+    <h2>INLINE-BLOCK (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 15-17</span> The Middle Ground</h3>
+    
+    <div class="notes-alert">
+        Students fill in:<br>
+        From inline: "doesn't break lines / flows horizontally"<br>
+        From block: "respects all box model properties / can set dimensions"
+    </div>
+    
+    <div class="demo-note">
+        Create navigation with links. First show as inline (spacing problems), then as inline-block (perfect!).
+    </div>
+    
+    <div class="teaching-tip">
+        Mention that while inline-block is useful, flexbox (next lesson) is often better for modern layouts.
+    </div>
+
+    <h2>DIVS AND SPANS (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 18-20</span> Generic Containers</h3>
+    
+    <div class="notes-alert">
+        Students complete div/span table:<br>
+        Default display: div = block | span = inline<br>
+        Semantic meaning: Both = none<br>
+        Common use: div = layout/grouping | span = text styling
+    </div>
+    
+    <div class="emphasis">
+        Always use semantic HTML first! Only use div/span when no semantic element fits.
+    </div>
+    
+    <div class="answer-key">
+        <strong>Best Practice:</strong> "no other semantic element applies"
+    </div>
+
+    <h2>PRACTICAL EXAMPLES (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 21-23</span> Real-World Applications</h3>
+    
+    <div class="demo-note">
+        Live code a navigation bar and a card component. Show display property changes in real-time.
+    </div>
+    
+    <div class="teaching-tip">
+        Reference their Recipe Projects - they'll be adding these concepts to style them!
+    </div>
+
+    <div class="pagebreak"></div>
+
+    <h2>COMMON GOTCHAS & QUIZ (5 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 24-25</span> Troubleshooting & Quick Check</h3>
+    
+    <div class="notes-alert">
+        Quiz Answers for Practice Problems:
+    </div>
+    
+    <div class="answer-key">
+        <strong>Display Type Answers:</strong><br>
+        1. Navigation links: inline-block<br>
+        2. Main container: block<br>
+        3. Bold text in paragraph: inline<br>
+        4. Cards in layout: inline-block (or flex)<br>
+        5. Page header: block<br><br>
+        
+        <strong>Fix the CSS:</strong> display: inline-block;<br><br>
+        
+        <strong>Output Lines:</strong> 3 lines<br>
+        Explanation: First div (line 1), both spans on same line (line 2), last div (line 3)
+    </div>
+    
+    <div class="activity-box">
+        Have students predict the answer BEFORE revealing. Use hand voting or chat responses.
+    </div>
+
+    <h2>WRAP-UP (3 minutes)</h2>
+    
+    <h3><span class="slide-ref">SLIDES 26-30</span> Best Practices, Resources, Homework</h3>
+    
+    <div class="emphasis">
+        Homework is CRITICAL - they need hands-on practice with margin/padding AND styling their Recipe page
+    </div>
+    
+    <div class="notes-alert">
+        Students should check off homework items as you explain them
+    </div>
+    
+    <p><strong>Homework Reminders:</strong></p>
+    <ul>
+        <li>CSS Exercises from Odin Project (specific folder path provided)</li>
+        <li>Style their Recipe page with display properties</li>
+        <li>Encourage experimentation - "break things and fix them!"</li>
+    </ul>
+    
+    <div class="teaching-tip">
+        End with enthusiasm about next class: "Flexbox will change how you think about layout!"
+    </div>
+
+    <h2>TIME MANAGEMENT NOTES</h2>
+    
+    <ul>
+        <li><strong>If running short:</strong> Skip slides 21-22 (practical examples) - cover in next class</li>
+        <li><strong>If extra time:</strong> Do more live coding demonstrations</li>
+        <li><strong>Critical slides:</strong> 7-14 (block/inline characteristics and padding issue)</li>
+    </ul>
+
+    <h2>COMMON STUDENT QUESTIONS</h2>
+    
+    <ol>
+        <li><strong>"Why doesn't my padding work on spans?"</strong><br>
+        → Inline elements don't respect vertical spacing normally. Use inline-block.</li>
+        
+        <li><strong>"Can I make any element block or inline?"</strong><br>
+        → Yes! But respect semantic meaning - a paragraph is still a paragraph even if displayed inline.</li>
+        
+        <li><strong>"When should I use inline-block vs flexbox?"</strong><br>
+        → Inline-block for simple horizontal layouts, flexbox for complex layouts (next class!).</li>
+        
+        <li><strong>"Why are there gaps between my inline-block elements?"</strong><br>
+        → HTML whitespace creates gaps. Solutions: no whitespace, font-size: 0 on parent, or use flexbox.</li>
+    </ol>
+
+    <h2>POST-CLASS CHECKLIST</h2>
+    
+    <ul class="checklist">
+        <li>Post CSS exercises links to course site/LMS</li>
+        <li>Share any demo code created during class</li>
+        <li>Note students struggling with concepts for follow-up</li>
+        <li>Prepare flexbox materials for next class</li>
+        <li>Check that students can access Odin Project exercises</li>
+    </ul>
+
+    <h2>ASSESSMENT NOTES</h2>
+    
+    <div class="activity-box">
+        Quick formative assessment: Have students write on paper or chat:
+        1. One thing that was clear
+        2. One thing that's still confusing
+        3. Which display type they'll use most in their Recipe project
+    </div>
+
+    <h2>INSTRUCTOR NOTES SECTION</h2>
+    <div style="border: 1px dashed #999; min-height: 200px; padding: 10px; margin-top: 20px;">
+        <p><em>Space for class-specific observations:</em></p>
+        <br><br><br><br><br><br><br>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: This is foundational - ensure understanding before moving to flexbox!</strong></p>
+        <p>Students often struggle with inline padding/margin - spend extra time if needed.</p>
+    </div>
+</body>
+</html>

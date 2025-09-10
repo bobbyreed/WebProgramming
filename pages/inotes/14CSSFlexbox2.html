@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE: CSS Flexbox Lecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+        }
+        
+        .timing-box {
+            background: #ff0000;
+            color: white;
+            padding: 5px 10px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .slide-section {
+            border: 2px solid #000;
+            padding: 20px;
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        
+        .slide-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        .slide-section h3 {
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+            text-decoration: underline;
+        }
+        
+        .note-fill {
+            background: #ffeb3b;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #f57c00;
+            font-weight: bold;
+        }
+        
+        .note-fill::before {
+            content: "📝 STUDENTS FILL IN: ";
+            font-weight: bold;
+            color: #d84315;
+        }
+        
+        .answer-key {
+            background: #c8e6c9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .answer-key::before {
+            content: "✅ ANSWER: ";
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .demo {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .demo::before {
+            content: "💻 LIVE DEMO: ";
+            font-weight: bold;
+            color: #1976d2;
+        }
+        
+        .activity {
+            background: #e8f5e9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .activity::before {
+            content: "👥 ACTIVITY: ";
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .emphasis {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #d32f2f;
+        }
+        
+        .emphasis::before {
+            content: "⚠️ EMPHASIZE: ";
+            font-weight: bold;
+            color: #c62828;
+        }
+        
+        .teaching-tip {
+            background: #fff3e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #ff9800;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            font-weight: bold;
+            font-style: normal;
+            color: #e65100;
+        }
+        
+        .talking-points {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .talking-points li {
+            margin-bottom: 5px;
+        }
+        
+        .transition {
+            background: #f5f5f5;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px dashed #666;
+            font-style: italic;
+        }
+        
+        .transition::before {
+            content: "➡️ TRANSITION: ";
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .checkpoint {
+            background: #fce4ec;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #e91e63;
+            border-radius: 10px;
+        }
+        
+        .checkpoint h3 {
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff9c4;
+            border: 2px solid #f57f17;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .warning-box::before {
+            content: "⚠️ COMMON MISTAKE: ";
+            font-weight: bold;
+            color: #f57f17;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+            .slide-section {
+                page-break-inside: avoid;
+            }
+            .header {
+                background: white;
+                color: black;
+                border: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSTRUCTOR GUIDE: CSS Flexbox Lecture</h1>
+        <p>CSCI 3403 - Web Programming | Day 14 | 40-50 minutes</p>
+        <p>⚠️ REMINDER: Students should have completed "Growing & Shrinking" homework</p>
+    </div>
+
+    <!-- Pre-Class Setup -->
+    <div class="slide-section">
+        <h2>PRE-CLASS SETUP</h2>
+        <ul class="talking-points">
+            <li>✓ Open slides in presentation mode</li>
+            <li>✓ Have VS Code ready with blank HTML file</li>
+            <li>✓ Open browser DevTools (Firefox recommended for Flexbox inspector)</li>
+            <li>✓ Ensure students have guided notes printed/open</li>
+            <li>✓ Test projector/screen sharing</li>
+            <li>✓ Have Flexbox Froggy bookmarked</li>
+        </ul>
+        <div class="warning-box">Landing Page Project due next Thursday - remind at start and end!</div>
+    </div>
+
+    <!-- Opening Slides 1-3 -->
+    <div class="slide-section">
+        <div class="timing-box">0:00 - 0:05</div>
+        <h2>Opening & Agenda (Slides 1-3)</h2>
+        
+        <h3>Key Opening Points</h3>
+        <ul class="talking-points">
+            <li>Welcome students, check homework completion</li>
+            <li>Announce Landing Page deadline reminder</li>
+            <li>Today's goal: Master flexbox alignment</li>
+        </ul>
+        
+        <div class="emphasis">Landing Page Project DUE next Thursday night!</div>
+        
+        <div class="transition">Let's start with a quick review of what you learned in the homework...</div>
+    </div>
+
+    <!-- Part 1: Quick Review -->
+    <div class="slide-section">
+        <div class="timing-box">0:05 - 0:10</div>
+        <h2>Part 1: Quick Review (Slides 4-6)</h2>
+        
+        <h3>The Flex Shorthand</h3>
+        <div class="note-fill">flex: 1 equals what three properties?</div>
+        <div class="answer-key">flex-grow: 1; flex-shrink: 1; flex-basis: 0;</div>
+        
+        <div class="teaching-tip">Use hand gestures: grow (expand hands), shrink (compress), basis (flat hand for starting point)</div>
+        
+        <h3>Flex Properties Table</h3>
+        <div class="note-fill">Students fill in purpose and default values for each property</div>
+        <div class="answer-key">
+            • flex-grow: Controls growing, default 0<br>
+            • flex-shrink: Controls shrinking, default 1<br>
+            • flex-basis: Starting size, default auto
+        </div>
+        
+        <h3>Important Gotcha (Slide 6)</h3>
+        <div class="emphasis">flex: 1 is NOT the same as flex-grow: 1</div>
+        <div class="note-fill">Why are they different?</div>
+        <div class="answer-key">flex: 1 sets basis to 0, flex-grow: 1 keeps basis at auto</div>
+        
+        <div class="demo">Show this difference in VS Code - create two containers to compare</div>
+    </div>
+
+    <!-- Part 2: Flexbox Axes -->
+    <div class="slide-section">
+        <div class="timing-box">0:10 - 0:25</div>
+        <h2>Part 2: Flexbox Axes (Slides 7-11)</h2>
+        
+        <h3>Two Axes Concept (Slide 7)</h3>
+        <div class="note-fill">Students define main axis and cross axis</div>
+        <div class="answer-key">
+            • Main Axis: primary direction of flow<br>
+            • Cross Axis: perpendicular to main axis
+        </div>
+        
+        <div class="teaching-tip">Use your arms to show axes - horizontal for main (row), vertical for cross</div>
+        
+        <h3>Flex Direction (Slide 8)</h3>
+        <div class="note-fill">Default value of flex-direction?</div>
+        <div class="answer-key">row</div>
+        
+        <div class="demo">Live code: Switch between row and column, show how items rearrange</div>
+        
+        <h3>Visual Example (Slide 9)</h3>
+        <div class="activity">Have students draw axes in their notes for both row and column</div>
+        
+        <h3>Critical Concept (Slide 10)</h3>
+        <div class="emphasis">When flex-direction changes, flex-basis reference changes!</div>
+        <div class="note-fill">In column direction, flex-basis refers to?</div>
+        <div class="answer-key">height (not width)</div>
+        
+        <h3>Common Pitfall (Slide 11)</h3>
+        <div class="warning-box">flex: 1 in column direction can cause collapse with no height!</div>
+        <div class="note-fill">Why do items collapse?</div>
+        <div class="answer-key">flex: 1 means flex-basis: 0, and empty divs have 0 height</div>
+        
+        <div class="demo">Show the collapse problem, then fix with flex: 1 1 auto or container height</div>
+    </div>
+
+    <!-- Part 3: Alignment -->
+    <div class="slide-section">
+        <div class="timing-box">0:25 - 0:40</div>
+        <h2>Part 3: Alignment Properties (Slides 12-18)</h2>
+        
+        <h3>Main Alignment Properties (Slide 12)</h3>
+        <div class="note-fill">justify-content aligns along which axis?</div>
+        <div class="answer-key">main axis</div>
+        <div class="note-fill">align-items aligns along which axis?</div>
+        <div class="answer-key">cross axis</div>
+        
+        <div class="teaching-tip">Memory trick: "JUSTify" = "JUST the main axis"</div>
+        
+        <h3>Justify-Content Values (Slides 13-14)</h3>
+        <div class="activity">Students draw boxes showing each alignment in their notes</div>
+        <div class="demo">Live code each justify-content value, pause for students to sketch</div>
+        
+        <h3>Perfect Centering (Slide 16)</h3>
+        <div class="emphasis">THE HOLY GRAIL OF CSS!</div>
+        <div class="note-fill">How to center both horizontally and vertically?</div>
+        <div class="answer-key">justify-content: center; align-items: center;</div>
+        
+        <div class="demo">Build a modal overlay with perfect centering</div>
+        
+        <h3>Direction Changes Everything (Slide 17)</h3>
+        <div class="warning-box">In column direction, justify/align swap their typical behavior!</div>
+        <div class="note-fill">With flex-direction: column, justify-content works?</div>
+        <div class="answer-key">vertically (not horizontally)</div>
+        
+        <h3>The Gap Property (Slide 18)</h3>
+        <div class="note-fill">Benefits of gap over margin?</div>
+        <div class="answer-key">No extra space on edges, cleaner, more predictable</div>
+        
+        <div class="demo">Show gap vs margin approach side-by-side</div>
+    </div>
+
+    <!-- Part 4: Practice Examples -->
+    <div class="slide-section">
+        <div class="timing-box">0:40 - 0:45</div>
+        <h2>Part 4: Practice Examples (Slides 19-23)</h2>
+        
+        <h3>Navigation Bar (Slide 20)</h3>
+        <div class="note-fill">Students complete CSS for nav bar</div>
+        <div class="answer-key">display: flex; justify-content: space-between; align-items: center;</div>
+        <div class="demo">Build together, students follow along</div>
+        
+        <h3>Card Layout (Slide 21)</h3>
+        <div class="note-fill">Students complete card container CSS</div>
+        <div class="answer-key">flex: 1 1 300px; (grow, shrink, min 300px basis)</div>
+        
+        <h3>Centered Modal (Slide 22)</h3>
+        <div class="note-fill">How to center the modal?</div>
+        <div class="answer-key">justify-content: center; align-items: center;</div>
+        
+        <h3>Footer Columns (Slide 23)</h3>
+        <div class="activity">Quick challenge: Students write CSS for equal-width footer columns</div>
+    </div>
+
+    <!-- Debugging & Wrap-up -->
+    <div class="slide-section">
+        <div class="timing-box">0:45 - 0:50</div>
+        <h2>Debugging & Wrap-up (Slides 24-32)</h2>
+        
+        <h3>Common Patterns (Slide 24)</h3>
+        <div class="teaching-tip">These are the "copy-paste" patterns they'll use constantly</div>
+        
+        <h3>Debugging Tips (Slide 25)</h3>
+        <div class="demo">Show Firefox Flexbox Inspector - game changer!</div>
+        <div class="emphasis">Adding borders is the #1 debugging technique</div>
+        
+        <h3>Quick Quiz (Slide 26)</h3>
+        <div class="activity">Ask class for answers, have students explain reasoning</div>
+        
+        <h3>Resources (Slide 27)</h3>
+        <div class="demo">Quick demo of Flexbox Froggy - assign as practice</div>
+        
+        <h3>Homework Reminder (Slide 29)</h3>
+        <div class="emphasis">LANDING PAGE DUE NEXT THURSDAY!</div>
+        <ul class="talking-points">
+            <li>Must use flexbox for layout</li>
+            <li>No CSS frameworks</li>
+            <li>Start TODAY if haven't already</li>
+        </ul>
+        
+        <h3>Let's Code (Slide 31)</h3>
+        <div class="activity">If time permits: Live code a quick navbar + hero section</div>
+    </div>
+
+    <!-- Checkpoint Activities -->
+    <div class="checkpoint">
+        <h3>🎯 CHECKPOINT QUESTIONS (Throughout Lecture)</h3>
+        <p><strong>After Axes (15 min):</strong> "Show me with your hands - which way is main axis in column?"</p>
+        <p><strong>After Alignment (30 min):</strong> "Type in chat: How do you center a div?"</p>
+        <p><strong>Before end (45 min):</strong> "Thumbs up if you understand axes, thumbs middle if somewhat, thumbs down if need review"</p>
+    </div>
+
+    <!-- Common Student Mistakes -->
+    <div class="slide-section">
+        <h2>COMMON STUDENT MISTAKES TO ADDRESS</h2>
+        
+        <div class="warning-box">Not putting display: flex on the container</div>
+        <p>→ Nothing works without this! Always check first when debugging.</p>
+        
+        <div class="warning-box">Confusing justify-content and align-items</div>
+        <p>→ Use the "JUSTify = JUST the main axis" memory trick</p>
+        
+        <div class="warning-box">Forgetting that column changes axis behavior</div>
+        <p>→ Draw the axes every time when learning</p>
+        
+        <div class="warning-box">Using flex: 1 without understanding flex-basis: 0</div>
+        <p>→ Show the difference between flex: 1 and flex-grow: 1</p>
+        
+        <div class="warning-box">Not setting height on column containers</div>
+        <p>→ Column containers need explicit height or content</p>
+    </div>
+
+    <!-- Answer Key Summary -->
+    <div class="slide-section">
+        <h2>GUIDED NOTES ANSWER KEY SUMMARY</h2>
+        
+        <h3>Part 1: Quick Review</h3>
+        <ul>
+            <li>flex: 1 = flex-grow: 1, flex-shrink: 1, flex-basis: 0</li>
+            <li>flex-grow default: 0</li>
+            <li>flex-shrink default: 1</li>
+            <li>flex-basis default: auto</li>
+        </ul>
+        
+        <h3>Part 2: Axes</h3>
+        <ul>
+            <li>flex-direction default: row</li>
+            <li>Row: main = horizontal, cross = vertical</li>
+            <li>Column: main = vertical, cross = horizontal</li>
+            <li>In column, flex-basis refers to height</li>
+        </ul>
+        
+        <h3>Part 3: Alignment</h3>
+        <ul>
+            <li>justify-content: main axis</li>
+            <li>align-items: cross axis</li>
+            <li>Perfect center: justify-content: center; align-items: center;</li>
+            <li>gap adds space between items only</li>
+        </ul>
+        
+        <h3>Part 4: Patterns</h3>
+        <ul>
+            <li>Nav: space-between + center</li>
+            <li>Cards: flex: 1 1 300px</li>
+            <li>Equal columns: flex: 1</li>
+            <li>Prevent shrink: flex-shrink: 0</li>
+        </ul>
+    </div>
+
+    <!-- Post-Class Checklist -->
+    <div class="slide-section">
+        <h2>POST-CLASS CHECKLIST</h2>
+        <ul>
+            <li>☐ Remind about Landing Page deadline (D2L announcement)</li>
+            <li>☐ Post Flexbox Froggy link in Discord/D2L</li>
+            <li>☐ Share recording if applicable</li>
+            <li>☐ Note struggling students for office hours follow-up</li>
+            <li>☐ Prepare Grid lesson for next class</li>
+            <li>☐ Check that all students have started Landing Page</li>
+        </ul>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="slide-section">
+        <h2>INSTRUCTOR NOTES SECTION</h2>
+        <div style="border: 1px dashed #000; min-height: 200px; padding: 10px; margin-top: 20px;">
+            <p><em>Space for notes during/after class:</em></p>
+            <br>
+            <p>Student comprehension level: _____/10</p>
+            <p>Timing adjustments needed:</p>
+            <br>
+            <p>Students struggling with:</p>
+            <br>
+            <p>What worked well:</p>
+            <br>
+            <p>Changes for next time:</p>
+            <br><br><br>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: Flexbox is the foundation of modern CSS layouts!</strong></p>
+        <p>Students MUST understand axes before moving to Grid next class.</p>
+        <p>If running behind, prioritize axes and justify/align over examples.</p>
+    </div>
+</body>
+</html>

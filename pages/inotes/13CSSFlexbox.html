@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTRUCTOR GUIDE - Day 13: Introduction to Flexbox</title>
+    <style>
+        @media print {
+            body { font-size: 11pt; }
+            .section { page-break-inside: avoid; }
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        h1 {
+            background: #000;
+            color: #fff;
+            padding: 15px;
+            margin: 0 -20px 20px -20px;
+        }
+        
+        h2 {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 20px -10px 10px -10px;
+        }
+        
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 20px 0;
+            background: #fff;
+        }
+        
+        .timing-note {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-left: 4px solid #666;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .slide-ref {
+            background: #e6f3ff;
+            padding: 8px;
+            margin: 10px 0;
+            border-left: 5px solid #0066cc;
+            font-weight: bold;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #f57c00;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+        }
+        
+        .critical {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #d32f2f;
+            font-weight: bold;
+        }
+        
+        .critical::before {
+            content: "⚠️ CRITICAL: ";
+        }
+        
+        .demo-box {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .demo-box::before {
+            content: "💻 DEMO: ";
+            font-weight: bold;
+        }
+        
+        .teaching-tip {
+            background: #e8f5e9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            font-weight: bold;
+        }
+        
+        .answer-key {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px dashed #999;
+        }
+        
+        .emphasis {
+            background: #fff3cd;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .emphasis::before {
+            content: "👉 EMPHASIZE: ";
+            font-weight: bold;
+        }
+        
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        .code-inline {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            font-family: monospace;
+            border: 1px solid #ddd;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>INSTRUCTOR GUIDE - Day 13: Introduction to Flexbox</h1>
+    <p><strong>Duration:</strong> 40-50 minutes | <strong>Slides:</strong> 20 total</p>
+    
+    <!-- Pre-Class Checklist -->
+    <div class="section">
+        <h2>PRE-CLASS CHECKLIST</h2>
+        <ul>
+            <li>☐ Open slides at slide 1</li>
+            <li>☐ Have VS Code ready with sample HTML file</li>
+            <li>☐ Open browser DevTools to Flexbox inspector</li>
+            <li>☐ Prepare CodePen or live coding environment</li>
+            <li>☐ Print guided notes for any students who need them</li>
+            <li>☐ Test that Flexbox Froggy loads (for resources)</li>
+            <li>☐ Have backup examples ready if live coding fails</li>
+        </ul>
+    </div>
+
+    <!-- Opening Section -->
+    <div class="section">
+        <h2>OPENING (Minutes 0-5)</h2>
+        <div class="timing-note">5 minutes total</div>
+        
+        <div class="slide-ref">Slide 1: Title Slide</div>
+        <ul>
+            <li>Welcome students to Day 13</li>
+            <li>Build excitement: "Today we learn THE most used CSS layout tool!"</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 2: Agenda</div>
+        <div class="notes-alert">
+            Students should write today's date and their name on guided notes
+        </div>
+        <ul>
+            <li>Overview the 8 main topics</li>
+            <li>Set expectations: hands-on practice included</li>
+        </ul>
+    </div>
+
+    <!-- Why Flexbox Section -->
+    <div class="section">
+        <h2>WHY FLEXBOX? (Minutes 5-10)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 3: Why Flexbox?</div>
+        <div class="notes-alert">
+            Students fill in problems with old methods:
+            <br>• Tables: "semantic nightmare"
+            <br>• Floats: "clearing issues"
+            <br>• Positioning: "confusing"
+            <br>• Inline-block: "whitespace issues"
+        </div>
+        
+        <div class="teaching-tip">
+            Show actual old code if time permits - makes them appreciate Flexbox more!
+        </div>
+        
+        <div class="notes-alert">
+            Students list 4 things Flexbox provides:
+            <br>1. Easy horizontal and vertical centering
+            <br>2. Dynamic sizing and spacing
+            <br>3. Responsive design without media queries
+            <br>4. Intuitive alignment control
+        </div>
+        
+        <div class="critical">Stress that Flexbox is used in 70%+ of modern layouts!</div>
+    </div>
+
+    <!-- Developer Tools Reminder -->
+    <div class="section">
+        <h2>DEVTOOLS REMINDER (Minutes 10-12)</h2>
+        <div class="timing-note">2 minutes - QUICK!</div>
+        
+        <div class="slide-ref">Slide 4: Developer Tools Reminder</div>
+        <div class="emphasis">This is CRUCIAL for debugging - don't skip!</div>
+        
+        <div class="demo-box">
+            Quick demo: Show the "flex" badge in DevTools
+        </div>
+        
+        <div class="notes-alert">
+            Students write: "inspect" as the first debugging step
+        </div>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <div class="section">
+        <h2>CORE CONCEPTS (Minutes 12-20)</h2>
+        <div class="timing-note">8 minutes - Most important section!</div>
+        
+        <div class="slide-ref">Slide 5: What is Flexbox?</div>
+        <div class="notes-alert">
+            Students fill in: "Flexible" Box Layout
+        </div>
+        <ul>
+            <li>Emphasize: One-dimensional (row OR column, not both)</li>
+            <li>Contrast with Grid (2D) briefly</li>
+        </ul>
+        
+        <div class="slide-ref">Slide 6: The Basic Concept</div>
+        <div class="critical">TWO KEY PLAYERS - Container and Items!</div>
+        
+        <div class="notes-alert">
+            Students complete in notes:
+            <br>• Container CSS: <span class="code-inline">display: flex</span>
+            <br>• Items: "Direct children automatically become flex items"
+        </div>
+        
+        <div class="demo-box">
+            LIVE CODE: Create basic flex container with 3 divs
+        </div>
+        
+        <div class="slide-ref">Slide 7: Before and After</div>
+        <div class="teaching-tip">
+            Toggle display: flex on/off multiple times to show the difference
+        </div>
+        
+        <div class="notes-alert">
+            Students note: Only "DIRECT" children become flex items
+        </div>
+    </div>
+
+    <!-- Properties Section -->
+    <div class="section">
+        <h2>PROPERTIES DEEP DIVE (Minutes 20-25)</h2>
+        <div class="timing-note">5 minutes</div>
+        
+        <div class="slide-ref">Slide 8: Container vs. Items Properties</div>
+        <div class="critical">Students MUST understand which properties go where!</div>
+        
+        <div class="notes-alert">
+            Students fill in Container Properties table:
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Common Values</th>
+                </tr>
+                <tr>
+                    <td>flex-direction</td>
+                    <td>row, column</td>
+                </tr>
+                <tr>
+                    <td>justify-content</td>
+                    <td>center, space-between, flex-start</td>
+                </tr>
+                <tr>
+                    <td>align-items</td>
+                    <td>center, flex-start, stretch</td>
+                </tr>
+                <tr>
+                    <td>flex-wrap</td>
+                    <td>wrap, nowrap</td>
+                </tr>
+                <tr>
+                    <td>gap</td>
+                    <td>20px (any unit)</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="notes-alert">
+            Students fill in Item Properties - defaults:
+            <br>• flex-grow: 0
+            <br>• flex-shrink: 1
+            <br>• flex-basis: auto
+        </div>
+        
+        <div class="emphasis">flex-shrink defaults to 1 - items shrink by default!</div>
+    </div>
+
+    <!-- Axes Understanding -->
+    <div class="section">
+        <h2>UNDERSTANDING AXES (Minutes 25-28)</h2>
+        <div class="timing-note">3 minutes</div>
+        
+        <div class="slide-ref">Slide 9: Main and Cross Axis</div>
+        <div class="critical">This concept is FUNDAMENTAL!</div>
+        
+        <div class="demo-box">
+            Use hand gestures: horizontal for main (row), vertical for cross
+        </div>
+        
+        <div class="notes-alert">
+            Students fill in:
+            <br>Row: main = horizontal, cross = vertical
+            <br>Column: main = vertical, cross = horizontal
+        </div>
+        
+        <div class="teaching-tip">
+            Memory trick: "justify-MAIN, align-CROSS" - repeat 3 times with class
+        </div>
+        
+        <div class="notes-alert">
+            Key rule: justify-content = MAIN axis, align-items = CROSS axis
+        </div>
+    </div>
+
+    <!-- Common Patterns -->
+    <div class="section">
+        <h2>COMMON PATTERNS (Minutes 28-32)</h2>
+        <div class="timing-note">4 minutes</div>
+        
+        <div class="slide-ref">Slide 10: Common Flexbox Patterns</div>
+        
+        <div class="notes-alert">
+            Students complete the patterns:
+            <br>1. Perfect Centering: display: flex, justify-content: center, align-items: center
+            <br>2. Navigation: display: flex, justify-content: space-between, align-items: center
+            <br>3. Cards: display: flex, flex-wrap: wrap, gap: 20px
+        </div>
+        
+        <div class="demo-box">
+            LIVE CODE at least one pattern (centering is quickest)
+        </div>
+    </div>
+
+    <!-- Practice Exercise -->
+    <div class="section">
+        <h2>PRACTICE EXERCISE (Minutes 32-38)</h2>
+        <div class="timing-note">6 minutes - Critical hands-on time!</div>
+        
+        <div class="slide-ref">Slide 14: Practice Exercise</div>
+        <div class="emphasis">Give students 3 minutes to attempt, then solve together</div>
+        
+        <div class="notes-alert">
+            Students complete in their notes:
+            <br>• .header: display: flex, justify-content: space-between, align-items: center
+            <br>• .nav: display: flex, gap: 2rem
+        </div>
+        
+        <div class="slide-ref">Slide 15: Solution</div>
+        <div class="demo-box">
+            Build the solution WITH them, not just show it
+        </div>
+        
+        <div class="teaching-tip">
+            If students struggle, hint: "Logo left, nav center, button right = space-between!"
+        </div>
+    </div>
+
+    <!-- Gotchas and Resources -->
+    <div class="section">
+        <h2>COMMON GOTCHAS & WRAP-UP (Minutes 38-45)</h2>
+        <div class="timing-note">7 minutes</div>
+        
+        <div class="slide-ref">Slide 13: Common Gotchas</div>
+        <div class="notes-alert">
+            Students fill in gotchas:
+            <br>1. Margins don't collapse in flex containers
+            <br>2. float, clear, vertical-align don't work
+            <br>3. flex-shrink default is 1
+            <br>4. Only direct children are flex items
+        </div>
+        
+        <div class="critical">Emphasize: flex-shrink: 1 catches everyone!</div>
+        
+        <div class="slide-ref">Slide 17: Resources</div>
+        <div class="demo-box">
+            Actually navigate to Flexbox Froggy - show first level
+        </div>
+        
+        <div class="notes-alert">
+            Students write down:
+            <br>• flexboxfroggy.com
+            <br>• MDN Flexbox Guide
+        </div>
+    </div>
+
+    <!-- Homework Reminder -->
+    <div class="section">
+        <h2>HOMEWORK EMPHASIS (Minutes 45-48)</h2>
+        <div class="timing-note">3 minutes - MUST NOT SKIP!</div>
+        
+        <div class="slide-ref">Slide 19: Homework</div>
+        <div class="critical">
+            CRITICAL HOMEWORK: "Flexbox - Growing and Shrinking" on Odin Project
+        </div>
+        
+        <div class="emphasis">
+            Write on board: "HOMEWORK: Flexbox Growing & Shrinking - Due Next Class"
+        </div>
+        
+        <div class="notes-alert">
+            Students should highlight/star the homework section in their notes
+        </div>
+        
+        <div class="teaching-tip">
+            Preview: "Next class builds directly on this - you'll be lost without the homework!"
+        </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="section">
+        <h2>CLOSING (Minutes 48-50)</h2>
+        <div class="timing-note">2 minutes</div>
+        
+        <div class="slide-ref">Slide 20: Thank You</div>
+        <ul>
+            <li>Recap: "You now know the most important layout tool!"</li>
+            <li>Encourage practice with Flexbox Froggy</li>
+            <li>Questions?</li>
+            <li>Final homework reminder</li>
+        </ul>
+    </div>
+
+    <!-- Answer Keys Section -->
+    <div class="section">
+        <h2>QUICK ANSWER KEYS FOR GUIDED NOTES</h2>
+        
+        <h3>Key Blanks to Check:</h3>
+        <ul>
+            <li><strong>Flexbox stands for:</strong> "Flexible" Box Layout</li>
+            <li><strong>Container property:</strong> display: flex</li>
+            <li><strong>justify-content works on:</strong> main axis</li>
+            <li><strong>align-items works on:</strong> cross axis</li>
+            <li><strong>Default flex-shrink:</strong> 1</li>
+            <li><strong>Default flex-grow:</strong> 0</li>
+            <li><strong>Perfect centering:</strong> justify-content: center, align-items: center</li>
+            <li><strong>Only ___ children:</strong> DIRECT</li>
+        </ul>
+    </div>
+
+    <!-- Common Student Questions -->
+    <div class="section">
+        <h2>COMMON STUDENT QUESTIONS</h2>
+        
+        <ol>
+            <li>
+                <strong>Q: "Why isn't my item flexing?"</strong>
+                <br>A: Check if it's a direct child. Grandchildren don't flex!
+            </li>
+            <li>
+                <strong>Q: "What's the difference between align-items and align-content?"</strong>
+                <br>A: Save align-content for when we cover flex-wrap next class
+            </li>
+            <li>
+                <strong>Q: "Can I use Flexbox and Grid together?"</strong>
+                <br>A: Yes! Grid for layout, Flexbox for components (we'll cover Grid later)
+            </li>
+            <li>
+                <strong>Q: "Why is my item shrinking when I don't want it to?"</strong>
+                <br>A: Default flex-shrink is 1. Set flex-shrink: 0 to prevent
+            </li>
+        </ol>
+    </div>
+
+    <!-- Post-Class Checklist -->
+    <div class="section">
+        <h2>POST-CLASS CHECKLIST</h2>
+        <ul>
+            <li>☐ Post homework reminder in D2L/Canvas</li>
+            <li>☐ Share Flexbox Froggy link in class channel</li>
+            <li>☐ Note students who struggled with exercise</li>
+            <li>☐ Prepare Growing & Shrinking examples for next class</li>
+            <li>☐ Check that students have guided notes for reference</li>
+            <li>☐ Consider office hours announcement if many struggled</li>
+        </ul>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>INSTRUCTOR NOTES</h2>
+        <div style="border: 1px dashed #000; min-height: 150px; padding: 10px;">
+            <p><em>Space for notes during/after class:</em></p>
+            <br><br><br><br><br>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: Flexbox is THE gateway to modern CSS!</strong></p>
+        <p>Your enthusiasm here sets the tone for all future CSS layout lessons.</p>
+        <p>If they master Flexbox, everything else becomes easier.</p>
+    </div>
+</body>
+</html>
