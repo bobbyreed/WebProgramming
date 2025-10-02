@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Notes - Day 16: Midterm & Landing Page Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            color: black;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            margin-bottom: 5px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 14pt;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        h2 {
+            font-size: 16pt;
+            margin-top: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+        
+        .slide-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 5px solid #000;
+        }
+        
+        .slide-section h3 {
+            font-size: 12pt;
+            margin: 15px 0 8px 0;
+            font-weight: bold;
+        }
+        
+        .timing {
+            background: #000;
+            color: #fff;
+            padding: 5px 10px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .teaching-tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 TIP: ";
+            color: #1976d2;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .demo-note {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .demo-note::before {
+            content: "🖥️ DEMO: ";
+            color: #c2185b;
+            font-weight: bold;
+        }
+        
+        .emphasis {
+            background: #ffe0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #d32f2f;
+            font-weight: bold;
+        }
+        
+        .emphasis::before {
+            content: "⚠️ EMPHASIZE: ";
+            color: #d32f2f;
+        }
+        
+        .notes-alert {
+            background: #ffeb3b;
+            padding: 10px;
+            border: 2px solid #f57c00;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .notes-alert::before {
+            content: "📝 GUIDED NOTES: ";
+            color: #ff6600;
+        }
+        
+        .exam-note {
+            background: #fff3e0;
+            border-left: 4px solid #ff6f00;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .exam-note::before {
+            content: "📋 EXAM: ";
+            color: #ff6f00;
+            font-weight: bold;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        
+        ul, ol {
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>INSTRUCTOR NOTES</h1>
+    <div class="subtitle">Day 16: Midterm Exam & Landing Page Project Work</div>
+    <div class="subtitle">CSCI 3403 - Web Programming | Week 8, Class 16</div>
+
+    <!-- Overview Section -->
+    <div class="section">
+        <h2>CLASS OVERVIEW</h2>
+        
+        <p><strong>Total Time:</strong> 80 minutes</p>
+        <p><strong>Format:</strong> Exam (30 min) + Project Work Time (50 min)</p>
+        
+        <h3>Learning Objectives</h3>
+        <ul>
+            <li>Assess student understanding of HTML, CSS, and Flexbox through midterm exam</li>
+            <li>Apply learned concepts to build a complete landing page from design</li>
+            <li>Practice Git workflow and deployment to GitHub Pages</li>
+            <li>Develop problem-solving skills by translating design to code</li>
+        </ul>
+        
+        <h3>Materials Needed</h3>
+        <ul class="checklist">
+            <li>Midterm exam printed or available in LMS (one per student)</li>
+            <li>Landing page design images from The Odin Project</li>
+            <li>Projector for displaying code examples during work time</li>
+            <li>Timer visible to students (30 min for exam)</li>
+            <li>Reference sheet available on screen (optional - your call)</li>
+        </ul>
+        
+        <h3>Pre-Class Setup</h3>
+        <ul class="checklist">
+            <li>Have midterm exams ready to distribute</li>
+            <li>Clear desk space for exam conditions</li>
+            <li>Load landing page design images on your computer</li>
+            <li>Have example code snippets ready for common issues</li>
+            <li>Prepare GitHub profile README extra credit link</li>
+        </ul>
+    </div>
+
+    <!-- Slide-by-Slide Breakdown -->
+    <h2>SLIDE-BY-SLIDE TEACHING GUIDE</h2>
+
+    <!-- Slide 1 -->
+    <div class="slide-section">
+        <h3>Slide 1: Title & Agenda</h3>
+        <div class="timing">0:00-0:03 (3 minutes)</div>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"Good morning! Today is a two-part class. First 30 minutes: midterm exam. Remainder: Landing Page project work."</li>
+            <li>"The midterm covers everything through Flexbox. It's open-note but you work independently."</li>
+            <li>"After the exam, you'll have dedicated time to work on your Landing Page with me here to help."</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Keep this intro brief - students are often nervous before exams. Reassure them but don't belabor it.
+        </div>
+        
+        <div class="exam-note">
+            Review exam rules: Can use notes/documentation, no collaboration, raise hand for questions.
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide-section">
+        <h3>Slide 2: Midterm Quick Reference</h3>
+        <div class="timing">0:03-0:30 (27 minutes)</div>
+        
+        <p><strong>Decision Point: Display Reference or Not?</strong></p>
+        <p>You can choose to:</p>
+        <ul>
+            <li><strong>Option A:</strong> Leave this slide up during exam as quick reference</li>
+            <li><strong>Option B:</strong> Hide slides and make exam closed-reference</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Most instructors find leaving basic syntax reference reduces anxiety without compromising assessment. The exam should test understanding, not memorization of syntax.
+        </div>
+        
+        <p><strong>During Exam (30 minutes):</strong></p>
+        <ul>
+            <li>Distribute exams at 0:03</li>
+            <li>Set visible timer for 30 minutes</li>
+            <li>Walk around quietly - be available for clarifying questions only</li>
+            <li>Give 10-minute and 5-minute warnings</li>
+            <li>Collect exams promptly at 0:30</li>
+        </ul>
+        
+        <div class="emphasis">
+            Do NOT help with exam content. Only clarify wording if a question is genuinely ambiguous.
+        </div>
+        
+        <div class="exam-note">
+            Watch for: students finishing very early (may need challenge), students struggling extensively (note for follow-up).
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide-section">
+        <h3>Slide 3: Landing Page Project Overview</h3>
+        <div class="timing">0:30-0:35 (5 minutes)</div>
+        
+        <p><strong>Transition from Exam:</strong></p>
+        <ul>
+            <li>"Great work everyone! Exams are done. Now let's switch gears to something creative."</li>
+            <li>"You're building a complete landing page from a design. This is what real web developers do daily."</li>
+        </ul>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"The Landing Page project is your chance to put together everything we've learned."</li>
+            <li>"You have a design to match - it doesn't need to be pixel-perfect, but it should be recognizable."</li>
+            <li>"This is due NEXT Thursday night. Use today's class time wisely!"</li>
+            <li>"Feel free to customize the content - make it about something you're interested in."</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Show enthusiasm here! This project is where things "click" for many students. Your energy matters.
+        </div>
+        
+        <div class="demo-note">
+            Pull up the design images from The Odin Project. Show both the full design and the colors/fonts specification sheet.
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide-section">
+        <h3>Slide 4: Breaking Down the Design</h3>
+        <div class="timing">0:35-0:42 (7 minutes)</div>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"Before you code, you need to analyze the design. What sections do you see?"</li>
+            <li>"Let's identify them together: Hero with nav, Information cards, Quote, Call-to-action, Footer."</li>
+            <li>"Each section is a container. Think about how you'll structure your HTML first."</li>
+        </ul>
+        
+        <div class="demo-note">
+            Use your cursor or drawing tool to outline each section on the design image. Draw boxes around them.
+        </div>
+        
+        <p><strong>Key Teaching Points:</strong></p>
+        <ul>
+            <li>Hero section spans full width with dark background</li>
+            <li>Information section has 4 cards - perfect for Flexbox!</li>
+            <li>Quote section uses italics and different background</li>
+            <li>CTA (Call-to-Action) section is similar to hero but smaller</li>
+            <li>Footer is simple, centered text</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Ask students: "If you were building this, which section would you start with?" Most say hero - validate this approach.
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide-section">
+        <h3>Slide 5: Project Checkpoints</h3>
+        <div class="timing">0:42-0:45 (3 minutes)</div>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"Here's your roadmap. Don't try to do everything at once."</li>
+            <li>"Start with structure, then style. HTML first, CSS second."</li>
+            <li>"If you finish early, the extension challenges are there. Custom animations are fun!"</li>
+        </ul>
+        
+        <div class="emphasis">
+            Students often jump straight to CSS. Reinforce: "Get your HTML working first. You can't style what doesn't exist."
+        </div>
+        
+        <p><strong>Recommended Student Timeline:</strong></p>
+        <ul>
+            <li>Today (in class): Complete HTML structure + start hero styling</li>
+            <li>By Monday: All sections styled</li>
+            <li>By Wednesday: Polish and deploy</li>
+            <li>Thursday: Final touches and submit</li>
+        </ul>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide-section">
+        <h3>Slide 6: HTML Structure Example</h3>
+        <div class="timing">0:45-0:50 (5 minutes)</div>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"Here's the skeleton. Notice the semantic HTML comments - use these to organize."</li>
+            <li>"Each major section gets its own div or semantic tag like <code>&lt;header&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>."</li>
+            <li>"The meta viewport tag is crucial - it makes your site mobile-friendly."</li>
+        </ul>
+        
+        <div class="demo-note">
+            If time allows, quickly live-code the basic structure in VS Code. Show them setting up the files.
+        </div>
+        
+        <div class="teaching-tip">
+            Mention: "Keep your HTML clean and organized. Future-you will thank present-you when debugging CSS."
+        </div>
+    </div>
+
+    <!-- Slides 7-16 -->
+    <div class="slide-section">
+        <h3>Slides 7-16: Section-by-Section Guides</h3>
+        <div class="timing">0:50-0:60 (10 minutes - as needed)</div>
+        
+        <p><strong>Purpose:</strong> Reference slides for students to consult during work time</p>
+        
+        <div class="teaching-tip">
+            Don't lecture through all of these. Students are at different paces. Use these slides when:
+            <ul>
+                <li>A student asks how to build a specific section</li>
+                <li>Multiple students are stuck on the same thing</li>
+                <li>You want to demo a tricky concept (like the info cards Flexbox)</li>
+            </ul>
+        </div>
+        
+        <p><strong>Slide Topics:</strong></p>
+        <ul>
+            <li><strong>Slide 7:</strong> Hero Section - Emphasize Flexbox for layout</li>
+            <li><strong>Slide 8:</strong> Navigation Bar - Space-between is your friend</li>
+            <li><strong>Slide 9:</strong> Hero Content - Flex-direction and alignment</li>
+            <li><strong>Slide 10:</strong> Information Section - Grid or Flexbox with wrap</li>
+            <li><strong>Slide 11:</strong> Cards - Box model practice (padding, border, border-radius)</li>
+            <li><strong>Slide 12:</strong> Quote Section - Background color and italics</li>
+            <li><strong>Slide 13:</strong> CTA Section - Reuse hero patterns</li>
+            <li><strong>Slide 14:</strong> Footer - Simple centering</li>
+            <li><strong>Slide 15:</strong> GitHub Deployment - Step-by-step</li>
+            <li><strong>Slide 16:</strong> Troubleshooting Tips - Common errors</li>
+        </ul>
+        
+        <div class="emphasis">
+            The most common struggle points will be:
+            <ol>
+                <li>Information cards layout (Flexbox with gap and flex-wrap)</li>
+                <li>Getting vertical centering right in hero section</li>
+                <li>Color matching (have the color codes handy: #1F2937, #3882F6, #E5E7EB, etc.)</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 17 -->
+    <div class="slide-section">
+        <h3>Slide 17: Let's Build!</h3>
+        <div class="timing">0:60-0:80 (20 minutes - Work Time)</div>
+        
+        <p><strong>What to Say:</strong></p>
+        <ul>
+            <li>"Alright, it's work time! Start with your Git repository setup if you haven't already."</li>
+            <li>"I'll be walking around. Raise your hand if you get stuck for more than 5 minutes."</li>
+            <li>"Remember: HTML first, CSS second. Structure before style."</li>
+        </ul>
+        
+        <p><strong>During Work Time - Your Role:</strong></p>
+        <ul>
+            <li><strong>Circulate constantly</strong> - Don't sit at your desk</li>
+            <li><strong>Check in with quiet students</strong> - "How's it going? Need anything?"</li>
+            <li><strong>Answer questions with questions</strong> - "What have you tried? What did you expect to happen?"</li>
+            <li><strong>Debug together</strong> - Don't just give answers, guide them to solutions</li>
+            <li><strong>Celebrate small wins</strong> - "Great! Your hero section looks good!"</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            If you see 3+ students stuck on the same issue, pause the class for a 2-minute mini-lesson addressing it.
+        </div>
+        
+        <div class="demo-note">
+            Keep VS Code open with a working example. If a student is completely lost, show them your code briefly, then have them close your screen and recreate it.
+        </div>
+        
+        <p><strong>Common Issues You'll See:</strong></p>
+        <ol>
+            <li><strong>Flexbox not working:</strong> "Did you set display: flex on the parent?"</li>
+            <li><strong>Colors not matching:</strong> "Use the exact hex codes from the design spec"</li>
+            <li><strong>Things not centering:</strong> "Align-items for vertical, justify-content for horizontal"</li>
+            <li><strong>Box model confusion:</strong> "Draw out the box model on paper first"</li>
+            <li><strong>Git issues:</strong> "Did you initialize the repo? Is your remote set up?"</li>
+        </ol>
+    </div>
+
+    <!-- Common Questions Section -->
+    <div class="section">
+        <h2>COMMON STUDENT QUESTIONS & ANSWERS</h2>
+        
+        <ol>
+            <li>
+                <strong>Q: "Do I have to use the exact same colors and fonts?"</strong>
+                <br>A: Colors yes (practice matching specs), fonts can be similar if the exact ones are hard to get.
+            </li>
+            <li>
+                <strong>Q: "Can I change the content to be about something else?"</strong>
+                <br>A: Absolutely! In fact, I encourage it. Make it yours.
+            </li>
+            <li>
+                <strong>Q: "My nav links don't go anywhere. Is that okay?"</strong>
+                <br>A: Yes, use # as the href. They're placeholders on a single-page site.
+            </li>
+            <li>
+                <strong>Q: "Should I use Flexbox or Grid for the information cards?"</strong>
+                <br>A: Either works! Flexbox with flex-wrap is what we've learned. We'll cover Grid later.
+            </li>
+            <li>
+                <strong>Q: "How do I get the image placeholder?"</strong>
+                <br>A: Use https://via.placeholder.com or find a real image that fits your theme.
+            </li>
+            <li>
+                <strong>Q: "My GitHub Pages isn't showing my CSS. Why?"</strong>
+                <br>A: Check the file path. Is style.css in the same folder as index.html? Is your link tag correct?
+            </li>
+            <li>
+                <strong>Q: "I'm stuck and don't know where to start."</strong>
+                <br>A: Start with just the HTML. Don't think about CSS yet. Build the structure first.
+            </li>
+            <li>
+                <strong>Q: "Can I use a CSS framework like Bootstrap?"</strong>
+                <br>A: No, this project is about learning the fundamentals. Write your own CSS.
+            </li>
+        </ol>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div class="section">
+        <h2>QUICK TROUBLESHOOTING GUIDE</h2>
+        
+        <h3>If Students Can't Get Started:</h3>
+        <ul>
+            <li>Sit with them for 2 minutes</li>
+            <li>Have them create index.html and style.css</li>
+            <li>Type the basic boilerplate together</li>
+            <li>Point them to Slide 6 for structure reference</li>
+        </ul>
+        
+        <h3>If Someone Finishes Early:</h3>
+        <ul>
+            <li>Have they deployed to GitHub Pages? If not, do that first</li>
+            <li>Extension: Add hover effects to buttons</li>
+            <li>Extension: Make the nav sticky on scroll</li>
+            <li>Extension: Add subtle animations</li>
+            <li>Extension: Make it responsive (mobile-friendly)</li>
+        </ul>
+        
+        <h3>If the Whole Class is Stuck:</h3>
+        <ul>
+            <li>Stop everyone, pull up the slides</li>
+            <li>Do a 5-minute live demo of the problematic section</li>
+            <li>Answer clarifying questions</li>
+            <li>Resume work time</li>
+        </ul>
+    </div>
+
+    <!-- Post-Class Checklist -->
+    <div class="section">
+        <h2>POST-CLASS CHECKLIST</h2>
+        
+        <ul class="checklist">
+            <li>Grade midterm exams within 48 hours if possible</li>
+            <li>Note students who struggled - offer office hours</li>
+            <li>Post reminder about Landing Page deadline (next Thursday)</li>
+            <li>Share any helpful resources discussed in class</li>
+            <li>Update D2L/Canvas with submission requirements</li>
+            <li>Check GitHub profile README extra credit submissions</li>
+            <li>Prepare for next class (Landing Page Show'n'Tell after Fall Break)</li>
+        </ul>
+    </div>
+
+    <!-- Grading Notes -->
+    <div class="section">
+        <h2>LANDING PAGE PROJECT GRADING RUBRIC REMINDER</h2>
+        
+        <p><strong>Total: 100 points</strong></p>
+        
+        <ul>
+            <li><strong>Structure (25 pts):</strong> Proper HTML5 semantic tags, all sections present</li>
+            <li><strong>Styling (40 pts):</strong> Closely matches design, appropriate use of Flexbox, colors/fonts match</li>
+            <li><strong>Code Quality (15 pts):</strong> Clean, organized code, good naming conventions</li>
+            <li><strong>Deployment (10 pts):</strong> Successfully deployed to GitHub Pages, site loads correctly</li>
+            <li><strong>Git Usage (10 pts):</strong> Multiple commits with good messages, proper repository setup</li>
+        </ul>
+        
+        <div class="teaching-tip">
+            Don't expect perfection. Focus on effort and understanding. A "B" project should be recognizable as the landing page design even if it's not pixel-perfect.
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+        <h2>INSTRUCTOR NOTES SECTION</h2>
+        <div style="border: 1px dashed #000; min-height: 300px; padding: 10px; margin-top: 20px;">
+            <p><em>Space for notes during/after class:</em></p>
+            <br>
+            <p><strong>Midterm Performance Notes:</strong></p>
+            <p>Overall class performance: _____/10</p>
+            <p>Topics students struggled with:</p>
+            <br><br>
+            <p>Topics students mastered:</p>
+            <br><br>
+            <p><strong>Work Session Notes:</strong></p>
+            <p>Most common questions/issues:</p>
+            <br><br>
+            <p>Students who needed extra support:</p>
+            <br><br>
+            <p>Students who excelled/finished early:</p>
+            <br><br>
+            <p><strong>Changes for Next Time:</strong></p>
+            <br><br><br>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #000;">
+        <p><strong>Remember: This is a milestone class!</strong></p>
+        <p>The midterm shows how far students have come. The Landing Page project shows what they can build.</p>
+        <p>Your support during work time makes all the difference. Be available, be encouraging, be patient.</p>
+        <p style="margin-top: 15px; font-style: italic;">Students who struggle today often surprise you with amazing projects by deadline!</p>
+    </div>
+</body>
+</html>
