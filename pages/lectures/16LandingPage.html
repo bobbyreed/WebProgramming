@@ -3,107 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 16: Midterm & Landing Page Project - CSCI 3403</title>
-    
-    <!-- OCU Branded Presentation Styles with Theme Support -->
-    <link rel="stylesheet" href="../../styles/presentation.css">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-    
-    <!-- Lecture-Specific Styles -->
-    <style>
-        .reference-card {
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid var(--ocu-true-blue);
-        }
-        
-        .project-section {
-            background: var(--bg-accent);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px var(--shadow-color);
-        }
-        
-        .checkpoint-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .checkpoint-item {
-            background: var(--slide-bg);
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
-        }
-        
-        .design-image {
-            max-width: 100%;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        
-        .structure-hint {
-            font-family: 'Courier New', monospace;
-            background: var(--code-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-        
-        .game-showcase {
-            background: linear-gradient(135deg, #1a472a 0%, #2d5016 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .game-feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .zombie-emoji {
-            font-size: 3em;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-    </style>
+    <title>Lecture 16: Landing Page Project</title>
+    <link rel="stylesheet" href="../../css/presentation.css">
 </head>
 <body>
-    
-    <div class="presentation-container">
-        <!-- Timer display -->
-        <div class="timer-display" id="timer-display">
-            <span id="timer-text">Day 16 - Midterm & Landing Page
-                 <button class="home"><a href="../../index.html">Home</a></button>
-            </span>
-        </div>
-
-        <!-- Slide 1: Title & Agenda -->
-        <div class="slide active">
-            <h1>Day 16: Midterm & Landing Page Project</h1>
-            <h2>Work Day <span class="emoji">📝💻</span></h2>
+    <div class="presentation">
+        <!-- Title Slide -->
+        <div class="slide">
+            <h1>Landing Page Project <span class="emoji">🎨</span></h1>
             <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
             <p style="font-size: 1.3em;">Week 8, Class 16</p>
             <div class="activity-box" style="margin-top: 40px;">
                 <h3>Today's Schedule:</h3>
                 <ul style="font-size: 1.2em;">
                     <li>⏰ First 30 minutes: Midterm Exam</li>
-                    <li>🧟 Next 10 minutes: Flexbox Zombies Preview</li>
                     <li>🚀 Remainder: Landing Page Project Work</li>
                 </ul>
             </div>
@@ -137,57 +50,7 @@
             </div>
         </div>
 
-        <!-- Slide 3: Flexbox Zombies Introduction -->
-        <div class="slide">
-            <h1>Flexbox Zombies <span class="zombie-emoji">🧟</span></h1>
-            <h2>Learn Flexbox by Surviving the Zombie Apocalypse!</h2>
-            <div class="game-showcase">
-                <p style="color: white; font-size: 1.3em; margin-bottom: 20px;">
-                    Use CSS Flexbox properties as weapons to survive!
-                </p>
-                <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                    <div class="game-feature">
-                        <h3 style="color: #4ade80;">🎯 Aim with Flexbox</h3>
-                        <p style="color: white;">Use justify-content and align-items to position your crosshair</p>
-                    </div>
-                    <div class="game-feature">
-                        <h3 style="color: #4ade80;">🎮 Interactive Learning</h3>
-                        <p style="color: white;">See immediate visual feedback for every CSS property</p>
-                    </div>
-                    <div class="game-feature">
-                        <h3 style="color: #4ade80;">📚 Master the Concepts</h3>
-                        <p style="color: white;">Practice the exact skills you need for your Landing Page</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tip-box" style="margin-top: 20px;">
-                <strong>Website:</strong> flexboxzombies.com | <strong>First section is FREE!</strong>
-            </div>
-        </div>
-
-        <!-- Slide 4: Flexbox Zombies Demo -->
-        <div class="slide">
-            <h1>Let's Play! <span class="emoji">🎮</span></h1>
-            <h2>Live Demo Time</h2>
-            <div class="demo-box" style="font-size: 1.3em;">
-                <p><strong>What we'll see:</strong></p>
-                <ul>
-                    <li>🎯 How <code>justify-content</code> moves the crosshair left/right</li>
-                    <li>📍 How <code>align-items</code> moves it up/down</li>
-                    <li>🔄 How <code>flex-direction</code> changes everything</li>
-                    <li>⚡ Immediate visual feedback for your code</li>
-                </ul>
-            </div>
-            <div class="activity-box" style="margin-top: 30px;">
-                <h3>🧟 Let's Navigate to flexboxzombies.com</h3>
-                <p>We'll play through the first level together!</p>
-            </div>
-            <div class="warning-box" style="margin-top: 20px;">
-                <strong>Pro Tip:</strong> The skills you learn here are EXACTLY what you'll use in your Landing Page project!
-            </div>
-        </div>
-
-        <!-- Slide 5: Landing Page Project Overview -->
+        <!-- Slide 3: Landing Page Project Overview -->
         <div class="slide">
             <h1>Landing Page Project <span class="emoji">🎨</span></h1>
             <h2>Creating a Complete Web Page from Design</h2>
@@ -199,82 +62,105 @@
                     <li>🎯 Practice HTML & CSS skills</li>
                     <li>🚀 Deploy to GitHub Pages</li>
                     <li>✨ Feel free to customize colors and content</li>
-                    <li>🧟 Use those Flexbox Zombies skills!</li>
                 </ul>
             </div>
-            <div class="warning-box">
-                <strong>Due Date:</strong> Next Thursday Night (11:59 PM)
-            </div>
-            <div class="tip-box">
-                <strong>Remember:</strong> This project combines EVERYTHING we've learned!
-            </div>
-        </div>
-
-        <!-- Slide 6: Breaking Down the Design -->
-        <div class="slide">
-            <h1>Analyzing the Design <span class="emoji">🔍</span></h1>
-            <h2>Think Before You Code!</h2>
-            <div class="activity-box">
-                <h3>Identify the Sections:</h3>
-                <ol style="font-size: 1.2em;">
-                    <li><strong>Hero Section</strong> - Dark background with nav + content (Flexbox!)</li>
-                    <li><strong>Information Section</strong> - 4 cards in a row (Flexbox!)</li>
-                    <li><strong>Quote Section</strong> - Italicized text with gray background</li>
-                    <li><strong>Call-to-Action</strong> - Similar to hero, centered button (Flexbox!)</li>
-                    <li><strong>Footer</strong> - Simple centered text</li>
-                </ol>
-            </div>
-            <div class="tip-box">
-                💡 <strong>Strategy:</strong> Build one section at a time, HTML first, then CSS
-            </div>
-        </div>
-
-        <!-- Slide 7: Project Checkpoints -->
-        <div class="slide">
-            <h1>Your Roadmap <span class="emoji">🗺️</span></h1>
-            <h2>Step-by-Step Approach</h2>
-            <div class="checkpoint-list">
-                <div class="checkpoint-item">
-                    <h3>✅ Phase 1: Setup</h3>
-                    <ul>
-                        <li>Create Git repository</li>
-                        <li>Set up index.html & style.css</li>
-                        <li>Link stylesheet</li>
-                    </ul>
-                </div>
-                <div class="checkpoint-item">
-                    <h3>✅ Phase 2: HTML Structure</h3>
-                    <ul>
-                        <li>Create all sections</li>
-                        <li>Add content placeholders</li>
-                        <li>Test in browser</li>
-                    </ul>
-                </div>
-                <div class="checkpoint-item">
-                    <h3>✅ Phase 3: Basic Styling</h3>
-                    <ul>
-                        <li>Colors and fonts</li>
-                        <li>Basic layout</li>
-                        <li>Spacing (margin/padding)</li>
-                    </ul>
-                </div>
-                <div class="checkpoint-item">
-                    <h3>✅ Phase 4: Flexbox Layout</h3>
-                    <ul>
-                        <li>Navigation bar</li>
-                        <li>Hero content alignment</li>
-                        <li>Information cards</li>
-                    </ul>
-                </div>
-            </div>
             <div class="demo-box">
-                <strong>Extension Ideas:</strong> Hover effects, animations, custom images, responsive design
+                <h3>What You'll Build:</h3>
+                <p>A professional landing page with navigation, hero section, information cards, testimonials, and call-to-action</p>
             </div>
         </div>
 
-        <!-- Slide 8: HTML Structure Example -->
+        <!-- NEW SLIDE: Story 1 - The First Website Ever Created (Part 1) -->
         <div class="slide">
-            <h1>Starting Structure <span class="emoji">🏗️</span></h1>
+            <h1>A Moment in Web History <span class="emoji">🌐</span></h1>
+            <h2>The First Website Ever Created</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
+                <h3 style="color: white;">August 6, 1991</h3>
+                <p style="font-size: 1.2em; margin: 20px 0;">Tim Berners-Lee published the first-ever website while working at CERN</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="font-size: 1.1em;"><strong>The site:</strong> http://info.cern.ch</p>
+                    <p style="font-size: 1.1em; margin-top: 15px;"><strong>The content:</strong> Described what the World Wide Web was and how to use it</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px; font-size: 0.9em; font-style: italic;">
+                <p>Citation: HISTORY - "The World's First Web Site"</p>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Story 1 - The First Website Ever Created (Part 2) -->
+        <div class="slide">
+            <h1>A Choice That Changed Everything <span class="emoji">💡</span></h1>
+            <div class="reference-card" style="background: #f0f9ff; border-left: 5px solid #3b82f6;">
+                <h3>Tim Berners-Lee's Decision:</h3>
+                <p style="font-size: 1.2em; line-height: 1.6;">He rejected CERN's call to patent his web technology, wanting the web to be <strong>open and free</strong> so it could expand and evolve as rapidly as possible.</p>
+                <p style="margin-top: 20px; font-size: 1.1em;">He didn't try to cash in on his invention — and because of that, we have the web as we know it today.</p>
+            </div>
+            <div class="demo-box" style="margin-top: 30px; background: #fef3c7; border: 2px solid #f59e0b;">
+                <h3>Connection to Your Project:</h3>
+                <p style="font-size: 1.2em;">Even the simplest landing page can have tremendous impact. Your project today follows in the footsteps of that very first website.</p>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>💭 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">If Tim Berners-Lee had patented the web, how might the internet be different today? Would we even have free landing pages to create?</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Project Requirements -->
+        <div class="slide">
+            <h1>Project Requirements <span class="emoji">📋</span></h1>
+            <div class="requirements-grid">
+                <div class="requirement-item">
+                    <h3>✅ Must Have</h3>
+                    <ul>
+                        <li>Header with navigation</li>
+                        <li>Hero section</li>
+                        <li>Information section</li>
+                        <li>Quote section</li>
+                        <li>Call-to-action</li>
+                        <li>Footer</li>
+                    </ul>
+                </div>
+                <div class="requirement-item">
+                    <h3>🎨 Styling</h3>
+                    <ul>
+                        <li>Match provided colors</li>
+                        <li>Appropriate fonts</li>
+                        <li>Proper spacing</li>
+                        <li>Flexbox layout</li>
+                    </ul>
+                </div>
+                <div class="requirement-item">
+                    <h3>🚀 Deployment</h3>
+                    <ul>
+                        <li>Push to GitHub</li>
+                        <li>Enable GitHub Pages</li>
+                        <li>Verify live site works</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Design Reference Images -->
+        <div class="slide">
+            <h1>Design Reference <span class="emoji">🎯</span></h1>
+            <h2>Follow This Layout</h2>
+            <div class="demo-box">
+                <p>Reference images are in the project repository:</p>
+                <ul style="font-size: 1.2em;">
+                    <li><strong>01.png</strong> - Full page layout</li>
+                    <li><strong>02.png</strong> - Colors and fonts</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <h3>💡 Pro Tip:</h3>
+                <p>Keep the design images open in a separate window as you code. Switch back and forth to check your progress!</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: HTML Structure -->
+        <div class="slide">
+            <h1>HTML Structure Overview <span class="emoji">🏗️</span></h1>
+            <h2>The Building Blocks</h2>
             <div class="code-example">
                 &lt;!DOCTYPE html&gt;<br>
                 &lt;html lang="en"&gt;<br>
@@ -295,7 +181,7 @@
             </div>
         </div>
 
-        <!-- Slide 9: Hero Section -->
+        <!-- Slide 7: Hero Section -->
         <div class="slide">
             <h1>Building the Hero Section <span class="emoji">🦸</span></h1>
             <div class="code-example">
@@ -314,130 +200,337 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;This website has some subtext...&lt;/p&gt;<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&gt;Sign up&lt;/button&gt;<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="placeholder.jpg" alt="hero image"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="hero-image"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="placeholder.jpg" alt="placeholder"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
                 &nbsp;&nbsp;&lt;/div&gt;<br>
                 &lt;/div&gt;
             </div>
         </div>
 
-        <!-- Slide 10: Hero Section CSS -->
+        <!-- Slide 8: Information Section -->
         <div class="slide">
-            <h1>Styling the Hero <span class="emoji">🎨</span></h1>
+            <h1>Information Section <span class="emoji">ℹ️</span></h1>
+            <h2>Cards with Images and Text</h2>
+            <div class="code-example">
+                &lt;div class="information"&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;Some random information&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;div class="info-cards"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="image.jpg" alt="description"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;this is some subtext...&lt;/p&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Repeat for 3 more cards --&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                &lt;/div&gt;
+            </div>
+            <div class="tip-box">
+                <h3>💡 Tip:</h3>
+                <p>Use Flexbox to arrange cards in a row!</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Quote and CTA Sections -->
+        <div class="slide">
+            <h1>Quote & Call-to-Action <span class="emoji">💬</span></h1>
+            <div class="code-example">
+                &lt;div class="quote"&gt;<br>
+                &nbsp;&nbsp;&lt;p class="quote-text"&gt;This is an inspiring quote...&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;p class="quote-author"&gt;-Thor, God of Thunder&lt;/p&gt;<br>
+                &lt;/div&gt;<br>
+                <br>
+                &lt;div class="cta"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="cta-content"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;Call to action! It's time!&lt;/h3&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Sign up for our product...&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;button&gt;Sign up&lt;/button&gt;<br>
+                &lt;/div&gt;
+            </div>
+        </div>
+
+        <!-- Slide 10: Design Colors and Fonts -->
+        <div class="slide">
+            <h1>Design: Colors and Fonts <span class="emoji">🎨</span></h1>
+            <div class="design-specs">
+                <div class="spec-item">
+                    <h3>Colors:</h3>
+                    <ul>
+                        <li><strong>Dark background:</strong> #1F2937</li>
+                        <li><strong>Hero text:</strong> #F9FAF8</li>
+                        <li><strong>Button/Links:</strong> #3882F6</li>
+                        <li><strong>Quote background:</strong> #E5E7EB</li>
+                    </ul>
+                </div>
+                <div class="spec-item">
+                    <h3>Fonts:</h3>
+                    <ul>
+                        <li><strong>Hero main text:</strong> 48px extra-bold</li>
+                        <li><strong>Hero secondary:</strong> 18px</li>
+                        <li><strong>Quote:</strong> 36px light italic</li>
+                        <li><strong>Body:</strong> 18px</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Story 2 - The Mosaic Browser (Part 1) -->
+        <div class="slide">
+            <h1>Web History: The Visual Revolution <span class="emoji">🖼️</span></h1>
+            <h2>The Mosaic Browser Sparks the Web's Popularity</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px;">
+                <h3 style="color: white;">February 1993</h3>
+                <p style="font-size: 1.2em; margin: 20px 0;">Marc Andreessen released the Mosaic web browser — a turning point for the World Wide Web</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h4 style="color: white;">What Made It Special:</h4>
+                    <ul style="font-size: 1.1em; text-align: left;">
+                        <li>Strong support for integrated multimedia (images, graphics)</li>
+                        <li>Rapid response to user bug reports</li>
+                        <li>Quick implementation of new features based on feedback</li>
+                    </ul>
+                </div>
+                <p style="font-size: 1.1em; margin-top: 20px;">Before Mosaic, the web was mostly text. Mosaic made it visual and accessible.</p>
+            </div>
+            <div style="text-align: center; margin-top: 20px; font-size: 0.9em; font-style: italic;">
+                <p>Citation: Wikipedia - "History of the World Wide Web"</p>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Story 2 - The Mosaic Browser (Part 2) -->
+        <div class="slide">
+            <h1>The Power of Design <span class="emoji">✨</span></h1>
+            <div class="demo-box" style="background: #dbeafe; border-left: 5px solid #3b82f6; padding: 30px;">
+                <h3>Connection to Your Landing Page:</h3>
+                <p style="font-size: 1.2em; line-height: 1.6;">Just as Mosaic proved that <strong>user experience and visual appeal</strong> could make the web accessible to millions, your landing page design can make or break user engagement.</p>
+                <ul style="font-size: 1.1em; margin-top: 20px;">
+                    <li>📊 Clear visual hierarchy guides users</li>
+                    <li>🎨 Color choices create emotional responses</li>
+                    <li>🖼️ Images and graphics tell stories</li>
+                    <li>⚡ Fast, intuitive navigation keeps users engaged</li>
+                </ul>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>💭 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">Look at your landing page design. What elements will make the biggest impact on your users? Which design choices will encourage them to take action?</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: CSS Flexbox Basics -->
+        <div class="slide">
+            <h1>CSS Flexbox for Layout <span class="emoji">📦</span></h1>
             <div class="code-example">
                 .hero {<br>
-                &nbsp;&nbsp;background-color: #1F2937;<br>
-                &nbsp;&nbsp;color: white;<br>
-                &nbsp;&nbsp;padding: 20px;<br>
-                }<br><br>
-                nav {<br>
-                &nbsp;&nbsp;<strong>display: flex;</strong><br>
-                &nbsp;&nbsp;<strong>justify-content: space-between;</strong><br>
-                &nbsp;&nbsp;<strong>align-items: center;</strong><br>
-                }<br><br>
-                .nav-links {<br>
-                &nbsp;&nbsp;<strong>display: flex;</strong><br>
-                &nbsp;&nbsp;<strong>gap: 20px;</strong><br>
-                &nbsp;&nbsp;list-style: none;<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;justify-content: space-between;<br>
+                &nbsp;&nbsp;align-items: center;<br>
+                &nbsp;&nbsp;padding: 40px;<br>
+                }<br>
+                <br>
+                .info-cards {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;gap: 20px;<br>
+                &nbsp;&nbsp;justify-content: center;<br>
                 }
             </div>
             <div class="tip-box">
-                🧟 Just like Flexbox Zombies! justify-content and align-items position everything!
+                <h3>Key Flexbox Properties:</h3>
+                <ul>
+                    <li><code>display: flex</code> - Activates flexbox</li>
+                    <li><code>justify-content</code> - Horizontal alignment</li>
+                    <li><code>align-items</code> - Vertical alignment</li>
+                    <li><code>gap</code> - Space between items</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Slide 11: Information Section -->
+        <!-- Slide 12: Common Styling Patterns -->
         <div class="slide">
-            <h1>Information Cards <span class="emoji">🃏</span></h1>
-            <h2>Perfect for Flexbox!</h2>
+            <h1>Common Styling Patterns <span class="emoji">🎯</span></h1>
             <div class="code-example">
-                .info-section {<br>
-                &nbsp;&nbsp;<strong>display: flex;</strong><br>
-                &nbsp;&nbsp;<strong>justify-content: center;</strong><br>
-                &nbsp;&nbsp;<strong>gap: 40px;</strong><br>
-                &nbsp;&nbsp;padding: 50px;<br>
-                }<br><br>
-                .card {<br>
-                &nbsp;&nbsp;max-width: 200px;<br>
-                &nbsp;&nbsp;text-align: center;<br>
-                }<br><br>
-                .card img {<br>
-                &nbsp;&nbsp;border: 4px solid #3882F6;<br>
-                &nbsp;&nbsp;border-radius: 15px;<br>
+                /* Center content */<br>
+                .container {<br>
+                &nbsp;&nbsp;max-width: 1200px;<br>
+                &nbsp;&nbsp;margin: 0 auto;<br>
+                &nbsp;&nbsp;padding: 0 20px;<br>
+                }<br>
+                <br>
+                /* Button styling */<br>
+                button {<br>
+                &nbsp;&nbsp;background-color: #3882F6;<br>
+                &nbsp;&nbsp;color: white;<br>
+                &nbsp;&nbsp;padding: 8px 30px;<br>
+                &nbsp;&nbsp;border: none;<br>
+                &nbsp;&nbsp;border-radius: 8px;<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                &nbsp;&nbsp;cursor: pointer;<br>
                 }
             </div>
         </div>
 
-        <!-- Slide 12: Common Colors -->
+        <!-- Slide 13: Tips for Success -->
         <div class="slide">
-            <h1>Design Colors <span class="emoji">🎨</span></h1>
-            <div class="reference-card">
-                <h3>Exact Colors from Design:</h3>
-                <ul style="font-size: 1.2em;">
-                    <li>Hero Background: <code style="background: #1F2937; color: white; padding: 5px;">#1F2937</code></li>
-                    <li>Button/Links: <code style="background: #3882F6; color: white; padding: 5px;">#3882F6</code></li>
-                    <li>Quote Background: <code style="background: #E5E7EB; padding: 5px;">#E5E7EB</code></li>
-                    <li>White Text: <code style="background: #F9FAF8; padding: 5px;">#F9FAF8</code></li>
-                    <li>Gray Text: <code style="background: white; border: 1px solid #ccc; padding: 5px;">#6B7280</code></li>
-                </ul>
-            </div>
-            <div class="tip-box">
-                💡 Use these exact colors to match the design!
+            <h1>Tips for Success <span class="emoji">💪</span></h1>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>1. Start with HTML</h3>
+                    <p>Get all your content in place before styling. Structure first, beauty second!</p>
+                </div>
+                <div class="tip-card">
+                    <h3>2. Build Section by Section</h3>
+                    <p>Complete one section fully before moving to the next. Don't try to do everything at once.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>3. Use Browser DevTools</h3>
+                    <p>Inspect elements, test colors, and debug CSS right in your browser (F12 or right-click → Inspect).</p>
+                </div>
+                <div class="tip-card">
+                    <h3>4. Commit Often</h3>
+                    <p>Save your progress with Git commits after completing each section. You can always go back!</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 13: Deployment -->
+        <!-- Slide 14: Common Pitfalls -->
         <div class="slide">
-            <h1>Deploy to GitHub Pages <span class="emoji">🚀</span></h1>
-            <div class="activity-box">
-                <h3>Quick Steps:</h3>
-                <ol style="font-size: 1.2em;">
-                    <li>Commit and push your code to GitHub</li>
-                    <li>Go to repository Settings</li>
-                    <li>Navigate to "Pages" section</li>
-                    <li>Select main branch as source</li>
-                    <li>Save and wait 2-3 minutes</li>
-                    <li>Your site is live! 🎉</li>
-                </ol>
-            </div>
+            <h1>Common Pitfalls to Avoid <span class="emoji">⚠️</span></h1>
             <div class="warning-box">
-                Test your live site before submitting!
+                <h3>❌ Don't:</h3>
+                <ul>
+                    <li>Try to make it pixel-perfect on the first try</li>
+                    <li>Forget to link your CSS file</li>
+                    <li>Use absolute positioning everywhere</li>
+                    <li>Forget about semantic HTML</li>
+                    <li>Skip testing your live GitHub Pages site</li>
+                </ul>
+            </div>
+            <div class="success-box">
+                <h3>✅ Do:</h3>
+                <ul>
+                    <li>Focus on getting it working first, then refine</li>
+                    <li>Test frequently in the browser</li>
+                    <li>Use Flexbox for layouts</li>
+                    <li>Ask for help when stuck</li>
+                    <li>Customize and make it your own!</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Slide 14: Troubleshooting Tips -->
+        <!-- Slide 15: Deployment Steps -->
         <div class="slide">
-            <h1>Common Issues <span class="emoji">🔧</span></h1>
-            <h2>Quick Fixes</h2>
-            <ul style="font-size: 1.2em;">
-                <li><strong>Items not aligning?</strong> Check if parent has <code>display: flex</code></li>
-                <li><strong>Colors don't match?</strong> Use exact hex codes from design</li>
-                <li><strong>CSS not loading?</strong> Check file path in link tag</li>
-                <li><strong>GitHub Pages not working?</strong> File must be named index.html</li>
-                <li><strong>Navigation not horizontal?</strong> Use <code>display: flex</code> on ul</li>
-            </ul>
-            <div class="tip-box">
-                🧟 Remember: If you can beat Flexbox Zombies, you can build this page!
+            <h1>Deploying to GitHub Pages <span class="emoji">🚀</span></h1>
+            <div class="steps-container">
+                <div class="step-item">
+                    <h3>Step 1: Push to GitHub</h3>
+                    <div class="code-example">
+                        git add .<br>
+                        git commit -m "Complete landing page"<br>
+                        git push origin main
+                    </div>
+                </div>
+                <div class="step-item">
+                    <h3>Step 2: Enable GitHub Pages</h3>
+                    <ul>
+                        <li>Go to repository Settings</li>
+                        <li>Click "Pages" in sidebar</li>
+                        <li>Source: Deploy from branch</li>
+                        <li>Branch: main, folder: / (root)</li>
+                        <li>Click "Save"</li>
+                    </ul>
+                </div>
+                <div class="step-item">
+                    <h3>Step 3: Visit Your Site</h3>
+                    <p>Your site will be at:<br>
+                    <code>https://[username].github.io/[repo-name]</code></p>
+                    <p>It may take a few minutes to go live!</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 15: Homework Reminder -->
+        <!-- Slide 16: Project Checklist -->
         <div class="slide">
-            <h1>Homework & Practice <span class="emoji">📚</span></h1>
-            <div class="demo-box" style="font-size: 1.3em;">
-                <h3>📝 Required:</h3>
-                <ul>
-                    <li>Complete Landing Page Project (Due next Thursday)</li>
-                    <li>Deploy to GitHub Pages</li>
-                    <li>Submit link in D2L/Canvas</li>
-                </ul>
+            <h1>Project Checklist <span class="emoji">✅</span></h1>
+            <div class="checklist-grid">
+                <div class="checkpoint-item">
+                    <h3>Setup</h3>
+                    <ul>
+                        <li>☐ Create Git repository</li>
+                        <li>☐ Create index.html</li>
+                        <li>☐ Create style.css</li>
+                        <li>☐ Link CSS to HTML</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Hero Section</h3>
+                    <ul>
+                        <li>☐ Navigation bar</li>
+                        <li>☐ Hero content</li>
+                        <li>☐ Hero styling</li>
+                        <li>☐ Button styling</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Content Sections</h3>
+                    <ul>
+                        <li>☐ Information cards</li>
+                        <li>☐ Quote section</li>
+                        <li>☐ Call-to-action</li>
+                        <li>☐ Footer</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Final Steps</h3>
+                    <ul>
+                        <li>☐ Add real images</li>
+                        <li>☐ Customize content</li>
+                        <li>☐ Deploy to GitHub Pages</li>
+                        <li>☐ Test live site</li>
+                    </ul>
+                </div>
             </div>
-            <div class="activity-box" style="margin-top: 20px; font-size: 1.3em;">
-                <h3>🧟 Highly Recommended:</h3>
-                <ul>
-                    <li>Play through Flexbox Zombies (at least first section)</li>
-                    <li>It will make your Landing Page SO much easier!</li>
-                    <li>Plus it's actually fun 😊</li>
+        </div>
+
+        <!-- NEW SLIDE: Story 3 - "Sorry, You're Screwed" (Part 1) -->
+        <div class="slide">
+            <h1>Web History: The Styling Crisis <span class="emoji">😱</span></h1>
+            <h2>"Sorry, You're Screwed"</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px;">
+                <h3>1994: The Dark Ages of Web Design</h3>
+                <div style="background: rgba(0,0,0,0.1); padding: 25px; border-radius: 10px; margin: 20px 0;">
+                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">Marc Andreessen on the WWW mailing list:</p>
+                    <p style="font-size: 1.2em; font-style: italic; line-height: 1.6;">"Because there was no way to style a website with HTML, the only thing I could tell web developers when asked about visual design was..."</p>
+                    <p style="font-size: 1.8em; font-weight: bold; margin-top: 20px; color: #dc2626;">"Sorry, you're screwed."</p>
+                </div>
+            </div>
+            <div class="reference-card" style="margin-top: 30px;">
+                <h3>The Problem:</h3>
+                <p style="font-size: 1.1em;">HTML alone couldn't control colors, fonts, layouts, or any visual design. Web pages were ugly, and developers were frustrated.</p>
+            </div>
+            <div style="text-align: center; margin-top: 20px; font-size: 0.9em; font-style: italic;">
+                <p>Citation: CSS-Tricks - "A Look Back at the History of CSS"</p>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Story 3 - "Sorry, You're Screwed" (Part 2) -->
+        <div class="slide">
+            <h1>The Birth of CSS <span class="emoji">🎨</span></h1>
+            <div class="demo-box" style="background: #dcfce7; border-left: 5px solid #16a34a; padding: 30px;">
+                <h3>The Solution That Changed Everything:</h3>
+                <p style="font-size: 1.2em; line-height: 1.6;">Marc Andreessen's frustrated comment led to the creation of <strong>CSS (Cascading Style Sheets)</strong> — giving developers the power to make beautiful websites.</p>
+            </div>
+            <div class="demo-box" style="margin-top: 30px; background: #fef3c7; border: 2px solid #f59e0b; padding: 30px;">
+                <h3>Connection to Your Landing Page:</h3>
+                <p style="font-size: 1.2em;">Today, you have incredibly powerful CSS tools at your fingertips:</p>
+                <ul style="font-size: 1.1em; margin-top: 15px;">
+                    <li>🎨 Complete control over colors and typography</li>
+                    <li>📐 Flexbox and Grid for sophisticated layouts</li>
+                    <li>✨ Animations, transitions, and visual effects</li>
+                    <li>📱 Responsive design for any screen size</li>
                 </ul>
+                <p style="font-size: 1.2em; margin-top: 20px; font-weight: bold;">What seemed impossible in 1994 is now trivial. You're creating in a few hours what would have been impossible back then!</p>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>💭 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">Take a moment to appreciate your style.css file. What would your landing page look like if you only had HTML? How has CSS empowered your design?</p>
             </div>
         </div>
 
@@ -451,7 +544,6 @@
                     <li>✨ It doesn't need to be pixel-perfect</li>
                     <li>🎯 Focus on getting it working first</li>
                     <li>🎨 Make it yours with custom content</li>
-                    <li>🧟 Use those Flexbox skills from the game!</li>
                     <li>💬 Ask questions when stuck!</li>
                 </ul>
             </div>
@@ -463,13 +555,16 @@
                     <li>Add the hero section HTML</li>
                 </ol>
             </div>
+            <div class="demo-box" style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
+                <p style="font-size: 1.3em;">💡 You're building on the shoulders of giants — from Tim Berners-Lee's first website to the creation of CSS. Make it count!</p>
+            </div>
         </div>
 
         <!-- Navigation Controls -->
         <div class="navigation">
             <button id="prevBtn">Previous</button>
             <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
+                <span id="currentSlide">1</span> / <span id="totalSlides">23</span>
             </span>
             <button id="nextBtn">Next</button>
         </div>
@@ -485,10 +580,6 @@
             // If on slide 2 (midterm reference), you could set a timer
             if (e.detail.currentSlide === 1) {
                 console.log('Midterm reference slide - 30 minutes for exam');
-            }
-            // Flexbox Zombies demo slide
-            if (e.detail.currentSlide === 3) {
-                console.log('Flexbox Zombies demo - have flexboxzombies.com ready!');
             }
         });
     </script>
