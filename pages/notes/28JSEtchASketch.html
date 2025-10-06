@@ -1,536 +1,1128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM Manipulation & Events - Guided Notes</title>
-
+    <title>Lecture 28: DOM Manipulation & Events - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Historical Story Slide Styles */
+        .historical-slide {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+        [data-theme="dark"] .historical-slide {
+            background: linear-gradient(135deg, #6b1b4a 0%, #8b2a3d 100%);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
+        .story-container {
+            background: rgba(255, 255, 255, 0.15);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 95%;
+            margin: 0 auto;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .story-icon {
+            font-size: 4em;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .story-title-group h1 {
+            margin: 0;
             color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin: -40px -40px 30px -40px;
-            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
+        .story-title-group h2 {
+            margin: 10px 0 0 0;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 300;
         }
 
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
-
-        .info-box {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .section {
-            margin: 30px 0;
-            padding: 20px 0;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .section:last-child {
-            border-bottom: none;
-        }
-
-        .section h2 {
-            color: #667eea;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-        }
-
-        .section h3 {
-            color: #764ba2;
+        .story-content {
             font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .blank {
-            display: inline-block;
-            min-width: 120px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .long-blank {
-            display: inline-block;
-            min-width: 250px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-        }
-
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .code-blank {
-            display: inline-block;
-            min-width: 100px;
-            border-bottom: 2px solid #f8f8f2;
-            margin: 0 5px;
-            color: #66d9ef;
-        }
-
-        ul,
-        ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .tip {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-
-        .tip strong {
-            color: #856404;
-        }
-
-        .practice-box {
-            background: #f0f8ff;
-            border: 2px dashed #4a90e2;
-            padding: 20px;
+            line-height: 1.8;
             margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .checkbox-list {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .checkbox-list li::before {
-            content: "☐ ";
-            font-size: 1.2em;
-            margin-right: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #667eea;
             color: white;
         }
 
-        tr:nth-child(even) {
-            background: #f9f9f9;
+        .story-content ul {
+            margin-left: 30px;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
+        .story-content li {
+            margin: 15px 0;
+        }
+
+        .story-content strong {
+            color: white;
+            font-weight: 700;
+        }
+
+        .citation {
             font-style: italic;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 20px;
+            font-size: 1em;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
         }
 
-        @media print {
-            body {
-                background: white;
-            }
+        .connection-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid white;
+        }
 
-            .header {
-                background: none;
-                color: black;
-                border: 2px solid black;
-            }
+        .connection-box h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
 
-            .blank,
-            .code-blank {
-                color: black;
-            }
+        .connection-box p {
+            color: white;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .reflection-question {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 1.2em;
+        }
+
+        .reflection-question strong {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: white;
+        }
+
+        .reflection-question p {
+            color: white;
+            line-height: 1.6;
+        }
+
+        .historical-image-placeholder {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 60px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+        }
+
+        /* Enhanced existing classes for better visual consistency */
+        .project-section {
+            background: var(--bg-accent);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .event-type {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            border: 1px solid var(--ocu-true-blue);
+        }
+
+        [data-theme="dark"] .event-type {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: var(--ocu-cyan);
+        }
+
+        .checkpoint-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .checkpoint-item {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .checkpoint-item:hover {
+            border-color: var(--ocu-true-blue);
+            transform: translateY(-2px);
+        }
+
+        [data-theme="dark"] .checkpoint-item:hover {
+            border-color: var(--ocu-cyan);
+        }
+
+        .dom-tree {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--code-text);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .method-card {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            border-color: var(--ocu-true-blue);
+        }
+
+        [data-theme="dark"] .method-card:hover {
+            border-color: var(--ocu-cyan);
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>DOM Manipulation & Events - Guided Notes</h1>
-            <p>CSCI 3403 - Web Programming | Day 27</p>
-            <p>Name: _________________________________ Date: _____________</p>
+    
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Lecture 28 - DOM Manipulation & Events
+                 <button class="home"><a href="../../index.html">Home</a></button>
+            </span>
         </div>
 
-        <div class="info-box">
-            <strong>🎯 Today's Goals:</strong> Master DOM manipulation, create dynamic elements, and handle user events
-            to make web pages interactive!
-        </div>
-
-        <!-- Section 1: DOM Basics -->
-        <div class="section">
-            <h2>🌳 Understanding the DOM</h2>
-
-            <h3>What is the DOM?</h3>
-            <p>The DOM stands for <span class="blank">_________________</span> and is a
-                <span class="blank">_________________</span>-like representation of your HTML.
-            </p>
-
-            <h3>Nodes vs Elements</h3>
-            <p>• <strong>Nodes:</strong> <span class="long-blank">_________________________________________</span></p>
-            <p>• <strong>Elements:</strong> <span class="long-blank">_________________________________________</span>
-            </p>
-
-            <h3>DOM Relationships</h3>
-            <p>Fill in the relationships in this HTML structure:</p>
-            <div class="code-block">
-                &lt;div id="container"&gt; ← This is the <span class="code-blank">_________</span>
-                &lt;div class="display"&gt;&lt;/div&gt; ← These are <span class="code-blank">_________</span>
-                &lt;div class="controls"&gt;&lt;/div&gt; ← and <span class="code-blank">_________</span> to each other
-                &lt;/div&gt;
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>DOM Manipulation & Events <span class="emoji">🎪</span></h1>
+            <h2>Making Webpages Come Alive with JavaScript</h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 15, Class 30</p>
+            
+            <div class="demo-box">
+                <p><strong>Today's Mission:</strong> Learn how to make your webpage interactive and responsive to user actions!</p>
             </div>
+            
+            <p style="margin-top: auto; font-style: italic;">"The DOM is your playground - let's make it dance!"</p>
         </div>
 
-        <!-- Section 2: Selecting Elements -->
-        <div class="section">
-            <h2>🎯 Selecting Elements</h2>
-
-            <h3>Query Selectors</h3>
-            <p>Complete the code to select elements:</p>
-
-            <div class="code-block">
-                // Select ONE element by ID
-                const header = document.<span class="code-blank">_______________</span>("#header");
-
-                // Select ONE element by class
-                const button = document.<span class="code-blank">_______________</span>(".btn-primary");
-
-                // Select ALL divs (returns NodeList)
-                const allDivs = document.<span class="code-blank">_______________</span>("div");
-            </div>
-
-            <div class="tip">
-                <strong>Remember:</strong> querySelector returns <span class="blank">_______</span> element,
-                querySelectorAll returns a <span class="blank">_____________</span>
-            </div>
-
-            <h3>Navigating Relationships</h3>
-            <table>
-                <tr>
-                    <th>Property</th>
-                    <th>What it selects</th>
-                </tr>
-                <tr>
-                    <td>element.firstElementChild</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>element.lastElementChild</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>element.nextElementSibling</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>element.parentElement</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Section 3: Creating Elements -->
-        <div class="section">
-            <h2>🏗️ Creating & Modifying Elements</h2>
-
-            <h3>The Creation Process</h3>
-            <p>Number these steps in the correct order:</p>
-            <ul class="checkbox-list">
-                <li>_____ Add the element to the DOM with appendChild()</li>
-                <li>_____ Create element in memory with createElement()</li>
-                <li>_____ Add content, classes, and attributes</li>
+        <!-- Slide 2: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives</h1>
+            <ul style="font-size: 1.4em; line-height: 2;">
+                <li>🎯 Navigate and manipulate the DOM tree structure</li>
+                <li>🎯 Create and modify elements dynamically with JavaScript</li>
+                <li>🎯 Handle user events like clicks, hovers, and key presses</li>
+                <li>🎯 Understand event bubbling and propagation</li>
+                <li>🎯 Build an interactive Etch-a-Sketch project</li>
             </ul>
+        </div>
 
-            <h3>Complete the Code</h3>
-            <div class="code-block">
-                // Step 1: Create element
-                const newDiv = document.<span class="code-blank">_______________</span>("div");
-
-                // Step 2: Add text content
-                newDiv.<span class="code-blank">_______________</span> = "Hello World!";
-
-                // Step 3: Add a class
-                newDiv.classList.<span class="code-blank">_______</span>("message");
-
-                // Step 4: Add to page
-                container.<span class="code-blank">_______________</span>(newDiv);
+        <!-- Slide 3: What is the DOM -->
+        <div class="slide">
+            <h1>What is the DOM? <span class="emoji">🌳</span></h1>
+            <h2>Document Object Model</h2>
+            
+            <div class="demo-box">
+                <p><strong>The DOM is:</strong> A tree-like representation of your HTML that JavaScript can interact with</p>
+            </div>
+            
+            <div class="dom-tree">
+                <span style="color: #66d9ef;">&lt;div id="container"&gt;</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;div class="display"&gt;</span><span style="color: #66d9ef;">&lt;/div&gt;</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;div class="controls"&gt;</span><span style="color: #66d9ef;">&lt;/div&gt;</span><br>
+                <span style="color: #66d9ef;">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="two-column">
+                <div class="method-card">
+                    <h3>📦 Nodes</h3>
+                    <p>Everything in the DOM (elements, text, comments)</p>
+                </div>
+                <div class="method-card">
+                    <h3>🏷️ Elements</h3>
+                    <p>HTML tags that become element nodes</p>
+                </div>
             </div>
         </div>
 
-        <!-- Section 4: Modifying Elements -->
-        <div class="section">
-            <h2>✨ Element Manipulation Methods</h2>
-
-            <h3>Match the Method to its Purpose</h3>
-            <p>Draw lines to connect each method with what it does:</p>
-
-            <table>
-                <tr>
-                    <th>Method</th>
-                    <th>Purpose</th>
-                </tr>
-                <tr>
-                    <td>element.textContent = "text"</td>
-                    <td>Add/remove/toggle CSS classes</td>
-                </tr>
-                <tr>
-                    <td>element.classList.toggle()</td>
-                    <td>Remove element from DOM</td>
-                </tr>
-                <tr>
-                    <td>element.style.color = "blue"</td>
-                    <td>Add plain text (safe)</td>
-                </tr>
-                <tr>
-                    <td>element.remove()</td>
-                    <td>Add HTML content (use sparingly)</td>
-                </tr>
-                <tr>
-                    <td>element.innerHTML = "&lt;p&gt;Hi&lt;/p&gt;"</td>
-                    <td>Apply inline styles</td>
-                </tr>
-            </table>
-
-            <div class="tip">
-                <strong>Best Practice:</strong> Use <span class="blank">_______________</span> for text
-                content instead of innerHTML to avoid security risks!
+        <!-- Slide 4: DOM Relationships -->
+        <div class="slide">
+            <h1>DOM Family Tree <span class="emoji">👨‍👩‍👧‍👦</span></h1>
+            <h2>Understanding Relationships</h2>
+            
+            <div class="code-example">
+                <span style="color: #66d9ef;">&lt;div id="container"&gt;</span> <span style="color: #75715e;">← Parent</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;div class="display"&gt;&lt;/div&gt;</span> <span style="color: #75715e;">← Child & Sibling</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;div class="controls"&gt;&lt;/div&gt;</span> <span style="color: #75715e;">← Child & Sibling</span><br>
+                <span style="color: #66d9ef;">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Parent-Child</h3>
+                    <p>Elements directly inside another</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Siblings</h3>
+                    <p>Elements at the same level</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Ancestors</h3>
+                    <p>All parent elements up the tree</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Descendants</h3>
+                    <p>All children down the tree</p>
+                </div>
             </div>
         </div>
 
-        <!-- Section 5: Events -->
-        <div class="section">
-            <h2>🎪 Event Handling</h2>
+        <!-- Slide 5: Query Selectors -->
+        <div class="slide">
+            <h1>Selecting Elements <span class="emoji">🎯</span></h1>
+            <h2>Query Selectors are Your Best Friends</h2>
+            
+            <div class="code-example">
+                <span style="color: #75715e;">// Select ONE element</span><br>
+                const header = document.querySelector("#header");<br>
+                const button = document.querySelector(".btn-primary");<br><br>
+                
+                <span style="color: #75715e;">// Select ALL matching elements (returns NodeList)</span><br>
+                const allDivs = document.querySelectorAll("div");<br>
+                const buttons = document.querySelectorAll("button");<br><br>
+                
+                <span style="color: #75715e;">// Complex selectors work too!</span><br>
+                const nested = document.querySelector(".container .item:first-child");
+            </div>
+            
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> querySelector returns the FIRST match. Use querySelectorAll for multiple elements!
+            </div>
+        </div>
 
-            <h3>Three Ways to Add Events</h3>
-            <p>Rate each method (❌ = Bad, ⚠️ = OK, ✅ = Best):</p>
+        <!-- Slide 6: Navigating Relationships -->
+        <div class="slide">
+            <h1>Navigating the DOM <span class="emoji">🧭</span></h1>
+            <h2>Moving Through Elements</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Going Down:</h3>
+                    <div class="code-example">
+                        element.firstElementChild<br>
+                        element.lastElementChild<br>
+                        element.children
+                    </div>
+                </div>
+                <div>
+                    <h3>Going Sideways:</h3>
+                    <div class="code-example">
+                        element.nextElementSibling<br>
+                        element.previousElementSibling
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>Going Up:</h3>
+                <div class="code-example">
+                    element.parentElement<br>
+                    element.closest(".ancestor-class") <span style="color: #75715e;">// Finds nearest ancestor</span>
+                </div>
+            </div>
+        </div>
 
-            <ul class="checkbox-list">
-                <li>_____ HTML: &lt;button onclick="alert('Hi')"&gt;</li>
-                <li>_____ Property: button.onclick = function() {...}</li>
-                <li>_____ addEventListener: button.addEventListener('click', function() {...})</li>
-            </ul>
+        <!-- Slide 7: Creating Elements -->
+        <div class="slide">
+            <h1>Creating Elements <span class="emoji">🏗️</span></h1>
+            <h2>Building DOM Nodes in Memory</h2>
+            
+            <div class="code-example">
+                <span style="color: #75715e;">// Step 1: Create element in memory</span><br>
+                const newDiv = document.createElement("div");<br><br>
+                
+                <span style="color: #75715e;">// Step 2: Add content and attributes</span><br>
+                newDiv.textContent = "Hello World!";<br>
+                newDiv.id = "my-div";<br>
+                newDiv.classList.add("highlight");<br><br>
+                
+                <span style="color: #75715e;">// Step 3: Add it to the page</span><br>
+                container.appendChild(newDiv);
+            </div>
+            
+            <div class="warning-box">
+                <strong>Important:</strong> Elements exist in memory until you add them to the DOM with appendChild() or append()!
+            </div>
+        </div>
 
-            <h3>addEventListener Syntax</h3>
-            <div class="code-block">
-                button.addEventListener("<span class="code-blank">_______</span>", (e) => {
-                // e is the <span class="code-blank">_______</span> object
-                console.log(e.<span class="code-blank">_______</span>); // The element that was clicked
-                e.target.style.background = "blue";
+        <!-- Slide 8: Modifying Elements -->
+        <div class="slide">
+            <h1>Modifying Elements <span class="emoji">✨</span></h1>
+            <h2>Changing Content and Properties</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Text Content</h3>
+                    <div class="code-example">
+                        element.textContent = "New text";<br>
+                        <span style="color: #75715e;">// Safe, doesn't parse HTML</span>
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>HTML Content</h3>
+                    <div class="code-example">
+                        element.innerHTML = "&lt;p&gt;HTML&lt;/p&gt;";<br>
+                        <span style="color: #75715e;">// Powerful but risky</span>
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Attributes</h3>
+                    <div class="code-example">
+                        element.id = "header";<br>
+                        element.setAttribute("data-id", "123");
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Classes</h3>
+                    <div class="code-example">
+                        element.classList.add("active");<br>
+                        element.classList.toggle("hidden");
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Removing Elements -->
+        <div class="slide">
+            <h1>Removing Elements <span class="emoji">🗑️</span></h1>
+            <h2>Clean Up Your DOM</h2>
+            
+            <div class="code-example">
+                <span style="color: #75715e;">// Modern way (ES6+)</span><br>
+                element.remove();<br><br>
+                
+                <span style="color: #75715e;">// Classic way</span><br>
+                parent.removeChild(element);<br><br>
+                
+                <span style="color: #75715e;">// Remove all children</span><br>
+                while (parent.firstChild) {<br>
+                &nbsp;&nbsp;parent.removeChild(parent.firstChild);<br>
+                }<br><br>
+                
+                <span style="color: #75715e;">// Or use innerHTML (be careful!)</span><br>
+                parent.innerHTML = "";
+            </div>
+        </div>
+
+        <!-- Slide 10: Style Manipulation -->
+        <div class="slide">
+            <h1>Styling Elements <span class="emoji">🎭</span></h1>
+            <h2>Multiple Approaches</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>✅ Good: Toggle Classes</h3>
+                    <div class="code-example">
+                        element.classList.toggle("dark-mode");
+                    </div>
+                    <p>Clean, reusable, separates concerns</p>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>⚠️ Use Sparingly: Inline Styles</h3>
+                    <div class="code-example">
+                        element.style.backgroundColor = "blue";<br>
+                        element.style.fontSize = "20px";
+                    </div>
+                    <p>OK for dynamic values, avoid for static styles</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <strong>Note:</strong> CSS properties use camelCase in JS: background-color → backgroundColor
+            </div>
+        </div>
+
+        <!-- Slide 11: Live Exercise 1 -->
+        <div class="slide">
+            <h1>Exercise: Build a Container <span class="emoji">💻</span></h1>
+            <h2>Let's Practice Together!</h2>
+            
+            <div class="activity-box">
+                <h3>Create this structure using only JavaScript:</h3>
+                <div class="code-example">
+                    &lt;div id="container"&gt;<br>
+                    &nbsp;&nbsp;&lt;p style="color: red"&gt;Hey I'm red!&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&lt;h3 style="color: blue"&gt;I'm a blue h3!&lt;/h3&gt;<br>
+                    &nbsp;&nbsp;&lt;div&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;I'm in a div&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;ME TOO!&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&lt;/div&gt;<br>
+                    &lt;/div&gt;
+                </div>
+            </div>
+            
+            <button data-timer="10">Start 10-Minute Timer</button>
+        </div>
+
+        <!-- Slide 12: Events Introduction -->
+        <div class="slide">
+            <h1>Events: Making It Interactive <span class="emoji">🎪</span></h1>
+            <h2>Responding to User Actions</h2>
+            
+            <div class="demo-box">
+                <p><strong>Events are:</strong> Things that happen on your webpage (clicks, key presses, mouse movements, etc.)</p>
+            </div>
+            
+            <div class="project-section">
+                <h3>Common Events:</h3>
+                <div style="text-align: center;">
+                    <span class="event-type">click</span>
+                    <span class="event-type">dblclick</span>
+                    <span class="event-type">mouseover</span>
+                    <span class="event-type">mouseout</span>
+                    <span class="event-type">keydown</span>
+                    <span class="event-type">keyup</span>
+                    <span class="event-type">submit</span>
+                    <span class="event-type">load</span>
+                    <span class="event-type">scroll</span>
+                    <span class="event-type">focus</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY 1: The First Computer Game -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <div class="story-header">
+                    <div class="story-icon">🎮</div>
+                    <div class="story-title-group">
+                        <h1>The First Computer Game</h1>
+                        <h2>1952 - Cambridge University</h2>
+                    </div>
+                </div>
+                
+                <div class="story-content">
+                    <ul>
+                        <li><strong>In 1952</strong>, A.S. Douglas created OXO (tic-tac-toe) for the EDSAC computer at Cambridge University as part of his PhD dissertation on human-computer interaction.</li>
+                        <li>It was one of the <strong>first games to use a visual display</strong> and allowed a human player to compete against the computer.</li>
+                        <li>The game used a 35×16-pixel cathode ray tube display, and players interacted using a rotary telephone controller.</li>
+                    </ul>
+                    
+                    <div class="historical-image-placeholder">
+                        🖥️ [Imagine: A grainy black-and-white image of the EDSAC computer with OXO displayed]
+                    </div>
+                    
+                    <p class="citation">Source: Computer History Museum</p>
+                </div>
+                
+                <div class="connection-box">
+                    <h3>💡 Connection to Events</h3>
+                    <p>This pioneering game demonstrates how <strong>event-driven programming enables interactive experiences</strong>. Just like OXO responded to player input via the rotary controller, modern web applications use event listeners to respond to user actions like clicks, hovers, and key presses!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY 1 CONTINUED: Reflection -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <h1>Reflection: The First Computer Game <span class="emoji">🤔</span></h1>
+                
+                <div class="reflection-question">
+                    <strong>🧠 Think About It:</strong>
+                    <p>How did OXO's need to respond to user input in 1952 lay the groundwork for the event-driven programming we use today in JavaScript?</p>
+                </div>
+                
+                <div class="story-content" style="margin-top: 30px;">
+                    <h3>Discussion Points:</h3>
+                    <ul>
+                        <li>What similarities exist between OXO's rotary controller input and modern click events?</li>
+                        <li>How has event-driven programming evolved from 1952 to today?</li>
+                        <li>What would A.S. Douglas think of modern web games and interactions?</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-box" style="margin-top: 30px; background: rgba(255, 255, 255, 0.2); border-color: white;">
+                    <p style="color: white;"><strong>Key Takeaway:</strong> Every click handler you write is part of a 70+ year legacy of making computers respond to human input!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Three Ways to Handle Events -->
+        <div class="slide">
+            <h1>Three Ways to Add Events <span class="emoji">3️⃣</span></h1>
+            
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Method 1: HTML Attribute</h3>
+                    <div class="code-example">
+                        &lt;button onclick="alert('Hi!')"&gt;Click&lt;/button&gt;
+                    </div>
+                    <p>Mixes JS with HTML, only one handler</p>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>⚠️ Method 2: DOM Property</h3>
+                    <div class="code-example">
+                        btn.onclick = () => alert("Hi!");
+                    </div>
+                    <p>Better, but still only one handler</p>
+                </div>
+            </div>
+            
+            <div class="comparison-card good" style="margin-top: 20px; max-width: 600px;">
+                <h3>✅ Method 3: addEventListener</h3>
+                <div class="code-example">
+                    btn.addEventListener("click", () => {<br>
+                    &nbsp;&nbsp;alert("Hi!");<br>
+                    });
+                </div>
+                <p>Clean, multiple handlers possible, most flexible!</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: addEventListener Deep Dive -->
+        <div class="slide">
+            <h1>addEventListener() <span class="emoji">🎯</span></h1>
+            <h2>The Right Way™</h2>
+            
+            <div class="code-example">
+                const button = document.querySelector("#myButton");<br><br>
+                
+                <span style="color: #75715e;">// Anonymous function</span><br>
+                button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;console.log("Clicked!");<br>
+                });<br><br>
+                
+                <span style="color: #75715e;">// Named function (reusable!)</span><br>
+                function handleClick() {<br>
+                &nbsp;&nbsp;console.log("Button was clicked!");<br>
+                }<br>
+                button.addEventListener("click", handleClick);<br><br>
+                
+                <span style="color: #75715e;">// With event object</span><br>
+                button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;console.log(e.target); <span style="color: #75715e;">// The clicked element</span><br>
+                &nbsp;&nbsp;e.target.style.background = "blue";<br>
                 });
             </div>
-
-            <h3>Common Events</h3>
-            <p>List 5 common events you might use:</p>
-            <ol>
-                <li>_________________________________</li>
-                <li>_________________________________</li>
-                <li>_________________________________</li>
-                <li>_________________________________</li>
-                <li>_________________________________</li>
-            </ol>
         </div>
 
-        <!-- Section 6: Event Object -->
-        <div class="section">
-            <h2>📦 The Event Object</h2>
-
-            <h3>Useful Event Properties</h3>
-            <table>
-                <tr>
-                    <th>Property</th>
-                    <th>What it contains</th>
-                </tr>
-                <tr>
-                    <td>e.type</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>e.target</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>e.preventDefault()</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-                <tr>
-                    <td>e.stopPropagation()</td>
-                    <td><span class="long-blank">_____________________________</span></td>
-                </tr>
-            </table>
+        <!-- Slide 15: The Event Object -->
+        <div class="slide">
+            <h1>The Event Object <span class="emoji">📦</span></h1>
+            <h2>Information About What Happened</h2>
+            
+            <div class="code-example">
+                button.addEventListener("click", function(e) {<br>
+                &nbsp;&nbsp;<span style="color: #75715e;">// e is the event object</span><br>
+                &nbsp;&nbsp;console.log(e.type);        <span style="color: #75715e;">// "click"</span><br>
+                &nbsp;&nbsp;console.log(e.target);      <span style="color: #75715e;">// Element that was clicked</span><br>
+                &nbsp;&nbsp;console.log(e.currentTarget); <span style="color: #75715e;">// Element with listener</span><br>
+                &nbsp;&nbsp;console.log(e.clientX);     <span style="color: #75715e;">// Mouse X position</span><br>
+                &nbsp;&nbsp;console.log(e.clientY);     <span style="color: #75715e;">// Mouse Y position</span><br>
+                &nbsp;&nbsp;console.log(e.timeStamp);   <span style="color: #75715e;">// When it happened</span><br>
+                });
+            </div>
         </div>
 
-        <!-- Practice Exercise -->
-        <div class="section">
-            <h2>💻 Practice Exercise</h2>
-
-            <div class="practice-box">
-                <h3>Build This Structure with JavaScript Only:</h3>
-                <p>Create the following HTML structure using DOM manipulation:</p>
-                <div class="code-block">
-                    &lt;div id="container"&gt;
-                    &lt;p style="color: red"&gt;Hey I'm red!&lt;/p&gt;
-                    &lt;h3 style="color: blue"&gt;I'm a blue h3!&lt;/h3&gt;
-                    &lt;div style="border: 1px solid black; background: pink"&gt;
-                    &lt;h1&gt;I'm in a div&lt;/h1&gt;
-                    &lt;p&gt;ME TOO!&lt;/p&gt;
-                    &lt;/div&gt;
-                    &lt;/div&gt;
+        <!-- STORY 2: The Computer Mouse -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <div class="story-header">
+                    <div class="story-icon">🖱️</div>
+                    <div class="story-title-group">
+                        <h1>The Computer Mouse Was Named for Its Tail</h1>
+                        <h2>1964 - Stanford Research Institute</h2>
+                    </div>
                 </div>
-
-                <p><strong>Your Code:</strong> (Write your solution below)</p>
-                <div style="min-height: 200px; border: 2px dashed #ccc; padding: 10px; background: #fafafa;">
-                    <br><br><br><br><br><br><br><br>
+                
+                <div class="story-content">
+                    <ul>
+                        <li><strong>Douglas Engelbart</strong> invented the computer mouse in 1964 at Stanford Research Institute. The first prototype was a <strong>wooden shell with two metal wheels</strong>.</li>
+                        <li>It was nicknamed <strong>"mouse"</strong> because the cord coming out the back looked like a tail. The cursor was originally called a <strong>"bug"</strong>.</li>
+                        <li>Engelbart chose this design after experimenting with various devices including knee-operated controls and head-mounted devices!</li>
+                    </ul>
+                    
+                    <div class="historical-image-placeholder">
+                        🪵 [Imagine: The original wooden mouse prototype with its "tail" cord]
+                    </div>
+                    
+                    <p class="citation">Source: Computer History Museum</p>
+                </div>
+                
+                <div class="connection-box">
+                    <h3>💡 Connection to Mouse Events</h3>
+                    <p>Engelbart's invention <strong>revolutionized user interaction</strong> with computers. Today, mouse events (click, mouseover, mouseout, mousemove) are fundamental to web development. Every addEventListener for a mouse event traces back to that wooden box with a tail!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Script Placement -->
-        <div class="section">
-            <h2>📍 Script Placement</h2>
-
-            <h3>Where should you put your &lt;script&gt; tag?</h3>
-
-            <p><strong>Option 1:</strong> At the end of body because:
-                <br><span class="long-blank">_________________________________________</span>
-            </p>
-
-            <p><strong>Option 2:</strong> In the head with the <span class="blank">_________</span> attribute because:
-                <br><span class="long-blank">_________________________________________</span>
-            </p>
-        </div>
-
-        <!-- Etch-a-Sketch Project -->
-        <div class="section">
-            <h2>🎨 Project: Etch-a-Sketch</h2>
-
-            <h3>Project Requirements Checklist:</h3>
-            <ul class="checkbox-list">
-                <li>Create a 16x16 grid of square divs</li>
-                <li>Use JavaScript to create the divs (not HTML)</li>
-                <li>Use Flexbox for the grid layout</li>
-                <li>Add hover effect to change square colors</li>
-                <li>Add button to resize the grid</li>
-                <li>Limit user input to maximum 100</li>
-                <li>Keep the same total grid size when resizing</li>
-            </ul>
-
-            <h3>Bonus Features:</h3>
-            <ul class="checkbox-list">
-                <li>Random RGB colors on each hover</li>
-                <li>Progressive darkening (10% each pass)</li>
-                <li>Clear/reset button</li>
-                <li>Color picker for custom colors</li>
-            </ul>
-        </div>
-
-        <!-- Review Questions -->
-        <div class="section">
-            <h2>📝 Review Questions</h2>
-
-            <ol>
-                <li>What's the difference between querySelector and querySelectorAll?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-
-                <li>Why is addEventListener preferred over onclick?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-
-                <li>What is event bubbling?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-
-                <li>When should you use textContent vs innerHTML?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-
-                <li>How do you convert a NodeList to an array?
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-            </ol>
-        </div>
-
-        <!-- Additional Notes -->
-        <div class="section">
-            <h2>📝 Additional Notes</h2>
-            <p>Use this space for any additional notes during the lecture:</p>
-            <br>
-            <div style="min-height: 250px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
-                <br><br><br><br><br><br><br><br><br><br>
+        <!-- STORY 2 CONTINUED: Reflection -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <h1>Reflection: The Computer Mouse <span class="emoji">🤔</span></h1>
+                
+                <div class="reflection-question">
+                    <strong>🧠 Think About It:</strong>
+                    <p>Before the mouse, users interacted with computers primarily through keyboards and punch cards. How did the mouse fundamentally change the way we think about computer interfaces?</p>
+                </div>
+                
+                <div class="story-content" style="margin-top: 30px;">
+                    <h3>Consider:</h3>
+                    <ul>
+                        <li>What types of interactions does the mouse make possible that keyboards can't?</li>
+                        <li>How do touchscreens (touch events) continue this evolution?</li>
+                        <li>What's the next evolution beyond mouse and touch?</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-box" style="margin-top: 30px; background: rgba(255, 255, 255, 0.2); border-color: white;">
+                    <p style="color: white;"><strong>Fun Fact:</strong> Engelbart's mouse had the buttons on top and the cord on the back. Modern mice flipped both - but we still call the cord a "tail"!</p>
+                </div>
             </div>
         </div>
 
-        <div class="footer">
-            <p>Remember: The DOM is your playground - experiment and have fun! 🚀</p>
-            <p>Practice makes perfect - build something after class!</p>
+        <!-- Slide 16: Mouse Events -->
+        <div class="slide">
+            <h1>Mouse Events in Action <span class="emoji">🖱️</span></h1>
+            <h2>Thanks to Douglas Engelbart!</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>click</h3>
+                    <div class="code-example">
+                        button.addEventListener("click", (e) => {<br>
+                        &nbsp;&nbsp;console.log("Clicked!");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>dblclick</h3>
+                    <div class="code-example">
+                        element.addEventListener("dblclick", (e) => {<br>
+                        &nbsp;&nbsp;console.log("Double clicked!");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>mouseover / mouseout</h3>
+                    <div class="code-example">
+                        div.addEventListener("mouseover", (e) => {<br>
+                        &nbsp;&nbsp;e.target.classList.add("hover");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>mousemove</h3>
+                    <div class="code-example">
+                        document.addEventListener("mousemove", (e) => {<br>
+                        &nbsp;&nbsp;console.log(e.clientX, e.clientY);<br>
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Event Bubbling -->
+        <div class="slide">
+            <h1>Event Bubbling <span class="emoji">🫧</span></h1>
+            <h2>Events Travel Up the DOM Tree</h2>
+            
+            <div class="code-example">
+                <span style="color: #66d9ef;">&lt;div class="outer"&gt;</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;div class="middle"&gt;</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #66d9ef;">&lt;button class="inner"&gt;</span>Click Me<span style="color: #66d9ef;">&lt;/button&gt;</span><br>
+                &nbsp;&nbsp;<span style="color: #66d9ef;">&lt;/div&gt;</span><br>
+                <span style="color: #66d9ef;">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="demo-box" style="margin-top: 30px;">
+                <p><strong>When you click the button:</strong></p>
+                <p>1️⃣ Button's handler fires first</p>
+                <p>2️⃣ Then middle div's handler</p>
+                <p>3️⃣ Then outer div's handler</p>
+                <p>4️⃣ All the way up to document!</p>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Stop It:</strong> Use e.stopPropagation() to prevent bubbling!
+            </div>
+        </div>
+
+        <!-- STORY 3: The Mother of All Demos -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <div class="story-header">
+                    <div class="story-icon">🎬</div>
+                    <div class="story-title-group">
+                        <h1>The Mother of All Demos</h1>
+                        <h2>December 9, 1968 - San Francisco</h2>
+                    </div>
+                </div>
+                
+                <div class="story-content">
+                    <ul>
+                        <li>On December 9, 1968, <strong>Douglas Engelbart</strong> (yes, the mouse inventor!) gave a <strong>90-minute demonstration</strong> that changed computing forever.</li>
+                        <li>In one demo, he introduced: the <strong>computer mouse</strong>, <strong>hypertext</strong>, <strong>video conferencing</strong>, <strong>collaborative editing</strong>, and <strong>windows</strong>.</li>
+                        <li>This demo <strong>inspired the development</strong> of the graphical user interface and modern interactive computing as we know it today.</li>
+                        <li>The demo was performed live in front of 1,000 computer professionals - none had seen anything like it!</li>
+                    </ul>
+                    
+                    <div class="historical-image-placeholder">
+                        🎥 [Imagine: Engelbart presenting with his headset mic and display screens showing collaborative editing]
+                    </div>
+                    
+                    <p class="citation">Source: "The Mother of All Demos" - Stanford Research Institute</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY 3 CONTINUED: Connection & Reflection -->
+        <div class="slide historical-slide">
+            <div class="story-container">
+                <h1>The Demo That Changed Everything <span class="emoji">🚀</span></h1>
+                
+                <div class="connection-box">
+                    <h3>💡 Connection to Event-Driven Interfaces</h3>
+                    <p>Engelbart's demo showed that computers could be <strong>interactive, collaborative, and intuitive</strong>. The concepts he introduced - clicking on hyperlinks, moving windows, editing documents collaboratively - all depend on <strong>event-driven programming</strong>. Every event listener you write today is part of realizing Engelbart's vision!</p>
+                </div>
+                
+                <div class="reflection-question" style="margin-top: 30px;">
+                    <strong>🧠 Think About It:</strong>
+                    <p>Engelbart demonstrated technology in 1968 that wouldn't become mainstream until the 1980s and 1990s. What do you think he would say about how we use event-driven interfaces today (web apps, mobile apps, VR)?</p>
+                </div>
+                
+                <div class="demo-box" style="margin-top: 30px; background: rgba(255, 215, 0, 0.3); border-color: gold;">
+                    <p style="color: white;"><strong>From 1968 to Today:</strong> When you write addEventListener(), you're implementing the same fundamental concept Engelbart showed 50+ years ago - computers that respond to human actions in real-time!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Common Patterns -->
+        <div class="slide">
+            <h1>Common DOM Patterns <span class="emoji">📚</span></h1>
+            <h2>Real-World Examples</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Toggle Dark Mode</h3>
+                    <div class="code-example">
+                        btn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;document.body.classList.toggle("dark");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Form Validation</h3>
+                    <div class="code-example">
+                        input.addEventListener("blur", (e) => {<br>
+                        &nbsp;&nbsp;if (!e.target.value) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;e.target.classList.add("error");<br>
+                        &nbsp;&nbsp;}<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Dynamic List</h3>
+                    <div class="code-example">
+                        addBtn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;const li = document.createElement("li");<br>
+                        &nbsp;&nbsp;li.textContent = input.value;<br>
+                        &nbsp;&nbsp;list.appendChild(li);<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Remove on Click</h3>
+                    <div class="code-example">
+                        item.addEventListener("click", (e) => {<br>
+                        &nbsp;&nbsp;e.target.remove();<br>
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Script Placement -->
+        <div class="slide">
+            <h1>Where to Put Your Script? <span class="emoji">📍</span></h1>
+            <h2>Timing is Everything!</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Problem: Script in Head</h3>
+                    <div class="code-example">
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/head&gt;
+                    </div>
+                    <p>DOM doesn't exist yet!</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution 1: End of Body</h3>
+                    <div class="code-example">
+                        &lt;body&gt;<br>
+                        &nbsp;&nbsp;<span style="color: #75715e;">&lt;!-- All your HTML --&gt;</span><br>
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/body&gt;
+                    </div>
+                    <p>DOM exists, safe to manipulate!</p>
+                </div>
+            </div>
+            
+            <div class="comparison-card good" style="margin-top: 20px; max-width: 700px;">
+                <h3>✅ Solution 2: DOMContentLoaded</h3>
+                <div class="code-example">
+                    document.addEventListener("DOMContentLoaded", () => {<br>
+                    &nbsp;&nbsp;<span style="color: #75715e;">// Your code here - DOM is ready!</span><br>
+                    });
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Etch-a-Sketch Project Intro -->
+        <div class="slide">
+            <h1>Project: Etch-a-Sketch <span class="emoji">🎨</span></h1>
+            <h2>Apply Everything You've Learned!</h2>
+            
+            <div class="project-section">
+                <h3>What You'll Build:</h3>
+                <ul style="font-size: 1.2em; line-height: 2;">
+                    <li>🖼️ A grid of divs (like graph paper)</li>
+                    <li>🖱️ Hover effects that "draw" on the grid</li>
+                    <li>🔢 User input to change grid size</li>
+                    <li>🎨 Color changes on interaction</li>
+                </ul>
+            </div>
+            
+            <div class="demo-box">
+                <p><strong>Skills Used:</strong> createElement, appendChild, addEventListener, event objects, loops, and DOM manipulation!</p>
+            </div>
+        </div>
+
+        <!-- Slide 21: Project Requirements -->
+        <div class="slide">
+            <h1>Project Requirements <span class="emoji">📋</span></h1>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>✅ Grid Generation</h3>
+                    <p>Create a 16×16 grid of square divs using JavaScript</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>✅ Hover Effect</h3>
+                    <p>Change square color when mouse hovers over it</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>✅ Reset Button</h3>
+                    <p>Clear the grid and prompt for new size</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>✅ Size Validation</h3>
+                    <p>Limit grid size to maximum 100×100</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <strong>Pro Tip:</strong> Use flexbox for the grid layout and keep total pixel size constant!
+            </div>
+        </div>
+
+        <!-- Slide 22: Getting Started -->
+        <div class="slide">
+            <h1>Getting Started <span class="emoji">🚀</span></h1>
+            <h2>Break It Down into Steps</h2>
+            
+            <div class="activity-box">
+                <h3>Development Steps:</h3>
+                <ol style="font-size: 1.2em; line-height: 2;">
+                    <li><strong>Setup:</strong> Create HTML structure with container div</li>
+                    <li><strong>Grid Function:</strong> Write function to create 16×16 grid</li>
+                    <li><strong>Style Grid:</strong> Use flexbox to arrange squares</li>
+                    <li><strong>Hover Effect:</strong> Add mouseover event listener</li>
+                    <li><strong>Button:</strong> Add reset button with click handler</li>
+                    <li><strong>User Input:</strong> Use prompt() for new grid size</li>
+                    <li><strong>Bonus:</strong> Add color options, progressive darkening</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 23: Key Concepts Review -->
+        <div class="slide">
+            <h1>Concepts to Use <span class="emoji">🔑</span></h1>
+            
+            <div class="two-column">
+                <div class="method-card">
+                    <h3>Creating Elements</h3>
+                    <div class="code-example">
+                        const square = document.createElement("div");<br>
+                        square.classList.add("grid-square");<br>
+                        container.appendChild(square);
+                    </div>
+                </div>
+                <div class="method-card">
+                    <h3>Adding Events</h3>
+                    <div class="code-example">
+                        square.addEventListener("mouseover", () => {<br>
+                        &nbsp;&nbsp;square.style.backgroundColor = "black";<br>
+                        });
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method-card" style="margin-top: 20px;">
+                <h3>Creating Multiple Squares</h3>
+                <div class="code-example">
+                    function createGrid(size) {<br>
+                    &nbsp;&nbsp;for (let i = 0; i &lt; size * size; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const square = document.createElement("div");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #75715e;">// Add event listener and styling</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;container.appendChild(square);<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Flexbox Grid Tips -->
+        <div class="slide">
+            <h1>Flexbox Grid Layout <span class="emoji">📐</span></h1>
+            
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;flex-wrap: wrap;<br>
+                &nbsp;&nbsp;width: 960px;<br>
+                &nbsp;&nbsp;height: 960px;<br>
+                }<br><br>
+                
+                .grid-square {<br>
+                &nbsp;&nbsp;<span style="color: #75715e;">/* If 16×16 grid, each square is 960/16 = 60px */</span><br>
+                &nbsp;&nbsp;width: calc(100% / 16);<br>
+                &nbsp;&nbsp;height: calc(100% / 16);<br>
+                &nbsp;&nbsp;border: 1px solid #ccc;<br>
+                &nbsp;&nbsp;box-sizing: border-box;<br>
+                }
+            </div>
+            
+            <div class="tip-box">
+                Use box-sizing: border-box;
+            </div>
+        </div>
+
+        <!-- Slide 25: Extra Challenges -->
+        <div class="slide">
+            <h1>Bonus Challenges <span class="emoji">🏆</span></h1>
+            <h2>Level Up Your Project!</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>🌈 Random Colors</h3>
+                    <div class="code-example">
+                        const randomColor = () => {<br>
+                        &nbsp;&nbsp;const r = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const g = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const b = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;return `rgb(${r}, ${g}, ${b})`;<br>
+                        };
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🌑 Progressive Darkening</h3>
+                    <p>Each pass makes square 10% darker</p>
+                    <p>Use opacity or RGB calculations</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🎨 Color Picker</h3>
+                    <p>Let user choose the drawing color</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🧹 Clear Button</h3>
+                    <p>Reset all squares to white</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Today's Takeaways -->
+        <div class="slide">
+            <h1>You Now Know DOM Manipulation! <span class="emoji">🎓</span></h1>
+            <h2>Today's Superpowers:</h2>
+            
+            <div class="demo-box" style="font-size: 1.2em;">
+                <ul style="text-align: left;">
+                    <li>✅ Navigate the DOM tree structure</li>
+                    <li>✅ Select elements with querySelector</li>
+                    <li>✅ Create new elements dynamically</li>
+                    <li>✅ Modify element properties and styles</li>
+                    <li>✅ Add interactive event listeners</li>
+                    <li>✅ Handle multiple elements efficiently</li>
+                    <li>✅ Understand event bubbling</li>
+                    <li>✅ Connect historical innovations to modern practices</li>
+                </ul>
+            </div>
+            
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Practice Resources:</h3>
+                <ul>
+                    <li>📖 MDN DOM Documentation</li>
+                    <li>🎮 JavaScript30 by Wes Bos</li>
+                    <li>💪 Complete the Etch-a-Sketch project</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: auto; font-style: italic; font-size: 1.3em;"><strong>Remember:</strong> From OXO in 1952 to Engelbart's 1968 demo to your Etch-a-Sketch today - you're part of computing history! 🚀</p>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">26</span>
+            </span>
+            <button id="nextBtn">Next</button>
         </div>
     </div>
-</body>
 
+    <!-- Shared Presentation JavaScript -->
+    <script src="../../js/presentation.js"></script>
+
+    <!-- Lecture-Specific JavaScript -->
+    <script>
+        // Add any lecture-specific JavaScript here
+        document.addEventListener('slidechange', (e) => {
+            console.log(`Slide ${e.detail.currentSlide + 1} of ${e.detail.totalSlides}`);
+        });
+    </script>
+</body>
 </html>
