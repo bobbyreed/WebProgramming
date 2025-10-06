@@ -1,631 +1,791 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Loops and Arrays - Guided Notes</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.1em;
-            margin: 5px 0;
-        }
-        
-        .info-box {
-            background: #e8f5e9;
-            border: 1px solid #4caf50;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        
-        .info-box strong {
-            color: #2e7d32;
-        }
-        
-        .section {
-            margin: 30px 0;
-            padding: 20px;
-            border-left: 4px solid #667eea;
-            background: #f8f9fa;
-        }
-        
-        .section h2 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-        }
-        
-        .section h3 {
-            color: #764ba2;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .blank {
-            display: inline-block;
-            min-width: 100px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .long-blank {
-            display: inline-block;
-            min-width: 200px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-        }
-        
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-        
-        .code-blank {
-            display: inline-block;
-            min-width: 80px;
-            border-bottom: 2px solid #f8f8f2;
-            margin: 0 5px;
-            color: #66d9ef;
-        }
-        
-        ul, ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .tip {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        
-        .tip strong {
-            color: #856404;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        th {
-            background: #667eea;
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-        
-        .practice-box {
-            background: #f0f8ff;
-            border: 2px dashed #4a90e2;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        @media print {
-            body {
-                background: white;
-            }
-            .header {
-                background: none;
-                color: black;
-                border: 2px solid black;
-            }
-            .blank, .code-blank {
-                color: black;
-            }
-        }
-    </style>
+    <title>Day 25: JavaScript - Loops and Arrays</title>
+    <link rel="stylesheet" href="../../styles/presentation.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>JavaScript: Loops and Arrays - Guided Notes</h1>
-            <p>CS 2083 - Web Programming I | Day 25</p>
-            <p>Name: _________________________________ Date: _____________</p>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Theme</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="theme-slider"></span>
+        </label>
+    </div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active">
+            <h1>JavaScript: Loops and Arrays <span class="emoji">🔁</span></h1>
+            <p class="subtitle">Day 25 - Handling Repetition and Collections</p>
+            <p class="meta-info">Web Programming</p>
+            <div class="home">
+                <a href="../../index.html">⌂ Back to Schedule</a>
+            </div>
         </div>
 
-        <div class="info-box">
-            <strong>📚 Today's Resources:</strong> MDN Looping Code, JavaScript.info Arrays, JavaScript30 Array Cardio
-        </div>
-
-        <!-- Loops Section -->
-        <div class="section">
-            <h2>🔁 Loops - Handling Repetition</h2>
-            
-            <h3>Why Do We Need Loops?</h3>
-            <p>Loops allow us to <span class="blank">_______________</span> code multiple times without writing it over and over.</p>
-            <p>Computers are good at repetition because they are <span class="blank">_______________</span> and never get <span class="blank">_______________</span>.</p>
-            
-            <h3>While Loops</h3>
-            <p>A while loop continues executing as long as the condition is <span class="blank">_______________</span>.</p>
-            
-            <div class="code-block">
-let count = 0;
-while (<span class="code-blank">_______________</span>) {
-    console.log(count);
-    <span class="code-blank">_______________</span>; // increment
-}
-            </div>
-            
-            <div class="tip">
-                <strong>⚠️ Warning:</strong> Always ensure your loop condition will eventually become <span class="blank">_______________</span> to avoid infinite loops!
-            </div>
-            
-            <h3>For Loops</h3>
-            <p>For loops have three parts:</p>
-            <ol>
-                <li><strong>Initialization:</strong> <span class="blank">_______________</span></li>
-                <li><strong>Condition:</strong> <span class="blank">_______________</span></li>
-                <li><strong>Update:</strong> <span class="blank">_______________</span></li>
-            </ol>
-            
-            <div class="code-block">
-for (let i = <span class="code-blank">_____</span>; i < <span class="code-blank">_____</span>; i++) {
-    console.log(i);
-}
-            </div>
-            
-            <h3>Loop Control Statements</h3>
-            <table>
-                <tr>
-                    <th>Statement</th>
-                    <th>Purpose</th>
-                    <th>Example</th>
-                </tr>
-                <tr>
-                    <td><code>break</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>Exit when condition met</td>
-                </tr>
-                <tr>
-                    <td><code>continue</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>Skip current iteration</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Practice Problems - Loops -->
-        <div class="practice-box">
-            <h3>🏋️ Practice: Write these loops</h3>
-            <ol>
-                <li>Count from 10 to 1 (countdown):
-                    <div class="code-block">
-for (<span class="code-blank">_______________</span>) {
-    console.log(i);
+        <!-- Slide 2: The Problem We're Solving -->
+        <div class="slide">
+            <h1>Why Do We Need Loops? <span class="emoji">🤔</span></h1>
+            <h2>The Repetition Challenge</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Without Loops</h3>
+                    <div class="code-example">
+console.log("Student 1");<br>
+console.log("Student 2");<br>
+console.log("Student 3");<br>
+console.log("Student 4");<br>
+console.log("Student 5");<br>
+// ... 25 more lines? 😱
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ With Loops</h3>
+                    <div class="code-example">
+for (let i = 1; i <= 30; i++) {<br>
+&nbsp;&nbsp;console.log(`Student ${i}`);<br>
 }
                     </div>
-                </li>
-                <li>Print only even numbers from 0 to 20:
-                    <div class="code-block">
-for (let i = 0; i <= 20; i++) {
-    if (<span class="code-blank">_______________</span>) {
-        console.log(i);
-    }
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Key Insight:</strong> Computers excel at repetitive tasks - they're fast and never get tired!
+            </div>
+        </div>
+
+        <!-- Slide 3: Learning Objectives -->
+        <div class="slide">
+            <h1>Today's Learning Objectives <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🔁 Master <code>for</code> and <code>while</code> loops</li>
+                <li>📦 Store multiple values in arrays</li>
+                <li>🔍 Access and modify array elements</li>
+                <li>⚡ Use powerful array methods: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
+                <li>🧪 Introduction to Test-Driven Development (TDD)</li>
+                <li>💪 Practice with real coding challenges</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: While Loops -->
+        <div class="slide">
+            <h1>While Loops <span class="emoji">⏰</span></h1>
+            <h2>Keep going while a condition is true</h2>
+            <div class="code-example">
+let count = 0;<br><br>
+while (count < 5) {<br>
+&nbsp;&nbsp;console.log(`Count is: ${count}`);<br>
+&nbsp;&nbsp;count++; <span class="comment">// Don't forget this!</span><br>
 }
+            </div>
+            <div class="warning-box">
+                <strong>⚠️ Watch Out for Infinite Loops!</strong>
+                <p>Always ensure your loop condition will eventually become false!</p>
+            </div>
+            <div class="activity-box">
+                <h3>Quick Challenge:</h3>
+                <p>What happens if we forget <code>count++</code>? 🤔</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: For Loops -->
+        <div class="slide">
+            <h1>For Loops <span class="emoji">🎢</span></h1>
+            <h2>When you know how many times to repeat</h2>
+            <div class="code-example">
+<span class="comment">// for (initialization; condition; update)</span><br>
+for (let i = 0; i < 5; i++) {<br>
+&nbsp;&nbsp;console.log(`Iteration ${i}`);<br>
+}
+            </div>
+            <div class="two-column">
+                <div>
+                    <h3>Parts of a For Loop:</h3>
+                    <ol>
+                        <li><strong>Initialization:</strong> <code>let i = 0</code></li>
+                        <li><strong>Condition:</strong> <code>i < 5</code></li>
+                        <li><strong>Update:</strong> <code>i++</code></li>
+                    </ol>
+                </div>
+                <div>
+                    <h3>Execution Order:</h3>
+                    <ol>
+                        <li>Initialize once</li>
+                        <li>Check condition</li>
+                        <li>Execute body</li>
+                        <li>Update</li>
+                        <li>Go to step 2</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Break and Continue -->
+        <div class="slide">
+            <h1>Loop Control: Break & Continue <span class="emoji">🛑</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>break</h3>
+                    <p>Exits the loop completely</p>
+                    <div class="code-example">
+for (let i = 0; i < 10; i++) {<br>
+&nbsp;&nbsp;if (i === 5) break;<br>
+&nbsp;&nbsp;console.log(i);<br>
+}<br>
+<span class="comment">// Output: 0, 1, 2, 3, 4</span>
                     </div>
-                </li>
-                <li>Sum of numbers 1 to 100:
-                    <div class="code-block">
-let sum = <span class="code-blank">_____</span>;
-for (let i = 1; i <= 100; i++) {
-    <span class="code-blank">_______________</span>;
-}
-console.log(sum);
+                </div>
+                <div class="comparison-card">
+                    <h3>continue</h3>
+                    <p>Skips to next iteration</p>
+                    <div class="code-example">
+for (let i = 0; i < 5; i++) {<br>
+&nbsp;&nbsp;if (i === 2) continue;<br>
+&nbsp;&nbsp;console.log(i);<br>
+}<br>
+<span class="comment">// Output: 0, 1, 3, 4</span>
                     </div>
-                </li>
-            </ol>
+                </div>
+            </div>
         </div>
 
-        <!-- Arrays Section -->
-        <div class="section">
-            <h2>📦 Arrays - Collections of Data</h2>
-            
-            <h3>What is an Array?</h3>
-            <p>An array is an <span class="blank">_______________</span> collection of items stored in a single variable.</p>
-            <p>Arrays are <span class="blank">_______________</span>-indexed, meaning the first element is at index <span class="blank">_____</span>.</p>
-            
-            <h3>Creating and Accessing Arrays</h3>
-            <div class="code-block">
-// Creating an array
-const fruits = ["apple", "banana", "orange"];
-
-// Accessing elements
-console.log(fruits[<span class="code-blank">_____</span>]); // "apple"
-console.log(fruits.length); // <span class="code-blank">_____</span>
+        <!-- Slide 7: Let's Practice Loops -->
+        <div class="slide">
+            <h1>Quick Loop Practice <span class="emoji">💻</span></h1>
+            <div class="activity-box">
+                <h3>5-Minute Challenge: Create These Loops</h3>
+                <ol>
+                    <li>Count from 10 to 1 (countdown)</li>
+                    <li>Print only even numbers from 0 to 20</li>
+                    <li>Calculate the sum of numbers 1 to 100</li>
+                </ol>
             </div>
-            
-            <h3>Common Array Methods</h3>
-            <table>
-                <tr>
-                    <th>Method</th>
-                    <th>Purpose</th>
-                    <th>Returns</th>
-                </tr>
-                <tr>
-                    <td><code>push()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>New length</td>
-                </tr>
-                <tr>
-                    <td><code>pop()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>Removed element</td>
-                </tr>
-                <tr>
-                    <td><code>unshift()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>New length</td>
-                </tr>
-                <tr>
-                    <td><code>shift()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>Removed element</td>
-                </tr>
-            </table>
-            
-            <h3>Looping Through Arrays</h3>
-            <div class="code-block">
-const numbers = [10, 20, 30, 40, 50];
-
-// Traditional for loop
-for (let i = 0; i < <span class="code-blank">_______________</span>; i++) {
-    console.log(numbers[i]);
+            <div class="demo-box">
+                <p><strong>Hint for #3:</strong></p>
+                <div class="code-example">
+let sum = 0;<br>
+for (let i = 1; i <= 100; i++) {<br>
+&nbsp;&nbsp;<span class="comment">// What goes here?</span><br>
 }
+                </div>
+            </div>
+        </div>
 
-// For...of loop
-for (const num of <span class="code-blank">_______________</span>) {
-    console.log(num);
+        <!-- NEW STORY 2: Y2K and Loop Boundaries -->
+        <div class="slide">
+            <h1>📚 Historical Moment: Y2K <span class="emoji">🕐</span></h1>
+            <h2>When Loop Boundaries Mattered Most</h2>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white;">
+                <h3 style="font-size: 1.8em; margin-bottom: 20px;">The Y2K Panic of 1999</h3>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 1.2em; line-height: 1.8;">The Clinton administration called preparing for Y2K <strong>"the single largest technology management challenge in history."</strong></p>
+                </div>
+                <div class="two-column" style="gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h4>Feared Consequences:</h4>
+                        <ul style="font-size: 1.1em;">
+                            <li>⚡ Power grid failures</li>
+                            <li>🏥 Medical equipment crashes</li>
+                            <li>🏦 Banking system collapses</li>
+                            <li>✈️ Transportation shutdowns</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h4>The Core Problem:</h4>
+                        <p style="font-size: 1.1em;">Systems stored years as 2 digits (99 for 1999). When 2000 came, computers would read "00" - creating invalid loop conditions and date calculations!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Source:</strong> NPR - "Y2K seems like a joke now, but in 1999 people were really freaking out"
+            </div>
+        </div>
+
+        <!-- NEW STORY 2 Part 2: Connection -->
+        <div class="slide">
+            <h1>Y2K: Why It Matters to You <span class="emoji">🎓</span></h1>
+            <h2>The Power of Proper Loop Boundaries</h2>
+            <div class="demo-box">
+                <h3>The Y2K Bug in Code:</h3>
+                <div class="code-example">
+<span class="comment">// Buggy Y2K-style code</span><br>
+let year = 99; <span class="comment">// Meant to be 1999</span><br>
+year++; <span class="comment">// Now it's 00 - is that 1900 or 2000?</span><br><br>
+<span class="comment">// Loop that breaks with wrong boundaries</span><br>
+for (let year = 95; year <= 05; year++) {<br>
+&nbsp;&nbsp;console.log(`Processing year: 19${year}`);<br>
+}<br>
+<span class="comment">// What happens when year = 00? 💥</span>
+                </div>
+            </div>
+            <div class="warning-box">
+                <h3>🔴 The acronym that emerged: TEOTWAWKI</h3>
+                <p style="font-size: 1.2em;">"<strong>The End Of The World As We Know It</strong>"</p>
+            </div>
+            <div class="activity-box">
+                <h3>💭 Reflection Question:</h3>
+                <p><strong>Why must programmers think carefully about loop boundaries and edge cases?</strong></p>
+                <p style="margin-top: 10px;">Think about: array indexing, date ranges, off-by-one errors...</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Introduction to Arrays -->
+        <div class="slide">
+            <h1>Arrays: Collections of Data <span class="emoji">📦</span></h1>
+            <h2>Store Multiple Values in One Variable</h2>
+            <div class="code-example">
+<span class="comment">// Creating arrays</span><br>
+const students = ["Alice", "Bob", "Charlie", "Diana"];<br>
+const scores = [95, 87, 92, 88, 91];<br>
+const mixed = [42, "hello", true, null];<br><br>
+<span class="comment">// Accessing elements (0-indexed!)</span><br>
+console.log(students[0]); <span class="comment">// "Alice"</span><br>
+console.log(scores[2]); <span class="comment">// 92</span>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Arrays are zero-indexed! The first element is at index 0.
+            </div>
+        </div>
+
+        <!-- NEW STORY 1: JavaScript Type Coercion -->
+        <div class="slide">
+            <h1>📚 Historical Moment <span class="emoji">⚡</span></h1>
+            <h2>JavaScript's Type Coercion: A User Request</h2>
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white;">
+                <h3 style="font-size: 1.8em; margin-bottom: 20px;">The Surprising Origin of JavaScript Quirks</h3>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 1.3em; line-height: 1.8;"><strong>Myth:</strong> JavaScript's "weird" behavior was due to being created in 10 days.</p>
+                    <p style="font-size: 1.3em; line-height: 1.8; margin-top: 15px;"><strong>Reality:</strong> The original prototype (Mocha) <em>didn't have</em> implicit type conversion. <strong>Users asked for it!</strong></p>
+                </div>
+                <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 10px;">
+                    <h4 style="font-size: 1.4em;">What This Means:</h4>
+                    <p style="font-size: 1.2em; line-height: 1.8;">Features we complain about today were actually requested enhancements that Brendan Eich added to version 1.0 based on user feedback!</p>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Source:</strong> Buttondown - "Was Javascript really made in 10 days?"
+            </div>
+        </div>
+
+        <!-- NEW STORY 1 Part 2: Connection to Arrays -->
+        <div class="slide">
+            <h1>Type Coercion & Arrays <span class="emoji">🔄</span></h1>
+            <h2>Why Understanding This Matters</h2>
+            <div class="demo-box">
+                <h3>Array Type Coercion Can Be Surprising:</h3>
+                <div class="code-example">
+<span class="comment">// Arrays can contain mixed types</span><br>
+const data = [1, "2", 3, "4"];<br><br>
+<span class="comment">// Type coercion in array operations</span><br>
+console.log([1, 2] + [3, 4]); <span class="comment">// "1,23,4" 😲</span><br>
+console.log([10, 5, 40].sort()); <span class="comment">// [10, 40, 5] 😲</span><br><br>
+<span class="comment">// Why? Default sort converts to strings!</span><br>
+<span class="comment">// "10" < "40" < "5" alphabetically</span><br><br>
+<span class="comment">// The fix: provide a comparison function</span><br>
+console.log([10, 5, 40].sort((a, b) => a - b)); <span class="comment">// [5, 10, 40] ✅</span>
+                </div>
+            </div>
+            <div class="warning-box">
+                <h3>⚠️ Key Takeaway</h3>
+                <p>Understanding how JavaScript handles types in arrays prevents subtle bugs and helps you write more reliable code!</p>
+            </div>
+            <div class="activity-box">
+                <h3>💭 Reflection Question:</h3>
+                <p><strong>Can you think of a situation where automatic type coercion in arrays might cause unexpected results in a real application?</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Array Properties and Methods -->
+        <div class="slide">
+            <h1>Working with Arrays <span class="emoji">🔧</span></h1>
+            <div class="code-example">
+const fruits = ["apple", "banana", "orange"];<br><br>
+<span class="comment">// Length property</span><br>
+console.log(fruits.length); <span class="comment">// 3</span><br><br>
+<span class="comment">// Adding elements</span><br>
+fruits.push("grape"); <span class="comment">// Add to end</span><br>
+fruits.unshift("mango"); <span class="comment">// Add to beginning</span><br><br>
+<span class="comment">// Removing elements</span><br>
+fruits.pop(); <span class="comment">// Remove from end</span><br>
+fruits.shift(); <span class="comment">// Remove from beginning</span><br><br>
+<span class="comment">// Modifying elements</span><br>
+fruits[1] = "strawberry"; <span class="comment">// Change element</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: Loops with Arrays -->
+        <div class="slide">
+            <h1>Looping Through Arrays <span class="emoji">🔄</span></h1>
+            <h2>The Perfect Partnership</h2>
+            <div class="code-example">
+const numbers = [10, 20, 30, 40, 50];<br><br>
+<span class="comment">// Traditional for loop</span><br>
+for (let i = 0; i < numbers.length; i++) {<br>
+&nbsp;&nbsp;console.log(numbers[i]);<br>
+}<br><br>
+<span class="comment">// For...of loop (cleaner!)</span><br>
+for (const num of numbers) {<br>
+&nbsp;&nbsp;console.log(num);<br>
 }
             </div>
-        </div>
-
-        <!-- Array Methods Section -->
-        <div class="section">
-            <h2>✨ Higher-Order Array Methods</h2>
-            
-            <h3>The Big Three Array Methods</h3>
-            <table>
-                <tr>
-                    <th>Method</th>
-                    <th>Purpose</th>
-                    <th>Returns</th>
-                </tr>
-                <tr>
-                    <td><code>map()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>New array</td>
-                </tr>
-                <tr>
-                    <td><code>filter()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>New array</td>
-                </tr>
-                <tr>
-                    <td><code>reduce()</code></td>
-                    <td><span class="blank">_______________________</span></td>
-                    <td>Single value</td>
-                </tr>
-            </table>
-            
-            <h3>Map Method</h3>
-            <p>Map <span class="blank">_______________</span> each element and returns a <span class="blank">_______________</span> array.</p>
-            <div class="code-block">
-const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map(num => <span class="code-blank">_______________</span>);
-// Result: [2, 4, 6, 8, 10]
-            </div>
-            
-            <h3>Filter Method</h3>
-            <p>Filter returns elements where the callback returns <span class="blank">_______________</span>.</p>
-            <div class="code-block">
-const numbers = [1, 2, 3, 4, 5, 6];
-const evens = numbers.filter(num => <span class="code-blank">_______________</span>);
-// Result: [2, 4, 6]
-            </div>
-            
-            <h3>Reduce Method</h3>
-            <p>Reduce combines all elements into a <span class="blank">_______________</span> value.</p>
-            <div class="code-block">
-const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((total, num) => <span class="code-blank">_______________</span>, 0);
-// Result: 15
-            </div>
-            
-            <div class="tip">
-                <strong>💡 Remember:</strong> These methods don't modify the original array - they return a new one!
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use <code>for...of</code> when you don't need the index!
             </div>
         </div>
 
-        <!-- Practice: sumOfTripledEvens -->
-        <div class="practice-box">
-            <h3>🏋️ Challenge: sumOfTripledEvens</h3>
-            <p>Write a function that:</p>
-            <ol>
-                <li>Takes an array of numbers</li>
-                <li>Filters for even numbers</li>
-                <li>Triples each even number</li>
-                <li>Sums the results</li>
-            </ol>
-            
-            <div class="code-block">
-// Using loops
-function sumOfTripledEvens(arr) {
-    let sum = <span class="code-blank">_____</span>;
-    for (let i = 0; i < arr.length; i++) {
-        if (<span class="code-blank">_______________</span>) {
-            sum += <span class="code-blank">_______________</span>;
-        }
-    }
-    return sum;
-}
-
-// Using array methods
-function sumOfTripledEvens(arr) {
-    return arr
-        .filter(<span class="code-blank">_______________</span>)
-        .map(<span class="code-blank">_______________</span>)
-        .reduce(<span class="code-blank">_______________</span>, 0);
-}
-            </div>
-        </div>
-
-        <!-- Method Chaining -->
-        <div class="section">
-            <h2>⛓️ Method Chaining</h2>
-            
-            <h3>Combining Multiple Operations</h3>
-            <p>We can chain array methods together for complex transformations:</p>
-            
-            <div class="code-block">
-const result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    .filter(n => n % 2 === 0)  // Keep: <span class="code-blank">_______________</span>
-    .map(n => n * 3)            // Result: <span class="code-blank">_______________</span>
-    .reduce((sum, n) => sum + n, 0); // Final: <span class="code-blank">_____</span>
-            </div>
-        </div>
-
-        <!-- Common Array Patterns -->
-        <div class="section">
-            <h2>📋 Common Array Patterns</h2>
-            
-            <table>
-                <tr>
-                    <th>Method</th>
-                    <th>Purpose</th>
-                    <th>Example</th>
-                </tr>
-                <tr>
-                    <td><code>some()</code></td>
-                    <td>Check if <span class="blank">_______</span> element matches</td>
-                    <td><code>arr.some(n => n > 3)</code></td>
-                </tr>
-                <tr>
-                    <td><code>every()</code></td>
-                    <td>Check if <span class="blank">_______</span> elements match</td>
-                    <td><code>arr.every(n => n > 0)</code></td>
-                </tr>
-                <tr>
-                    <td><code>find()</code></td>
-                    <td>Return <span class="blank">_______</span> matching element</td>
-                    <td><code>arr.find(n => n > 3)</code></td>
-                </tr>
-                <tr>
-                    <td><code>indexOf()</code></td>
-                    <td>Return <span class="blank">_______</span> of element</td>
-                    <td><code>arr.indexOf(3)</code></td>
-                </tr>
-                <tr>
-                    <td><code>includes()</code></td>
-                    <td>Check if array <span class="blank">_______</span> element</td>
-                    <td><code>arr.includes(3)</code></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- TDD Section -->
-        <div class="section">
-            <h2>🧪 Test-Driven Development (TDD)</h2>
-            
-            <h3>What is TDD?</h3>
-            <p>TDD means writing <span class="blank">_______________</span> before writing <span class="blank">_______________</span>.</p>
-            
-            <h3>The TDD Cycle</h3>
-            <ol>
-                <li>🔴 <strong>Red:</strong> Write a <span class="blank">_______________</span> test</li>
-                <li>🟢 <strong>Green:</strong> Write code to <span class="blank">_______________</span> the test</li>
-                <li>🔄 <strong>Refactor:</strong> <span class="blank">_______________</span> the code</li>
-            </ol>
-            
-            <div class="tip">
-                <strong>💡 Benefits of TDD:</strong>
-                <ul>
-                    <li>Ensures code works correctly</li>
-                    <li>Makes debugging easier</li>
-                    <li>Documents expected behavior</li>
-                    <li>Prevents regression bugs</li>
+        <!-- Slide 11: Introduction to Array Methods -->
+        <div class="slide">
+            <h1>Array Magic: Higher-Order Methods <span class="emoji">✨</span></h1>
+            <h2>More Elegant Than Loops!</h2>
+            <div class="demo-box">
+                <h3>The Big Three:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>📍 <strong>map()</strong> - Transform each element</li>
+                    <li>🔍 <strong>filter()</strong> - Keep only what you want</li>
+                    <li>📊 <strong>reduce()</strong> - Combine into single value</li>
                 </ul>
             </div>
+            <div class="activity-box">
+                <p><strong>Key Concept:</strong> These methods take functions as arguments (callbacks)</p>
+            </div>
         </div>
 
-        <!-- Assignment Checklist -->
-        <div class="section">
-            <h2>📝 Assignment Checklist</h2>
-            
-            <h3>JavaScript.info Exercises</h3>
-            <ul>
-                <li>☐ Translate border-left-width to borderLeftWidth</li>
-                <li>☐ Filter range</li>
-                <li>☐ Filter range "in place"</li>
-                <li>☐ Sort in decreasing order</li>
-                <li>☐ Copy and sort array</li>
-                <li>☐ Shuffle an array</li>
-                <li>☐ Filter unique array members</li>
-            </ul>
-            
-            <h3>JavaScript30 Challenges</h3>
-            <ul>
-                <li>☐ Array Cardio Day 1</li>
-                <li>☐ Array Cardio Day 2</li>
-            </ul>
-            
-            <h3>JavaScript Exercises</h3>
-            <ul>
-                <li>☐ 06_repeatString</li>
-                <li>☐ 07_reverseString</li>
-                <li>☐ 08_removeFromArray</li>
-                <li>☐ 09_sumAll</li>
-                <li>☐ 10_leapYears</li>
-                <li>☐ 11_tempConversion</li>
-            </ul>
+        <!-- NEW STORY 3: Y2K Resolution -->
+        <div class="slide">
+            <h1>📚 Historical Moment: Y2K Resolution <span class="emoji">✅</span></h1>
+            <h2>Much Ado About Nothing?</h2>
+            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white;">
+                <h3 style="font-size: 1.8em; margin-bottom: 20px;">What Actually Happened on January 1, 2000?</h3>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 1.3em; line-height: 1.8;">Despite the massive fears, <strong>there were very few Y2K problems</strong> when midnight struck.</p>
+                </div>
+                <div class="two-column" style="gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h4>Minor Issues:</h4>
+                        <ul style="font-size: 1.1em;">
+                            <li>🏭 One nuclear facility in Japan had radiation equipment fail (backup systems worked)</li>
+                            <li>📱 Some minor glitches worldwide</li>
+                            <li>✅ No major disasters occurred</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+                        <h4>The Surprise:</h4>
+                        <p style="font-size: 1.1em; line-height: 1.6;">Countries like Italy, Russia, and South Korea did little preparation - yet had <strong>no more problems</strong> than countries like the U.S. that spent millions!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Source:</strong> National Geographic - "Y2K bug"
+            </div>
         </div>
 
-        <!-- Practice Problems -->
-        <div class="practice-box">
-            <h3>🏋️ In-Class Exercise: repeatString</h3>
-            <p>Complete the function that repeats a string a given number of times:</p>
-            
-            <div class="code-block">
-function repeatString(string, num) {
-    // Handle negative numbers
-    if (<span class="code-blank">_______________</span>) {
-        return 'ERROR';
-    }
-    
-    // Your solution here:
-    let result = <span class="code-blank">_____</span>;
-    for (<span class="code-blank">_______________</span>) {
-        <span class="code-blank">_______________</span>;
-    }
-    return result;
-    
-    // Alternative solution using string method:
-    // return <span class="code-blank">_______________</span>;
+        <!-- NEW STORY 3 Part 2: The Testing Lesson -->
+        <div class="slide">
+            <h1>The Y2K Legacy <span class="emoji">🧪</span></h1>
+            <h2>Testing Edge Cases Matters</h2>
+            <div class="demo-box">
+                <h3>Was Y2K Preparation Wasted?</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">Some say the massive testing <em>prevented</em> disasters. Others say the threat was overblown. The truth? <strong>We'll never know for certain.</strong></p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>What We DO Know:</h3>
+                    <div class="code-example">
+<span class="comment">// Testing edge cases in arrays</span><br>
+function processData(arr) {<br>
+&nbsp;&nbsp;<span class="comment">// Test: What if arr is empty?</span><br>
+&nbsp;&nbsp;if (arr.length === 0) return [];<br><br>
+&nbsp;&nbsp;<span class="comment">// Test: What if arr has 1 item?</span><br>
+&nbsp;&nbsp;if (arr.length === 1) return arr;<br><br>
+&nbsp;&nbsp;<span class="comment">// Test: What about negative numbers?</span><br>
+&nbsp;&nbsp;<span class="comment">// Test: What about non-numbers?</span><br>
+&nbsp;&nbsp;return arr.filter(x => <br>
+&nbsp;&nbsp;&nbsp;&nbsp;typeof x === 'number' && x >= 0<br>
+&nbsp;&nbsp;);<br>
 }
-
-// Test cases:
-// repeatString('hey', 3)  → 'heyheyhey'
-// repeatString('hello', 0) → ''
-// repeatString('hi', -1)   → 'ERROR'
+                    </div>
+                </div>
+            </div>
+            <div class="warning-box">
+                <h3>🎯 Programming Wisdom from Y2K:</h3>
+                <ul style="font-size: 1.1em;">
+                    <li>✅ Always test edge cases (empty arrays, single items, boundaries)</li>
+                    <li>✅ Don't assume "normal" inputs only</li>
+                    <li>✅ Better safe than sorry - defensive programming saves time!</li>
+                </ul>
+            </div>
+            <div class="activity-box">
+                <h3>💭 Reflection Question:</h3>
+                <p><strong>What edge cases should you test when working with loops and arrays?</strong></p>
+                <p style="margin-top: 10px;">Examples: Empty arrays? Single elements? Very large arrays? Mixed types?</p>
             </div>
         </div>
 
-        <!-- Review Questions -->
-        <div class="section">
-            <h2>🤔 Review Questions</h2>
-            <ol>
-                <li>What is the difference between a while loop and a for loop?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-                
-                <li>Why are arrays zero-indexed?
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-                
-                <li>What's the difference between map() and forEach()?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-                
-                <li>When would you use reduce() instead of a for loop?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-                
-                <li>What does it mean that array methods return a "new array"?
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-            </ol>
-        </div>
-
-        <!-- Notes Section -->
-        <div class="section">
-            <h2>📝 Additional Notes</h2>
-            <p>Use this space for any additional notes during the lecture:</p>
-            <br>
-            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
-                <br><br><br><br><br><br><br><br>
+        <!-- Slide 12: Map Method -->
+        <div class="slide">
+            <h1>The Map Method <span class="emoji">🗺️</span></h1>
+            <h2>Transform Every Element</h2>
+            <div class="code-example">
+<span class="comment">// Double all numbers</span><br>
+const numbers = [1, 2, 3, 4, 5];<br>
+const doubled = numbers.map(num => num * 2);<br>
+console.log(doubled); <span class="comment">// [2, 4, 6, 8, 10]</span><br><br>
+<span class="comment">// Make names uppercase</span><br>
+const names = ["alice", "bob", "charlie"];<br>
+const upperNames = names.map(name => name.toUpperCase());<br>
+console.log(upperNames); <span class="comment">// ["ALICE", "BOB", "CHARLIE"]</span>
+            </div>
+            <div class="tip-box">
+                <strong>Important:</strong> map() returns a NEW array - original is unchanged!
             </div>
         </div>
 
-        <div class="footer">
-            <p>Remember: The best way to learn programming is by doing! 💻</p>
-            <p>Practice these concepts and complete all exercises.</p>
+        <!-- Slide 13: Filter Method -->
+        <div class="slide">
+            <h1>The Filter Method <span class="emoji">🔍</span></h1>
+            <h2>Keep Only What Passes the Test</h2>
+            <div class="code-example">
+<span class="comment">// Keep only even numbers</span><br>
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];<br>
+const evens = numbers.filter(num => num % 2 === 0);<br>
+console.log(evens); <span class="comment">// [2, 4, 6, 8]</span><br><br>
+<span class="comment">// Keep long words</span><br>
+const words = ["hi", "hello", "goodbye", "yes", "no"];<br>
+const longWords = words.filter(word => word.length > 3);<br>
+console.log(longWords); <span class="comment">// ["hello", "goodbye"]</span>
+            </div>
+            <div class="demo-box">
+                <p>Filter returns elements where callback returns <code>true</code></p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Reduce Method -->
+        <div class="slide">
+            <h1>The Reduce Method <span class="emoji">📊</span></h1>
+            <h2>Combine All Elements Into One Value</h2>
+            <div class="code-example">
+<span class="comment">// Sum all numbers</span><br>
+const numbers = [1, 2, 3, 4, 5];<br>
+const sum = numbers.reduce((total, num) => total + num, 0);<br>
+console.log(sum); <span class="comment">// 15</span><br><br>
+<span class="comment">// Find the maximum</span><br>
+const scores = [85, 92, 78, 96, 88];<br>
+const max = scores.reduce((max, score) => {<br>
+&nbsp;&nbsp;return score > max ? score : max;<br>
+}, 0);<br>
+console.log(max); <span class="comment">// 96</span>
+            </div>
+            <div class="tip-box">
+                <strong>Pattern:</strong> reduce((accumulator, current) => ..., initialValue)
+            </div>
+        </div>
+
+        <!-- Slide 15: Visual Example -->
+        <div class="slide">
+            <h1>Visualizing Array Methods <span class="emoji">🎨</span></h1>
+            <div class="demo-box">
+                <h3>The Sandwich Example 🥪</h3>
+                <div style="font-size: 1.2em; line-height: 2;">
+                    <p><strong>Start:</strong> [🍞, 🥬, 🍅, 🧀, 🥓, 🍞]</p>
+                    <p><strong>Filter (vegetarian):</strong> [🍞, 🥬, 🍅, 🧀, 🍞]</p>
+                    <p><strong>Map (toast):</strong> [🍞→🥖, 🥬, 🍅, 🧀, 🍞→🥖]</p>
+                    <p><strong>Reduce (stack):</strong> 🥪</p>
+                </div>
+            </div>
+            <div class="activity-box">
+                <p>Each method serves a specific purpose in data transformation!</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Chaining Methods -->
+        <div class="slide">
+            <h1>Method Chaining <span class="emoji">⛓️</span></h1>
+            <h2>Combine Multiple Operations</h2>
+            <div class="code-example">
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];<br><br>
+const result = numbers<br>
+&nbsp;&nbsp;.filter(num => num % 2 === 0) <span class="comment">// Keep evens</span><br>
+&nbsp;&nbsp;.map(num => num * 3) <span class="comment">// Triple them</span><br>
+&nbsp;&nbsp;.reduce((sum, num) => sum + num, 0); <span class="comment">// Sum all</span><br><br>
+console.log(result); <span class="comment">// 90 (2*3 + 4*3 + 6*3 + 8*3 + 10*3)</span>
+            </div>
+            <div class="tip-box">
+                <strong>Power Move:</strong> Chain methods for complex transformations in readable code!
+            </div>
+        </div>
+
+        <!-- Slide 17: Introduction to TDD -->
+        <div class="slide">
+            <h1>Test-Driven Development (TDD) <span class="emoji">🧪</span></h1>
+            <h2>Write Tests First, Code Second</h2>
+            <div class="demo-box">
+                <h3>The TDD Cycle:</h3>
+                <ol style="font-size: 1.3em; line-height: 2;">
+                    <li>🔴 <strong>Red:</strong> Write a failing test</li>
+                    <li>🟢 <strong>Green:</strong> Write minimal code to pass</li>
+                    <li>🔵 <strong>Refactor:</strong> Improve the code</li>
+                    <li>🔁 <strong>Repeat:</strong> Add next test</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Why TDD?</strong> Catches bugs early, guides design, provides documentation
+            </div>
+        </div>
+
+        <!-- Slide 18: TDD Example -->
+        <div class="slide">
+            <h1>TDD in Action <span class="emoji">🎯</span></h1>
+            <div class="code-example">
+<span class="comment">// Step 1: Write the test first</span><br>
+test('sum adds two numbers', () => {<br>
+&nbsp;&nbsp;expect(sum(2, 3)).toBe(5);<br>
+});<br><br>
+<span class="comment">// Step 2: Test fails (function doesn't exist yet)</span><br><br>
+<span class="comment">// Step 3: Write minimal code to pass</span><br>
+function sum(a, b) {<br>
+&nbsp;&nbsp;return a + b;<br>
+}<br><br>
+<span class="comment">// Step 4: Test passes! Now add more tests...</span><br>
+test('sum handles negative numbers', () => {<br>
+&nbsp;&nbsp;expect(sum(-1, -2)).toBe(-3);<br>
+});
+            </div>
+        </div>
+
+        <!-- Slide 19: Jest Introduction -->
+        <div class="slide">
+            <h1>Meet Jest <span class="emoji">🃏</span></h1>
+            <h2>JavaScript Testing Framework</h2>
+            <div class="code-example">
+<span class="comment">// Basic Jest test structure</span><br>
+describe('Array exercises', () => {<br>
+&nbsp;&nbsp;test('repeatString repeats text', () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(repeatString('hey', 3)).toBe('heyheyhey');<br>
+&nbsp;&nbsp;});<br><br>
+&nbsp;&nbsp;test('repeatString handles empty string', () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(repeatString('hi', 0)).toBe('');<br>
+&nbsp;&nbsp;});<br><br>
+&nbsp;&nbsp;test('repeatString returns ERROR for negative', () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(repeatString('hi', -1)).toBe('ERROR');<br>
+&nbsp;&nbsp;});<br>
+});
+            </div>
+        </div>
+
+        <!-- Slide 20: Running Tests -->
+        <div class="slide">
+            <h1>Running Jest Tests <span class="emoji">▶️</span></h1>
+            <div class="demo-box">
+                <h3>In Your Terminal:</h3>
+                <div class="code-example">
+<span class="comment"># Install Jest (first time only)</span><br>
+npm install --save-dev jest<br><br>
+<span class="comment"># Run all tests</span><br>
+npm test<br><br>
+<span class="comment"># Run tests in watch mode (re-runs on save)</span><br>
+npm test -- --watch<br><br>
+<span class="comment"># Run a specific test file</span><br>
+npm test repeatString.spec.js
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use watch mode while developing - tests run automatically!
+            </div>
+        </div>
+
+        <!-- Slide 21: Reading Test Output -->
+        <div class="slide">
+            <h1>Understanding Test Results <span class="emoji">📊</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>✅ Passing Test</h3>
+                    <div class="code-example">
+PASS  ./repeatString.spec.js<br>
+&nbsp;&nbsp;✓ repeats text (2 ms)<br>
+&nbsp;&nbsp;✓ handles zero (1 ms)<br><br>
+Test Suites: 1 passed<br>
+Tests: 2 passed<br>
+Time: 0.5s
+                    </div>
+                </div>
+                <div class="comparison-card bad">
+                    <h3>❌ Failing Test</h3>
+                    <div class="code-example">
+FAIL  ./repeatString.spec.js<br>
+&nbsp;&nbsp;✕ handles negative (5 ms)<br><br>
+Expected: "ERROR"<br>
+Received: "hihihi..."<br><br>
+Test Suites: 1 failed<br>
+Tests: 1 failed, 2 passed
+                    </div>
+                </div>
+            </div>
+            <div class="activity-box">
+                <p>Read error messages carefully - they tell you exactly what went wrong!</p>
+            </div>
+        </div>
+
+        <!-- Slide 22: Your Assignment -->
+        <div class="slide">
+            <h1>This Week's Exercises <span class="emoji">📝</span></h1>
+            <div class="demo-box">
+                <h3>JavaScript Exercises Repository:</h3>
+                <ol style="font-size: 1.2em; line-height: 2;">
+                    <li><strong>06_repeatString</strong> - String manipulation & loops</li>
+                    <li><strong>07_reverseString</strong> - Array methods practice</li>
+                    <li><strong>08_removeFromArray</strong> - Filter & includes</li>
+                    <li><strong>09_sumAll</strong> - Reduce & validation</li>
+                    <li><strong>10_leapYears</strong> - Logic & edge cases</li>
+                    <li><strong>11_tempConversion</strong> - Math & rounding</li>
+                </ol>
+            </div>
+            <div class="warning-box">
+                <strong>Remember:</strong> Read each README carefully before starting!
+            </div>
+        </div>
+
+        <!-- Slide 23: Exercise Strategy -->
+        <div class="slide">
+            <h1>How to Approach Each Exercise <span class="emoji">🎯</span></h1>
+            <div class="demo-box">
+                <h3>The Winning Strategy:</h3>
+                <ol style="font-size: 1.2em; line-height: 2;">
+                    <li>📖 <strong>Read</strong> the README completely</li>
+                    <li>👀 <strong>Examine</strong> the test cases</li>
+                    <li>💭 <strong>Plan</strong> your approach (pseudocode)</li>
+                    <li>⌨️ <strong>Code</strong> incrementally</li>
+                    <li>🧪 <strong>Test</strong> frequently</li>
+                    <li>🔍 <strong>Debug</strong> failures using test output</li>
+                    <li>✨ <strong>Refactor</strong> after passing</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Make one test pass at a time!
+            </div>
+        </div>
+
+        <!-- Slide 24: Let's Start Coding! -->
+        <div class="slide">
+            <h1>Practice Time! <span class="emoji">⚡</span></h1>
+            <div class="activity-box">
+                <h3>15-Minute In-Class Exercise</h3>
+                <p>Let's tackle <strong>repeatString</strong> together!</p>
+                <div class="code-example">
+<span class="comment">// Your function should:</span><br>
+repeatString('hey', 3) <span class="comment">// returns 'heyheyhey'</span><br>
+repeatString('hello', 0) <span class="comment">// returns ''</span><br>
+repeatString('hi', -1) <span class="comment">// returns 'ERROR'</span>
+                </div>
+                <p><strong>Hint:</strong> You'll need a loop or a clever string method!</p>
+            </div>
+            <button data-timer="15">Start 15-Minute Timer</button>
+        </div>
+
+        <!-- Slide 25: Key Takeaways -->
+        <div class="slide">
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <h2>You Can Now:</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Use <code>for</code> and <code>while</code> loops effectively</li>
+                <li>✅ Control loop flow with <code>break</code> and <code>continue</code></li>
+                <li>✅ Create and manipulate arrays</li>
+                <li>✅ Transform data with <code>map</code></li>
+                <li>✅ Filter data with <code>filter</code></li>
+                <li>✅ Aggregate data with <code>reduce</code></li>
+                <li>✅ Understand basic TDD concepts</li>
+            </ul>
+            <div class="demo-box">
+                <p><strong>Homework:</strong> Complete all exercises from the assignment list</p>
+                <p><strong>Next Class:</strong> DOM Manipulation - Making pages interactive!</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">31</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
         </div>
     </div>
+
+    <!-- Shared Presentation JavaScript -->
+    <script src="../../js/presentation.js"></script>
+    
+    <!-- Additional slide functionality -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 31;
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName('slide');
+            const totalSlidesElement = document.getElementById('totalSlides');
+            const currentSlideElement = document.getElementById('currentSlide');
+
+            if (n > slides.length) {
+                currentSlide = 1;
+            }
+            if (n < 1) {
+                currentSlide = slides.length;
+            }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+
+            slides[currentSlide - 1].classList.add('active');
+            currentSlideElement.textContent = currentSlide;
+            totalSlidesElement.textContent = totalSlides;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === slides.length;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Timer functionality for exercises
+        document.querySelectorAll('[data-timer]').forEach(button => {
+            button.addEventListener('click', function() {
+                const minutes = parseInt(this.getAttribute('data-timer'));
+                const endTime = Date.now() + (minutes * 60 * 1000);
+                
+                const timer = setInterval(() => {
+                    const remaining = endTime - Date.now();
+                    if (remaining <= 0) {
+                        clearInterval(timer);
+                        alert('Time\'s up! How did you do?');
+                        return;
+                    }
+                    
+                    const mins = Math.floor(remaining / 60000);
+                    const secs = Math.floor((remaining % 60000) / 1000);
+                    this.textContent = `${mins}:${secs.toString().padStart(2, '0')} remaining`;
+                }, 1000);
+            });
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
 </body>
 </html>
