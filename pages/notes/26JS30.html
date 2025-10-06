@@ -4,514 +4,848 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS30 Array Cardio - Guided Notes</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .section {
-            margin-bottom: 35px;
-        }
-
-        .section h2 {
-            color: #667eea;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .section h3 {
-            color: #764ba2;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .blank {
-            display: inline-block;
-            min-width: 100px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .long-blank {
-            display: inline-block;
-            min-width: 250px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-        }
-
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .code-blank {
-            display: inline-block;
-            min-width: 120px;
-            border-bottom: 2px solid #f8f8f2;
-            margin: 0 5px;
-            color: #66d9ef;
-        }
-
-        ul,
-        ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-
-        li {
-            margin-bottom: 12px;
-            line-height: 1.8;
-        }
-
-        .tip {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-
-        .tip strong {
-            color: #856404;
-        }
-
-        .practice-box {
-            background: #f0f8ff;
-            border: 2px dashed #4a90e2;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #667eea;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-style: italic;
-        }
-
-        @media print {
-            body {
-                background: white;
-            }
-
-            .header {
-                background: none;
-                color: black;
-                border: 2px solid black;
-            }
-
-            .blank,
-            .code-blank {
-                color: black;
-            }
-        }
-    </style>
+    <title>Day 27: JavaScript - JS30 Array Cardio</title>
+    <link rel="stylesheet" href="../../styles/presentation.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>JavaScript30: Array Cardio - Guided Notes</h1>
-            <p>CS 2083 - Web Programming I | Day 27</p>
-            <p>Name: _________________________________ Date: _____________</p>
-        </div>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Theme</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="theme-slider"></span>
+        </label>
+    </div>
 
-        <div class="info-box">
-            <strong>🎯 Learning Objectives:</strong> Master JavaScript array methods through hands-on practice with
-            filter(), map(), sort(), reduce(), and more!
-        </div>
-
-        <!-- Introduction Section -->
-        <div class="section">
-            <h2>📚 Introduction to JavaScript30</h2>
-
-            <h3>Who is Wes Bos?</h3>
-            <p>Wes Bos is a <span class="blank">_______________</span> developer, speaker, and <span
-                    class="blank">_______________</span> from Canada.</p>
-
-            <h3>The JavaScript30 Philosophy</h3>
-            <p>Complete the quote: "There is no formation without <span class="blank">_______________</span>."</p>
-            <p>The solution to getting better at JavaScript: Build <span class="blank">_______________</span>. Lots of
-                <span class="blank">_______________</span>.</p>
-
-            <div class="tip">
-                <strong>💡 Key Point:</strong> JavaScript30 uses NO frameworks, NO libraries - just vanilla JavaScript!
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active">
+            <h1>JavaScript30: Array Cardio <span class="emoji">💪</span></h1>
+            <p class="subtitle">Day 27 - Mastering Array Methods Through Practice</p>
+            <p class="meta-info">CSCI 3403 - Web Programming</p>
+            <div class="home">
+                <a href="../../index.html">⌂ Back to Schedule</a>
             </div>
         </div>
 
-        <!-- Array Methods Overview -->
-        <div class="section">
-            <h2>🔧 Array Methods Overview</h2>
-
-            <h3>The Big Four Methods</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Purpose</th>
-                        <th>Returns</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>filter()</strong></td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                        <td>New array</td>
-                    </tr>
-                    <tr>
-                        <td><strong>map()</strong></td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                        <td>New array</td>
-                    </tr>
-                    <tr>
-                        <td><strong>sort()</strong></td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                        <td>Same array (mutates!)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>reduce()</strong></td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                        <td>Single value</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Array Cardio Day 1 Exercises -->
-        <div class="section">
-            <h2>💪 Array Cardio Day 1 - Exercises</h2>
-
-            <h3>Exercise 1: Filter - Inventors born in the 1500s</h3>
-            <div class="code-block">
-                const fifteen = inventors.filter(inventor =>
-                <span class="code-blank">_____________________</span>
-                );
+        <!-- Slide 2: Who is Wes Bos? -->
+        <div class="slide">
+            <h1>Meet Wes Bos <span class="emoji">🎯</span></h1>
+            <h2>Full Stack Developer, Speaker & Teacher from Canada</h2>
+            <div class="demo-box">
+                <p style="font-size: 1.3em; line-height: 1.8;">
+                    • Course creator with 500+ students taught<br>
+                    • Co-host of Syntax podcast<br>
+                    • Creator of JavaScript30<br>
+                    • Focus on practical, hands-on learning
+                </p>
             </div>
-            <p>What condition checks if someone was born in the 1500s?</p>
-            <p>Answer: year >= <span class="blank">________</span> AND year < <span class="blank">________</span></p>
-
-            <h3>Exercise 2: Map - Full Names</h3>
-            <div class="code-block">
-                const fullNames = inventors.map(inventor =>
-                <span class="code-blank">_____________________</span>
-                );
-            </div>
-            <p>How do we combine first and last names with template literals?</p>
-
-            <h3>Exercise 3: Sort - By Birthdate</h3>
-            <div class="code-block">
-                const ordered = inventors.sort((a, b) =>
-                <span class="code-blank">_____________________</span>
-                );
-            </div>
-            <p>Sorting rule: Return <span class="blank">____</span> if a should come after b, <span
-                    class="blank">____</span> if before</p>
-
-            <h3>Exercise 4: Reduce - Total Years Lived</h3>
-            <div class="code-block">
-                const totalYears = inventors.reduce((total, inventor) => {
-                return <span class="code-blank">_____________________</span>;
-                }, 0);
-            </div>
-            <p>Formula for lifespan: <span class="blank">_______________</span> - <span
-                    class="blank">_______________</span></p>
-
-            <h3>Exercise 5: Sort by Years Lived</h3>
-            <p>Combine concepts: Calculate lifespan DURING sorting!</p>
-            <div class="code-block">
-                const oldest = inventors.sort((a, b) => {
-                const lastGuy = <span class="code-blank">_____________________</span>;
-                const nextGuy = <span class="code-blank">_____________________</span>;
-                return lastGuy > nextGuy ? -1 : 1;
-                });
+            <div class="tip-box">
+                <strong>His Philosophy:</strong> "There is no formation without repetition."
             </div>
         </div>
 
-        <!-- Advanced Exercises -->
-        <div class="section">
-            <h2>🎯 Advanced Array Challenges</h2>
-
-            <h3>Exercise 7: Sort People by Last Name</h3>
-            <p>Challenge: Names are in "Last, First" format!</p>
-            <div class="code-block">
-                const [aLast, aFirst] = lastOne.<span class="code-blank">___________</span>(', ');
+        <!-- Slide 3: What is JavaScript30? -->
+        <div class="slide">
+            <h1>JavaScript30 Philosophy <span class="emoji">🚀</span></h1>
+            <h2>"Build 30 Things in 30 Days"</h2>
+            <div class="activity-box">
+                <h3>The Problem It Solves:</h3>
+                <p style="font-size: 1.2em;">
+                    "You've done courses, read books, but still don't feel confident with JavaScript..."
+                </p>
             </div>
-            <p>What method splits a string into an array? <span class="blank">_______________</span></p>
-
-            <h3>Exercise 8: Count Instances with Reduce</h3>
-            <p>Build an object that counts occurrences:</p>
-            <div class="code-block">
-                const transportation = data.reduce((obj, item) => {
-                if (!obj[item]) {
-                obj[item] = <span class="code-blank">_____</span>;
-                }
-                obj[item]<span class="code-blank">_____</span>;
-                return obj;
-                }, <span class="code-blank">_____</span>);
+            <div class="demo-box">
+                <h3>The Solution:</h3>
+                <p style="font-size: 1.3em; font-weight: bold;">
+                    Build things. Lots of things. Build 1,000 things.<br>
+                    Keep it up and don't stop. Seriously.
+                </p>
             </div>
-            <p>Initial value for reduce when building an object: <span class="blank">_____</span></p>
-        </div>
-
-        <!-- Array Cardio Day 2 -->
-        <div class="section">
-            <h2>💪💪 Array Cardio Day 2 - Discovery Methods</h2>
-
-            <h3>New Methods to Learn</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Returns</th>
-                        <th>Use When</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>some()</strong></td>
-                        <td>Boolean</td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>every()</strong></td>
-                        <td>Boolean</td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>find()</strong></td>
-                        <td>Single item</td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>findIndex()</strong></td>
-                        <td>Number</td>
-                        <td><span class="long-blank">_________________________________________</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>some() vs every()</h3>
-            <p>• some() returns true if <span class="blank">_______________</span> element passes the test</p>
-            <p>• every() returns true if <span class="blank">_______________</span> elements pass the test</p>
-
-            <h3>find() vs filter()</h3>
-            <p>• filter() returns <span class="blank">_______________</span> of all matches</p>
-            <p>• find() returns <span class="blank">_______________</span> the first match</p>
-
-            <h3>The Spread Operator (...)</h3>
-            <p>Create a new array without mutation:</p>
-            <div class="code-block">
-                const newComments = [
-                ...comments.slice(0, index),
-                ...comments.slice(<span class="code-blank">_______________</span>)
-                ];
+            <div class="tip-box">
+                <strong>Key Point:</strong> No frameworks, no libraries - just vanilla JavaScript and browser APIs!
             </div>
         </div>
 
-        <!-- Method Chaining -->
-        <div class="section">
-            <h2>⛓️ Method Chaining</h2>
-
-            <h3>Combining Multiple Operations</h3>
-            <div class="code-block">
-                const result = numbers
-                .filter(num => num % 2 === 0) // Step 1: <span class="code-blank">_______________</span>
-                .map(num => num * 3) // Step 2: <span class="code-blank">_______________</span>
-                .reduce((sum, num) => sum + num, 0); // Step 3: <span class="code-blank">_______________</span>
+        <!-- NEW SLIDE 4: Story 1 - Stallman's Philosophy (Part 1) -->
+        <div class="slide">
+            <h1>Historical Context <span class="emoji">📚</span></h1>
+            <h2>Richard Stallman & The Freedom of Software</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 8em; margin-bottom: 20px;">🗽</div>
             </div>
-
-            <p>Benefits of chaining:</p>
-            <ol>
-                <li><span class="long-blank">_________________________________________</span></li>
-                <li><span class="long-blank">_________________________________________</span></li>
-            </ol>
-        </div>
-
-        <!-- Common Patterns -->
-        <div class="section">
-            <h2>🎨 Common Real-World Patterns</h2>
-
-            <h3>Shopping Cart Total</h3>
-            <div class="code-block">
-                const total = cart.reduce((sum, item) =>
-                sum + (item.<span class="code-blank">_______</span> * item.<span class="code-blank">_______</span>), 0
-                );
+            <div class="demo-box">
+                <p style="font-size: 1.3em; line-height: 1.8;">
+                    <strong>Richard Stallman's Vision (1985):</strong><br>
+                    Software should be distributed with the freedom to:<br>
+                    • <strong>Use</strong> it for any purpose<br>
+                    • <strong>Study</strong> how it works<br>
+                    • <strong>Distribute</strong> copies<br>
+                    • <strong>Modify</strong> and improve it
+                </p>
             </div>
-
-            <h3>Search Filter</h3>
-            <div class="code-block">
-                const results = products.filter(product =>
-                product.name.<span class="code-blank">_______________</span>().includes(searchTerm)
-                );
-            </div>
-
-            <h3>Check Permissions</h3>
-            <div class="code-block">
-                const canEdit = user.roles.<span class="code-blank">_______</span>(role =>
-                role === 'admin' || role === 'editor'
-                );
+            <div class="tip-box">
+                <strong>1985:</strong> Founded the Free Software Foundation<br>
+                <strong>1990:</strong> MacArthur "genius award" fellowship
             </div>
         </div>
 
-        <!-- Debugging Tips -->
-        <div class="section">
-            <h2>🐛 Debugging Array Methods</h2>
-
-            <h3>Pro Debugging Tips</h3>
-            <ol>
-                <li>Use <span class="blank">_______________</span> for better visualization of objects</li>
-                <li>Add console.log() inside methods to check <span class="blank">_______________</span> steps</li>
-                <li>Break complex chains into <span class="blank">_______________</span> variables</li>
-                <li>Use <span class="blank">_______________</span> variable names</li>
-            </ol>
+        <!-- NEW SLIDE 5: Story 1 - Connection to Array Methods -->
+        <div class="slide">
+            <h1>Freedom in Code <span class="emoji">⚡</span></h1>
+            <h2>Stallman's Legacy Lives in Array Methods</h2>
+            <div class="activity-box">
+                <h3>The Connection:</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    Just as Stallman championed <strong>freedom to manipulate software</strong>,<br>
+                    array methods give us <strong>freedom to manipulate data</strong> efficiently and expressively.
+                </p>
+            </div>
+            <div class="demo-box">
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    <strong>Filter, map, reduce</strong> aren't just functions—they're tools of empowerment.<br>
+                    They let us <strong>study</strong> data transformations,<br>
+                    <strong>modify</strong> them to our needs,<br>
+                    and <strong>share</strong> elegant solutions.
+                </p>
+            </div>
+            <div class="reflection-box" style="background: #fff3cd; padding: 20px; margin-top: 20px; border-radius: 8px; border: 2px solid #ffc107;">
+                <h3>🤔 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">How does having powerful, standardized array methods make you a more "free" developer compared to writing custom loops every time?</p>
+            </div>
+            <p style="text-align: right; font-size: 0.9em; color: #666; margin-top: 20px;">
+                <em>Source: Wikipedia - "Richard Stallman"</em>
+            </p>
         </div>
 
-        <!-- Practice Problems -->
-        <div class="practice-box">
-            <h3>💪 Practice Problems - Try These!</h3>
-            <ol>
-                <li><strong>Easy:</strong> Filter numbers > 10 from [5, 12, 8, 130, 44]
-                    <br><span class="long-blank">_________________________________________</span>
-                </li>
-
-                <li><strong>Medium:</strong> Calculate average age from people array
-                    <br><span class="long-blank">_________________________________________</span>
-                    <br>Hint: Use reduce then divide by <span class="blank">_______________</span>
-                </li>
-
-                <li><strong>Hard:</strong> Chain methods to find top 3 expensive items under $100
-                    <br>Steps needed:
-                    <br>1. Filter: <span class="long-blank">_________________________________________</span>
-                    <br>2. Sort: <span class="long-blank">_________________________________________</span>
-                    <br>3. Slice: <span class="long-blank">_________________________________________</span>
-                </li>
-            </ol>
-        </div>
-
-        <!-- Key Takeaways -->
-        <div class="section">
-            <h2>🎯 Key Takeaways</h2>
-            <ol>
-                <li>Array methods are <span class="blank">_______________</span> tools for data manipulation</li>
-                <li>Most methods don't <span class="blank">_______________</span> the original array</li>
-                <li><span class="blank">_______________</span> methods creates readable pipelines</li>
-                <li>Practice with <span class="blank">_______________</span> data builds confidence</li>
-                <li>console.<span class="blank">_______________</span>() is your debugging friend</li>
-            </ol>
-
-            <div class="tip">
-                <strong>Remember Wes Bos's Advice:</strong> "Just put in the work and you will get better!"
+        <!-- Slide 6: Today's Mission (renumbered from 4) -->
+        <div class="slide">
+            <h1>Today's Mission <span class="emoji">🎯</span></h1>
+            <h2>Array Cardio Days 1 & 2</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>💪 Day 1: Core Methods</h3>
+                    <ul style="font-size: 1.2em; line-height: 1.8;">
+                        <li>filter()</li>
+                        <li>map()</li>
+                        <li>sort()</li>
+                        <li>reduce()</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>💪💪 Day 2: Discovery Methods</h3>
+                    <ul style="font-size: 1.2em; line-height: 1.8;">
+                        <li>some()</li>
+                        <li>every()</li>
+                        <li>find()</li>
+                        <li>findIndex()</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Notes Section -->
-        <div class="section">
-            <h2>📝 Additional Notes</h2>
-            <p>Use this space for any additional notes, examples, or questions:</p>
-            <br>
-            <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
-                <br><br><br><br><br><br><br><br>
+        <!-- Slide 7: Our Data Sets (renumbered from 5) -->
+        <div class="slide">
+            <h1>Our Data Sets <span class="emoji">📊</span></h1>
+            <h2>Real Data, Real Problems</h2>
+            <div class="code-example">
+<span class="comment">// Famous inventors with birth/death years</span><br>
+const inventors = [<br>
+&nbsp;&nbsp;{ first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },<br>
+&nbsp;&nbsp;{ first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },<br>
+&nbsp;&nbsp;{ first: 'Marie', last: 'Curie', year: 1867, passed: 1934 },<br>
+&nbsp;&nbsp;<span class="comment">// ... and more!</span><br>
+];<br><br>
+<span class="comment">// Array of people names (last, first format)</span><br>
+const people = ['Bernhard, Sandra', 'Bethea, Erin', ...];<br><br>
+<span class="comment">// Transportation data for counting</span><br>
+const data = ['car', 'car', 'truck', 'bike', ...];
             </div>
         </div>
 
-        <!-- Homework -->
-        <div class="section">
-            <h2>📚 Homework</h2>
-            <div class="practice-box">
-                <h3>Complete These Tasks:</h3>
-                <ol>
-                    <li>✅ Finish both ArrayCardioDay1 and ArrayCardioDay2 exercises</li>
-                    <li>✅ Use at least 3 array methods in your next assignment</li>
-                    <li>✅ Optional: Start more JavaScript30 challenges at JavaScript30.com</li>
-                </ol>
+        <!-- Slide 8: Quick Review - Array Methods (renumbered from 6) -->
+        <div class="slide">
+            <h1>Quick Review: Array Methods <span class="emoji">🔄</span></h1>
+            <h2>Building Blocks We'll Use Today</h2>
+            <div class="tip-box">
+                <p><strong>Remember:</strong> These methods don't change the original array - they return new arrays!</p>
+            </div>
+            <div class="demo-box">
+                <h3>The Big Four:</h3>
+                <p style="font-size: 1.2em; line-height: 2;">
+                    <strong>filter():</strong> Keep items that pass a test<br>
+                    <strong>map():</strong> Transform every item<br>
+                    <strong>sort():</strong> Arrange items in order<br>
+                    <strong>reduce():</strong> Boil down to a single value
+                </p>
             </div>
         </div>
 
-        <div class="footer">
-            <p>Keep practicing! Build things. Lots of things! 🚀</p>
-            <p>Remember: The best way to learn is by doing.</p>
+        <!-- NEW SLIDE 9: Story 2 - McCarthy & LISP (Part 1) -->
+        <div class="slide">
+            <h1>The Origins <span class="emoji">🕰️</span></h1>
+            <h2>John McCarthy & The Birth of Functional Programming</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 8em; margin-bottom: 20px;">🧮</div>
+            </div>
+            <div class="demo-box">
+                <p style="font-size: 1.4em; line-height: 1.8;">
+                    <strong>1958:</strong> John McCarthy invents <strong>LISP</strong>
+                </p>
+                <p style="font-size: 1.2em; line-height: 1.8; margin-top: 20px;">
+                    Introduced revolutionary concepts:<br>
+                    • <strong>map</strong> - transform collections<br>
+                    • <strong>filter</strong> - select elements<br>
+                    • <strong>reduce</strong> - combine results
+                </p>
+            </div>
+            <div class="tip-box">
+                <strong>Fun Fact:</strong> These concepts took over 50 years to become mainstream in JavaScript!
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 10: Story 2 - The Power of Functional Methods -->
+        <div class="slide">
+            <h1>From Theory to Practice <span class="emoji">🚀</span></h1>
+            <h2>Why Functional Array Methods Are Powerful</h2>
+            <div class="activity-box">
+                <h3>The Journey:</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    <strong>1958 → 2009:</strong> 51 years for these ideas to reach JavaScript<br>
+                    What took so long?
+                </p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Old Way (Pre-ES5)</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+var result = [];<br>
+for (var i = 0; i < arr.length; i++) {<br>
+&nbsp;&nbsp;if (arr[i] > 10) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result.push(arr[i] * 2);<br>
+&nbsp;&nbsp;}<br>
+}
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h3>New Way (ES5+)</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+const result = arr<br>
+&nbsp;&nbsp;.filter(x => x > 10)<br>
+&nbsp;&nbsp;.map(x => x * 2);
+                    </div>
+                </div>
+            </div>
+            <div class="reflection-box" style="background: #d1ecf1; padding: 20px; margin-top: 20px; border-radius: 8px; border: 2px solid #0dcaf0;">
+                <h3>🤔 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">Why do you think functional methods like map and filter make code easier to read and maintain than traditional for loops?</p>
+            </div>
+            <p style="text-align: right; font-size: 0.9em; color: #666; margin-top: 20px;">
+                <em>Source: History of Programming Languages</em>
+            </p>
+        </div>
+
+        <!-- Slide 11: Array Cardio Day 1 - Exercise 1 (renumbered from 7) -->
+        <div class="slide">
+            <h1>Exercise 1: Filter <span class="emoji">🔍</span></h1>
+            <h2>Filter inventors born in the 1500s</h2>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p>Use filter() to find all inventors born between 1500-1599</p>
+            </div>
+            <div class="code-example">
+<span class="comment">// Starter code</span><br>
+const fifteen = inventors.filter(inventor => {<br>
+&nbsp;&nbsp;<span class="comment">// What condition goes here?</span><br>
+});<br><br>
+<span class="comment">// Hint: Check if year is >= 1500 AND < 1600</span>
+            </div>
+        </div>
+
+        <!-- Slide 12: Exercise 1 Solution (renumbered from 8) -->
+        <div class="slide">
+            <h1>Solution: Filter <span class="emoji">✅</span></h1>
+            <div class="code-example">
+const fifteen = inventors.filter(inventor => <br>
+&nbsp;&nbsp;inventor.year >= 1500 && inventor.year < 1600<br>
+);<br><br>
+console.table(fifteen);<br><br>
+<span class="comment">// Results: Galileo, Kepler, and Copernicus!</span>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> console.table() displays objects in a nice table format!
+            </div>
+        </div>
+
+        <!-- Slide 13: Exercise 2 - Map (renumbered from 9) -->
+        <div class="slide">
+            <h1>Exercise 2: Map <span class="emoji">🗺️</span></h1>
+            <h2>Create array of full names</h2>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p>Use map() to create an array of "First Last" names</p>
+            </div>
+            <div class="code-example">
+<span class="comment">// Starter code</span><br>
+const fullNames = inventors.map(inventor => {<br>
+&nbsp;&nbsp;<span class="comment">// Combine first and last names</span><br>
+});<br><br>
+<span class="comment">// Hint: Use template literals: `${first} ${last}`</span>
+            </div>
+        </div>
+
+        <!-- Slide 14: Exercise 2 Solution (renumbered from 10) -->
+        <div class="slide">
+            <h1>Solution: Map <span class="emoji">✅</span></h1>
+            <div class="code-example">
+const fullNames = inventors.map(inventor => <br>
+&nbsp;&nbsp;`${inventor.first} ${inventor.last}`<br>
+);<br><br>
+console.log(fullNames);<br>
+<span class="comment">// ["Albert Einstein", "Isaac Newton", ...]</span>
+            </div>
+            <div class="tip-box">
+                <strong>Map transforms</strong> each element but keeps the same array length!
+            </div>
+        </div>
+
+        <!-- Slide 15: Exercise 3 - Sort (renumbered from 11) -->
+        <div class="slide">
+            <h1>Exercise 3: Sort <span class="emoji">🔢</span></h1>
+            <h2>Order inventors by birthdate (oldest first)</h2>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p>Use sort() to arrange inventors from oldest to youngest</p>
+            </div>
+            <div class="code-example">
+<span class="comment">// Sort expects a comparison function</span><br>
+const ordered = inventors.sort((a, b) => {<br>
+&nbsp;&nbsp;<span class="comment">// Compare birth years</span><br>
+});<br><br>
+<span class="comment">// Return negative if a comes first</span><br>
+<span class="comment">// Return positive if b comes first</span>
+            </div>
+        </div>
+
+        <!-- Slide 16: Exercise 3 Solution (renumbered from 12) -->
+        <div class="slide">
+            <h1>Solution: Sort <span class="emoji">✅</span></h1>
+            <div class="code-example">
+const ordered = inventors.sort((a, b) => <br>
+&nbsp;&nbsp;a.year - b.year<br>
+);<br><br>
+console.table(ordered);<br><br>
+<span class="comment">// Newton (1643) comes before Einstein (1879)</span>
+            </div>
+            <div class="warning-box">
+                <strong>Warning:</strong> sort() modifies the original array! (It mutates)
+            </div>
+        </div>
+
+        <!-- Slide 17: Exercise 4 - Reduce (renumbered from 13) -->
+        <div class="slide">
+            <h1>Exercise 4: Reduce <span class="emoji">📊</span></h1>
+            <h2>Calculate total years all inventors lived</h2>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p>Use reduce() to sum up all the years lived by inventors</p>
+            </div>
+            <div class="code-example">
+const totalYears = inventors.reduce((total, inventor) => {<br>
+&nbsp;&nbsp;<span class="comment">// Calculate lifespan and add to total</span><br>
+&nbsp;&nbsp;return <span class="comment">???</span>;<br>
+}, 0);<br><br>
+<span class="comment">// Hint: passed - year = lifespan</span>
+            </div>
+        </div>
+
+        <!-- Slide 18: Exercise 4 Solution (renumbered from 14) -->
+        <div class="slide">
+            <h1>Solution: Reduce <span class="emoji">✅</span></h1>
+            <div class="code-example">
+const totalYears = inventors.reduce((total, inventor) => {<br>
+&nbsp;&nbsp;return total + (inventor.passed - inventor.year);<br>
+}, 0);<br><br>
+console.log(totalYears); <span class="comment">// 861 years total!</span>
+            </div>
+            <div class="tip-box">
+                <strong>Reduce pattern:</strong> accumulator + current calculation, initial value
+            </div>
+        </div>
+
+        <!-- Slide 19: Exercise 5 - Complex Sort (renumbered from 15) -->
+        <div class="slide">
+            <h1>Exercise 5: Sort by Years Lived <span class="emoji">🏆</span></h1>
+            <h2>Order by lifespan (longest first)</h2>
+            <div class="code-example">
+const oldest = inventors.sort((a, b) => {<br>
+&nbsp;&nbsp;const lastGuy = a.passed - a.year;<br>
+&nbsp;&nbsp;const nextGuy = b.passed - b.year;<br>
+&nbsp;&nbsp;return lastGuy > nextGuy ? -1 : 1;<br>
+});<br><br>
+console.table(oldest);
+            </div>
+            <div class="demo-box">
+                <p>This combines calculation WITH sorting - powerful!</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Exercise 6 - External Data (renumbered from 16) -->
+        <div class="slide">
+            <h1>Exercise 6: Boulevard Filter <span class="emoji">🌳</span></h1>
+            <h2>Find Paris streets with "de" in the name</h2>
+            <div class="activity-box">
+                <p>This exercise uses external data from Wikipedia</p>
+            </div>
+            <div class="code-example">
+const category = document.querySelector('.mw-category');<br>
+const links = Array.from(category.querySelectorAll('a'));<br><br>
+const de = links<br>
+&nbsp;&nbsp;.map(link => link.textContent)<br>
+&nbsp;&nbsp;.filter(streetName => streetName.includes('de'));<br><br>
+console.log(de);
+            </div>
+            <div class="tip-box">
+                <strong>Bonus:</strong> Array.from() converts NodeList to Array!
+            </div>
+        </div>
+
+        <!-- Slide 21: Exercise 7 - Sort Names (renumbered from 17) -->
+        <div class="slide">
+            <h1>Exercise 7: Alphabetical Sort <span class="emoji">🔤</span></h1>
+            <h2>Sort people by last name</h2>
+            <div class="code-example">
+const alpha = people.sort((lastOne, nextOne) => {<br>
+&nbsp;&nbsp;const [aLast, aFirst] = lastOne.split(', ');<br>
+&nbsp;&nbsp;const [bLast, bFirst] = nextOne.split(', ');<br>
+&nbsp;&nbsp;return aLast > bLast ? 1 : -1;<br>
+});<br><br>
+console.log(alpha);
+            </div>
+            <div class="tip-box">
+                <strong>Destructuring:</strong> [aLast, aFirst] pulls out array values!
+            </div>
+        </div>
+
+        <!-- Slide 22: Exercise 8 - Reduce to Count (renumbered from 18) -->
+        <div class="slide">
+            <h1>Exercise 8: Count Instances <span class="emoji">📊</span></h1>
+            <h2>Build an object with counts</h2>
+            <div class="code-example">
+const data = ['car', 'car', 'truck', 'truck', 'bike', ...];<br><br>
+const transportation = data.reduce((obj, item) => {<br>
+&nbsp;&nbsp;if (!obj[item]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj[item] = 0;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;obj[item]++;<br>
+&nbsp;&nbsp;return obj;<br>
+}, {});<br><br>
+console.log(transportation);<br>
+<span class="comment">// {car: 5, truck: 3, bike: 2, ...}</span>
+            </div>
+        </div>
+
+        <!-- Slide 23: Break Time (renumbered from 19) -->
+        <div class="slide">
+            <h1>5-Minute Break! <span class="emoji">☕</span></h1>
+            <h2>Stretch, hydrate, prepare for Array Cardio Day 2!</h2>
+            <div class="activity-box">
+                <h3>Coming Up Next:</h3>
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>some() - Does at least one match?</li>
+                    <li>every() - Do all match?</li>
+                    <li>find() - Get the first match</li>
+                    <li>findIndex() - Where is it?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 24: Array Cardio Day 2 Introduction (renumbered from 20) -->
+        <div class="slide">
+            <h1>Array Cardio Day 2 <span class="emoji">💪💪</span></h1>
+            <h2>Discovery Methods</h2>
+            <div class="demo-box">
+                <h3>New Data Set:</h3>
+                <div class="code-example">
+const people = [<br>
+&nbsp;&nbsp;{ name: 'Wes', year: 1988 },<br>
+&nbsp;&nbsp;{ name: 'Kait', year: 1986 },<br>
+&nbsp;&nbsp;{ name: 'Irv', year: 1970 },<br>
+&nbsp;&nbsp;{ name: 'Lux', year: 2015 }<br>
+];<br><br>
+const comments = [<br>
+&nbsp;&nbsp;{ text: 'Love this!', id: 523423 },<br>
+&nbsp;&nbsp;{ text: 'Super good', id: 823423 }<br>
+];
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: some() Method (renumbered from 21) -->
+        <div class="slide">
+            <h1>The some() Method <span class="emoji">🔍</span></h1>
+            <h2>Is at least one person 19 or older?</h2>
+            <div class="code-example">
+const isAdult = people.some(person => {<br>
+&nbsp;&nbsp;const currentYear = new Date().getFullYear();<br>
+&nbsp;&nbsp;return currentYear - person.year >= 19;<br>
+});<br><br>
+console.log(isAdult); <span class="comment">// true or false</span>
+            </div>
+            <div class="tip-box">
+                <strong>some():</strong> Returns true if ANY element passes the test
+            </div>
+        </div>
+
+        <!-- Slide 26: every() Method (renumbered from 22) -->
+        <div class="slide">
+            <h1>The every() Method <span class="emoji">✅</span></h1>
+            <h2>Is everyone 19 or older?</h2>
+            <div class="code-example">
+const allAdults = people.every(person => {<br>
+&nbsp;&nbsp;const currentYear = new Date().getFullYear();<br>
+&nbsp;&nbsp;return currentYear - person.year >= 19;<br>
+});<br><br>
+console.log(allAdults); <span class="comment">// true or false</span>
+            </div>
+            <div class="tip-box">
+                <strong>every():</strong> Returns true only if ALL elements pass the test
+            </div>
+        </div>
+
+        <!-- Slide 27: find() Method (renumbered from 23) -->
+        <div class="slide">
+            <h1>The find() Method <span class="emoji">🎯</span></h1>
+            <h2>Find the comment with ID 823423</h2>
+            <div class="code-example">
+const comment = comments.find(comment => <br>
+&nbsp;&nbsp;comment.id === 823423<br>
+);<br><br>
+console.log(comment);<br>
+<span class="comment">// { text: 'Super good', id: 823423 }</span>
+            </div>
+            <div class="tip-box">
+                <strong>find():</strong> Returns the FIRST element that matches (or undefined)
+            </div>
+        </div>
+
+        <!-- Slide 28: findIndex() Method (renumbered from 24) -->
+        <div class="slide">
+            <h1>The findIndex() Method <span class="emoji">📍</span></h1>
+            <h2>Find the index of comment 823423</h2>
+            <div class="code-example">
+const index = comments.findIndex(comment => <br>
+&nbsp;&nbsp;comment.id === 823423<br>
+);<br><br>
+console.log(index); <span class="comment">// 1</span><br><br>
+<span class="comment">// Use it to delete:</span><br>
+comments.splice(index, 1);
+            </div>
+            <div class="tip-box">
+                <strong>findIndex():</strong> Returns the index position (or -1 if not found)
+            </div>
+        </div>
+
+        <!-- Slide 29: Comparison Table (renumbered from 25) -->
+        <div class="slide">
+            <h1>Method Comparison <span class="emoji">📊</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Transform Methods</h3>
+                    <p style="line-height: 2;">
+                        <strong>map():</strong> New array (same length)<br>
+                        <strong>filter():</strong> New array (fewer items)<br>
+                        <strong>reduce():</strong> Single value
+                    </p>
+                </div>
+                <div class="comparison-card">
+                    <h3>Test Methods</h3>
+                    <p style="line-height: 2;">
+                        <strong>some():</strong> Boolean (any match?)<br>
+                        <strong>every():</strong> Boolean (all match?)<br>
+                        <strong>find():</strong> First match or undefined<br>
+                        <strong>findIndex():</strong> Index or -1
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 30: Common Patterns (renumbered from 27) -->
+        <div class="slide">
+            <h1>Common Array Patterns <span class="emoji">🎨</span></h1>
+            <h2>Real-world examples</h2>
+            <div class="code-example">
+<span class="comment">// Shopping cart total</span><br>
+const total = cart.reduce((sum, item) => <br>
+&nbsp;&nbsp;sum + (item.price * item.quantity), 0<br>
+);<br><br>
+<span class="comment">// Search filter</span><br>
+const results = products.filter(product => <br>
+&nbsp;&nbsp;product.name.toLowerCase().includes(searchTerm)<br>
+);<br><br>
+<span class="comment">// Format for display</span><br>
+const displayNames = users.map(user => <br>
+&nbsp;&nbsp;`${user.firstName} ${user.lastName[0]}.`<br>
+);<br><br>
+<span class="comment">// Check permissions</span><br>
+const canEdit = user.roles.some(role => <br>
+&nbsp;&nbsp;role === 'admin' || role === 'editor'<br>
+);
+            </div>
+        </div>
+
+        <!-- Slide 31: Debugging Tips (renumbered from 28) -->
+        <div class="slide">
+            <h1>Debugging Array Methods <span class="emoji">🐛</span></h1>
+            <div class="demo-box">
+                <h3>Pro Debugging Tips:</h3>
+                <div class="code-example">
+<span class="comment">// 1. Use console.table() for objects</span><br>
+console.table(inventors);<br><br>
+<span class="comment">// 2. Check intermediate steps</span><br>
+const filtered = data.filter(item => {<br>
+&nbsp;&nbsp;console.log('Checking:', item);<br>
+&nbsp;&nbsp;return item.value > 10;<br>
+});<br><br>
+<span class="comment">// 3. Break complex chains</span><br>
+const step1 = data.filter(...);<br>
+console.log('After filter:', step1);<br>
+const step2 = step1.map(...);<br>
+console.log('After map:', step2);
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 32: Performance Considerations (renumbered from 29) -->
+        <div class="slide">
+            <h1>Performance Tips <span class="emoji">⚡</span></h1>
+            <h2>Write efficient array code</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>❌ Less Efficient</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+// Multiple passes<br>
+const adults = users.filter(u => u.age >= 18);<br>
+const names = adults.map(u => u.name);<br>
+const sorted = names.sort();
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h3>✅ More Efficient</h3>
+                    <div class="code-example" style="font-size: 0.9em;">
+// Chain when possible<br>
+const result = users<br>
+&nbsp;&nbsp;.filter(u => u.age >= 18)<br>
+&nbsp;&nbsp;.map(u => u.name)<br>
+&nbsp;&nbsp;.sort();
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Readability often matters more than micro-optimizations!
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 33: Story 3 - ES5 Evolution (Part 1) -->
+        <div class="slide">
+            <h1>The Modern Era <span class="emoji">🎉</span></h1>
+            <h2>JavaScript's Array Revolution</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 8em; margin-bottom: 20px;">🌟</div>
+            </div>
+            <div class="demo-box">
+                <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 30px;">
+                    December 2009: ECMAScript 5 (ES5)
+                </p>
+                <p style="font-size: 1.3em; line-height: 1.8;">
+                    <strong>The Game Changers:</strong><br>
+                    • forEach() - iterate with function<br>
+                    • map() - transform arrays<br>
+                    • filter() - select elements<br>
+                    • reduce() - combine values<br>
+                    • some() & every() - test conditions
+                </p>
+            </div>
+            <div class="tip-box">
+                <strong>Impact:</strong> Transformed JavaScript from scripting language to modern programming powerhouse
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 34: Story 3 - Before & After ES5 -->
+        <div class="slide">
+            <h1>The Transformation <span class="emoji">✨</span></h1>
+            <h2>Code Before and After ES5</h2>
+            <div class="activity-box">
+                <h3>Life Before ES5 (Pre-2009):</h3>
+                <div class="code-example" style="font-size: 0.95em;">
+<span class="comment">// Get even numbers and double them</span><br>
+var numbers = [1, 2, 3, 4, 5, 6];<br>
+var result = [];<br><br>
+for (var i = 0; i < numbers.length; i++) {<br>
+&nbsp;&nbsp;if (numbers[i] % 2 === 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result.push(numbers[i] * 2);<br>
+&nbsp;&nbsp;}<br>
+}<br>
+console.log(result); <span class="comment">// [4, 8, 12]</span>
+                </div>
+            </div>
+            <div class="demo-box" style="margin-top: 20px;">
+                <h3>Life After ES5 (2009+):</h3>
+                <div class="code-example" style="font-size: 0.95em;">
+<span class="comment">// Get even numbers and double them</span><br>
+const numbers = [1, 2, 3, 4, 5, 6];<br><br>
+const result = numbers<br>
+&nbsp;&nbsp;.filter(n => n % 2 === 0)<br>
+&nbsp;&nbsp;.map(n => n * 2);<br><br>
+console.log(result); <span class="comment">// [4, 8, 12]</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE 35: Story 3 - The Impact -->
+        <div class="slide">
+            <h1>Cleaner, More Expressive Code <span class="emoji">💎</span></h1>
+            <h2>ES5's Lasting Impact</h2>
+            <div class="demo-box">
+                <h3>What Changed:</h3>
+                <p style="font-size: 1.2em; line-height: 2;">
+                    ✅ <strong>Less code</strong> - fewer lines to maintain<br>
+                    ✅ <strong>More readable</strong> - intent is clear<br>
+                    ✅ <strong>Fewer bugs</strong> - no index tracking errors<br>
+                    ✅ <strong>Chainable</strong> - combine operations elegantly<br>
+                    ✅ <strong>Declarative</strong> - say what, not how
+                </p>
+            </div>
+            <div class="reflection-box" style="background: #d4edda; padding: 20px; margin-top: 20px; border-radius: 8px; border: 2px solid #28a745;">
+                <h3>🤔 Reflection Question:</h3>
+                <p style="font-size: 1.1em;">Imagine having to write custom for loops for every array operation in your projects. How much extra time and complexity would that add? How does ES5's contribution make you appreciate modern JavaScript?</p>
+            </div>
+            <p style="text-align: right; font-size: 0.9em; color: #666; margin-top: 20px;">
+                <em>Source: ECMAScript Specification History</em>
+            </p>
+        </div>
+
+        <!-- Slide 36: Best Practices (renumbered from 30) -->
+        <div class="slide">
+            <h1>Array Method Best Practices <span class="emoji">⭐</span></h1>
+            <div class="demo-box">
+                <h3>Golden Rules:</h3>
+                <p style="font-size: 1.2em; line-height: 2;">
+                    1. <strong>Choose the right method</strong> for the job<br>
+                    2. <strong>Chain when it improves readability</strong><br>
+                    3. <strong>Use descriptive variable names</strong><br>
+                    4. <strong>Don't mutate</strong> unless you mean to (avoid sort)<br>
+                    5. <strong>Remember:</strong> map/filter/reduce return NEW arrays
+                </p>
+            </div>
+            <div class="tip-box">
+                <strong>When in doubt:</strong> Break it down into steps and test each one!
+            </div>
+        </div>
+
+        <!-- Slide 37: Resources & Next Steps (renumbered from 32) -->
+        <div class="slide">
+            <h1>Continue Your Journey <span class="emoji">🚀</span></h1>
+            <h2>Resources & Next Steps</h2>
+            <div class="activity-box">
+                <h3>Keep Learning:</h3>
+                <ul style="font-size: 1.2em; line-height: 2;">
+                    <li>🔗 Complete JavaScript30.com (it's free!)</li>
+                    <li>📚 MDN Array documentation</li>
+                    <li>🎧 Syntax Podcast by Wes Bos & Scott Tolinski</li>
+                    <li>💻 Build a project using these methods</li>
+                </ul>
+            </div>
+            <div class="demo-box">
+                <h3>Challenge for This Week:</h3>
+                <p style="font-size: 1.2em;">Use at least 3 different array methods in your next assignment!</p>
+            </div>
+        </div>
+
+        <!-- Slide 38: Closing (renumbered from 33) -->
+        <div class="slide">
+            <h1>Great Work Today! <span class="emoji">🎉</span></h1>
+            <h2>You've Leveled Up Your Array Skills!</h2>
+            <div class="demo-box" style="text-align: center; font-size: 1.4em;">
+                <p><strong>Remember:</strong></p>
+                <p style="font-size: 1.6em; margin: 30px 0; color: var(--ocu-true-blue);">
+                    "Just put in the work and you will get better."<br>
+                    - Wes Bos
+                </p>
+            </div>
+            <div class="activity-box">
+                <h3>Homework:</h3>
+                <p>Complete both Array Cardio exercises and submit your solutions</p>
+            </div>
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    <strong>Today's Historical Journey:</strong><br>
+                    From Stallman's vision of software freedom (1985) →<br>
+                    McCarthy's functional programming (1958) →<br>
+                    ES5's array methods revolution (2009) →<br>
+                    <strong>You, mastering these tools today! 🌟</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn">← Previous</button>
+            <span id="slideNumber">1 / 38</span>
+            <button id="nextBtn">Next →</button>
         </div>
     </div>
+
+    <!-- JavaScript for navigation and theme -->
+    <script src="../../js/presentation.js"></script>
+    <script>
+        // Slide navigation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('slideNumber').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize slide counter
+            document.getElementById('slideNumber').textContent = `1 / ${totalSlides}`;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Bind button clicks
+            document.getElementById('prevBtn').onclick = () => changeSlide(-1);
+            document.getElementById('nextBtn').onclick = () => changeSlide(1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
 </body>
 
 </html>
