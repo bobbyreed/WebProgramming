@@ -1,471 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Clean Code - Guided Notes</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        
-        .header {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .header h1 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2em;
-        }
-        
-        .header p {
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .info-box {
-            background: #e8f5e9;
-            border: 2px solid #4caf50;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        
-        .info-box strong {
-            color: #2e7d32;
-        }
-        
-        .section {
-            background: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .section h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.6em;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-        }
-        
-        .section h3 {
-            color: #764ba2;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .blank {
-            display: inline-block;
-            min-width: 120px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .long-blank {
-            display: inline-block;
-            min-width: 250px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-        }
-        
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-        
-        .code-blank {
-            display: inline-block;
-            min-width: 100px;
-            border-bottom: 2px solid #f8f8f2;
-            margin: 0 5px;
-            color: #66d9ef;
-        }
-        
-        ul, ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .tip {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        
-        .tip strong {
-            color: #856404;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        th {
-            background: #667eea;
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-        
-        .practice-box {
-            background: #f0f8ff;
-            border: 2px dashed #4a90e2;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .comparison-table {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .bad-example {
-            background: #ffebee;
-            border: 2px solid #ef5350;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        .good-example {
-            background: #e8f5e9;
-            border: 2px solid #66bb6a;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: white;
-            font-style: italic;
-        }
-        
-        @media print {
-            body {
-                background: white;
-            }
-            .header {
-                background: none;
-                color: black;
-                border: 2px solid black;
-            }
-            .blank, .code-blank {
-                color: black;
-            }
-        }
-    </style>
+    <title>JavaScript - Clean Code</title>
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 </head>
+
 <body>
-    <div class="header">
-        <h1>JavaScript Clean Code - Guided Notes</h1>
-        <p>CSCI 3403 - Web Programming | Day 24</p>
-        <p>Name: _________________________________ Date: _____________</p>
-    </div>
-
-    <div class="info-box">
-        <strong>📚 Today's Focus:</strong> Writing code for humans + Rock Paper Scissors Project work session
-    </div>
-
-    <!-- Introduction Section -->
-    <div class="section">
-        <h2>📖 The Reality of Programming</h2>
-        
-        <h3>How Developers Spend Their Time</h3>
-        <p>Writing code: <span class="blank">________</span> %</p>
-        <p>Reading code: <span class="blank">________</span> %</p>
-        
-        <p>We read code written by:</p>
-        <ul>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-        </ul>
-    </div>
-
-    <!-- Clean Code Principles Section -->
-    <div class="section">
-        <h2>✨ What Makes Code "Clean"?</h2>
-        
-        <p>Clean code is:</p>
-        <ol>
-            <li><strong>Readable:</strong> <span class="long-blank">_________________________________________</span></li>
-            <li><strong>Consistent:</strong> <span class="long-blank">_________________________________________</span></li>
-            <li><strong>Meaningful:</strong> <span class="long-blank">_________________________________________</span></li>
-            <li><strong>Simple:</strong> <span class="long-blank">_________________________________________</span></li>
-            <li><strong>Maintainable:</strong> <span class="long-blank">_________________________________________</span></li>
-        </ol>
-        
-        <div class="tip">
-            <strong>💡 Remember:</strong> You're writing for <span class="blank">_______________</span>, not just computers!
+    <div class="presentation-container">
+        <div class="timer" id="timer">Class 24 - Clean Code
+            <button class="home"><a href="../../index.html">Home</a></button>
         </div>
-    </div>
 
-    <!-- Naming Conventions Section -->
-    <div class="section">
-        <h2>🏷️ Naming Variables & Functions</h2>
-        
-        <h3>JavaScript Naming Convention</h3>
-        <p>JavaScript uses <span class="blank">_______________</span> case for variables and functions.</p>
-        
-        <h3>camelCase Rules:</h3>
-        <ul>
-            <li>First word: <span class="blank">_______________________</span></li>
-            <li>Following words: <span class="blank">_______________________</span></li>
-            <li>No <span class="blank">___________</span> or <span class="blank">___________</span></li>
-        </ul>
-
-        <h3>Variables vs Functions</h3>
-        <table>
-            <tr>
-                <th>Variables (Things)</th>
-                <th>Functions (Actions)</th>
-            </tr>
-            <tr>
-                <td>Start with <span class="blank">___________</span> or <span class="blank">___________</span></td>
-                <td>Start with <span class="blank">___________</span></td>
-            </tr>
-            <tr>
-                <td>Example: userName, isActive</td>
-                <td>Example: calculateTotal, sendEmail</td>
-            </tr>
-        </table>
-
-        <div class="practice-box">
-            <h4>Practice: Fix these variable names</h4>
-            <p>x = <span class="long-blank">_______________________</span></p>
-            <p>temp = <span class="long-blank">_______________________</span></p>
-            <p>data = <span class="long-blank">_______________________</span></p>
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>JavaScript Clean Code</h1>
+            <h2>Writing Code for Humans <span class="emoji">✨</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Day 24</p>
+            <p style="margin-top: auto; font-style: italic;">Great code comes from experience. Experience comes from not-so-great code.</p>
         </div>
-    </div>
 
-    <!-- Consistency Section -->
-    <div class="section">
-        <h2>📚 Consistency in Code</h2>
-        
-        <h3>Pick ONE word for ONE concept</h3>
-        <div class="comparison-table">
-            <div class="bad-example">
-                <strong>❌ Inconsistent</strong>
+        <!-- Slide 2: Today's Schedule -->
+        <div class="slide">
+            <h1>Today's Schedule <span class="emoji">📅</span></h1>
+            <div class="activity-box">
+                <h3>Clean Code Lecture (40-50 min)</h3>
                 <ul>
-                    <li>getUserData()</li>
-                    <li>fetchPlayerInfo()</li>
-                    <li>retrieveAccountDetails()</li>
+                    <li>What is clean code and why it matters</li>
+                    <li>Naming conventions and best practices</li>
+                    <li>Code organization and consistency</li>
+                    <li>Writing meaningful comments</li>
                 </ul>
             </div>
-            <div class="good-example">
-                <strong>✅ Consistent</strong>
-                <ul>
-                    <li>getUser<span class="blank">_____</span>()</li>
-                    <li>getPlayer<span class="blank">_____</span>()</li>
-                    <li>getAccount<span class="blank">_____</span>()</li>
+            <div class="activity-box" style="margin-top: 20px;">
+                <h3>Rock Paper Scissors Project</h3>
+                <p>Individual work session with instructor support</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Reality of Programming -->
+        <div class="slide">
+            <h1>The Reality of Programming <span class="emoji">📖</span></h1>
+            <h2>What do developers actually do?</h2>
+            <div class="demo-box">
+                <p style="font-size: 1.8em; text-align: center;">Writing code: ~20%</p>
+                <p style="font-size: 2.2em; text-align: center; color: var(--ocu-cyan);"><strong>Reading code: ~80%</strong></p>
+            </div>
+            <ul style="margin-top: 30px; font-size: 1.2em;">
+                <li>Code written by teammates</li>
+                <li>Code from developers who left the project</li>
+                <li>Code you wrote 2 weeks ago (and forgot about!)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Which Code is Better? -->
+        <div class="slide">
+            <h1>Quick Quiz: Which is Better? <span class="emoji">🤔</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>Example A</h3>
+                    <div class="code-example">
+const x= function (z){
+   const w = "Hello ";
+return w +  z
+
+ }
+
+x("John");
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>Example B</h3>
+                    <div class="code-example">
+const generateUserGreeting = function (name) {
+  const greeting = "Hello ";
+  return greeting + name;
+};
+
+generateUserGreeting("John");
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-size: 1.2em;">Both do the EXACT same thing! 🤯</p>
+        </div>
+
+        <!-- Slide 5: What Makes Code Clean? -->
+        <div class="slide">
+            <h1>What Makes Code "Clean"? <span class="emoji">✨</span></h1>
+            <h2>Clean code is...</h2>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ <strong>Readable:</strong> Others (and future you) can understand it</li>
+                <li>✅ <strong>Consistent:</strong> Follows predictable patterns</li>
+                <li>✅ <strong>Meaningful:</strong> Names describe purpose</li>
+                <li>✅ <strong>Simple:</strong> Does one thing well</li>
+                <li>✅ <strong>Maintainable:</strong> Easy to modify and extend</li>
+            </ul>
+            <div class="tip-box" style="margin-top: 30px;">
+                <strong>Remember:</strong> You're writing for humans, not just computers!
+            </div>
+        </div>
+
+        <!-- Slide 6: Important Mindset -->
+        <div class="slide">
+            <h1>Important Mindset <span class="emoji">🧠</span></h1>
+            <div class="warning-box" style="font-size: 1.3em;">
+                <h3>⚠️ Don't Stress About Perfection!</h3>
+                <p>Everyone writes messy code sometimes - even professionals!</p>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Our Goal Today:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>Learn guidelines to improve readability</li>
+                    <li>Develop good habits gradually</li>
+                    <li>Focus on improvement, not perfection</li>
+                </ul>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.2em; font-style: italic;">
+                "Clean code is a journey, not a destination"
+            </p>
+        </div>
+
+        <!-- NEW STORY 1: Donald Knuth - Slide 1 of 2 -->
+        <div class="slide">
+            <h1>Historical Insight <span class="emoji">📜</span></h1>
+            <h2>Donald Knuth on Premature Optimization</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
+                <p style="font-size: 1.6em; font-style: italic; text-align: center; margin: 20px 0;">
+                    "We should forget about small efficiencies, say about 97% of the time: 
+                    <strong>premature optimization is the root of all evil.</strong>"
+                </p>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
+                    — Donald Knuth, 1974
+                </p>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Context:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>Written in his landmark paper "Structured Programming with go to Statements"</li>
+                    <li>One of the most cited principles in software engineering</li>
+                    <li>Knuth himself is considered the "father of algorithm analysis"</li>
                 </ul>
             </div>
         </div>
-    </div>
 
-    <!-- Magic Numbers Section -->
-    <div class="section">
-        <h2>🎩 Avoiding "Magic Numbers"</h2>
-        
-        <p>Magic numbers are: <span class="long-blank">_________________________________________</span></p>
-        
-        <h3>How to Fix Magic Numbers:</h3>
-        <div class="code-block">
-// Bad:
+        <!-- NEW STORY 1: Donald Knuth - Slide 2 of 2 -->
+        <div class="slide">
+            <h1>Why This Matters Today <span class="emoji">💡</span></h1>
+            <h2>Readable Code > Clever Code</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ "Optimized" but Unreadable</h3>
+                    <div class="code-example">
+// Clever one-liner!
+const r = a.reduce((p,c)=>p+c,0)/a.length;
+                    </div>
+                    <p style="margin-top: 10px;">Hard to understand, hard to debug, hard to maintain</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Clear and Maintainable</h3>
+                    <div class="code-example">
+// Calculate average of array
+const sum = array.reduce((total, num) => total + num, 0);
+const average = sum / array.length;
+                    </div>
+                    <p style="margin-top: 10px;">Easy to understand, easy to debug, easy to maintain</p>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px; font-size: 1.2em;">
+                <strong>Reflection Question:</strong> When have you written "clever" code that you later couldn't understand? 
+                How could you have made it clearer?
+            </div>
+        </div>
+
+        <!-- Slide 7: Naming Variables -->
+        <div class="slide">
+            <h1>Naming Variables & Functions <span class="emoji">🏷️</span></h1>
+            <h2>A good name is descriptive</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Bad</h3>
+                    <div class="code-example">
+const d = new Date();
+const u = users.filter(x => x.a > 18);
+const calc = (a, b) => a * 0.1 + b;
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Good</h3>
+                    <div class="code-example">
+const currentDate = new Date();
+const adultUsers = users.filter(user => user.age > 18);
+const calculateTotalWithTax = (price, tax) => price * 0.1 + tax;
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Rule:</strong> If you need a comment to explain a variable name, the name needs improvement!
+            </div>
+        </div>
+
+        <!-- Slide 8: camelCase Convention -->
+        <div class="slide">
+            <h1>JavaScript Naming Convention: camelCase <span class="emoji">🐫</span></h1>
+            <div class="demo-box">
+                <h3>How camelCase Works:</h3>
+                <ul style="font-size: 1.3em;">
+                    <li>First word: all lowercase</li>
+                    <li>Following words: capitalize first letter</li>
+                    <li>No spaces or underscores</li>
+                </ul>
+            </div>
+            <div class="code-example" style="margin-top: 30px;">
+// Variables (nouns/adjectives)
+const userName = "Alice";
+const isLoggedIn = true;
+const shoppingCartItems = [];
+
+// Functions (verbs)
+function calculateTotal() { }
+function getUserProfile() { }
+function validateEmailAddress() { }
+            </div>
+        </div>
+
+        <!-- Slide 9: Consistent Vocabulary -->
+        <div class="slide">
+            <h1>Use Consistent Vocabulary <span class="emoji">📚</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Inconsistent</h3>
+                    <div class="code-example">
+function getUserScore() { }
+function fetchPlayerName() { }
+function retrievePlayer1Tag() { }
+
+// Wait... User? Player? Player1?
+// Get? Fetch? Retrieve?
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Consistent</h3>
+                    <div class="code-example">
+function getPlayerScore() { }
+function getPlayerName() { }
+function getPlayerTag() { }
+
+// Same pattern throughout!
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Tip:</strong> Pick one word for one concept and stick with it!
+            </div>
+        </div>
+
+        <!-- NEW STORY 2: Hungarian Notation - Slide 1 of 2 -->
+        <div class="slide">
+            <h1>Historical Insight <span class="emoji">📜</span></h1>
+            <h2>The Hungarian Notation Debate</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h3 style="font-size: 1.8em; margin-bottom: 20px;">Microsoft's Variable Naming Convention</h3>
+                <p style="font-size: 1.3em;">
+                    In the 1980s, Charles Simonyi invented <strong>Hungarian notation</strong> at Microsoft, 
+                    where variable names included type information.
+                </p>
+            </div>
+            <div class="code-example" style="margin-top: 30px; font-size: 1.2em;">
+// Hungarian Notation Examples
+var strUserName = "Alice";        // str = string
+var intAge = 25;                  // int = integer
+var bIsActive = true;             // b = boolean
+var arrScores = [95, 87, 92];     // arr = array
+            </div>
+            <div class="activity-box" style="margin-top: 20px;">
+                <p><strong>Popular in the 1990s-2000s</strong> • Used in Windows API development</p>
+            </div>
+        </div>
+
+        <!-- NEW STORY 2: Hungarian Notation - Slide 2 of 2 -->
+        <div class="slide">
+            <h1>Why Hungarian Notation Fell Out of Favor <span class="emoji">📉</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Hungarian Notation (Old Style)</h3>
+                    <div class="code-example">
+var strFirstName = "Alice";
+var strLastName = "Johnson";
+var intUserAge = 25;
+var bIsLoggedIn = true;
+                    </div>
+                    <p style="margin-top: 10px;">Problems: Redundant with modern IDEs, clutters code, maintenance burden</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Semantic Naming (Modern Style)</h3>
+                    <div class="code-example">
+const firstName = "Alice";
+const lastName = "Johnson";
+const userAge = 25;
+const isLoggedIn = true;
+                    </div>
+                    <p style="margin-top: 10px;">Benefits: Cleaner, focuses on meaning not type, easier to read</p>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px; font-size: 1.2em;">
+                <p><strong>Why the change?</strong> As IDEs improved (hover to see type) and languages became more strongly typed, 
+                encoding type information in names became unnecessary.</p>
+                <p style="margin-top: 10px;"><strong>Reflection Question:</strong> How does your IDE help you understand variable types without needing prefixes?</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Variables vs Functions -->
+        <div class="slide">
+            <h1>Variables vs Functions Naming <span class="emoji">📝</span></h1>
+            <div class="project-section">
+                <h3>Variables = Things (Nouns/Adjectives)</h3>
+                <div class="code-example">
+const numberOfItems = 10;
+const userName = "Thor";
+const isSelected = true;
+const shoppingCart = [];
+                </div>
+            </div>
+            <div class="project-section" style="margin-top: 30px;">
+                <h3>Functions = Actions (Verbs)</h3>
+                <div class="code-example">
+function calculateTotal() { }
+function validateInput() { }
+function sendEmail() { }
+function updateScore() { }
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Magic Numbers -->
+        <div class="slide">
+            <h1>Avoid "Magic Numbers" <span class="emoji">🎩</span></h1>
+            <h2>What does 3600000 mean?</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Unclear</h3>
+                    <div class="code-example">
 setTimeout(stopTimer, 3600000);
 
-// Good:
-const <span class="code-blank">_______________</span> = 60 * 60 * 1000;
-setTimeout(stopTimer, <span class="code-blank">_______________</span>);
+if (score > 75) {
+    showBadge();
+}
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Clear</h3>
+                    <div class="code-example">
+const ONE_HOUR = 60 * 60 * 1000;
+setTimeout(stopTimer, ONE_HOUR);
+
+const PASSING_SCORE = 75;
+if (score > PASSING_SCORE) {
+    showBadge();
+}
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Convention:</strong> Use ALL_CAPS for true constants that never change
+            </div>
         </div>
 
-        <div class="tip">
-            <strong>Convention:</strong> Use <span class="blank">_______________</span> for true constants that never change
-        </div>
-    </div>
+        <!-- Slide 12: Indentation & Formatting -->
+        <div class="slide">
+            <h1>Indentation & Line Length <span class="emoji">📏</span></h1>
+            <h2>Consistency is KEY!</h2>
+            <div class="demo-box">
+                <h3>Pick ONE and stick with it:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>2 spaces OR 4 spaces OR tabs</li>
+                    <li>Same bracket style throughout</li>
+                    <li>~80 characters per line maximum</li>
+                </ul>
+            </div>
+            <div class="code-example" style="margin-top: 20px;">
+// Breaking long lines
+let reallyLongLine = 
+  something + 
+  somethingElse + 
+  anotherThing + 
+  howManyTacos + 
+  oneMoreThing;
 
-    <!-- Formatting Section -->
-    <div class="section">
-        <h2>📏 Code Formatting</h2>
-        
-        <h3>Indentation</h3>
-        <p>Choose ONE style and stick with it:</p>
-        <ul>
-            <li>Option 1: <span class="blank">___________</span> spaces</li>
-            <li>Option 2: <span class="blank">___________</span> spaces</li>
-            <li>Option 3: <span class="blank">___________</span></li>
-        </ul>
-        
-        <h3>Line Length</h3>
-        <p>Keep lines under approximately <span class="blank">_____</span> characters</p>
-        
-        <h3>Semicolons</h3>
-        <p>JavaScript can automatically insert semicolons, but this can cause <span class="blank">___________</span></p>
-        <p><strong>Recommendation:</strong> <span class="long-blank">_________________________________________</span></p>
-    </div>
-
-    <!-- Comments Section -->
-    <div class="section">
-        <h2>💬 Writing Good Comments</h2>
-        
-        <h3>BAD Comments (Avoid These!):</h3>
-        <ol>
-            <li>Using comments for <span class="blank">_______________</span> control (use Git instead!)</li>
-            <li>Leaving <span class="blank">_______________</span> code</li>
-            <li>Comments that explain <span class="blank">_______________</span> instead of <span class="blank">_______________</span></li>
-        </ol>
-        
-        <h3>GOOD Comments:</h3>
-        <ul>
-            <li>Explain <span class="blank">_______________</span> logic</li>
-            <li>Clarify <span class="blank">_______________</span> logic</li>
-            <li>Warn about <span class="blank">_______________</span> cases</li>
-            <li>Document <span class="blank">_______________</span> decisions were made</li>
-        </ul>
-
-        <div class="practice-box">
-            <h4>Practice: Write a good comment for this function</h4>
-            <div class="code-block">
-function calculateBMI(height, weight) {
-    // <span class="long-blank">_________________________________________</span>
-    const heightInMeters = height / 100;
-    const bmi = weight / (heightInMeters * heightInMeters);
-    return bmi;
+// Consistent indentation
+if (condition) {
+  doSomething();
+  if (anotherCondition) {
+    doSomethingElse();
+  }
 }
             </div>
         </div>
-    </div>
 
-    <!-- Rock Paper Scissors Section -->
-    <div class="section">
-        <h2>✂️📄🪨 Rock Paper Scissors Project</h2>
-        
-        <h3>Clean Code Function Names</h3>
-        <ul>
-            <li>get<span class="blank">_______________</span>Choice()</li>
-            <li>get<span class="blank">_______________</span>Choice()</li>
-            <li>play<span class="blank">_______________</span>()</li>
-            <li>play<span class="blank">_______________</span>()</li>
-        </ul>
-        
-        <h3>Project Requirements</h3>
-        <ol>
-            <li>Random computer choice: <span class="long-blank">_________________________________________</span></li>
-            <li>Get human choice using: <span class="blank">_______________</span></li>
-            <li>Play <span class="blank">_____</span> rounds</li>
-            <li>Track <span class="blank">_______________</span></li>
-            <li>Declare <span class="blank">_______________</span></li>
-        </ol>
+        <!-- Slide 13: Semicolons -->
+        <div class="slide">
+            <h1>The Semicolon Debate <span class="emoji">;</span></h1>
+            <h2>To use or not to use?</h2>
+            <div class="demo-box">
+                <p style="font-size: 1.3em;">JavaScript can automatically insert semicolons...</p>
+                <p style="font-size: 1.3em; color: var(--ocu-cyan);"><strong>BUT this can cause bugs!</strong></p>
+            </div>
+            <div class="code-example" style="margin-top: 30px;">
+// Recommended: Use semicolons
+const name = "Alice";
+const age = 25;
+console.log(name);
 
-        <h3>Workflow Steps</h3>
-        <table>
-            <tr>
-                <th>Step</th>
-                <th>Action</th>
-            </tr>
-            <tr>
-                <td>1. Plan</td>
-                <td><span class="long-blank">_________________________________________</span></td>
-            </tr>
-            <tr>
-                <td>2. Write</td>
-                <td><span class="long-blank">_________________________________________</span></td>
-            </tr>
-            <tr>
-                <td>3. Test</td>
-                <td><span class="long-blank">_________________________________________</span></td>
-            </tr>
-            <tr>
-                <td>4. Commit</td>
-                <td><span class="long-blank">_________________________________________</span></td>
-            </tr>
-        </table>
-    </div>
+// Can work without, but risky
+const name = "Alice"
+const age = 25
+console.log(name)
+            </div>
+            <div class="tip-box">
+                <strong>Our recommendation:</strong> Use semicolons consistently to avoid surprises
+            </div>
+        </div>
 
-    <!-- Key Takeaways Section -->
-    <div class="section">
-        <h2>📋 Key Takeaways</h2>
-        
-        <h3>Remember These Principles:</h3>
-        <ul>
-            <li>📖 Code is read more than it's <span class="blank">_______________</span></li>
-            <li>🏷️ Names should be <span class="blank">_______________</span></li>
-            <li>📏 <span class="blank">_______________</span> > Personal preference</li>
-            <li>💬 Comments explain <span class="blank">_____</span>, not <span class="blank">_____</span></li>
-            <li>🔄 <span class="blank">_______________</span> as you learn</li>
-        </ul>
-        
-        <div class="tip">
-            <strong>Quote to Remember:</strong><br>
-            "Any fool can write code that a computer can understand.<br>
-            Good programmers write code that <span class="blank">_______________</span> can understand."<br>
-            - Martin Fowler
+        <!-- Slide 14: Comments - The Bad -->
+        <div class="slide">
+            <h1>Bad Comments <span class="emoji">💬❌</span></h1>
+            <h2>What NOT to do</h2>
+            <div class="warning-box">
+                <h3>1. Don't use comments for version control</h3>
+                <div class="code-example">
+/**
+ * 2023-01-10: Fixed bug (RM)
+ * 2023-03-05: Simplified code (JP)
+ * 2023-05-15: Removed old function (LI)
+ */
+// That's what Git is for!
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top: 20px;">
+                <h3>2. Don't leave commented-out code</h3>
+                <div class="code-example">
+theFunctionInUse();
+// oldFunction();
+// evenOlderFunction();
+// whyAmIEvenHere();
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Comments - Tell Why, Not How -->
+        <div class="slide">
+            <h1>Good Comments: Tell WHY, Not HOW <span class="emoji">💡</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Redundant</h3>
+                    <div class="code-example">
+// Increment counter by 1
+counter++;
+
+// Check if user age is over 18
+if (user.age > 18) {
+  // Set adult to true
+  adult = true;
+}
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Helpful</h3>
+                    <div class="code-example">
+// Track failed login attempts for security
+counter++;
+
+// Legal requirement in some regions
+if (user.age > 18) {
+  adult = true;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: When Comments Help -->
+        <div class="slide">
+            <h1>When Comments Are Valuable <span class="emoji">💎</span></h1>
+            <div class="project-section">
+                <h3>Good Example:</h3>
+                <div class="code-example">
+function calculateBMI(height, weight) {
+  // BMI formula: weight(kg) / height(m)²
+  // We receive height in cm, so convert first
+  const heightInMeters = height / 100;
+  const bmi = weight / (heightInMeters * heightInMeters);
+  return bmi;
+}
+                </div>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Comments are great for:</h3>
+                <ul>
+                    <li>Explaining complex algorithms</li>
+                    <li>Clarifying business logic</li>
+                    <li>Warning about edge cases</li>
+                    <li>Documenting WHY decisions were made</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 17: Self-Documenting Code -->
+        <div class="slide">
+            <h1>Self-Documenting Code <span class="emoji">📖</span></h1>
+            <h2>Let the code speak for itself!</h2>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>Needs Comments</h3>
+                    <div class="code-example">
+// Extract text between brackets
+function extract(s) {
+  // Find [ and get position after it
+  // Find ] and get text between
+  return s.substring(s.indexOf("[") + 1, s.indexOf("]"));
+}
+                    </div>
+                </div>
+                <div class="comparison-card good">
+                    <h3>Self-Explanatory</h3>
+                    <div class="code-example">
+function extractTextWithinBrackets(text) {
+  const bracketStart = text.indexOf("[") + 1;
+  const bracketEnd = text.indexOf("]");
+  return text.substring(bracketStart, bracketEnd);
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Rock Paper Scissors Preview -->
+        <div class="slide">
+            <h1>Project Time! <span class="emoji">✂️📄🪨</span></h1>
+            <h2>Rock Paper Scissors</h2>
+            <div class="demo-box">
+                <h3>Today's Focus: Console-Based Game</h3>
+                <p style="font-size: 1.2em;">Build the game logic entirely in JavaScript</p>
+                <p style="font-size: 1.2em;">Play through the browser console</p>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Key Requirements:</h3>
+                <ul>
+                    <li>Random computer choice</li>
+                    <li>Get human choice (prompt)</li>
+                    <li>Play 5 rounds</li>
+                    <li>Track scores</li>
+                    <li>Declare final winner</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 19: Clean Code in Your Project -->
+        <div class="slide">
+            <h1>Apply Clean Code to Rock Paper Scissors <span class="emoji">✨</span></h1>
+            <div class="project-section">
+                <h3>Good Function Names:</h3>
+                <div class="code-example">
+// Clear, descriptive names
+function getComputerChoice() { }
+function getHumanChoice() { }
+function playRound(humanChoice, computerChoice) { }
+function playGame() { }
+                </div>
+            </div>
+            <div class="project-section" style="margin-top: 20px;">
+                <h3>Good Variable Names:</h3>
+                <div class="code-example">
+let humanScore = 0;
+let computerScore = 0;
+const choices = ["rock", "paper", "scissors"];
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Write code as if the person maintaining it is a violent psychopath who knows where you live! 😅
+            </div>
+        </div>
+
+        <!-- Slide 20: Project Workflow -->
+        <div class="slide">
+            <h1>Recommended Project Workflow <span class="emoji">🔄</span></h1>
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Step 1: Plan</h3>
+                    <p>Pseudocode your solution first</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Step 2: Write</h3>
+                    <p>Code one function at a time</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Step 3: Test</h3>
+                    <p>Use console.log() to verify each step</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Step 4: Commit</h3>
+                    <p>Make meaningful commits often!</p>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>Important:</strong> NO GUI yet - that comes in a later lesson!
+            </div>
+        </div>
+
+        <!-- Slide 21: Common Pitfalls -->
+        <div class="slide">
+            <h1>Common Pitfalls to Avoid <span class="emoji">⚠️</span></h1>
+            <div class="warning-box">
+                <h3>In Your Code:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>❌ Single-letter variable names (except in loops)</li>
+                    <li>❌ Inconsistent indentation</li>
+                    <li>❌ No spacing between code blocks</li>
+                    <li>❌ Massive functions that do everything</li>
+                    <li>❌ Copy-pasting without understanding</li>
+                </ul>
+            </div>
+            <div class="tip-box" style="margin-top: 30px;">
+                <h3>Quick Fixes:</h3>
+                <ul>
+                    <li>✅ Use descriptive names</li>
+                    <li>✅ Keep functions small and focused</li>
+                    <li>✅ Test frequently</li>
+                    <li>✅ Ask "Would I understand this in 2 weeks?"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- NEW STORY 3: Zen of Python - Slide 1 of 2 -->
+        <div class="slide">
+            <h1>Historical Insight <span class="emoji">📜</span></h1>
+            <h2>The Zen of Python</h2>
+            <div class="demo-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h3 style="font-size: 1.6em; margin-bottom: 20px;">19 Aphorisms for Writing Great Code</h3>
+                <p style="font-size: 1.2em;">
+                    In 1999, Tim Peters wrote <strong>PEP 20 - The Zen of Python</strong>, 
+                    a collection of guiding principles for Python developers.
+                </p>
+            </div>
+            <div class="code-example" style="margin-top: 30px; font-size: 1.3em; line-height: 1.8;">
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+<strong>Readability counts.</strong>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <p><strong>Fun fact:</strong> You can see all 19 principles in Python by typing <code>import this</code></p>
+            </div>
+        </div>
+
+        <!-- NEW STORY 3: Zen of Python - Slide 2 of 2 -->
+        <div class="slide">
+            <h1>Universal Principles of Clean Code <span class="emoji">🌍</span></h1>
+            <h2>Not Just for Python!</h2>
+            <div class="demo-box">
+                <h3>The Zen of Python Applies to ALL Languages:</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--ocu-cyan); font-size: 1.3em;">Python</h4>
+                        <div class="code-example">
+# Simple is better
+average = sum(numbers) / len(numbers)
+                        </div>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: var(--ocu-cyan); font-size: 1.3em;">JavaScript</h4>
+                        <div class="code-example">
+// Simple is better
+const average = numbers.reduce((a,b) => a+b) / numbers.length;
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <h3>Key Takeaways for Your Code:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>📖 <strong>Readability counts</strong> - Others will read your code</li>
+                    <li>✨ <strong>Simple is better</strong> - Don't overcomplicate solutions</li>
+                    <li>🎯 <strong>Explicit is better</strong> - Make your intentions clear</li>
+                </ul>
+            </div>
+            <div class="tip-box" style="margin-top: 20px; font-size: 1.2em;">
+                <strong>Reflection Question:</strong> Which of the Zen principles resonates most with you? 
+                How can you apply it to your Rock Paper Scissors project?
+            </div>
+        </div>
+
+        <!-- Slide 22: Key Takeaways -->
+        <div class="slide">
+            <h1>Clean Code Summary <span class="emoji">📋</span></h1>
+            <h2>Remember These Principles:</h2>
+            <div class="demo-box">
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>📖 Code is read more than it's written</li>
+                    <li>🏷️ Names should be self-explanatory</li>
+                    <li>📏 Consistency > Personal preference</li>
+                    <li>💬 Comments explain WHY, not WHAT</li>
+                    <li>🔄 Refactor as you learn</li>
+                </ul>
+            </div>
+            <div class="activity-box" style="margin-top: 30px;">
+                <p style="text-align: center; font-size: 1.3em;">
+                    "Any fool can write code that a computer can understand.<br>
+                    Good programmers write code that humans can understand."<br>
+                    <em>- Martin Fowler</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 23: Work Session Instructions -->
+        <div class="slide">
+            <h1>Work Session Time! <span class="emoji">💻</span></h1>
+            <h2>Rock Paper Scissors Project</h2>
+            <div class="activity-box">
+                <h3>Your Tasks:</h3>
+                <ol style="font-size: 1.2em; line-height: 1.8;">
+                    <li>Set up project structure</li>
+                    <li>Create getComputerChoice()</li>
+                    <li>Create getHumanChoice()</li>
+                    <li>Build playRound() function</li>
+                    <li>Implement playGame() for 5 rounds</li>
+                    <li>Test thoroughly!</li>
+                </ol>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>I'll be walking around to help!</strong> Raise your hand if you get stuck.
+            </div>
+        </div>
+
+        <!-- Slide 24: Closing -->
+        <div class="slide">
+            <h1>Let's Build Clean Code! <span class="emoji">🚀</span></h1>
+            <div class="demo-box">
+                <h2>Remember:</h2>
+                <p style="font-size: 1.4em;">Perfect is the enemy of good</p>
+                <p style="font-size: 1.4em;">Focus on gradual improvement</p>
+                <p style="font-size: 1.4em;">Clean code is a skill that develops over time</p>
+            </div>
+            <div class="activity-box" style="margin-top: 40px;">
+                <h3>Start your Rock Paper Scissors project!</h3>
+                <p>Apply the clean code principles we learned today</p>
+                <p><strong>Goal:</strong> Working game in the console by end of class</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">30</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
     </div>
 
-    <!-- Notes Section -->
-    <div class="section">
-        <h2>📝 Additional Notes</h2>
-        <p>Use this space for any additional notes during the lecture:</p>
-        <br>
-        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
-            <br><br><br><br><br><br><br><br>
-        </div>
-    </div>
+    <!-- Include the standard presentation JavaScript -->
+    <script src="../../js/presentation.js"></script>
+    <script>
+        // Global changeSlide function for onclick handlers
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
 
-    <div class="footer">
-        <p>Remember: Clean code is a journey, not a destination! 🚀</p>
-        <p>Focus on gradual improvement, not perfection.</p>
-    </div>
+        function changeSlide(direction) {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = currentSlide + direction;
+            
+            // Handle boundaries
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update total slides count
+            document.getElementById('totalSlides').textContent = totalSlides;
+            // Initialize button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
 </body>
 </html>
