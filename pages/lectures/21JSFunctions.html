@@ -43,46 +43,44 @@
 
         <!-- Slide 3: What Are Functions? -->
         <div class="slide">
-            <h1>What Are Functions? <span class="emoji">🎁</span></h1>
-            <h2>Reusable Code Packages</h2>
+            <h1>What Are Functions? <span class="emoji">🎯</span></h1>
+            <h2>Reusable Blocks of Code</h2>
+            <div class="visual-example">
+                <div class="function-demo">
+                    <p>Think of a function like a <strong>recipe</strong> 📖</p>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li>Ingredients = Parameters</li>
+                        <li>Instructions = Function Body</li>
+                        <li>Final Dish = Return Value</li>
+                    </ul>
+                </div>
+            </div>
             <div class="comparison-table">
-                <div class="comparison-card">
-                    <h3>Without Functions</h3>
-                    <ul>
-                        <li>Write same code multiple times</li>
-                        <li>Hard to maintain</li>
-                        <li>Prone to errors</li>
-                        <li>Messy and repetitive</li>
-                    </ul>
-                </div>
-                <div class="comparison-card good">
-                    <h3>With Functions</h3>
-                    <ul>
-                        <li>Write once, use many times</li>
-                        <li>Easy to update</li>
-                        <li>Less bugs</li>
-                        <li>Clean and organized</li>
-                    </ul>
-                </div>
+                <p>Without Functions: Write the same code over and over 😫</p>
+                <p>With Functions: Write once, use many times! 🎉</p>
             </div>
         </div>
 
-        <!-- Slide 4: Your First Function -->
+        <!-- Slide 4: Why Use Functions? -->
         <div class="slide">
-            <h1>Your First Function <span class="emoji">👋</span></h1>
-            <h2>Let's Say Hello!</h2>
-            <div class="code-example">
-                <span class="comment">// Defining a function</span><br>
-                <span class="keyword">function</span> <span class="function">sayHello</span>() {<br>
-                &nbsp;&nbsp;console.log(<span class="string">"Hello, World!"</span>);<br>
-                }<br><br>
-                <span class="comment">// Calling (using) the function</span><br>
-                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span><br>
-                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span><br>
-                <span class="function">sayHello</span>();  <span class="comment">// Output: Hello, World!</span>
-            </div>
-            <div class="activity-box">
-                <strong>Notice:</strong> We write the function once but can call it many times!
+            <h1>Why Use Functions? <span class="emoji">💡</span></h1>
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <h3>♻️ Reusability</h3>
+                    <p>Write code once, use it multiple times</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🗂️ Organization</h3>
+                    <p>Keep code clean and structured</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🐛 Easy Debugging</h3>
+                    <p>Fix bugs in one place</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>👥 Teamwork</h3>
+                    <p>Share code with others</p>
+                </div>
             </div>
         </div>
 
@@ -108,6 +106,66 @@
             </div>
         </div>
 
+        <!-- STORY 1: BROWSER WARS BEGIN -->
+        <div class="slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <h1 style="color: white;">Historical Moment 📜</h1>
+            <h2 style="color: #f0f0f0;">The Browser Wars Begin</h2>
+            <div style="background: white; padding: 30px; border-radius: 15px; margin: 20px; text-align: left;">
+                <h3 style="color: #667eea; margin-bottom: 20px;">1995-1999: The Battle for the Web</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                    <div>
+                        <p style="font-size: 1.2em;"><strong>📊 1995:</strong> Microsoft licenses Mosaic to create Internet Explorer 1.0</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 1.2em;"><strong>📈 1996:</strong> Netscape dominates with 86% market share, IE has 10%</p>
+                    </div>
+                </div>
+                <div style="background: #ffe0e0; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="font-size: 1.3em; margin: 0;"><strong>⚡ The Turn:</strong> Microsoft begins bundling IE with Windows OS</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <p style="font-size: 1.2em;"><strong>📉 4 years later:</strong> IE reaches 75% market share</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 1.2em;"><strong>🏆 1999:</strong> IE captures 99% of the market</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9em; margin-top: 20px; font-style: italic; color: #666;">
+                    Source: The History of the Web - "The History of the Browser Wars"
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Why This Matters for Functions <span class="emoji">🤔</span></h1>
+            <h2>Cross-Browser Compatibility</h2>
+            <div style="background: #f0f8ff; padding: 30px; border-radius: 15px; margin: 20px;">
+                <p style="font-size: 1.4em; margin-bottom: 20px;">
+                    During the browser wars, different browsers implemented JavaScript functions differently!
+                </p>
+                <div class="code-example" style="text-align: left;">
+                    <span class="comment">// Code that worked in Netscape might not work in IE</span><br>
+                    <span class="keyword">function</span> <span class="function">checkBrowser</span>() {<br>
+                    &nbsp;&nbsp;<span class="comment">// Different implementations...</span><br>
+                    &nbsp;&nbsp;<span class="keyword">if</span> (document.all) { <span class="comment">// IE only</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// IE-specific code</span><br>
+                    &nbsp;&nbsp;} <span class="keyword">else if</span> (document.layers) { <span class="comment">// Netscape only</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Netscape code</span><br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #667eea;">
+                    <p style="font-size: 1.2em; margin: 0;">
+                        <strong>💡 Today:</strong> Modern JavaScript standards ensure our functions work across all browsers!
+                    </p>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Reflection Question:</strong> Why is it important that all browsers implement JavaScript functions the same way?
+            </div>
+        </div>
+
         <!-- Slide 6: Parameters vs Arguments -->
         <div class="slide">
             <h1>Parameters vs Arguments <span class="emoji">📥</span></h1>
@@ -116,51 +174,48 @@
                 <span class="keyword">function</span> <span class="function">favoriteAnimal</span>(<span class="parameter">animal</span>) {<br>
                 &nbsp;&nbsp;<span class="keyword">return</span> <span class="parameter">animal</span> + <span class="string">" is my favorite animal!"</span>;<br>
                 }<br><br>
-                <span class="comment">// ARGUMENT: actual value passed when calling</span><br>
-                console.log(<span class="function">favoriteAnimal</span>(<span class="string">'Goat'</span>));<br>
-                <span class="comment">// Output: Goat is my favorite animal!</span>
+                
+                <span class="comment">// ARGUMENT: actual value when calling</span><br>
+                <span class="function">favoriteAnimal</span>(<span class="string">"Dog"</span>); <span class="comment">// "Dog" is the argument</span>
             </div>
             <div class="tip-box">
-                <p><strong>Remember:</strong></p>
-                <p>📌 <strong>Parameter</strong> = Placeholder (in definition)</p>
-                <p>📌 <strong>Argument</strong> = Actual value (when calling)</p>
+                <strong>Remember:</strong> Parameters are placeholders, Arguments are actual values!
             </div>
         </div>
 
-        <!-- Slide 7: Visual Parameter Flow -->
+        <!-- Slide 7: Multiple Parameters -->
         <div class="slide">
-            <h1>How Parameters Flow <span class="emoji">🔄</span></h1>
-            <h2>Visualizing the Process</h2>
-            <div class="visual-example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
-                <div style="text-align: center;">
-                    <h3>1️⃣ Function Call</h3>
-                    <code style="font-size: 1.3em;">favoriteAnimal('Goat')</code>
-                    <p>↓</p>
-                    <h3>2️⃣ Parameter Receives Value</h3>
-                    <code style="font-size: 1.3em;">animal = 'Goat'</code>
-                    <p>↓</p>
-                    <h3>3️⃣ Function Executes</h3>
-                    <code style="font-size: 1.3em;">'Goat' + ' is my favorite animal!'</code>
-                    <p>↓</p>
-                    <h3>4️⃣ Return Value</h3>
-                    <code style="font-size: 1.3em;">'Goat is my favorite animal!'</code>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Multiple Parameters -->
-        <div class="slide">
-            <h1>Multiple Parameters <span class="emoji">➕</span></h1>
+            <h1>Multiple Parameters <span class="emoji">🎯</span></h1>
             <h2>Functions Can Take Many Inputs!</h2>
             <div class="code-example">
                 <span class="keyword">function</span> <span class="function">greetPerson</span>(<span class="parameter">firstName</span>, <span class="parameter">lastName</span>, <span class="parameter">age</span>) {<br>
-                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${<span class="parameter">firstName</span>} ${<span class="parameter">lastName</span>}! You are ${<span class="parameter">age</span>} years old.`</span>;<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${<span class="parameter">firstName</span>} ${<span class="parameter">lastName</span>}! 
+                You are ${<span class="parameter">age</span>} years old.`</span>;<br>
                 }<br><br>
                 console.log(<span class="function">greetPerson</span>(<span class="string">'John'</span>, <span class="string">'Doe'</span>, <span class="number">25</span>));<br>
                 <span class="comment">// Output: Hello, John Doe! You are 25 years old.</span>
             </div>
             <div class="warning-box">
                 <strong>Order Matters!</strong> Arguments must match parameter order
+            </div>
+        </div>
+
+        <!-- Slide 8: Creating Your First Function -->
+        <div class="slide">
+            <h1>Let's Create a Function! <span class="emoji">👨‍💻</span></h1>
+            <div class="code-example">
+                <span class="comment">// 1. Declare the function</span><br>
+                <span class="keyword">function</span> <span class="function">sayHello</span>() {<br>
+                &nbsp;&nbsp;console.log(<span class="string">"Hello, World!"</span>);<br>
+                }<br><br>
+                
+                <span class="comment">// 2. Call the function</span><br>
+                <span class="function">sayHello</span>(); <span class="comment">// Output: Hello, World!</span><br>
+                <span class="function">sayHello</span>(); <span class="comment">// Output: Hello, World!</span><br>
+                <span class="function">sayHello</span>(); <span class="comment">// Output: Hello, World!</span>
+            </div>
+            <div class="activity-box">
+                <p><strong>Try it yourself!</strong> Open your browser console and create this function!</p>
             </div>
         </div>
 
@@ -210,6 +265,68 @@ console.log(result); <span class="comment">// 8</span>
             </div>
             <div class="tip-box">
                 <strong>Key Point:</strong> Nothing after a return statement executes!
+            </div>
+        </div>
+
+        <!-- STORY 2: BEST VIEWED IN NETSCAPE/IE -->
+        <div class="slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <h1 style="color: white;">Historical Moment 📜</h1>
+            <h2 style="color: #f0f0f0;">"Best Viewed In..." Badges</h2>
+            <div style="background: white; padding: 30px; border-radius: 15px; margin: 20px; text-align: left;">
+                <div style="display: flex; gap: 20px; margin-bottom: 20px; justify-content: center;">
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; text-align: center; border: 3px solid #2196f3;">
+                        <p style="font-size: 1.5em; margin: 0;">🌐 <strong>Best Viewed<br>in Netscape</strong></p>
+                    </div>
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; text-align: center; border: 3px solid #4caf50;">
+                        <p style="font-size: 1.5em; margin: 0;">💻 <strong>Best Viewed<br>in Internet Explorer</strong></p>
+                    </div>
+                </div>
+                <p style="font-size: 1.2em; margin: 20px 0;">
+                    During the browser wars, websites commonly displayed these badges to warn visitors about compatibility issues.
+                </p>
+                <div style="background: #fff3e0; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ff9800;">
+                    <p style="font-size: 1.2em; margin: 0;">
+                        <strong>The Problem:</strong> Without standards, the two browsers supported different features. Support was fractured and uneven. Many developers had no choice but to build separate versions of their websites!
+                    </p>
+                </div>
+                <p style="font-size: 0.9em; font-style: italic; color: #666; margin-top: 20px;">
+                    Source: Wikipedia - "Browser wars"
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Why Standards Matter <span class="emoji">📏</span></h1>
+            <h2>Consistent Function Behavior</h2>
+            <div style="background: #f0f8ff; padding: 30px; border-radius: 15px; margin: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: #ffebee; padding: 20px; border-radius: 10px;">
+                        <h3 style="color: #c62828;">❌ Without Standards (1990s)</h3>
+                        <ul style="text-align: left;">
+                            <li>Different function implementations</li>
+                            <li>Code worked in one browser only</li>
+                            <li>Developers wrote duplicate code</li>
+                            <li>Users got frustrated</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e8f5e9; padding: 20px; border-radius: 10px;">
+                        <h3 style="color: #2e7d32;">✅ With Standards (Today)</h3>
+                        <ul style="text-align: left;">
+                            <li>Consistent function behavior</li>
+                            <li>Code works everywhere</li>
+                            <li>Write once, run anywhere</li>
+                            <li>Better user experience</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                    <p style="font-size: 1.2em; margin: 0;">
+                        <strong>💡 Modern JavaScript:</strong> Thanks to ECMAScript standards (ES5, ES6+), our functions work consistently across all modern browsers!
+                    </p>
+                </div>
+            </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Reflection Question:</strong> How would your development workflow be different if every browser implemented functions differently?
             </div>
         </div>
 
@@ -321,73 +438,132 @@ console.log(result); <span class="comment">// 8</span>
                 &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;<br>
                 }<br><br>
                 
-                console.log(<span class="function">greet</span>());        <span class="comment">// "Hello, friend!"</span><br>
-                console.log(<span class="function">greet</span>(<span class="string">"Alice"</span>)); <span class="comment">// "Hello, Alice!"</span>
+                console.log(<span class="function">greet</span>());           <span class="comment">// "Hello, friend!"</span><br>
+                console.log(<span class="function">greet</span>(<span class="string">"Alice"</span>));  <span class="comment">// "Hello, Alice!"</span>
             </div>
         </div>
 
-        <!-- Slide 16: Call Stack -->
+        <!-- Slide 16: Functions Without Return -->
         <div class="slide">
-            <h1>The Call Stack <span class="emoji">📚</span></h1>
-            <h2>How Functions Execute</h2>
+            <h1>Functions Without Return <span class="emoji">🎭</span></h1>
+            <h2>Side Effects vs Return Values</h2>
             <div class="code-example">
-                <span class="keyword">function</span> <span class="function">first</span>() {<br>
-                &nbsp;&nbsp;console.log(<span class="string">"First start"</span>);<br>
-                &nbsp;&nbsp;<span class="function">second</span>();<br>
-                &nbsp;&nbsp;console.log(<span class="string">"First end"</span>);<br>
+                <span class="comment">// Function with side effect (no return)</span><br>
+                <span class="keyword">function</span> <span class="function">logMessage</span>(message) {<br>
+                &nbsp;&nbsp;console.log(message);<br>
+                &nbsp;&nbsp;<span class="comment">// No return statement - returns undefined</span><br>
                 }<br><br>
                 
-                <span class="keyword">function</span> <span class="function">second</span>() {<br>
-                &nbsp;&nbsp;console.log(<span class="string">"Second"</span>);<br>
+                <span class="comment">// Function with return value</span><br>
+                <span class="keyword">function</span> <span class="function">createMessage</span>(message) {<br>
+                &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">`Message: ${message}`</span>;<br>
                 }<br><br>
                 
-                <span class="function">first</span>();
-            </div>
-            <div class="visual-example">
-                <h3>Output Order:</h3>
-                <ol>
-                    <li>"First start"</li>
-                    <li>"Second"</li>
-                    <li>"First end"</li>
-                </ol>
-                <p><strong>Why?</strong> Functions pause to complete inner function calls!</p>
+                <span class="keyword">let</span> result1 = <span class="function">logMessage</span>(<span class="string">"Hi!"</span>);     <span class="comment">// undefined</span><br>
+                <span class="keyword">let</span> result2 = <span class="function">createMessage</span>(<span class="string">"Hi!"</span>); <span class="comment">// "Message: Hi!"</span>
             </div>
         </div>
 
-        <!-- Slide 17: Practice Time -->
-        <div class="slide">
-            <h1>Let's Practice! <span class="emoji">💪</span></h1>
-            <h2>Your Turn to Write Functions</h2>
-            <div class="activity-box">
-                <h3>Exercise 1: add7</h3>
-                <p>Write a function that takes one number and returns that number + 7</p>
-                <div class="code-example">
-<span class="keyword">function</span> <span class="function">add7</span>(num) {
-  <span class="comment">// Your code here!</span>
-}
+        <!-- STORY 3: MOZILLA PHOENIX RISES -->
+        <div class="slide" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <h1 style="color: white;">Historical Moment 📜</h1>
+            <h2 style="color: #f0f0f0;">Mozilla Phoenix Rises from the Ashes</h2>
+            <div style="background: white; padding: 30px; border-radius: 15px; margin: 20px; text-align: left;">
+                <h3 style="color: #fa709a; margin-bottom: 20px;">The Birth of Open Source Browsers</h3>
+                <div style="background: #ffe0e0; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="font-size: 1.3em; margin: 0;">
+                        <strong>The Turning Point:</strong> After losing the browser war to Internet Explorer, Netscape made a bold move in 1998...
+                    </p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                    <div style="background: #e3f2fd; padding: 20px; border-radius: 10px;">
+                        <p style="font-size: 1.2em;"><strong>🔓 Open Source:</strong> Netscape released their browser code to the public, creating Mozilla</p>
+                    </div>
+                    <div style="background: #f3e5f5; padding: 20px; border-radius: 10px;">
+                        <p style="font-size: 1.2em;"><strong>🔥 2002:</strong> A spinoff project that would become Firefox was released</p>
+                    </div>
+                </div>
+                <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #4caf50;">
+                    <p style="font-size: 1.2em; margin: 0;">
+                        <strong>🎯 The Result:</strong> Community-driven development led to better JavaScript standards and more reliable function implementations!
+                    </p>
+                </div>
+                <p style="font-size: 0.9em; font-style: italic; color: #666; margin-top: 20px;">
+                    Source: Firefox - "Browser History: Epic power struggles"
+                </p>
+            </div>
+        </div>
 
-console.log(<span class="function">add7</span>(5));  <span class="comment">// Should output: 12</span>
+        <div class="slide">
+            <h1>Open Source Impact <span class="emoji">🌟</span></h1>
+            <h2>Better Standards Through Collaboration</h2>
+            <div style="background: #f0f8ff; padding: 30px; border-radius: 15px; margin: 20px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;">How Mozilla Changed JavaScript Development</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #667eea;">
+                        <h4 style="color: #667eea;">🤝 Community Input</h4>
+                        <p>Thousands of developers contributed to improving JavaScript implementation</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #764ba2;">
+                        <h4 style="color: #764ba2;">📖 Better Documentation</h4>
+                        <p>MDN (Mozilla Developer Network) became the gold standard for JavaScript docs</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #f093fb;">
+                        <h4 style="color: #f093fb;">🧪 Standards Testing</h4>
+                        <p>Open test suites ensured all browsers implemented functions correctly</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border: 2px solid #fa709a;">
+                        <h4 style="color: #fa709a;">🚀 Innovation</h4>
+                        <p>Competition from Firefox pushed all browsers to improve</p>
+                    </div>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #667eea;">
+                    <p style="font-size: 1.2em; margin: 0;">
+                        <strong>💡 Today:</strong> Thanks to open source collaboration, JavaScript functions are reliable, standardized, and work consistently across all modern browsers!
+                    </p>
                 </div>
             </div>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Reflection Question:</strong> How has open source development improved the web technologies we use today?
+            </div>
         </div>
 
-        <!-- Slide 18: Practice Solution 1 -->
+        <!-- Slide 17: Let's Practice! -->
         <div class="slide">
-            <h1>Solution: add7 <span class="emoji">✅</span></h1>
-            <div class="code-example">
-                <span class="keyword">function</span> <span class="function">add7</span>(num) {<br>
-                &nbsp;&nbsp;<span class="keyword">return</span> num + 7;<br>
-                }<br><br>
-                
-                console.log(<span class="function">add7</span>(5));   <span class="comment">// 12</span><br>
-                console.log(<span class="function">add7</span>(10));  <span class="comment">// 17</span><br>
-                console.log(<span class="function">add7</span>(-3));  <span class="comment">// 4</span>
+            <h1>Let's Practice! <span class="emoji">💪</span></h1>
+            <h2>Time to Write Some Functions</h2>
+            <div class="activity-box">
+                <h3>We'll complete 4 exercises together:</h3>
+                <ol style="font-size: 1.3em; text-align: left; margin-left: 50px;">
+                    <li>add7 - Add 7 to any number</li>
+                    <li>multiply - Multiply two numbers</li>
+                    <li>capitalize - Capitalize first letter</li>
+                    <li>lastLetter - Get the last letter of a string</li>
+                </ol>
             </div>
             <div class="tip-box">
-                <strong>Key Points:</strong>
-                <ul>
-                    <li>Takes one parameter (num)</li>
-                    <li>Returns the result (important!)</li>
+                <strong>Remember:</strong> Start small, test often, and don't be afraid to make mistakes!
+            </div>
+        </div>
+
+        <!-- Slide 18: Exercise 1 - add7 -->
+        <div class="slide">
+            <h1>Exercise 1: add7 <span class="emoji">➕</span></h1>
+            <h2>Write a function that takes one number and returns that number + 7</h2>
+            <div class="code-example">
+                <span class="keyword">function</span> <span class="function">add7</span>(<span class="parameter">number</span>) {<br>
+                &nbsp;&nbsp;<span class="comment">// Your code here!</span><br>
+                }<br><br>
+                
+                <span class="comment">// Test your function</span><br>
+                console.log(<span class="function">add7</span>(5));  <span class="comment">// Should output: 12</span><br>
+                console.log(<span class="function">add7</span>(10)); <span class="comment">// Should output: 17</span>
+            </div>
+            <div class="activity-box">
+                <h3>Solution Checklist:</h3>
+                <ul style="text-align: left;">
+                    <li>Takes one parameter</li>
+                    <li>Returns the parameter plus 7</li>
                     <li>Works with any number</li>
                 </ul>
             </div>
@@ -533,6 +709,7 @@ console.log(<span class="function">add7</span>(5));  <span class="comment">// Sh
                     <li>✅ Returned values from functions</li>
                     <li>✅ Understood function scope</li>
                     <li>✅ Practiced with real examples</li>
+                    <li>✅ Learned about browser history and standards</li>
                 </ul>
             </div>
             <div class="next-class">
@@ -548,7 +725,7 @@ console.log(<span class="function">add7</span>(5));  <span class="comment">// Sh
         <div class="navigation">
             <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
             <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">25</span>
+                <span id="currentSlide">1</span> / <span id="totalSlides">28</span>
             </span>
             <button id="nextBtn" onclick="changeSlide(1)">Next</button>
         </div>
