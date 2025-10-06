@@ -1,557 +1,949 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Exercises - Guided Notes | CSCI 3403</title>
+    <title>Day 27: DOM Manipulation & Events - CSCI 3403</title>
+    
+    <!-- OCU Branded Presentation Styles with Theme Support -->
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Lecture-Specific Styles -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #0075BF 0%, #003768 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2em;
-        }
-
-        .info-box {
-            background: #e8f4f8;
-            border-left: 4px solid #0075BF;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .section {
-            background: white;
+        .dom-tree {
+            background: var(--bg-secondary);
             padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .section h2 {
-            color: #0075BF;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .section h3 {
-            color: #003768;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .blank {
-            display: inline-block;
-            min-width: 100px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #0075BF;
-        }
-
-        .long-blank {
-            display: inline-block;
-            min-width: 200px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-        }
-
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .code-blank {
-            display: inline-block;
-            min-width: 80px;
-            border-bottom: 2px solid #f8f8f2;
-            margin: 0 5px;
-            color: #66d9ef;
-        }
-
-        ul,
-        ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .tip {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-
-        .tip strong {
-            color: #856404;
-        }
-
-        .exercise-box {
-            background: #f0f8ff;
-            border: 2px dashed #0075BF;
-            padding: 20px;
+            border-radius: 15px;
             margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .recognition-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        .recognition-table th,
-        .recognition-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        .recognition-table th {
-            background: #0075BF;
-            color: white;
-        }
-
-        .recognition-table tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-style: italic;
-        }
-
-        .solution-space {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-            min-height: 100px;
             font-family: 'Courier New', monospace;
         }
+        
+        .node-diagram {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .method-card {
+            background: var(--bg-accent);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid var(--ocu-true-blue);
+        }
+        
+        .event-type {
+            display: inline-block;
+            background: var(--ocu-light-blue);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+        }
+        
+        [data-theme="dark"] .event-type {
+            background: var(--ocu-cyan);
+            color: var(--text-primary);
+        }
 
-        @media print {
-            body {
-                background: white;
-            }
+        /* Historical Story Styles */
+        .history-slide {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-accent) 100%);
+        }
 
-            .header {
-                background: none;
-                color: black;
-                border: 2px solid black;
-            }
+        .history-header {
+            background: var(--ocu-true-blue);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
 
-            .blank,
-            .code-blank {
-                color: black;
-            }
+        .story-content {
+            background: var(--bg-primary);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--ocu-gold);
+            margin: 20px 0;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        .connection-box {
+            background: var(--ocu-light-blue);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        [data-theme="dark"] .connection-box {
+            background: var(--ocu-cyan);
+            color: var(--text-primary);
+        }
+
+        .reflection-question {
+            background: var(--ocu-gold);
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.15em;
+            font-weight: bold;
+        }
+
+        .citation {
+            font-style: italic;
+            color: #666;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        [data-theme="dark"] .citation {
+            color: #aaa;
         }
     </style>
 </head>
-
 <body>
-    <div class="header">
-        <h1>JavaScript Exercises - Guided Notes</h1>
-        <p>CSCI 3403 - Web Programming | Day 29, December 2nd</p>
-        <p>Name: _________________________________ Date: _____________</p>
-    </div>
-
-    <div class="info-box">
-        <strong>📚 Today's Exercises:</strong> repeatString, reverseString, removeFromArray, sumAll, leapYears,
-        tempConversion<br>
-        <strong>🏆 Recognition Categories:</strong> First Complete | Most Creative | Cleanest Code | Shortest Solution
-    </div>
-
-    <!-- Setup Section -->
-    <div class="section">
-        <h2>🛠️ Setup & Testing</h2>
-
-        <h3>Repository Information</h3>
-        <p>Repository URL: <span class="long-blank">_________________________________________</span></p>
-        <p>Test Command: npm test <span class="blank">_______________</span></p>
-
-        <h3>Key Commands</h3>
-        <ul>
-            <li>Run all tests: <span class="blank">_______________</span></li>
-            <li>Run specific test: npm test <span class="blank">_______________</span></li>
-            <li>View test file: Look in <span class="blank">_______________</span> folder</li>
-        </ul>
-    </div>
-
-    <!-- Exercise 1: repeatString -->
-    <div class="section">
-        <h2>🔁 Exercise 1: repeatString</h2>
-
-        <h3>Function Signature</h3>
-        <div class="code-block">
-            function repeatString(<span class="code-blank">_______</span>, <span class="code-blank">_______</span>) {
-            // Your implementation
-            }
+    
+    <div class="presentation-container">
+        <!-- Timer display -->
+        <div class="timer-display" id="timer-display">
+            <span id="timer-text">Day 27 - DOM Manipulation & Events
+                 <button class="home"><a href="../../index.html">Home</a></button>
+            </span>
         </div>
 
-        <h3>Test Cases</h3>
-        <ul>
-            <li>repeatString('hey', 3) returns: <span class="blank">_______________</span></li>
-            <li>repeatString('hello', 0) returns: <span class="blank">_______________</span></li>
-            <li>repeatString('hi', -1) returns: <span class="blank">_______________</span></li>
-        </ul>
-
-        <h3>Implementation Notes</h3>
-        <p>Edge case to handle: <span class="long-blank">_________________________________________</span></p>
-        <p>Method I'll use: <span class="long-blank">_________________________________________</span></p>
-
-        <div class="exercise-box">
-            <strong>My Solution:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br>
+        <!-- Slide 1: Title & Overview -->
+        <div class="slide active">
+            <h1>Day 27: DOM Manipulation & Events</h1>
+            <h2>Making Web Pages Interactive <span class="emoji">🎮</span></h2>
+            <p style="font-size: 1.4em; margin: 30px 0;">Today we unlock JavaScript's superpower: dynamically changing web pages!</p>
+            
+            <div class="activity-box">
+                <h3>Today's Journey:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>🌳 Understanding the DOM tree structure</li>
+                    <li>🎯 Selecting elements with precision</li>
+                    <li>✨ Creating and modifying elements</li>
+                    <li>🎪 Handling user events</li>
+                    <li>🎨 Project: Etch-a-Sketch (if time permits)</li>
+                </ul>
             </div>
         </div>
-    </div>
 
-    <!-- Exercise 2: reverseString -->
-    <div class="section">
-        <h2>🔄 Exercise 2: reverseString</h2>
-
-        <h3>Function Signature</h3>
-        <div class="code-block">
-            function reverseString(<span class="code-blank">_______</span>) {
-            // Your implementation
-            }
-        </div>
-
-        <h3>Test Cases</h3>
-        <ul>
-            <li>reverseString('hello') returns: <span class="blank">_______________</span></li>
-            <li>reverseString('hello there') returns: <span class="long-blank">_____________________</span></li>
-            <li>reverseString('') returns: <span class="blank">_______________</span></li>
-        </ul>
-
-        <h3>Approach Options</h3>
-        <p>☐ Use split(), reverse(), join()</p>
-        <p>☐ Use a for loop backwards</p>
-        <p>☐ Use recursion</p>
-        <p>☐ Other: <span class="long-blank">_________________________________________</span></p>
-
-        <div class="exercise-box">
-            <strong>My Solution:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br>
+        <!-- Slide 2: What is the DOM? -->
+        <div class="slide">
+            <h1>What is the DOM? <span class="emoji">🌳</span></h1>
+            <h2>Document Object Model</h2>
+            
+            <div class="demo-box">
+                <p><strong>The DOM is:</strong> A tree-like representation of your HTML that JavaScript can interact with</p>
+            </div>
+            
+            <div class="dom-tree">
+                <span class="tag">&lt;div id="container"&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="display"&gt;</span><span class="tag">&lt;/div&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="controls"&gt;</span><span class="tag">&lt;/div&gt;</span><br>
+                <span class="tag">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="two-column">
+                <div class="method-card">
+                    <h3>📦 Nodes</h3>
+                    <p>Everything in the DOM (elements, text, comments)</p>
+                </div>
+                <div class="method-card">
+                    <h3>🏷️ Elements</h3>
+                    <p>HTML tags that become element nodes</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Exercise 3: removeFromArray -->
-    <div class="section">
-        <h2>🗑️ Exercise 3: removeFromArray</h2>
+        <!-- NEW SLIDE: Historical Story 1 -->
+        <div class="slide history-slide">
+            <div class="history-header">
+                <h1><span class="emoji">🌐</span> Web History Moment <span class="emoji">📜</span></h1>
+                <h2>The Web's First Browser Had Editing Built In</h2>
+            </div>
 
-        <h3>Function Signature</h3>
-        <div class="code-block">
-            function removeFromArray(<span class="code-blank">_______</span>, ...<span
-                class="code-blank">_______</span>) {
-            // Your implementation
-            }
-        </div>
+            <div class="story-content">
+                <p><strong>Tim Berners-Lee's Vision (1990)</strong></p>
+                <ul style="font-size: 1.1em; line-height: 1.8;">
+                    <li>The original web browser ran on NeXT computers and showed Tim Berners-Lee's revolutionary vision</li>
+                    <li>It had many features of current web browsers - but with one amazing difference</li>
+                    <li><strong>Built-in editing capability!</strong> You could modify web pages directly from inside the browser</li>
+                    <li>This was the first web editing functionality - decades before modern developer tools</li>
+                </ul>
+                <div class="citation">Source: CERN - "A short history of the Web"</div>
+            </div>
 
-        <h3>Key Concept</h3>
-        <p>This function accepts <span class="blank">_______________</span> number of arguments to remove.</p>
-        <p>I can access extra arguments using: <span class="long-blank">_____________________</span></p>
+            <div class="connection-box">
+                <strong>💡 Connection to Today:</strong> DOM manipulation fulfills Tim Berners-Lee's original vision of an interactive, editable web. What we're learning today is the foundation that makes the modern web dynamic and user-controlled!
+            </div>
 
-        <h3>Test Cases</h3>
-        <ul>
-            <li>removeFromArray([1, 2, 3, 4], 3) returns: <span class="blank">_______________</span></li>
-            <li>removeFromArray([1, 2, 3, 4], 3, 2) returns: <span class="blank">_______________</span></li>
-        </ul>
-
-        <div class="tip">
-            <strong>Hint:</strong> Consider using the filter() method or rest parameters (...)
-        </div>
-
-        <div class="exercise-box">
-            <strong>My Solution:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br>
+            <div class="reflection-question">
+                <span class="emoji">🤔</span> Reflection Question: How would the web be different today if editing capabilities had remained a standard browser feature from the beginning?
             </div>
         </div>
-    </div>
 
-    <!-- Exercise 4: sumAll -->
-    <div class="section">
-        <h2>➕ Exercise 4: sumAll</h2>
-
-        <h3>Function Requirements</h3>
-        <p>Sum all integers from <span class="blank">_______________</span> to <span
-                class="blank">_______________</span> (inclusive)</p>
-
-        <h3>Validation Checks</h3>
-        <p>☐ Check for negative numbers → return <span class="blank">_______________</span></p>
-        <p>☐ Check for non-numbers → return <span class="blank">_______________</span></p>
-        <p>☐ Handle first > second → <span class="long-blank">_____________________</span></p>
-
-        <h3>Test Cases</h3>
-        <ul>
-            <li>sumAll(1, 4) returns: <span class="blank">_______________</span> (show work: ____________)</li>
-            <li>sumAll(123, 1) returns: <span class="blank">_______________</span></li>
-            <li>sumAll(-10, 4) returns: <span class="blank">_______________</span></li>
-        </ul>
-
-        <div class="exercise-box">
-            <strong>My Solution:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br>
+        <!-- Slide 3: DOM Relationships -->
+        <div class="slide">
+            <h1>DOM Family Tree <span class="emoji">👨‍👩‍👧‍👦</span></h1>
+            <h2>Understanding Relationships</h2>
+            
+            <div class="code-example">
+                <span class="tag">&lt;div id="container"&gt;</span> <span class="comment">&lt;-- Parent</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="display"&gt;</span><span class="tag">&lt;/div&gt;</span> <span class="comment">&lt;-- Child & Sibling</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;div class="controls"&gt;</span><span class="tag">&lt;/div&gt;</span> <span class="comment">&lt;-- Child & Sibling</span><br>
+                <span class="tag">&lt;/div&gt;</span>
+            </div>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Parent-Child</h3>
+                    <p>Elements directly inside another</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Siblings</h3>
+                    <p>Elements at the same level</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Ancestors</h3>
+                    <p>All parent elements up the tree</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Descendants</h3>
+                    <p>All child elements down the tree</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Exercise 5: leapYears -->
-    <div class="section">
-        <h2>📅 Exercise 5: leapYears</h2>
-
-        <h3>Leap Year Rules</h3>
-        <ol>
-            <li>Year divisible by 4? → <span class="blank">_______________</span></li>
-            <li>EXCEPT: Year divisible by 100? → <span class="blank">_______________</span></li>
-            <li>EXCEPT EXCEPT: Year divisible by 400? → <span class="blank">_______________</span></li>
-        </ol>
-
-        <h3>Test Cases - Trace Through Logic</h3>
-        <table class="recognition-table">
-            <tr>
-                <th>Year</th>
-                <th>÷ 4?</th>
-                <th>÷ 100?</th>
-                <th>÷ 400?</th>
-                <th>Result</th>
-            </tr>
-            <tr>
-                <td>2000</td>
-                <td>___</td>
-                <td>___</td>
-                <td>___</td>
-                <td>_______</td>
-            </tr>
-            <tr>
-                <td>1900</td>
-                <td>___</td>
-                <td>___</td>
-                <td>___</td>
-                <td>_______</td>
-            </tr>
-            <tr>
-                <td>2004</td>
-                <td>___</td>
-                <td>___</td>
-                <td>___</td>
-                <td>_______</td>
-            </tr>
-        </table>
-
-        <div class="exercise-box">
-            <strong>My Solution:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br>
+        <!-- Slide 4: Selecting Elements -->
+        <div class="slide">
+            <h1>Targeting Elements <span class="emoji">🎯</span></h1>
+            <h2>Query Selectors</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Select by ID</span><br>
+                const container = document.querySelector("#container");<br><br>
+                
+                <span class="comment">// Select by class</span><br>
+                const display = document.querySelector(".display");<br><br>
+                
+                <span class="comment">// Select by tag</span><br>
+                const divs = document.querySelectorAll("div");<br><br>
+                
+                <span class="comment">// Complex selectors (CSS-style)</span><br>
+                const button = document.querySelector("#container > button.primary");
+            </div>
+            
+            <div class="warning-box">
+                <strong>Remember:</strong> querySelector returns ONE element, querySelectorAll returns a NodeList (like an array, but not quite!)
             </div>
         </div>
-    </div>
 
-    <!-- Exercise 6: tempConversion -->
-    <div class="section">
-        <h2>🌡️ Exercise 6: tempConversion</h2>
-
-        <h3>Conversion Formulas</h3>
-        <p>Celsius to Fahrenheit: F = <span class="blank">_______</span> × <span class="blank">_______</span> + <span
-                class="blank">_______</span></p>
-        <p>Fahrenheit to Celsius: C = (<span class="blank">_______</span> - <span class="blank">_______</span>) × <span
-                class="blank">_______</span></p>
-
-        <h3>Rounding Requirement</h3>
-        <p>Round to <span class="blank">_______</span> decimal place(s)</p>
-        <p>Rounding method: <span class="long-blank">_________________________________________</span></p>
-
-        <h3>Test Cases</h3>
-        <ul>
-            <li>convertToCelsius(32) returns: <span class="blank">_______________</span></li>
-            <li>convertToCelsius(100) returns: <span class="blank">_______________</span></li>
-            <li>convertToFahrenheit(0) returns: <span class="blank">_______________</span></li>
-            <li>convertToFahrenheit(100) returns: <span class="blank">_______________</span></li>
-        </ul>
-
-        <div class="exercise-box">
-            <strong>My Solutions:</strong>
-            <div class="solution-space">
-                <br><br><br><br><br><br><br>
+        <!-- Slide 5: Relational Selectors -->
+        <div class="slide">
+            <h1>Navigating the DOM Tree <span class="emoji">🧭</span></h1>
+            <h2>Using Relationships</h2>
+            
+            <div class="code-example">
+                const container = document.querySelector("#container");<br><br>
+                
+                <span class="comment">// Navigate to children</span><br>
+                const firstChild = container.firstElementChild;<br>
+                const lastChild = container.lastElementChild;<br>
+                const allChildren = container.children;<br><br>
+                
+                <span class="comment">// Navigate to siblings</span><br>
+                const nextSibling = element.nextElementSibling;<br>
+                const prevSibling = element.previousElementSibling;<br><br>
+                
+                <span class="comment">// Navigate to parent</span><br>
+                const parent = element.parentElement;
+            </div>
+            
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use these when you need to move through the DOM based on structure, not selectors!
             </div>
         </div>
-    </div>
 
-    <!-- Recognition Tracking -->
-    <div class="section">
-        <h2>🏆 Recognition Tracking</h2>
-
-        <table class="recognition-table">
-            <tr>
-                <th>Exercise</th>
-                <th>🥇 First Complete</th>
-                <th>🎨 Most Creative</th>
-                <th>✨ Cleanest Code</th>
-                <th>📏 Shortest Solution</th>
-            </tr>
-            <tr>
-                <td>repeatString</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-            <tr>
-                <td>reverseString</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-            <tr>
-                <td>removeFromArray</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-            <tr>
-                <td>sumAll</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-            <tr>
-                <td>leapYears</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-            <tr>
-                <td>tempConversion</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-                <td>________________</td>
-            </tr>
-        </table>
-    </div>
-
-    <!-- Key Concepts -->
-    <div class="section">
-        <h2>💡 Key JavaScript Concepts Used Today</h2>
-
-        <h3>String Methods</h3>
-        <ul>
-            <li>.repeat() - <span class="long-blank">_________________________________________</span></li>
-            <li>.split() - <span class="long-blank">_________________________________________</span></li>
-            <li>.reverse() - <span class="long-blank">_________________________________________</span></li>
-            <li>.join() - <span class="long-blank">_________________________________________</span></li>
-        </ul>
-
-        <h3>Array Methods</h3>
-        <ul>
-            <li>.filter() - <span class="long-blank">_________________________________________</span></li>
-            <li>.includes() - <span class="long-blank">_________________________________________</span></li>
-            <li>.indexOf() - <span class="long-blank">_________________________________________</span></li>
-        </ul>
-
-        <h3>Important Operators</h3>
-        <ul>
-            <li>... (rest/spread) - <span class="long-blank">_________________________________________</span></li>
-            <li>% (modulo) - <span class="long-blank">_________________________________________</span></li>
-            <li>=== vs == - <span class="long-blank">_________________________________________</span></li>
-        </ul>
-    </div>
-
-    <!-- Problem-Solving Strategies -->
-    <div class="section">
-        <h2>🎯 Problem-Solving Strategies</h2>
-
-        <h3>My Approach Checklist</h3>
-        <p>☐ Read the test file first to understand requirements</p>
-        <p>☐ Identify edge cases from test examples</p>
-        <p>☐ Start with the simplest solution that works</p>
-        <p>☐ Refactor for cleanliness/efficiency after tests pass</p>
-        <p>☐ Consider multiple approaches before coding</p>
-
-        <h3>Debugging Tips I Learned</h3>
-        <ol>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-        </ol>
-    </div>
-
-    <!-- Additional Notes -->
-    <div class="section">
-        <h2>📝 Additional Notes & Reflections</h2>
-        <p>Use this space for any additional notes, alternative solutions, or insights from class discussion:</p>
-        <br>
-        <div style="min-height: 200px; border: 1px dashed #ccc; padding: 10px; background: #fafafa;">
-            <br><br><br><br><br><br><br><br>
+        <!-- Slide 6: Creating Elements -->
+        <div class="slide">
+            <h1>Creating Elements <span class="emoji">🏗️</span></h1>
+            <h2>Building DOM Nodes in Memory</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Step 1: Create element in memory</span><br>
+                const newDiv = document.createElement("div");<br><br>
+                
+                <span class="comment">// Step 2: Add content and attributes</span><br>
+                newDiv.textContent = "Hello World!";<br>
+                newDiv.classList.add("my-class");<br>
+                newDiv.setAttribute("id", "new-div");<br><br>
+                
+                <span class="comment">// Step 3: Add to DOM (makes it visible!)</span><br>
+                container.appendChild(newDiv);
+            </div>
+            
+            <div class="warning-box">
+                <strong>Important:</strong> Elements exist in memory until you append them to the DOM!
+            </div>
         </div>
 
-        <h3>Questions for Further Study</h3>
-        <ol>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-            <li><span class="long-blank">_________________________________________</span></li>
-        </ol>
+        <!-- Slide 7: Modifying Elements -->
+        <div class="slide">
+            <h1>Changing Elements <span class="emoji">✏️</span></h1>
+            <h2>Content, Style, and Classes</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Modify Text Content</h3>
+                    <div class="code-example">
+                        element.textContent = "New text";<br>
+                        element.innerHTML = "&lt;strong&gt;Bold&lt;/strong&gt;";
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Modify Attributes</h3>
+                    <div class="code-example">
+                        element.setAttribute("href", "https://...");<br>
+                        element.id = "new-id";<br>
+                        element.src = "image.jpg";
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Modify Styles</h3>
+                    <div class="code-example">
+                        element.style.color = "red";<br>
+                        element.style.backgroundColor = "blue";
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Modify Classes</h3>
+                    <div class="code-example">
+                        element.classList.add("active");<br>
+                        element.classList.remove("hidden");<br>
+                        element.classList.toggle("selected");
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Historical Story 2 -->
+        <div class="slide history-slide">
+            <div class="history-header">
+                <h1><span class="emoji">🖼️</span> Web History Moment <span class="emoji">📜</span></h1>
+                <h2>Mosaic Made the Web Accessible</h2>
+            </div>
+
+            <div class="story-content">
+                <p><strong>The Browser That Changed Everything (1993)</strong></p>
+                <ul style="font-size: 1.1em; line-height: 1.8;">
+                    <li>In 1993, the Mosaic web browser was revolutionary - it was the first application to download images and text together</li>
+                    <li>It laid everything out in the same document, like a printed magazine page - this seems obvious now, but it was groundbreaking!</li>
+                    <li><strong>Mosaic was the spark that popularized the web</strong> - making it accessible to everyday users</li>
+                    <li>The Mosaic browser quickly spawned Netscape Navigator, from which Mozilla Firefox is descended</li>
+                </ul>
+                <div class="citation">Source: "A Short History of the Web – Full Stack Web Development"</div>
+            </div>
+
+            <div class="connection-box">
+                <strong>💡 Connection to Today:</strong> DOM manipulation evolved from Mosaic's static document display to dynamic, interactive content. The methods we're learning allow us to change those "magazine pages" in real-time based on user interaction!
+            </div>
+
+            <div class="reflection-question">
+                <span class="emoji">🤔</span> Reflection Question: How did Mosaic's ability to display images alongside text transform user expectations for the web? What parallels do you see with modern web capabilities?
+            </div>
+        </div>
+
+        <!-- Slide 8: Removing Elements -->
+        <div class="slide">
+            <h1>Removing Elements <span class="emoji">🗑️</span></h1>
+            <h2>Cleaning Up the DOM</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Modern way - remove itself</span><br>
+                element.remove();<br><br>
+                
+                <span class="comment">// Classic way - parent removes child</span><br>
+                parent.removeChild(element);<br><br>
+                
+                <span class="comment">// Example: Remove all buttons</span><br>
+                const buttons = document.querySelectorAll("button");<br>
+                buttons.forEach(button => button.remove());
+            </div>
+            
+            <div class="tip-box">
+                <strong>Note:</strong> Removing an element also removes all its children!
+            </div>
+        </div>
+
+        <!-- Slide 9: Adding/Removing Classes -->
+        <div class="slide">
+            <h1>classList Methods <span class="emoji">🎨</span></h1>
+            <h2>The Best Way to Style with JS</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Add a class</span><br>
+                element.classList.add("active");<br><br>
+                
+                <span class="comment">// Remove a class</span><br>
+                element.classList.remove("hidden");<br><br>
+                
+                <span class="comment">// Toggle a class (add if missing, remove if present)</span><br>
+                element.classList.toggle("dark-mode");<br><br>
+                
+                <span class="comment">// Check if element has a class</span><br>
+                if (element.classList.contains("selected")) {<br>
+                &nbsp;&nbsp;console.log("Element is selected!");<br>
+                }
+            </div>
+            
+            <div class="demo-box">
+                <strong>Best Practice:</strong> Use classes for styling, not inline styles!
+            </div>
+        </div>
+
+        <!-- Slide 10: Event Listeners Intro -->
+        <div class="slide">
+            <h1>What are Events? <span class="emoji">⚡</span></h1>
+            <h2>Listening for User Actions</h2>
+            
+            <div class="demo-box">
+                <p><strong>Events</strong> are actions that happen in the browser:</p>
+            </div>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3><span class="event-type">click</span></h3>
+                    <p>User clicks an element</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3><span class="event-type">mouseenter</span></h3>
+                    <p>Mouse moves over an element</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3><span class="event-type">keydown</span></h3>
+                    <p>User presses a key</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3><span class="event-type">input</span></h3>
+                    <p>User types in an input field</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>And many more!</strong> focus, blur, submit, scroll, etc.
+            </div>
+        </div>
+
+        <!-- Slide 11: Adding Event Listeners -->
+        <div class="slide">
+            <h1>addEventListener() <span class="emoji">👂</span></h1>
+            <h2>The Modern Way</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Basic syntax</span><br>
+                element.addEventListener(eventType, callback);<br><br>
+                
+                <span class="comment">// Example: Click handler</span><br>
+                const button = document.querySelector("#myButton");<br><br>
+                
+                button.addEventListener("click", function() {<br>
+                &nbsp;&nbsp;alert("Button clicked!");<br>
+                });<br><br>
+                
+                <span class="comment">// Arrow function version</span><br>
+                button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;console.log("Clicked!");<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 12: Event Listener Types -->
+        <div class="slide">
+            <h1>Common Event Types <span class="emoji">🎪</span></h1>
+            <h2>What Can You Listen For?</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>Mouse Events</h3>
+                    <ul style="font-size: 1.2em;">
+                        <li>click</li>
+                        <li>dblclick</li>
+                        <li>mouseenter</li>
+                        <li>mouseleave</li>
+                        <li>mousedown</li>
+                        <li>mouseup</li>
+                        <li>mousemove</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Keyboard Events</h3>
+                    <ul style="font-size: 1.2em;">
+                        <li>keydown</li>
+                        <li>keyup</li>
+                        <li>keypress</li>
+                    </ul>
+                    <h3>Form Events</h3>
+                    <ul style="font-size: 1.2em;">
+                        <li>input</li>
+                        <li>change</li>
+                        <li>submit</li>
+                        <li>focus</li>
+                        <li>blur</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Callback Functions -->
+        <div class="slide">
+            <h1>Callback Functions <span class="emoji">📞</span></h1>
+            <h2>Functions as Arguments</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Anonymous function (inline)</span><br>
+                button.addEventListener("click", function() {<br>
+                &nbsp;&nbsp;console.log("Clicked!");<br>
+                });<br><br>
+                
+                <span class="comment">// Arrow function</span><br>
+                button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;console.log("Clicked!");<br>
+                });<br><br>
+                
+                <span class="comment">// Named function (reusable!)</span><br>
+                function handleClick() {<br>
+                &nbsp;&nbsp;console.log("Button was clicked!");<br>
+                }<br>
+                button.addEventListener("click", handleClick);<br><br>
+                
+                <span class="comment">// With event object</span><br>
+                button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;console.log(e.target); <span class="comment">// The clicked element</span><br>
+                &nbsp;&nbsp;e.target.style.background = "blue";<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 14: The Event Object -->
+        <div class="slide">
+            <h1>The Event Object <span class="emoji">📦</span></h1>
+            <h2>Information About What Happened</h2>
+            
+            <div class="code-example">
+                button.addEventListener("click", function(e) {<br>
+                &nbsp;&nbsp;<span class="comment">// e is the event object</span><br>
+                &nbsp;&nbsp;console.log(e.type);        <span class="comment">// "click"</span><br>
+                &nbsp;&nbsp;console.log(e.target);      <span class="comment">// Element that was clicked</span><br>
+                &nbsp;&nbsp;console.log(e.currentTarget); <span class="comment">// Element with listener</span><br>
+                &nbsp;&nbsp;console.log(e.clientX);     <span class="comment">// Mouse X position</span><br>
+                &nbsp;&nbsp;console.log(e.clientY);     <span class="comment">// Mouse Y position</span><br>
+                &nbsp;&nbsp;console.log(e.timeStamp);   <span class="comment">// When it happened</span><br>
+                });<br><br>
+                
+                <span class="comment">// Prevent default behavior</span><br>
+                link.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;e.preventDefault(); <span class="comment">// Stop link navigation</span><br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 15: Multiple Elements -->
+        <div class="slide">
+            <h1>Events on Multiple Elements <span class="emoji">🎭</span></h1>
+            <h2>Using forEach with NodeLists</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Select ALL buttons</span><br>
+                const buttons = document.querySelectorAll("button");<br><br>
+                
+                <span class="comment">// Add listener to EACH button</span><br>
+                buttons.forEach((button) => {<br>
+                &nbsp;&nbsp;button.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alert(`You clicked ${button.textContent}`);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;button.classList.toggle("clicked");<br>
+                &nbsp;&nbsp;});<br>
+                });<br><br>
+                
+                <span class="comment">// Or use the event target to identify which one</span><br>
+                buttons.forEach((button) => {<br>
+                &nbsp;&nbsp;button.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(`Clicked: ${e.target.textContent}`);<br>
+                &nbsp;&nbsp;});<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 16: Event Bubbling -->
+        <div class="slide">
+            <h1>Event Bubbling <span class="emoji">🫧</span></h1>
+            <h2>Events Travel Up the Tree</h2>
+            
+            <div class="demo-box">
+                <p>When an event happens on an element, it "bubbles up" to its parents!</p>
+            </div>
+            
+            <div class="code-example">
+                <span class="tag">&lt;div id="parent"&gt;</span><br>
+                &nbsp;&nbsp;<span class="tag">&lt;button id="child"&gt;</span>Click me<span class="tag">&lt;/button&gt;</span><br>
+                <span class="tag">&lt;/div&gt;</span><br><br>
+                
+                <span class="comment">// Click on button triggers BOTH listeners!</span><br>
+                parent.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;console.log("Parent clicked");<br>
+                });<br><br>
+                
+                child.addEventListener("click", (e) => {<br>
+                &nbsp;&nbsp;console.log("Child clicked");<br>
+                &nbsp;&nbsp;e.stopPropagation(); <span class="comment">// Stops bubbling</span><br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 17: Common Patterns -->
+        <div class="slide">
+            <h1>Common DOM Patterns <span class="emoji">📚</span></h1>
+            <h2>Real-World Examples</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>Toggle Dark Mode</h3>
+                    <div class="code-example">
+                        btn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;document.body.classList.toggle("dark");<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Form Validation</h3>
+                    <div class="code-example">
+                        input.addEventListener("blur", (e) => {<br>
+                        &nbsp;&nbsp;if (!e.target.value) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;e.target.classList.add("error");<br>
+                        &nbsp;&nbsp;}<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Dynamic List</h3>
+                    <div class="code-example">
+                        addBtn.addEventListener("click", () => {<br>
+                        &nbsp;&nbsp;const li = document.createElement("li");<br>
+                        &nbsp;&nbsp;li.textContent = input.value;<br>
+                        &nbsp;&nbsp;list.appendChild(li);<br>
+                        });
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>Remove on Click</h3>
+                    <div class="code-example">
+                        item.addEventListener("click", (e) => {<br>
+                        &nbsp;&nbsp;e.target.remove();<br>
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SLIDE: Historical Story 3 -->
+        <div class="slide history-slide">
+            <div class="history-header">
+                <h1><span class="emoji">⚡</span> Web History Moment <span class="emoji">📜</span></h1>
+                <h2>JavaScript Gave the Web Interactivity</h2>
+            </div>
+
+            <div class="story-content">
+                <p><strong>The Dawn of Dynamic Web Pages (1995)</strong></p>
+                <ul style="font-size: 1.1em; line-height: 1.8;">
+                    <li>In 1995, Netscape Navigator began to support dynamic content on web pages through JavaScript and Java Applets</li>
+                    <li>Before this, web pages were completely static - you could only read them, not interact with them</li>
+                    <li><strong>Duke, the Java mascot, changed everything!</strong> A popular animation showed Duke slowly tumbling across web pages</li>
+                    <li>This simple animation blew everyone away - it proved that web pages could be alive and interactive!</li>
+                </ul>
+                <div class="citation">Source: "A Short History of the Web – Full Stack Web Development"</div>
+            </div>
+
+            <div class="connection-box">
+                <strong>💡 Connection to Today:</strong> DOM manipulation is the foundation of ALL web interactivity today. Every animation, every button click, every dynamic update you see on modern websites - it all traces back to these pioneering experiments in 1995. You're learning the technology that powers the interactive web!
+            </div>
+
+            <div class="reflection-question">
+                <span class="emoji">🤔</span> Reflection Question: Imagine showing a 1995 web developer a modern interactive web application (like Google Maps or Netflix). What do you think would surprise them most about how far DOM manipulation has evolved?
+            </div>
+        </div>
+
+        <!-- Slide 18: Script Placement -->
+        <div class="slide">
+            <h1>Where to Put Your Script? <span class="emoji">📍</span></h1>
+            <h2>Timing is Everything!</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Problem: Script in Head</h3>
+                    <div class="code-example">
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/head&gt;
+                    </div>
+                    <p>DOM doesn't exist yet!</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution 1: Script at Bottom</h3>
+                    <div class="code-example">
+                        &lt;body&gt;<br>
+                        &nbsp;&nbsp;...<br>
+                        &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                        &lt;/body&gt;
+                    </div>
+                    <p>DOM loads first!</p>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Solution 2: defer Attribute</h3>
+                    <div class="code-example">
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="script.js" defer&gt;&lt;/script&gt;<br>
+                        &lt;/head&gt;
+                    </div>
+                    <p>Waits for DOM!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Etch-a-Sketch Project Intro -->
+        <div class="slide">
+            <h1>Project: Etch-a-Sketch <span class="emoji">🎨</span></h1>
+            <h2>Let's Build Something!</h2>
+            
+            <div class="activity-box">
+                <h3>Project Goals:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>Create a grid of squares using JavaScript</li>
+                    <li>Change square colors on hover</li>
+                    <li>Add a button to reset the grid</li>
+                    <li>Allow users to choose grid size</li>
+                    <li>Bonus: Add color options!</li>
+                </ul>
+            </div>
+            
+            <div class="demo-box">
+                <h3>Skills You'll Practice:</h3>
+                <p>createElement, appendChild, addEventListener, loops, classList, querySelector</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Creating the Grid -->
+        <div class="slide">
+            <h1>Step 1: Create the Grid <span class="emoji">🗂️</span></h1>
+            <h2>Nested Loops for Structure</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Create a 16x16 grid</span><br>
+                const container = document.querySelector("#container");<br><br>
+                
+                function createGrid(size) {<br>
+                &nbsp;&nbsp;for (let i = 0; i < size * size; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const square = document.createElement("div");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;square.classList.add("grid-square");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;container.appendChild(square);<br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                
+                createGrid(16); <span class="comment">// 256 squares!</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong>CSS Tip:</strong> Use display: grid; or flexbox to arrange squares!
+            </div>
+        </div>
+
+        <!-- Slide 21: Adding Interactivity -->
+        <div class="slide">
+            <h1>Step 2: Add Hover Effect <span class="emoji">🖱️</span></h1>
+            <h2>mouseenter Event</h2>
+            
+            <div class="code-example">
+                <span class="comment">// Get all squares</span><br>
+                const squares = document.querySelectorAll(".grid-square");<br><br>
+                
+                <span class="comment">// Add hover effect to each</span><br>
+                squares.forEach((square) => {<br>
+                &nbsp;&nbsp;square.addEventListener("mouseenter", () => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;square.style.backgroundColor = "black";<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Or add a class:</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// square.classList.add("colored");</span><br>
+                &nbsp;&nbsp;});<br>
+                });
+            </div>
+            
+            <div class="warning-box">
+                <strong>Remember:</strong> Add event listeners AFTER creating elements!
+            </div>
+        </div>
+
+        <!-- Slide 22: Reset Functionality -->
+        <div class="slide">
+            <h1>Step 3: Reset Button <span class="emoji">🔄</span></h1>
+            <h2>Clear and Rebuild</h2>
+            
+            <div class="code-example">
+                const resetBtn = document.querySelector("#reset");<br><br>
+                
+                resetBtn.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;<span class="comment">// Option 1: Clear all styles</span><br>
+                &nbsp;&nbsp;squares.forEach(square => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;square.style.backgroundColor = "white";<br>
+                &nbsp;&nbsp;});<br><br>
+                
+                &nbsp;&nbsp;<span class="comment">// Option 2: Rebuild grid</span><br>
+                &nbsp;&nbsp;container.innerHTML = ""; <span class="comment">// Clear all</span><br>
+                &nbsp;&nbsp;createGrid(16); <span class="comment">// Rebuild</span><br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 23: Grid Size Selection -->
+        <div class="slide">
+            <h1>Step 4: Custom Grid Size <span class="emoji">📐</span></h1>
+            <h2>User Input with prompt()</h2>
+            
+            <div class="code-example">
+                const sizeBtn = document.querySelector("#change-size");<br><br>
+                
+                sizeBtn.addEventListener("click", () => {<br>
+                &nbsp;&nbsp;let size = prompt("Enter grid size (max 100):");<br>
+                &nbsp;&nbsp;size = parseInt(size);<br><br>
+                
+                &nbsp;&nbsp;<span class="comment">// Validate input</span><br>
+                &nbsp;&nbsp;if (size > 0 && size <= 100) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;container.innerHTML = "";<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;createGrid(size);<br>
+                &nbsp;&nbsp;} else {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alert("Please enter a number between 1 and 100");<br>
+                &nbsp;&nbsp;}<br>
+                });
+            </div>
+        </div>
+
+        <!-- Slide 24: Extra Challenges -->
+        <div class="slide">
+            <h1>Bonus Challenges <span class="emoji">🏆</span></h1>
+            <h2>Level Up Your Project!</h2>
+            
+            <div class="checkpoint-list">
+                <div class="checkpoint-item">
+                    <h3>🌈 Random Colors</h3>
+                    <div class="code-example">
+                        const randomColor = () => {<br>
+                        &nbsp;&nbsp;const r = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const g = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;const b = Math.floor(Math.random() * 256);<br>
+                        &nbsp;&nbsp;return `rgb(${r}, ${g}, ${b})`;<br>
+                        };
+                    </div>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🌑 Progressive Darkening</h3>
+                    <p>Each pass makes square 10% darker</p>
+                    <p>Use opacity or RGB calculations</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🎨 Color Picker</h3>
+                    <p>Let user choose the drawing color</p>
+                </div>
+                <div class="checkpoint-item">
+                    <h3>🧹 Clear Button</h3>
+                    <p>Reset all squares to white</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: CSS for Grid -->
+        <div class="slide">
+            <h1>CSS Grid Layout <span class="emoji">🎯</span></h1>
+            <h2>Making Squares Arrange Properly</h2>
+            
+            <div class="code-example">
+                <span class="comment">/* Container */</span><br>
+                #container {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;grid-template-columns: repeat(16, 1fr);<br>
+                &nbsp;&nbsp;width: 500px;<br>
+                &nbsp;&nbsp;height: 500px;<br>
+                &nbsp;&nbsp;border: 2px solid black;<br>
+                }<br><br>
+                
+                <span class="comment">/* Each square */</span><br>
+                .grid-square {<br>
+                &nbsp;&nbsp;border: 1px solid #ddd;<br>
+                &nbsp;&nbsp;aspect-ratio: 1;<br>
+                }<br><br>
+                
+                <span class="comment">/* Important! */</span><br>
+                * {<br>
+                &nbsp;&nbsp;box-sizing: border-box;<br>
+                }
+            </div>
+            
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use box-sizing: border-box;
+            </div>
+        </div>
+
+        <!-- Slide 26: Today's Takeaways -->
+        <div class="slide">
+            <h1>You Now Know DOM Manipulation! <span class="emoji">🎓</span></h1>
+            <h2>Today's Superpowers:</h2>
+            
+            <div class="demo-box" style="font-size: 1.2em;">
+                <ul>
+                    <li>✅ Navigate the DOM tree structure</li>
+                    <li>✅ Select elements with querySelector</li>
+                    <li>✅ Create new elements dynamically</li>
+                    <li>✅ Modify element properties and styles</li>
+                    <li>✅ Add interactive event listeners</li>
+                    <li>✅ Handle multiple elements efficiently</li>
+                    <li>✅ Understand event bubbling</li>
+                    <li>✅ Appreciate the history of web interactivity!</li>
+                </ul>
+            </div>
+            
+            <div class="activity-box">
+                <h3>Practice Resources:</h3>
+                <ul>
+                    <li>📖 MDN DOM Documentation</li>
+                    <li>🎮 JavaScript30 by Wes Bos</li>
+                    <li>💪 Complete the Etch-a-Sketch project</li>
+                    <li>🌐 Explore early web browser histories</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">26</span>
+            </span>
+            <button id="nextBtn">Next</button>
+        </div>
     </div>
 
-    <div class="footer">
-        <p>Great work today! Keep practicing! 🚀</p>
-        <p>Remember: The best way to learn programming is by writing code!</p>
-        <p><strong>Next Class:</strong> Project: Etch-a-Sketch</p>
-    </div>
+    <!-- Shared Presentation JavaScript -->
+    <script src="../../js/presentation.js"></script>
+
+    <!-- Lecture-Specific JavaScript -->
+    <script>
+        // Add any lecture-specific JavaScript here
+        document.addEventListener('slidechange', (e) => {
+            // Could add specific animations or demos for certain slides
+            console.log(`Slide ${e.detail.currentSlide + 1} of ${e.detail.totalSlides}`);
+        });
+    </script>
 </body>
-
 </html>
