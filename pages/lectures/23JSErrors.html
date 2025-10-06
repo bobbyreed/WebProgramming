@@ -74,6 +74,108 @@
             border-radius: 10px;
             margin: 15px 0;
         }
+        
+        /* Historical Story Styles */
+        .historical-story {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        
+        .historical-story h2 {
+            color: #ffd93d;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .story-content {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .story-fact {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin: 15px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .story-fact:before {
+            content: "🚀";
+            position: absolute;
+            left: 0;
+            font-size: 1.3em;
+        }
+        
+        .story-impact {
+            background: rgba(255,107,107,0.3);
+            padding: 15px;
+            border-left: 4px solid #ff6b6b;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        
+        .reflection-box {
+            background: rgba(255,217,61,0.2);
+            border: 3px dashed #ffd93d;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+        
+        .reflection-box h3 {
+            color: #ffd93d;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .reflection-question {
+            font-size: 1.3em;
+            font-style: italic;
+            color: white;
+            margin: 10px 0;
+        }
+        
+        .story-citation {
+            text-align: right;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .rocket-icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .warning-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
@@ -275,58 +377,54 @@
         <!-- Slide 10: Syntax Error Examples -->
         <div class="slide">
             <h1>Spot the Syntax Errors! <span class="emoji">🔍</span></h1>
-            <div class="comparison-table">
-                <div class="comparison-card bad">
-                    <h3>❌ Wrong</h3>
-                    <div class="code-example">
-                        const obj = {<br>
-                        &nbsp;&nbsp;name: "Alice"<br>
-                        &nbsp;&nbsp;age: 25<br>
-                        }
-                    </div>
+            <div class="grid-layout">
+                <div class="code-example">
+                    <h3>Example 1:</h3>
+                    const items = [1, 2, 3;<br>
+                    <span style="color: #ff6b6b;">❌ Missing closing bracket ]</span>
                 </div>
-                <div class="comparison-card good">
-                    <h3>✅ Correct</h3>
-                    <div class="code-example">
-                        const obj = {<br>
-                        &nbsp;&nbsp;name: "Alice",<br>
-                        &nbsp;&nbsp;age: 25<br>
-                        }
-                    </div>
+                <div class="code-example">
+                    <h3>Example 2:</h3>
+                    if (x > 5 {<br>
+                    &nbsp;&nbsp;console.log("big");<br>
+                    }<br>
+                    <span style="color: #ff6b6b;">❌ Missing closing parenthesis )</span>
+                </div>
+                <div class="code-example">
+                    <h3>Example 3:</h3>
+                    let name = "Alice<br>
+                    <span style="color: #ff6b6b;">❌ Missing closing quote "</span>
+                </div>
+                <div class="code-example">
+                    <h3>Example 4:</h3>
+                    const obj = { name: "Bob" price: 10 };<br>
+                    <span style="color: #ff6b6b;">❌ Missing comma between properties</span>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
-                Missing comma between object properties!
-            </p>
         </div>
 
         <!-- Slide 11: TypeError -->
         <div class="slide">
-            <h1>TypeError <span class="emoji">🔧</span></h1>
-            <h2>When you use the wrong type or method</h2>
-            <div class="code-example">
-                const str1 = "Hello";<br>
-                const str2 = "World!";<br>
-                const message = str1.push(str2);  // TypeError!
-            </div>
-            <div class="error-example">
-                Uncaught TypeError: str1.push is not a function
-            </div>
+            <h1>TypeError <span class="emoji">🔄</span></h1>
+            <h2>When you try to use the wrong type of data</h2>
             <div class="activity-box">
-                <h3>Why?</h3>
-                <p><code>.push()</code> is an Array method, not a String method!</p>
-                <p>Strings use <code>.concat()</code> instead</p>
+                <h3>Common Scenarios:</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>🔸 Calling something that's not a function</li>
+                    <li>🔸 Accessing properties on null/undefined</li>
+                    <li>🔸 Using wrong method for the data type</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Slide 12: TypeError Common Scenarios -->
+        <!-- Slide 12: TypeError Examples -->
         <div class="slide">
-            <h1>Common TypeError Scenarios</h1>
-            <div class="demo-box">
-                <h3>1. Calling non-functions</h3>
+            <h1>TypeError in Action <span class="emoji">⚡</span></h1>
+            <div class="grid-layout">
+                <h3>1. Calling non-function</h3>
                 <div class="code-example">
-                    const num = 42;<br>
-                    num();  // TypeError: num is not a function
+                    const name = "Alice";<br>
+                    name();  // TypeError!
                 </div>
                 
                 <h3>2. Properties on null/undefined</h3>
@@ -340,6 +438,68 @@
                     const num = 123;<br>
                     num.toUpperCase();  // TypeError!
                 </div>
+            </div>
+        </div>
+
+        <!-- HISTORICAL STORY 1: ARIANE 5 ROCKET DISASTER -->
+        <div class="slide">
+            <div class="historical-story">
+                <div class="rocket-icon">🚀💥</div>
+                <h2>Historical Case Study: The Ariane 5 Disaster</h2>
+                
+                <div class="story-content">
+                    <div class="story-fact">
+                        <strong>Date:</strong> June 4, 1996
+                    </div>
+                    <div class="story-fact" style="font-size: 1.4em;">
+                        The maiden flight of Europe's Ariane 5 rocket lasted only <strong>40 seconds</strong> before veering off course and self-destructing.
+                    </div>
+                    <div class="story-fact">
+                        <strong>The Culprit:</strong> A single software error - an integer overflow when converting a 64-bit floating-point number to a 16-bit signed integer.
+                    </div>
+                    <div class="story-fact">
+                        The software was reused from Ariane 4 <em>without proper testing</em> for the new rocket's higher velocities.
+                    </div>
+                </div>
+
+                <div class="story-impact">
+                    💸 Total Loss: $370 Million
+                </div>
+
+                <div class="story-citation">
+                    Source: ESA - "Ariane 5 Flight 501 Failure Report"
+                </div>
+            </div>
+        </div>
+
+        <!-- ARIANE 5 REFLECTION SLIDE -->
+        <div class="slide">
+            <div class="historical-story">
+                <h2>The Ariane 5 Lesson <span class="emoji">📚</span></h2>
+                
+                <div class="story-content">
+                    <h3 style="color: #ffd93d; font-size: 1.5em;">What Went Wrong?</h3>
+                    <ul style="font-size: 1.2em; line-height: 1.8;">
+                        <li><span class="warning-badge">TypeError</span> The value exceeded what a 16-bit integer could hold</li>
+                        <li><span class="warning-badge">No Error Handling</span> The system had no try-catch or validation</li>
+                        <li><span class="warning-badge">Assumption Failure</span> Code worked on Ariane 4, assumed it would work on Ariane 5</li>
+                        <li><span class="warning-badge">Testing Gap</span> The specific conditions weren't tested before launch</li>
+                    </ul>
+                </div>
+
+                <div class="reflection-box">
+                    <h3>🤔 Reflection Question:</h3>
+                    <p class="reflection-question">
+                        How does this disaster illustrate why understanding error types (like overflow errors) and implementing proper error handling is critical in software development?
+                    </p>
+                    <p class="reflection-question" style="margin-top: 15px;">
+                        What testing practices could have prevented this $370 million mistake?
+                    </p>
+                </div>
+
+                <p style="text-align: center; font-size: 1.3em; margin-top: 20px;">
+                    <strong>Key Takeaway:</strong> Small errors in understanding data types and limits can have catastrophic consequences. Always validate, handle errors, and test thoroughly! 🎯
+                </p>
             </div>
         </div>
 
@@ -416,6 +576,88 @@
             </div>
         </div>
 
+        <!-- HISTORICAL STORY 2: GRACE HOPPER -->
+        <div class="slide">
+            <div class="historical-story">
+                <div style="text-align: center; font-size: 4em; margin: 20px 0;">
+                    👩‍💻🐛
+                </div>
+                <h2>Historical Pioneer: Grace Hopper & The Birth of Debugging</h2>
+                
+                <div class="story-content">
+                    <div class="story-fact">
+                        <strong>Year:</strong> 1951
+                    </div>
+                    <div class="story-fact" style="font-size: 1.3em;">
+                        Admiral Grace Hopper published <strong>"The Education of a Computer"</strong> - the first comprehensive paper on debugging.
+                    </div>
+                    <div class="story-fact">
+                        She introduced revolutionary concepts that we still use today:
+                        <ul style="margin-top: 10px; font-size: 1.1em;">
+                            <li>✨ <strong>Breakpoints</strong> - pausing code execution to inspect state</li>
+                            <li>✨ <strong>Subroutines for testing</strong> - isolating code sections</li>
+                            <li>✨ <strong>Systematic debugging methods</strong> - step-by-step problem solving</li>
+                        </ul>
+                    </div>
+                    <div class="story-fact" style="font-size: 1.2em; margin-top: 20px;">
+                        <strong>Fun Fact:</strong> She's also famous for the first literal "bug" - a moth found in the Harvard Mark II computer in 1947! 🦋
+                    </div>
+                </div>
+
+                <div class="story-citation">
+                    Source: Computer History Museum - Grace Hopper Collection
+                </div>
+            </div>
+        </div>
+
+        <!-- GRACE HOPPER REFLECTION SLIDE -->
+        <div class="slide">
+            <div class="historical-story">
+                <h2>Grace Hopper's Legacy <span class="emoji">🌟</span></h2>
+                
+                <div class="story-content">
+                    <h3 style="color: #ffd93d; font-size: 1.5em;">From 1951 to Today</h3>
+                    
+                    <table style="width: 100%; color: white; margin: 20px 0;">
+                        <tr style="background: rgba(255,255,255,0.2);">
+                            <th style="padding: 15px; border: 2px solid rgba(255,255,255,0.3);">Grace Hopper's 1951 Ideas</th>
+                            <th style="padding: 15px; border: 2px solid rgba(255,255,255,0.3);">Modern Equivalent</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Breakpoints</td>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Browser DevTools, debugger statement</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Testing subroutines</td>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Unit tests, Jest, Mocha</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Step-by-step execution</td>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Step over/into/out in debuggers</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">Systematic problem-solving</td>
+                            <td style="padding: 15px; border: 1px solid rgba(255,255,255,0.2);">The 4-step debugging strategy</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="reflection-box">
+                    <h3>🤔 Reflection Question:</h3>
+                    <p class="reflection-question">
+                        How have the core principles of debugging remained the same since Grace Hopper's time, even as technology has evolved dramatically?
+                    </p>
+                    <p class="reflection-question" style="margin-top: 15px;">
+                        What does this tell us about the fundamental nature of problem-solving in programming?
+                    </p>
+                </div>
+
+                <p style="text-align: center; font-size: 1.3em; margin-top: 20px;">
+                    <strong>Key Takeaway:</strong> The debugging tools change, but the systematic approach to finding and fixing errors remains timeless! 🎯
+                </p>
+            </div>
+        </div>
+
         <!-- Slide 16: Console Methods -->
         <div class="slide">
             <h1>Console Debugging Tools <span class="emoji">🛠️</span></h1>
@@ -436,90 +678,205 @@
             </div>
         </div>
 
-        <!-- Slide 17: The Debugger -->
+        <!-- Slide 17: Console Demo -->
         <div class="slide">
-            <h1>The Debugger Statement <span class="emoji">🐞</span></h1>
-            <h2>Your Secret Weapon</h2>
-            <div class="code-example" style="font-size: 1.3em;">
-                function calculateTotal(items) {<br>
+            <h1>Console Methods in Action <span class="emoji">🎬</span></h1>
+            <div class="demo-box">
+                <h3>Let's try these live!</h3>
+                <div class="code-example">
+                    const users = [<br>
+                    &nbsp;&nbsp;{ name: "Alice", age: 25 },<br>
+                    &nbsp;&nbsp;{ name: "Bob", age: 30 }<br>
+                    ];<br><br>
+                    
+                    console.table(users);<br>
+                    console.warn("This is a warning!");<br>
+                    console.error("This is an error!");<br>
+                    console.time("loop");<br>
+                    for(let i = 0; i < 1000000; i++) {}<br>
+                    console.timeEnd("loop");
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 1.2em;">
+                Open your console and try these now! ⌨️
+            </p>
+        </div>
+
+        <!-- Slide 18: Debugger Statement -->
+        <div class="slide">
+            <h1>The Debugger Statement <span class="emoji">⏸️</span></h1>
+            <h2>Pause execution on demand</h2>
+            <div class="code-example">
+                function calculatePrice(items) {<br>
                 &nbsp;&nbsp;let total = 0;<br>
-                &nbsp;&nbsp;<strong style="color: #ff6b6b;">debugger;</strong>  // Pause here!<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;debugger;  // Execution pauses here!<br>
+                &nbsp;&nbsp;<br>
                 &nbsp;&nbsp;for (let item of items) {<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;total += item.price;<br>
                 &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<br>
                 &nbsp;&nbsp;return total;<br>
                 }
             </div>
-            <div class="demo-box">
-                <p><strong>What happens:</strong></p>
-                <ul>
-                    <li>Code pauses at debugger statement</li>
-                    <li>You can inspect all variables</li>
-                    <li>Step through code line by line</li>
-                    <li>See the call stack</li>
-                </ul>
+            <div class="tip-box">
+                <strong>When you hit debugger:</strong><br>
+                - DevTools automatically opens<br>
+                - You can inspect all variables<br>
+                - Step through code line by line<br>
+                - Watch values change in real-time
             </div>
         </div>
 
-        <!-- Slide 18: Common Beginner Mistakes -->
+        <!-- Slide 19: Logical Errors -->
         <div class="slide">
-            <h1>Common Beginner Mistakes <span class="emoji">🎯</span></h1>
-            <div class="project-section">
-                <h3>Top 5 Error-Causing Mistakes:</h3>
-                <ol style="font-size: 1.2em; line-height: 2;">
-                    <li><strong>Case sensitivity:</strong> myVariable vs myvariable</li>
-                    <li><strong>Missing quotes:</strong> class=container vs class="container"</li>
-                    <li><strong>= vs ==:</strong> Assignment vs comparison</li>
-                    <li><strong>Scope issues:</strong> Variables inside blocks</li>
-                    <li><strong>Async timing:</strong> Using data before it loads</li>
-                </ol>
-            </div>
-            <div class="warning-box">
-                <strong>Remember:</strong> Everyone makes these mistakes - even senior developers!
-            </div>
-        </div>
-
-        <!-- Slide 19: Google Fu -->
-        <div class="slide">
-            <h1>How to Google Errors <span class="emoji">🔍</span></h1>
-            <h2>The Art of Error Searching</h2>
+            <h1>Logical Errors <span class="emoji">🤯</span></h1>
+            <h2>The sneakiest bugs</h2>
             <div class="comparison-table">
                 <div class="comparison-card bad">
-                    <h3>❌ Bad Search</h3>
-                    <p>"my code doesn't work help"</p>
-                    <p>"javascript error in my project"</p>
-                    <p>[Paste entire code file]</p>
+                    <h3>Logical Errors Are Harder</h3>
+                    <ul>
+                        <li>No error message appears!</li>
+                        <li>Code runs successfully</li>
+                        <li>But the result is wrong</li>
+                        <li>Requires careful testing</li>
+                    </ul>
                 </div>
-                <div class="comparison-card good">
-                    <h3>✅ Good Search</h3>
-                    <p>"TypeError push is not a function string javascript"</p>
-                    <p>"ReferenceError cannot access before initialization"</p>
-                    <p>[Error message + language]</p>
+                <div class="code-example">
+                    // Calculate average - but there's a bug!<br>
+                    function average(numbers) {<br>
+                    &nbsp;&nbsp;let sum = 0;<br>
+                    &nbsp;&nbsp;for (let i = 0; i <= numbers.length; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;sum += numbers[i];<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return sum / numbers.length;<br>
+                    }<br><br>
+                    
+                    console.log(average([10, 20, 30]));<br>
+                    // Returns NaN - but why? 🤔
                 </div>
             </div>
+            <p style="margin-top: 20px;">
+                <strong>Answer:</strong> <code>i <= numbers.length</code> should be <code>i < numbers.length</code>
+            </p>
+        </div>
+
+        <!-- Slide 20: ESLint -->
+        <div class="slide">
+            <h1>Prevention: ESLint <span class="emoji">🛡️</span></h1>
+            <h2>Catch errors before they happen</h2>
+            <div class="project-section">
+                <h3>What is ESLint?</h3>
+                <ul style="font-size: 1.2em; line-height: 1.8;">
+                    <li>🔍 Analyzes your code as you write</li>
+                    <li>⚠️ Warns about potential problems</li>
+                    <li>✨ Enforces code style consistency</li>
+                    <li>🐛 Catches common mistakes early</li>
+                </ul>
+            </div>
             <div class="tip-box">
-                <strong>Pro Tip:</strong> Remove specific variable names from your search - 
-                focus on the error type and pattern!
+                <strong>Common Issues ESLint Catches:</strong>
+                <ul>
+                    <li>Unused variables</li>
+                    <li>Missing semicolons</li>
+                    <li>Unreachable code</li>
+                    <li>Variables used before declaration</li>
+                </ul>
+            </div>
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                <strong>Warning:</strong> ESLint isn't perfect. It might introduce new bugs or security issues.
+            </p>
+        </div>
+
+        <!-- HISTORICAL STORY 3: THERAC-25 -->
+        <div class="slide">
+            <div class="historical-story" style="background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);">
+                <div style="text-align: center; font-size: 4em; margin: 20px 0;">
+                    ⚕️💔
+                </div>
+                <h2>Historical Tragedy: The Therac-25 Radiation Disaster</h2>
+                
+                <div class="story-content">
+                    <div class="story-fact">
+                        <strong>Timeline:</strong> 1985-1987
+                    </div>
+                    <div class="story-fact" style="font-size: 1.3em;">
+                        At least <strong>six patients</strong> received massive radiation overdoses (up to 100 times the intended dose) from the Therac-25 radiation therapy machine.
+                    </div>
+                    <div class="story-fact">
+                        <strong>The Cause:</strong> Race conditions in the software that occurred only under specific timing circumstances.
+                    </div>
+                    <div class="story-fact">
+                        The errors were nearly impossible to reproduce and debug because they depended on the exact timing of operator keystrokes.
+                    </div>
+                    <div class="story-fact" style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 5px; margin-top: 15px;">
+                        <strong>Critical Failures:</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>❌ No hardware safety interlocks (relied solely on software)</li>
+                            <li>❌ Inadequate error handling - errors were ignored or dismissed</li>
+                            <li>❌ Poor user interface - cryptic error codes like "Malfunction 54"</li>
+                            <li>❌ Insufficient testing for race conditions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="story-impact" style="background: rgba(0,0,0,0.4);">
+                    💔 Result: Multiple patient deaths and severe injuries
+                </div>
+
+                <div class="story-citation">
+                    Source: "Medical Devices: The Therac-25" - Nancy Leveson, University of Washington
+                </div>
             </div>
         </div>
 
-        <!-- Slide 20: Stack Overflow -->
+        <!-- THERAC-25 REFLECTION SLIDE -->
         <div class="slide">
-            <h1>Using Stack Overflow <span class="emoji">💡</span></h1>
-            <h2>Finding Solutions Effectively</h2>
-            <div class="activity-box">
-                <h3>Good Stack Overflow Habits:</h3>
-                <ul style="font-size: 1.2em;">
-                    <li>✅ Read the accepted answer AND comments</li>
-                    <li>✅ Check the date (old answers might be outdated)</li>
-                    <li>✅ Look for multiple solutions</li>
-                    <li>✅ Understand the code before copying</li>
-                    <li>✅ Check upvotes and the green checkmark</li>
-                </ul>
-            </div>
-            <div class="warning-box">
-                <strong>Warning:</strong> Never copy code you don't understand! 
-                It might introduce new bugs or security issues.
+            <div class="historical-story" style="background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);">
+                <h2>The Therac-25 Lessons <span class="emoji">⚖️</span></h2>
+                
+                <div class="story-content">
+                    <h3 style="color: #ffd93d; font-size: 1.5em;">What Software Engineering Teaches Us:</h3>
+                    
+                    <div style="font-size: 1.2em; line-height: 1.8; margin: 20px 0;">
+                        <p style="margin: 15px 0;">
+                            <span class="warning-badge">Error Handling Matters</span><br>
+                            The software dismissed critical errors with codes users didn't understand. <strong>Always handle errors gracefully and clearly.</strong>
+                        </p>
+                        
+                        <p style="margin: 15px 0;">
+                            <span class="warning-badge">Test Edge Cases</span><br>
+                            Race conditions only happened with specific timing. <strong>Test unusual scenarios, not just happy paths.</strong>
+                        </p>
+                        
+                        <p style="margin: 15px 0;">
+                            <span class="warning-badge">Never Trust Software Alone</span><br>
+                            Critical systems need multiple layers of protection. <strong>Hardware interlocks + software validation.</strong>
+                        </p>
+                        
+                        <p style="margin: 15px 0;">
+                            <span class="warning-badge">User Communication</span><br>
+                            Cryptic error messages like "Malfunction 54" prevented proper response. <strong>Error messages should be clear and actionable.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reflection-box" style="border-color: #ffd93d;">
+                    <h3>🤔 Reflection Questions:</h3>
+                    <p class="reflection-question">
+                        How does the Therac-25 disaster illustrate why thorough error handling and testing can literally save lives?
+                    </p>
+                    <p class="reflection-question" style="margin-top: 15px;">
+                        What responsibilities do we have as developers when our code affects human safety and wellbeing?
+                    </p>
+                    <p class="reflection-question" style="margin-top: 15px;">
+                        If you were on the Therac-25 development team, what testing and error handling practices would you implement?
+                    </p>
+                </div>
+
+                <p style="text-align: center; font-size: 1.4em; margin-top: 20px; font-weight: bold;">
+                    Key Takeaway: Code has consequences. Error handling, testing, and clear communication aren't just best practices—they're ethical imperatives. 💔➡️❤️
+                </p>
             </div>
         </div>
 
@@ -629,65 +986,80 @@
             </div>
         </div>
 
-        <!-- Slide 26: Resources -->
+        <!-- Slide 26: Googling Errors -->
         <div class="slide">
-            <h1>Debugging Resources <span class="emoji">📚</span></h1>
-            <div class="demo-box">
-                <h3>Recommended Learning:</h3>
-                <ul style="font-size: 1.2em;">
-                    <li>📖 MDN JavaScript Errors Reference</li>
-                    <li>🎮 JavaScript.info Error Handling</li>
-                    <li>🎥 Chrome DevTools Tutorial</li>
-                    <li>💬 Stack Overflow JavaScript tag</li>
-                    <li>🔧 ESLint for catching errors early</li>
-                </ul>
+            <h1>How to Google Errors Effectively <span class="emoji">🔍</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card bad">
+                    <h3>❌ Bad Search</h3>
+                    <ul>
+                        <li>"my code doesn't work"</li>
+                        <li>"javascript error help"</li>
+                        <li>"why is this broken"</li>
+                        <li>Including all your code</li>
+                    </ul>
+                </div>
+                <div class="comparison-card good">
+                    <h3>✅ Good Search</h3>
+                    <ul>
+                        <li>"TypeError: push is not a function"</li>
+                        <li>"javascript string push alternative"</li>
+                        <li>"ReferenceError: can't access before initialization"</li>
+                        <li>Just the error type + key terms</li>
+                    </ul>
+                </div>
             </div>
-            <div class="activity-box">
-                <h3>Practice Sites:</h3>
-                <ul>
-                    <li>🎯 Codewars (debugging challenges)</li>
-                    <li>🎯 HackerRank (error handling problems)</li>
-                </ul>
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Pro tip:</strong> Add "javascript" and the error type to your search for best results!
             </div>
         </div>
 
-        <!-- Slide 27: Assignment Preview -->
+        <!-- Slide 27: Error Prevention -->
         <div class="slide">
-            <h1>Tonight's Assignment <span class="emoji">📝</span></h1>
-            <h2>From The Odin Project</h2>
-            <div class="activity-box">
-                <h3>Complete These Exercises:</h3>
-                <ol style="font-size: 1.2em; line-height: 2;">
-                    <li>Read MDN docs on ReferenceError, SyntaxError, TypeError</li>
-                    <li>Work through "What went wrong?" troubleshooting guide</li>
-                    <li>Download and fix the intentionally broken starter code</li>
-                    <li>Practice with console methods (table, trace, time)</li>
-                </ol>
-            </div>
-            <div class="tip-box">
-                <strong>Goal:</strong> Get comfortable with reading and fixing errors - 
-                they're a normal part of coding!
+            <h1>Preventing Errors <span class="emoji">🛡️</span></h1>
+            <h2>Write defensive code</h2>
+            <div class="grid-layout">
+                <div class="project-section">
+                    <h3>1. Validate Input</h3>
+                    <div class="code-example">
+                        function divide(a, b) {<br>
+                        &nbsp;&nbsp;if (b === 0) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;throw new Error("Can't divide by 0");<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return a / b;<br>
+                        }
+                    </div>
+                </div>
+                <div class="project-section">
+                    <h3>2. Use Strict Equality</h3>
+                    <div class="code-example">
+                        // Use === not ==<br>
+                        if (value === null) { ... }<br><br>
+                        
+                        // Check types<br>
+                        if (typeof x === "number") { ... }
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 28: Summary -->
         <div class="slide">
-            <h1>You're Now an Error Detective! <span class="emoji">🕵️‍♀️</span></h1>
-            <h2>Key Takeaways:</h2>
-            <ul style="font-size: 1.3em; line-height: 2;">
-                <li>✅ Errors are helpful, not scary</li>
-                <li>✅ Three main types: Reference, Syntax, Type</li>
-                <li>✅ Stack traces show the error path</li>
-                <li>✅ Console methods beyond .log()</li>
-                <li>✅ Debugger for step-by-step analysis</li>
-                <li>✅ Google errors effectively</li>
-            </ul>
-            <div class="activity-box" style="margin-top: 30px;">
-                <p style="font-size: 1.3em;">
-                    <strong>Remember:</strong> Every developer creates errors daily - 
-                    it's how we learn and improve!
-                </p>
+            <h1>Today's Key Takeaways <span class="emoji">🎯</span></h1>
+            <div class="project-section">
+                <ul style="font-size: 1.3em; line-height: 2;">
+                    <li>✅ Errors are helpful messages, not obstacles</li>
+                    <li>✅ Three main types: Reference, Syntax, Type</li>
+                    <li>✅ Read error messages carefully - they tell you exactly what's wrong</li>
+                    <li>✅ Use console methods and debugger effectively</li>
+                    <li>✅ Google errors by type and message</li>
+                    <li>✅ Prevent errors with validation and defensive coding</li>
+                    <li>✅ Historical disasters teach us: proper error handling saves money, reputation, and lives</li>
+                </ul>
             </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
+                <strong>Remember:</strong> Every error is an opportunity to learn! 🌟
+            </p>
         </div>
 
         <!-- Slide 29: Questions -->
@@ -707,60 +1079,17 @@
                 <strong>Next Class:</strong> Functions and Scope Deep Dive!
             </p>
         </div>
+
     </div>
 
-    <!-- Navigation -->
-    <div class="navigation">
-        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
-        <span class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">29</span>
-        </span>
-        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    <!-- Navigation and Timer Controls -->
+    <div class="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button id="fullscreenBtn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+        <button id="resetBtn" onclick="resetTimer()">⏱ Reset Timer</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
     </div>
 
-    <!-- Include the standard presentation JavaScript -->
     <script src="../../js/presentation.js"></script>
-    <script>
-        // Global changeSlide function for onclick handlers
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-
-        function changeSlide(direction) {
-            // Hide current slide
-            slides[currentSlide].classList.remove('active');
-            
-            // Calculate new slide index
-            currentSlide = currentSlide + direction;
-            
-            // Handle boundaries
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-            
-            // Show new slide
-            slides[currentSlide].classList.add('active');
-            
-            // Update slide counter
-            document.getElementById('currentSlide').textContent = currentSlide + 1;
-            
-            // Update button states
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
-            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Update total slides count
-            document.getElementById('totalSlides').textContent = totalSlides;
-            // Initialize button states
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') changeSlide(-1);
-            if (e.key === 'ArrowRight') changeSlide(1);
-        });
-    </script>
 </body>
 </html>
