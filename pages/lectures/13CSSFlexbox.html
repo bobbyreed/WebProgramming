@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <style>
-        /* Existing styles preserved */
+        /* FIXED: Theme-aware styles for proper contrast */
         .flex-container-demo {
             margin: 20px 0;
             padding: 20px;
@@ -19,9 +19,15 @@
             display: flex;
             gap: 10px;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-secondary, #f5f5f5);
+            border: 2px solid var(--border-color, #ddd);
             border-radius: 5px;
             min-height: 80px;
+        }
+        
+        [data-theme="dark"] .flex-demo {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
         
         .flex-item {
@@ -37,10 +43,12 @@
         
         .flex-item:nth-child(2) {
             background: var(--ocu-gold);
+            color: #000;
         }
         
         .flex-item:nth-child(3) {
             background: var(--ocu-sky);
+            color: #000;
         }
         
         .code-example {
@@ -63,14 +71,31 @@
         .before-after-card {
             padding: 20px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-secondary, #f9f9f9);
+            border: 2px solid var(--border-color, #ddd);
         }
         
-        .axis-diagram {
-            position: relative;
-            margin: 30px 0;
+        [data-theme="dark"] .before-after-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
         
+        .example-container {
+            background: var(--bg-secondary, #f0f0f0);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        [data-theme="dark"] .example-container {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .example-block {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+     
         .axis-arrow {
             position: absolute;
             font-weight: bold;
@@ -84,11 +109,19 @@
             color: var(--ocu-true-blue);
         }
         
+        [data-theme="dark"] .main-axis {
+            color: var(--ocu-cyan);
+        }
+        
         .cross-axis {
             right: -80px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--ocu-gold);
+        }
+        
+        [data-theme="dark"] .cross-axis {
+            color: #ffd700;
         }
         
         .nested-flex {
@@ -103,6 +136,10 @@
             padding: 20px;
             border-radius: 10px;
             color: white;
+        }
+        
+        [data-theme="dark"] .nested-card {
+            background: var(--ocu-dark-blue);
         }
         
         .nested-inner {
@@ -122,6 +159,13 @@
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
+            background: #333;
+            color: white;
+        }
+        
+        .pattern-example a {
+            color: white;
+            text-decoration: none;
         }
         
         .homework-reminder {
@@ -143,7 +187,7 @@
             font-size: 1.3em;
         }
 
-        /* Styles for historical story slides */
+        /* Historical story slides */
         .history-slide {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
@@ -152,119 +196,61 @@
 
         .history-slide h1 {
             color: var(--ocu-gold);
-            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .history-content {
+        .history-slide .quote-box {
             background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .history-content ul {
-            line-height: 1.8;
-            font-size: 1.2em;
-        }
-
-        .citation {
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 15px;
-            font-size: 0.9em;
-        }
-
-        .reflection-question {
-            background: rgba(252, 186, 81, 0.2);
             border-left: 4px solid var(--ocu-gold);
             padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
+            margin: 20px 0;
+            font-style: italic;
         }
 
-        .reflection-question h3 {
-            color: var(--ocu-gold);
-            margin-bottom: 10px;
-        }
-
-        .spacer-gif-demo {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,.5) 10px,
-                rgba(255,255,255,.5) 20px
-            );
-            border: 2px dashed white;
-            margin: 0 10px;
+        .history-slide .citation {
+            text-align: right;
+            color: var(--ocu-cyan);
+            margin-top: 10px;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <div class="presentation-container">
-        <!-- Timer display -->
-        <div class="timer-display" id="timer-display">
-            <span id="timer-text">Day 13 - Introduction to Flexbox
-                <button class="home"><a href="../../index.html">Home</a></button>
-            </span>
-        </div>
-
         <!-- Slide 1: Title -->
         <div class="slide active">
             <h1>CSS Foundations</h1>
             <h2>Introduction to Flexbox <span class="emoji">🎯</span></h2>
             <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
             <p style="font-size: 1.3em;">Day 13</p>
-            <p style="margin-top: auto; font-style: italic;">The modern way to layout web pages!</p>
+            <p style="margin-top: auto; font-style: italic;">The modern way to layout web pages</p>
         </div>
 
         <!-- Slide 2: Agenda -->
         <div class="slide">
-            <h1>Today's Agenda <span class="emoji">📚</span></h1>
-            <ul style="font-size: 1.3em; line-height: 2;">
-                <li>What is Flexbox and why it matters</li>
-                <li>Flex containers vs. flex items</li>
-                <li>Basic flexbox properties</li>
-                <li>Creating layouts with flexbox</li>
-                <li>How items flex (grow & shrink preview)</li>
-                <li>Building complex layouts</li>
-                <li>Hands-on practice</li>
+            <h1>Today's Journey</h1>
+            <ul style="font-size: 1.5em; line-height: 2;">
+                <li>What is Flexbox?</li>
+                <li>Container vs Items</li>
+                <li>Main Axis & Cross Axis</li>
+                <li>Basic Properties</li>
+                <li>Real-World Examples</li>
             </ul>
             <div class="tip-box">
-                <strong>Goal:</strong> Master the fundamentals of Flexbox positioning
+                💡 <strong>Goal:</strong> By the end, you'll understand how 70%+ of modern layouts work!
             </div>
         </div>
 
-        <!-- NEW STORY 1: The Dark Ages of Table-Based Layouts -->
+        <!-- STORY 1: Tables -->
         <div class="slide history-slide">
-            <h1>Historical Context <span class="emoji">📜</span></h1>
-            <h2>The Dark Ages of Table-Based Layouts</h2>
-            
-            <div class="history-content">
-                <ul>
-                    <li>Twenty-plus years ago, tables were the main way web pages were created in HTML</li>
-                    <li>It gave web builders consistent control of constructing pages with some "design"</li>
-                    <li>No longer did sites only have to be top-to-bottom in a linear manner — they could be set up with columns</li>
-                    <li>Back then, it was seen as a huge breakthrough!</li>
-                </ul>
-                
-                <div style="text-align: center; margin: 20px 0;">
-                    <div style="display: inline-block; border: 3px solid white; padding: 20px;">
-                        <code>&lt;table&gt;&lt;tr&gt;&lt;td&gt;Layout&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code>
-                    </div>
-                </div>
-                
-                <p style="margin-top: 20px;">Tables, however, were never designed to lay out pages and have all sorts of problems when used that way today. It was a convenient hack, but at the time, a very welcome one.</p>
-                
-                <p class="citation">Source: CSS-Tricks - "In Defense of Tables and Floats in Modern Day Development"</p>
+            <h1>📚 The Dark Ages of Table-Based Layouts</h1>
+            <div class="quote-box">
+                <p>Twenty-plus years ago, tables were the main way web pages were created in HTML. It gave web builders consistent control of constructing pages with some "design." No longer did sites only have to be top-to-bottom in a linear manner — they could be set up with columns. Back then, it was seen as a huge breakthrough.</p>
             </div>
-            
-            <div class="reflection-question">
-                <h3>🤔 Reflection Question:</h3>
-                <p>Why do you think developers were willing to use HTML tables for layout, even though they weren't designed for that purpose?</p>
+            <p>Tables, however, were never designed to lay out pages and have all sorts of problems when used that way today. It was a convenient hack, but at the time, a very welcome one.</p>
+            <div class="citation">— CSS-Tricks, "In Defense of Tables and Floats in Modern Day Development"</div>
+            <div class="tip-box" style="margin-top: 30px;">
+                💡 <strong>Why This Matters:</strong> Flexbox represents a huge leap forward from the messy hacks of the past!
             </div>
         </div>
 
@@ -310,8 +296,8 @@
         <div class="slide">
             <h1>What is Flexbox?</h1>
             <h2 style="text-align: center;">Flexible Box Layout = A one-dimensional layout method</h2>
-            <div class="comparison-table">
-                <div class="comparison-card">
+            <div class="before-after">
+                <div class="before-after-card">
                     <h3>✅ What Flexbox IS</h3>
                     <ul>
                         <li>A way to arrange items in rows OR columns</li>
@@ -320,7 +306,7 @@
                         <li>Great for navigation bars, cards, etc.</li>
                     </ul>
                 </div>
-                <div class="comparison-card">
+                <div class="before-after-card">
                     <h3>❌ What Flexbox ISN'T</h3>
                     <ul>
                         <li>Not for complex 2D layouts (use Grid)</li>
@@ -368,10 +354,10 @@
             <div class="before-after">
                 <div class="before-after-card">
                     <h3>❌ Without Flexbox</h3>
-                    <div style="background: #f0f0f0; padding: 10px; border-radius: 5px;">
-                        <div style="background: var(--ocu-true-blue); color: white; padding: 10px; margin: 5px 0;">Block 1</div>
-                        <div style="background: var(--ocu-gold); padding: 10px; margin: 5px 0;">Block 2</div>
-                        <div style="background: var(--ocu-sky); padding: 10px; margin: 5px 0;">Block 3</div>
+                    <div class="example-container">
+                        <div class="example-block" style="background: var(--ocu-true-blue); color: white; padding: 10px;">Block 1</div>
+                        <div class="example-block" style="background: var(--ocu-gold); color: #000; padding: 10px;">Block 2</div>
+                        <div class="example-block" style="background: var(--ocu-sky); color: #000; padding: 10px;">Block 3</div>
                     </div>
                     <p>Blocks stack vertically by default</p>
                 </div>
@@ -392,101 +378,78 @@
             </div>
         </div>
 
-        <!-- Slide 8: Container vs Items Properties -->
+        <!-- STORY 2: Spacer GIF -->
+        <div class="slide history-slide">
+            <h1>🎯 The Spacer GIF: Computer Science's Unsung Hero</h1>
+            <div class="quote-box">
+                <p>David Siegel's 1996 book "Creating Killer Web Sites" was the first known to publish the Spacer GIF technique. In the days of HTML-table based web design, a transparent 1×1 pixel gif was often used to hold open empty HTML table cells. The image could be resized to any dimensions and invisibly prevent a table cell from collapsing and ruining a layout.</p>
+            </div>
+            <div class="quote-box">
+                <p>"1x1.gif should have won a Grammy. Or a Pulitzer. It's the most important achievement in computer science since the linked list."</p>
+                <div class="citation">— Anonymous Developer</div>
+            </div>
+            <div class="citation">Source: Wikipedia - "Spacer GIF"</div>
+            <div class="tip-box" style="margin-top: 30px;">
+                💡 <strong>Connection:</strong> Flexbox eliminates these creative workarounds. No more invisible pixels!
+            </div>
+        </div>
+
+        <!-- Slide 8: Container vs Item Properties -->
         <div class="slide">
-            <h1>Container vs Items Properties</h1>
-            <div class="comparison-table">
-                <div class="comparison-card">
-                    <h3>🎯 Container Properties</h3>
+            <h1>Container vs Item Properties</h1>
+            <h2>Who Controls What?</h2>
+            
+            <div class="before-after">
+                <div class="before-after-card">
+                    <h3>🗃️ Container Properties</h3>
                     <ul>
-                        <li><code>display: flex</code></li>
-                        <li><code>flex-direction</code></li>
-                        <li><code>justify-content</code></li>
-                        <li><code>align-items</code></li>
-                        <li><code>flex-wrap</code></li>
-                        <li><code>gap</code></li>
+                        <li>display: flex</li>
+                        <li>flex-direction</li>
+                        <li>justify-content</li>
+                        <li>align-items</li>
+                        <li>flex-wrap</li>
+                        <li>gap</li>
                     </ul>
                 </div>
-                <div class="comparison-card">
+                <div class="before-after-card">
                     <h3>📦 Item Properties</h3>
                     <ul>
-                        <li><code>flex-grow</code></li>
-                        <li><code>flex-shrink</code></li>
-                        <li><code>flex-basis</code></li>
-                        <li><code>flex</code> (shorthand)</li>
-                        <li><code>align-self</code></li>
-                        <li><code>order</code></li>
+                        <li>flex-grow</li>
+                        <li>flex-shrink</li>
+                        <li>flex-basis</li>
+                        <li>flex (shorthand)</li>
+                        <li>align-self</li>
+                        <li>order</li>
                     </ul>
                 </div>
             </div>
-        </div>
-
-        <!-- NEW STORY 2: The Spacer GIF -->
-        <div class="slide history-slide">
-            <h1>Historical Context <span class="emoji">🖼️</span></h1>
-            <h2>The Spacer GIF: The Most Important Achievement in Computer Science</h2>
             
-            <div class="history-content">
-                <ul>
-                    <li>David Siegel's 1996 book "Creating Killer Web Sites" was the first known to publish the Spacer GIF technique</li>
-                    <li>According to Siegel, he invented the trick in his living room</li>
-                    <li>In the days of HTML-table based web design, a transparent 1×1 pixel gif was often used to hold open empty HTML table cells</li>
-                    <li>The image could be resized to any dimensions and invisibly prevent a table cell from collapsing and ruining a layout</li>
-                </ul>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <p style="font-size: 1.3em;">The Famous 1×1 Transparent GIF</p>
-                    <div class="spacer-gif-demo" title="This represents the invisible 1x1 GIF"></div>
-                    <p style="color: rgba(255,255,255,0.7);">↑ Actual size (enlarged for visibility)</p>
-                </div>
-                
-                <p style="font-size: 1.3em; text-align: center; margin-top: 30px;">
-                    <em>"1x1.gif should have won a Grammy. Or a Pulitzer. It's the most important achievement in computer science since the linked list."</em>
-                </p>
-                <p style="text-align: center;">- Anonymous Developer</p>
-                
-                <p class="citation">Source: Wikipedia - "Spacer GIF"</p>
-            </div>
-            
-            <div class="reflection-question">
-                <h3>🤔 Reflection Question:</h3>
-                <p>How does Flexbox's <code>gap</code> property eliminate the need for spacer GIFs and similar hacks?</p>
+            <div class="activity-box">
+                <strong>Note:</strong> Write down which properties go on the container vs items!
             </div>
         </div>
 
-        <!-- Slide 9: Main and Cross Axis -->
+        <!-- Slide 9: Main Axis and Cross Axis -->
         <div class="slide">
             <h1>Understanding Axes</h1>
-            <h2>Main Axis & Cross Axis</h2>
+            <h2>The Foundation of Flexbox</h2>
             
-            <h3>flex-direction: row (default)</h3>
-            <div class="axis-diagram">
-                <div class="flex-demo" style="width: 80%;">
-                    <div class="flex-item">1</div>
-                    <div class="flex-item">2</div>
-                    <div class="flex-item">3</div>
-                </div>
-                <span class="axis-arrow main-axis">→ Main</span>
-                <span class="axis-arrow cross-axis">↓ Cross</span>
+            <div style="background: var(--bg-secondary); padding: 30px; border-radius: 10px; border: 2px solid var(--border-color);">
+                <h3 style="color: var(--ocu-true-blue);">Main Axis →</h3>
+                <p>Direction items flow (controlled by flex-direction)</p>
+                
+                <h3 style="color: var(--ocu-gold); margin-top: 20px;">Cross Axis ↓</h3>
+                <p>Perpendicular to main axis</p>
             </div>
             
-            <h3>flex-direction: column</h3>
-            <div class="axis-diagram">
-                <div style="display: flex; flex-direction: column; gap: 10px; height: 80%;">
-                    <div class="flex-item">1</div>
-                    <div class="flex-item">2</div>
-                    <div class="flex-item">3</div>
-                </div>
-            </div>
-            
-            <div class="tip-box">
-                <strong>Remember:</strong> justify-content works on MAIN axis, align-items on CROSS axis
+            <div class="tip-box" style="margin-top: 30px;">
+                💡 <strong>Key Point:</strong> justify-content = main axis, align-items = cross axis
             </div>
         </div>
 
         <!-- Slide 10: Common Patterns -->
         <div class="slide">
-            <h1>Common Flexbox Patterns</h1>
+            <h1>Common Patterns</h1>
             
             <h2>1. Perfect Centering</h2>
             <div class="code-example">
@@ -547,15 +510,15 @@
             <h3>Equal Distribution (flex: 1)</h3>
             <div class="flex-container-demo">
                 <div class="flex-demo">
-                    <div class="flex-item">flex: 1</div>
-                    <div class="flex-item">flex: 1</div>
-                    <div class="flex-item">flex: 1</div>
+                    <div class="flex-item" style="flex: 1;">flex: 1</div>
+                    <div class="flex-item" style="flex: 1;">flex: 1</div>
+                    <div class="flex-item" style="flex: 1;">flex: 1</div>
                 </div>
             </div>
             
             <h3>Different Ratios</h3>
             <div class="flex-container-demo">
-                <div style="display: flex; gap: 10px;">
+                <div class="flex-demo">
                     <div class="flex-item" style="flex: 2;">flex: 2</div>
                     <div class="flex-item" style="flex: 1;">flex: 1</div>
                     <div class="flex-item" style="flex: 1;">flex: 1</div>
@@ -594,73 +557,44 @@
             </div>
         </div>
 
-        <!-- NEW STORY 3: Float Layouts -->
+        <!-- STORY 3: Float Layouts -->
         <div class="slide history-slide">
-            <h1>Historical Context <span class="emoji">🏗️</span></h1>
-            <h2>Float Layouts: Building Houses with Duct Tape and Broomsticks</h2>
-            
-            <div class="history-content">
-                <ul>
-                    <li>With the push toward web standards in the early 2000s, web authors began to hack out layouts with complicated mixtures of absolute positioning and floats</li>
-                    <li>CSS Layout at that time was mostly built out of this</li>
-                    <li>As one expert described it: <em>"It's an ingenious use of the materials available, but a bit like building a house out of duct tape and broomsticks."</em></li>
-                    <li>Floats were not intended for coarse layout but for text wrapping around images</li>
-                    <li>Tables were still the accepted way of handling 2D layout; there was nothing else</li>
-                </ul>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <div style="display: inline-block; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
-                        <code style="font-size: 1.2em;">
-                            .column { float: left; width: 33.33%; }<br>
-                            .clearfix::after { clear: both; /* The horror! */ }
-                        </code>
-                    </div>
-                </div>
-                
-                <p style="margin-top: 20px;">The complexity of float-based layouts led to countless debugging hours and the infamous "clearfix hack" that developers had to memorize.</p>
-                
-                <p class="citation">Source: fantasai - "Evolution of CSS Layout: 1990s to the Future"</p>
+            <h1>🏗️ Float Layouts: Building Houses with Duct Tape</h1>
+            <div class="quote-box">
+                <p>With the push toward web standards in the early 2000s, web authors began to hack out layouts with complicated mixtures of absolute positioning and floats. CSS Layout at that time was mostly built out of this.</p>
             </div>
-            
-            <div class="reflection-question">
-                <h3>🤔 Reflection Question:</h3>
-                <p>Why is it important to learn modern layout techniques like Flexbox properly, rather than relying on outdated hacks and workarounds?</p>
+            <p style="margin-top: 20px;">Developers had to:</p>
+            <ul style="margin-left: 30px; margin-top: 15px;">
+                <li>Use clearfix hacks to prevent container collapse</li>
+                <li>Calculate widths down to the pixel</li>
+                <li>Fight with margins and negative margins</li>
+                <li>Deal with mysterious spacing issues</li>
+            </ul>
+            <div class="tip-box" style="margin-top: 30px;">
+                💡 <strong>Why Flexbox Wins:</strong> No more clearfix! No pixel calculations! Layout that actually makes sense!
             </div>
         </div>
 
-        <!-- Slide 14: Exercise Time! -->
+        <!-- Slide 14: Practice Exercise -->
         <div class="slide">
-            <h1>Exercise: Build a Navigation Bar</h1>
-            <h2>Let's Practice What We've Learned!</h2>
+            <h1>Practice Time! <span class="emoji">💻</span></h1>
+            <h2>Build a Navigation Bar</h2>
             
             <div class="activity-box">
-                <h3>Your Challenge:</h3>
-                <p>Create a navigation bar with:</p>
-                <ul>
+                <h3>Requirements:</h3>
+                <ul style="font-size: 1.2em;">
                     <li>Logo on the left</li>
-                    <li>Menu items in the center</li>
+                    <li>Navigation links in the center</li>
                     <li>Login button on the right</li>
+                    <li>Everything vertically centered</li>
                 </ul>
+                <p style="margin-top: 20px;"><strong>Try it yourself first!</strong> You have 3 minutes.</p>
             </div>
-            
-            <div class="code-example">
-                &lt;header class="header"&gt;<br>
-                &nbsp;&nbsp;&lt;div class="logo"&gt;Logo&lt;/div&gt;<br>
-                &nbsp;&nbsp;&lt;nav class="nav"&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;Home&lt;/a&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;About&lt;/a&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"&gt;Contact&lt;/a&gt;<br>
-                &nbsp;&nbsp;&lt;/nav&gt;<br>
-                &nbsp;&nbsp;&lt;button class="login"&gt;Login&lt;/button&gt;<br>
-                &lt;/header&gt;
-            </div>
-            
-            <p style="text-align: center; margin-top: 20px; font-size: 1.2em;">⏱️ Take 5 minutes to try this!</p>
         </div>
 
         <!-- Slide 15: Solution -->
         <div class="slide">
-            <h1>Solution</h1>
+            <h1>Navigation Bar Solution</h1>
             <div class="code-example">
                 .header {<br>
                 &nbsp;&nbsp;display: flex;<br>
@@ -680,7 +614,7 @@
             </div>
             
             <h2>Result:</h2>
-            <div class="pattern-example" style="background: #333; color: white;">
+            <div class="pattern-example">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div style="font-weight: bold; font-size: 1.5em;">Logo</div>
                     <nav style="display: flex; gap: 2rem;">
@@ -697,8 +631,8 @@
         <div class="slide">
             <h1>Where You'll Use Flexbox</h1>
             <h2>Real-World Applications</h2>
-            <div class="comparison-table">
-                <div class="comparison-card">
+            <div class="before-after">
+                <div class="before-after-card">
                     <h3>🎨 UI Components</h3>
                     <ul>
                         <li>Navigation bars</li>
@@ -708,7 +642,7 @@
                         <li>Form layouts</li>
                     </ul>
                 </div>
-                <div class="comparison-card">
+                <div class="before-after-card">
                     <h3>📱 Responsive Design</h3>
                     <ul>
                         <li>Mobile-first layouts</li>
@@ -821,64 +755,16 @@
                     <strong>Remember:</strong> Flexbox will become one of your most-used tools.
                 </p>
                 <p style="font-size: 1.2em; margin-top: 15px;">
-                    Practice, experiment, and don't forget to inspect! 🔍
+                    Practice, experiment, and don't forget to inspect!
                 </p>
             </div>
             
-            <p style="margin-top: 40px; font-size: 1.3em; text-align: center;">
-                <strong>Next Class:</strong> Deep dive into Growing & Shrinking
-            </p>
-            
-            <p style="margin-top: 30px; text-align: center; font-size: 1.2em;">Questions?</p>
+            <h3 style="margin-top: 40px;">Questions?</h3>
+            <p>Office Hours: Mon/Wed 9-11 AM | Tue/Thu 1-2:30 PM</p>
+            <p>SSM 204A | bobby.reed@okcu.edu</p>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <div class="navigation">
-        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
-        <span class="slide-counter">
-            <span id="currentSlide">1</span> / <span id="totalSlides">23</span>
-        </span>
-        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
-    </div>
-
-    <!-- Include the standard presentation JavaScript -->
     <script src="../../js/presentation.js"></script>
-    <script>
-        // Global changeSlide function for onclick handlers
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-
-        function changeSlide(direction) {
-            // Hide current slide
-            slides[currentSlide].classList.remove('active');
-            
-            // Calculate new slide index
-            currentSlide = currentSlide + direction;
-            
-            // Handle boundaries
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-            
-            // Show new slide
-            slides[currentSlide].classList.add('active');
-            
-            // Update slide counter
-            document.getElementById('currentSlide').textContent = currentSlide + 1;
-            
-            // Update button states
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
-            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Update total slides count
-            document.getElementById('totalSlides').textContent = totalSlides;
-            // Initialize button states
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
-        });
-    </script>
 </body>
 </html>
