@@ -4,16 +4,38 @@
     --ocu-black: #000000;
     --ocu-true-blue: #00669b;
     --ocu-white: #ffffff;
-    
+
     /* Secondary Colors */
     --ocu-dark-blue: #043d5d;
     --ocu-cyan: #009edb;
     --ocu-light-blue: #9ddcf9;
-    
+
     /* Accent Colors */
     --ocu-green: #70bf54;
     --ocu-light-green: #afd46c;
     --ocu-yellow: #ffc222;
+    --ocu-gold: #ffc222;
+    --ocu-sky: #9ddcf9;
+
+    /* Spacing Variables */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 40px;
+    --spacing-xl: 60px;
+
+    /* Typography Variables */
+    --font-size-xs: 0.9em;
+    --font-size-sm: 1em;
+    --font-size-md: 1.2em;
+    --font-size-lg: 1.5em;
+    --font-size-xl: 2em;
+    --font-size-xxl: 2.8em;
+
+    /* Code Block Variables */
+    --code-font-size: 1.1em;
+    --code-line-height: 1.6;
+    --code-padding: 20px;
     
     /* Semantic colors for light mode (default) */
     --bg-primary: #ffffff;
@@ -171,6 +193,7 @@ input:checked + .theme-slider:before {
     width: 100%;
     height: 100%;
     padding: 60px;
+    padding-bottom: 120px; /* Fixed: Prevent navigation overlap */
     display: none;
     flex-direction: column;
     animation: slideIn 0.5s ease-in-out;
@@ -253,15 +276,41 @@ li {
 .code-example {
     background: var(--code-bg);
     color: var(--code-text);
-    padding: 20px;
+    padding: var(--code-padding);
     border-radius: 10px;
     font-family: 'Courier New', monospace;
     margin: 20px 0;
-    font-size: 1.1em;
+    font-size: var(--code-font-size);
+    line-height: var(--code-line-height);
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 6px var(--shadow-color);
-    overflow-x: auto;
+    /* Fixed: Prevent internal scrolling, allow wrapping */
+    overflow: visible;
+    overflow-x: visible;
+    white-space: pre-wrap;
+    word-wrap: break-word;
     transition: all 0.3s ease;
+}
+
+.code-example br {
+    line-height: 0;
+    margin: 0;
+}
+
+/* Code Block Size Variants */
+.code-example.code-lg {
+    font-size: 1.5em;
+    padding: 30px;
+}
+
+.code-example.code-md {
+    font-size: 1.3em;
+    padding: 25px;
+}
+
+.code-example.code-sm {
+    font-size: 1em;
+    padding: 15px;
 }
 
 .code-example .tag {
@@ -578,4 +627,214 @@ code {
 /* Smooth transitions for theme switching */
 * {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Spacing Utilities */
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+
+/* Typography Utilities */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-md { font-size: var(--font-size-md); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Layout Utilities */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* ========================================
+   STANDARDIZED COMPONENTS
+   ======================================== */
+
+/* Card Variants - Unify method-card, phase-card, checklist-item, etc. */
+.card {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.card-accent {
+    background: var(--bg-accent);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    border-left: 4px solid var(--ocu-true-blue);
+}
+
+[data-theme="dark"] .card-accent {
+    border-left-color: var(--ocu-cyan);
+}
+
+.card-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.card-gradient h3,
+.card-gradient p,
+.card-gradient li {
+    color: white;
+}
+
+/* Demo Container - Unify demo-box, visual-example, example-container */
+.demo-container {
+    background: var(--bg-accent);
+    border: 2px dashed var(--border-color);
+    padding: 30px;
+    border-radius: 15px;
+    margin: 25px 0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* History Slide Components */
+.history-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.history-card h1,
+.history-card h2,
+.history-card h3,
+.history-card p,
+.history-card li {
+    color: white;
+}
+
+.history-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.history-quote {
+    font-style: italic;
+    font-size: 1.1em;
+    margin: 20px 0;
+    padding-left: 20px;
+    border-left: 4px solid #ffd700;
+}
+
+.history-citation {
+    text-align: right;
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+.reflection-question {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.reflection-question h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+/* Flex Demo Components (used in multiple lectures) */
+.flex-demo {
+    display: flex;
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    min-height: 100px;
+    border: 2px solid var(--border-color);
+    gap: 10px;
+}
+
+.flex-item {
+    background: var(--ocu-true-blue);
+    color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+[data-theme="dark"] .flex-item {
+    background: var(--ocu-dark-blue);
+}
+
+/* DOM Tree Visual (JS lectures) */
+.dom-tree {
+    background: var(--bg-secondary);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+}
+
+/* Checkpoint/Progress Items */
+.checkpoint-item {
+    background: var(--bg-accent);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border-left: 4px solid var(--ocu-true-blue);
+}
+
+[data-theme="dark"] .checkpoint-item {
+    border-left-color: var(--ocu-cyan);
+}
+
+.checkpoint-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
 }
