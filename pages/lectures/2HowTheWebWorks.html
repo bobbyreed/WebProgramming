@@ -7,8 +7,9 @@
     <title>How the Web Works - CSCI 3403</title>
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Lecture-specific styles with theme support */
+        /* Unique to this lecture */
         .diagram {
             text-align: center;
             margin: 30px 0;
@@ -23,7 +24,7 @@
             color: var(--ocu-true-blue);
             margin: 0 20px;
         }
-        
+
         [data-theme="dark"] .arrow {
             color: var(--ocu-cyan);
         }
@@ -88,49 +89,6 @@
             margin: 20px 0;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
-        
-        .center {
-            text-align: center;
-        }
-        
-        .code {
-            background: var(--code-bg);
-            color: var(--code-text);
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            margin: 20px 0;
-            border: 1px solid var(--border-color);
-        }
-        
-        .controls {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            background: var(--slide-bg);
-            padding: 15px 25px;
-            border-radius: 30px;
-            box-shadow: 0 4px 10px var(--shadow-color);
-        }
-        
-        .controls button {
-            background: var(--nav-bg);
-            color: var(--nav-text);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .controls button:hover {
-            background: var(--button-hover);
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 
@@ -148,7 +106,7 @@
             <span class="slide-number">1/20</span>
             <h1>How the Web Works</h1>
             <p class="big-text">CSCI 3403 - Web Programming</p>
-            <p class="center" style="font-size: 1.4em; margin-top: 40px;">Class 2 - Thursday</p>
+            <p class="text-center" style="font-size: 1.4em; margin-top: 40px;">Class 2 - Thursday</p>
             <div class="diagram">
                 <span class="emoji">🌐</span>
                 <span class="arrow">→</span>
@@ -156,7 +114,7 @@
                 <span class="arrow">→</span>
                 <span class="emoji">🚀</span>
             </div>
-            <p class="center" style="margin-top: 40px;">Today's Journey: From Networks to Websites</p>
+            <p class="text-center" style="margin-top: 40px;">Today's Journey: From Networks to Websites</p>
         </div>
 
         <!-- Slide 2: Learning Objectives -->
@@ -273,7 +231,7 @@
         <div class="slide">
             <span class="slide-number">7/20</span>
             <h2>IP Addresses: The Internet's Phone Numbers</h2>
-            <div class="code">
+            <div class="code-example">
                 IPv4: 192.168.1.1
                 IPv6: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
             </div>
@@ -283,7 +241,7 @@
                 <li><strong>IPv6:</strong> Much longer, enough for trillions of devices</li>
                 <li><strong>Your IP right now:</strong> Check whatismyipaddress.com</li>
             </ul>
-            <p class="center" style="margin-top: 30px;">
+            <p class="text-center" style="margin-top: 30px;">
                 <em>But wait... who remembers IP addresses? 🤔</em>
             </p>
         </div>
@@ -369,7 +327,7 @@
         <div class="slide">
             <span class="slide-number">11/20</span>
             <h2>What Happens When You Google Something?</h2>
-            <p class="center">Let's trace the journey step by step...</p>
+            <p class="text-center">Let's trace the journey step by step...</p>
             <div class="diagram">
                 <p style="font-size: 2em;">🤔 → 💻 → 🌐 → 🔍 → 📊</p>
             </div>
@@ -451,7 +409,7 @@
                     </ul>
                 </div>
             </div>
-            <p class="center" style="margin-top: 30px; font-size: 1.3em;">
+            <p class="text-center" style="margin-top: 30px; font-size: 1.3em;">
                 <strong>Always look for the padlock when entering passwords or payment info!</strong>
             </p>
         </div>
@@ -497,7 +455,7 @@
                     </ul>
                 </div>
             </div>
-            <p class="center" style="margin-top: 30px;">
+            <p class="text-center" style="margin-top: 30px;">
                 <em>The Web runs ON the Internet, like cars on a highway</em>
             </p>
         </div>
@@ -514,7 +472,7 @@
                 <li>Browser vs. Search Engine - what's the difference?</li>
                 <li>What happens when you search on Google?</li>
             </ul>
-            <p class="center" style="margin-top: 40px; font-size: 1.3em;">
+            <p class="text-center" style="margin-top: 40px; font-size: 1.3em;">
                 <strong>Understanding these concepts = Speaking the language of the web!</strong>
             </p>
         </div>
@@ -551,14 +509,17 @@
                 <li>Mozilla's internet articles</li>
                 <li>"How the Internet Works in 5 Minutes" video</li>
             </ul>
-            <p class="center" style="margin-top: 40px;">
+            <p class="text-center" style="margin-top: 40px;">
                 <strong>Questions? Let's discuss! 🤔</strong>
             </p>
         </div>
     </div>
 
-    <div class="controls">
+    <div class="navigation">
         <button id="prevBtn">Previous</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">20</span>
+        </span>
         <button id="nextBtn">Next</button>
     </div>
 

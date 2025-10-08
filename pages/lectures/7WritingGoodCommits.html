@@ -7,8 +7,9 @@
     <title>Writing Good Commits & Recipe Project - CSCI 3403</title>
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Lecture-specific styles */
+        /* Unique to this lecture */
         .workflow-diagram {
             display: flex;
             align-items: center;
@@ -17,7 +18,7 @@
             margin: 30px 0;
             font-size: 1.3em;
         }
-        
+
         .workflow-step {
             background: var(--bg-accent);
             padding: 15px 25px;
@@ -25,17 +26,17 @@
             border: 2px solid var(--border-color);
             color: var(--text-primary);
         }
-        
+
         .arrow {
             font-size: 1.5em;
             color: var(--ocu-true-blue);
             margin: 0 10px;
         }
-        
+
         [data-theme="dark"] .arrow {
             color: var(--ocu-cyan);
         }
-        
+
         .recipe-requirements {
             background: var(--bg-secondary);
             border: 2px solid var(--border-color);
@@ -43,20 +44,13 @@
             padding: 25px;
             margin: 20px 0;
         }
-        
+
         .bad {
             color: #ff5555;
         }
-        
+
         .good {
             color: var(--ocu-green);
-        }
-        
-        .comparison-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
         }
     </style>
 </head>
@@ -173,7 +167,7 @@
         <!-- Slide 6: Comparison -->
         <div class="slide">
             <h1>Bad vs. Good: Side by Side</h1>
-            <div class="comparison-box">
+            <div class="grid-2">
                 <div class="comparison-card bad">
                     <h3>❌ Bad</h3>
                     <div class="code-example">

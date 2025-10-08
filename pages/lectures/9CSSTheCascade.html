@@ -7,8 +7,9 @@
     <title>CSS Foundations - The Cascade | CSCI 4513</title>
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Lecture-specific styles */
+        /* Unique to this lecture */
         .specificity-visual {
             display: flex;
             justify-content: space-around;
@@ -33,15 +34,6 @@
             font-weight: bold;
             color: #667eea;
             margin: 10px 0;
-        }
-
-        .css-rule {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-family: 'Courier New', monospace;
         }
 
         .cascade-flow {
@@ -285,7 +277,7 @@
                 &lt;/div&gt;
             </div>
             <div class="rule-comparison">
-                <div class="css-rule">
+                <div class="code-example">
                     <span class="comment">/* Rule 1 */</span><br>
                     .subsection {<br>
                     &nbsp;&nbsp;color: blue;<br>
@@ -322,7 +314,7 @@
                     }
                 </div>
                 <div class="vs-symbol">VS</div>
-                <div class="css-rule">
+                <div class="code-example">
                     <span class="comment">/* Rule 2 */</span><br>
                     .main .list {<br>
                     &nbsp;&nbsp;color: red;<br>
@@ -442,7 +434,7 @@
                 &lt;/div&gt;
             </div>
             <div class="rule-comparison">
-                <div class="css-rule">
+                <div class="code-example">
                     #parent {<br>
                     &nbsp;&nbsp;color: red;<br>
                     }
