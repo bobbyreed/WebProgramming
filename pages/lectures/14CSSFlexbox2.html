@@ -21,7 +21,7 @@
         }
         
         .flex-item {
-            background: var(--ocu-light-blue);
+            background: var(--ocu-true-blue);
             color: white;
             padding: 20px;
             margin: 10px;
@@ -144,6 +144,25 @@
             border-radius: 8px;
             text-align: center;
         }
+
+        /* Fix code block scrolling - ensure wrapping */
+        .code-example {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow: visible !important;
+            overflow-x: visible !important;
+            line-height: 1.4;
+        }
+
+        .code-example br {
+            line-height: 0;
+            margin: 0;
+        }
+
+        /* Prevent navigation controls from covering content */
+        .slide {
+            padding-bottom: 120px;
+        }
     </style>
 </head>
 
@@ -235,7 +254,7 @@
         <!-- Slide 5: Flex Shorthand Review -->
         <div class="slide">
             <h1>The Flex Shorthand (Review)</h1>
-            <div class="code-example">
+            <div class="code-example" style="font-size: 1.5em; padding: 30px; overflow: visible; overflow-x: visible; max-height: none; line-height: 1.6; margin: 30px 0;">
                 .item {<br>
                 &nbsp;&nbsp;flex: 1;  <span class="comment">/* What does this mean? */</span><br>
                 }
@@ -475,7 +494,7 @@
         <!-- Slide 19: Navigation Bar -->
         <div class="slide">
             <h1>Example 1: Navigation Bar</h1>
-            <div class="code-example">
+            <div class="code-example" style="font-size: 1.5em; padding: 30px; overflow: visible; overflow-x: visible; max-height: none; line-height: 1.6; margin: 30px 0;">
                 .nav {<br>
                 &nbsp;&nbsp;display: flex;<br>
                 &nbsp;&nbsp;justify-content: space-between;<br>
@@ -599,7 +618,7 @@
                 
                 <p>Before Flexbox and Grid, developers relied on floated elements for layouts:</p>
                 
-                <div class="code-example" style="background: rgba(0,0,0,0.3); color: white;">
+                <div class="code-example" style="background: rgba(0,0,0,0.6); color: white;">
                     /* The dreaded clearfix hack */<br>
                     .clearfix::after {<br>
                     &nbsp;&nbsp;content: "";<br>
@@ -713,6 +732,15 @@
             </div>
             
             <p style="margin-top: 40px;">Remember: Flexbox is everywhere in modern web development</p>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">31</span>
+            </span>
+            <button id="nextBtn">Next</button>
         </div>
     </div>
 
