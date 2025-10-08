@@ -6,17 +6,9 @@
     <title>CSS Foundations - Browser Developer Tools - CSCI 3403</title>
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Lecture-specific styles */
-        .devtools-demo {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-family: 'Consolas', 'Monaco', monospace;
-        }
-        
+        /* Unique to this lecture */
         .keyboard-shortcut {
             display: inline-block;
             background: #f0f0f0;
@@ -27,14 +19,7 @@
             font-weight: bold;
             margin: 0 5px;
         }
-        
-        .panel-preview {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
+
         .panel-card {
             background: #f8f9fa;
             border: 2px solid #667eea;
@@ -157,7 +142,7 @@
         <!-- Slide 5: DevTools Layout Overview -->
         <div class="slide">
             <h1>DevTools Layout Overview <span class="emoji">🗺️</span></h1>
-            <div class="panel-preview">
+            <div class="grid-2">
                 <div class="panel-card">
                     <h3>Elements Panel 📄</h3>
                     <ul>
@@ -223,7 +208,7 @@
         <!-- Slide 7: The Element Selector Tool -->
         <div class="slide">
             <h1>The Element Selector Tool <span class="emoji">🎯</span></h1>
-            <div class="devtools-demo">
+            <div class="code-example">
                 <p>🔍 Click the selector icon (or press <span class="keyboard-shortcut">Ctrl+Shift+C</span>)</p>
             </div>
             <h3>How it works:</h3>
@@ -273,7 +258,7 @@
         <!-- Slide 9: The Styles Panel -->
         <div class="slide">
             <h1>Understanding the Styles Panel <span class="emoji">🎨</span></h1>
-            <div class="devtools-demo">
+            <div class="code-example">
                 <p>element.style { }</p>
                 <p>.my-class {<br>
                 &nbsp;&nbsp;color: blue;<br>
@@ -581,7 +566,7 @@
         <!-- Slide 20: Responsive Design Mode -->
         <div class="slide">
             <h1>Bonus: Responsive Design Mode <span class="emoji">📱</span></h1>
-            <div class="devtools-demo">
+            <div class="code-example">
                 <p>Click the device icon 📱 or press <span class="keyboard-shortcut">Ctrl+Shift+M</span></p>
             </div>
             <h3>Test your site on different devices:</h3>

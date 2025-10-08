@@ -8,32 +8,9 @@
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     
-    <!-- Lecture-Specific Styles -->
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        .flex-demo {
-            display: flex;
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            min-height: 100px;
-            border: 2px solid var(--border-color);
-        }
-        
-        .flex-item {
-            background: var(--ocu-true-blue);
-            color: white;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        [data-theme="dark"] .flex-item {
-            background: var(--ocu-dark-blue);
-        }
-        
+        /* Unique to this lecture only */
         .axis-diagram {
             position: relative;
             width: 400px;
@@ -42,30 +19,30 @@
             border: 2px dashed var(--border-color);
             border-radius: 10px;
         }
-        
+
         .axis-arrow {
             position: absolute;
             font-size: 2em;
             color: var(--ocu-true-blue);
             font-weight: bold;
         }
-        
+
         [data-theme="dark"] .axis-arrow {
             color: var(--ocu-cyan);
         }
-        
+
         .main-axis {
             top: 50%;
             right: 10px;
             transform: translateY(-50%);
         }
-        
+
         .cross-axis {
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
         }
-        
+
         .property-table {
             display: grid;
             grid-template-columns: 1fr 2fr;
@@ -75,60 +52,14 @@
             border-radius: 10px;
             margin: 20px 0;
         }
-        
+
         .property-name {
             font-weight: bold;
             color: var(--ocu-true-blue);
         }
-        
+
         [data-theme="dark"] .property-name {
             color: var(--ocu-cyan);
-        }
-
-        /* Styles for historical story slides */
-        .history-slide {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-        }
-
-        .history-slide h1 {
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .history-content {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .history-quote {
-            font-style: italic;
-            font-size: 1.1em;
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 4px solid #ffd700;
-        }
-
-        .history-citation {
-            text-align: right;
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-top: 10px;
-        }
-
-        .reflection-question {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-
-        .reflection-question h3 {
-            color: #ffd700;
-            margin-bottom: 10px;
         }
 
         .zen-garden-visual {
@@ -143,25 +74,6 @@
             padding: 15px;
             border-radius: 8px;
             text-align: center;
-        }
-
-        /* Fix code block scrolling - ensure wrapping */
-        .code-example {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow: visible !important;
-            overflow-x: visible !important;
-            line-height: 1.4;
-        }
-
-        .code-example br {
-            line-height: 0;
-            margin: 0;
-        }
-
-        /* Prevent navigation controls from covering content */
-        .slide {
-            padding-bottom: 120px;
         }
     </style>
 </head>
@@ -200,7 +112,7 @@
         </div>
 
         <!-- STORY 1: CSS Zen Garden (NEW SLIDE) -->
-        <div class="slide history-slide">
+        <div class="slide history-card">
             <h1>Historical Context: CSS Zen Garden <span class="emoji">🌸</span></h1>
             <div class="history-content">
                 <h2>Show, Don't Tell</h2>
@@ -254,7 +166,7 @@
         <!-- Slide 5: Flex Shorthand Review -->
         <div class="slide">
             <h1>The Flex Shorthand (Review)</h1>
-            <div class="code-example" style="font-size: 1.5em; padding: 30px; overflow: visible; overflow-x: visible; max-height: none; line-height: 1.6; margin: 30px 0;">
+            <div class="code-example code-lg">
                 .item {<br>
                 &nbsp;&nbsp;flex: 1;  <span class="comment">/* What does this mean? */</span><br>
                 }
@@ -348,7 +260,7 @@
         </div>
 
         <!-- STORY 2: CSS Zen Garden Reputations (NEW SLIDE) -->
-        <div class="slide history-slide">
+        <div class="slide history-card">
             <h1>Building Reputations with CSS <span class="emoji">⭐</span></h1>
             <div class="history-content">
                 <h2>Hundreds Made Their Mark</h2>
@@ -494,7 +406,7 @@
         <!-- Slide 19: Navigation Bar -->
         <div class="slide">
             <h1>Example 1: Navigation Bar</h1>
-            <div class="code-example" style="font-size: 1.5em; padding: 30px; overflow: visible; overflow-x: visible; max-height: none; line-height: 1.6; margin: 30px 0;">
+            <div class="code-example code-lg">
                 .nav {<br>
                 &nbsp;&nbsp;display: flex;<br>
                 &nbsp;&nbsp;justify-content: space-between;<br>
@@ -611,7 +523,7 @@
         </div>
 
         <!-- STORY 3: Clearfix Hack (NEW SLIDE) -->
-        <div class="slide history-slide">
+        <div class="slide history-card">
             <h1>The Dark Days: Clearfix Hacks <span class="emoji">😱</span></h1>
             <div class="history-content">
                 <h2>Float Nightmares</h2>

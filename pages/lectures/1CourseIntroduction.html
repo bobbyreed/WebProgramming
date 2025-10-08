@@ -9,32 +9,9 @@
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     
-    <!-- Lecture-Specific Styles -->
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        .ice-breaker-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        .checklist-item {
-            background: var(--bg-accent);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-left: 4px solid var(--ocu-true-blue);
-        }
-        
-        .phase-card {
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-        
+        /* Unique to this lecture */
         .odin-feature {
             display: grid;
             grid-template-columns: auto 1fr;
@@ -45,13 +22,17 @@
             border-radius: 10px;
             margin: 10px 0;
         }
-        
+
         .countdown-timer {
             font-size: 3em;
             color: var(--ocu-true-blue);
             text-align: center;
             margin: 20px 0;
             font-weight: bold;
+        }
+
+        [data-theme="dark"] .countdown-timer {
+            color: var(--ocu-cyan);
         }
     </style>
 </head>
@@ -92,7 +73,7 @@
         <div class="slide">
             <h1>Ice Breaker: Build Someone Else's Idea!</h1>
             <h2>30-Minute Website Challenge <span class="emoji">⚡</span></h2>
-            <div class="ice-breaker-card">
+            <div class="card-gradient">
                 <h3>The Twist:</h3>
                 <p style="font-size: 1.3em;">You won't build YOUR idea - you'll build your PARTNER'S!</p>
             </div>
@@ -111,7 +92,7 @@
         <div class="slide">
             <h1>Pre-Exercise Setup</h1>
             <h2>Before We Start Coding <span class="emoji">📝</span></h2>
-            <div class="phase-card">
+            <div class="card">
                 <h3>Step 1: Choose Your Topic</h3>
                 <ul>
                     <li>Think of something fun and creative</li>
@@ -120,7 +101,7 @@
                     <li>Return to your seat</li>
                 </ul>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>Step 2: Find Your Partner</h3>
                 <ul>
                     <li>Stand up with your whiteboard</li>
@@ -140,7 +121,7 @@
                 cd partner-topic-site
                 git init
             </div>
-            <div class="checklist-item">
+            <div class="card-accent">
                 <h3>✓ Create GitHub Repository</h3>
                 <p>Name it after your partner's topic</p>
             </div>
@@ -156,7 +137,7 @@
         <div class="slide">
             <h1>Phase 1: Initial Files</h1>
             <h2>Setting Up Your Project <span class="emoji">📁</span></h2>
-            <div class="checklist-item">
+            <div class="card-accent">
                 <h3>Create These Files:</h3>
                 <ul>
                     <li>☐ index.html</li>
@@ -168,7 +149,7 @@
                 <h3>HTML Boilerplate Shortcut!</h3>
                 <p>In VS Code, type <code>!</code> and hit Enter for instant HTML structure</p>
             </div>
-            <div class="checklist-item">
+            <div class="card-accent">
                 <h3>Link Your Files:</h3>
                 <ul>
                     <li>☐ Add CSS link in &lt;head&gt;</li>
@@ -181,7 +162,7 @@
         <div class="slide">
             <h1>Phase 2: Rapid Development</h1>
             <h2>HTML Structure Checklist <span class="emoji">⚡</span></h2>
-            <div class="phase-card">
+            <div class="card">
                 <h3>Required Elements:</h3>
                 <ul style="font-size: 1.2em;">
                     <li>☐ Meaningful &lt;title&gt; tag</li>
@@ -209,7 +190,7 @@
                 git branch -M main
                 git push -u origin main
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>Enable GitHub Pages:</h3>
                 <ol>
                     <li>Go to repo Settings → Pages</li>
@@ -230,7 +211,7 @@
             <div class="warning-box">
                 <strong>⚠️ MUST BE DONE WITH PROFESSOR REED</strong>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>A Record Configuration:</h3>
                 <ol>
                     <li>I'll provide the domain: [instructor-domain].com</li>
@@ -366,23 +347,23 @@
         <div class="slide">
             <h1>The Foundations Path</h1>
             <h2>Your Roadmap <span class="emoji">🗺️</span></h2>
-            <div class="phase-card">
+            <div class="card">
                 <h3>1. Introduction</h3>
                 <p>How the course works, mindset, asking for help</p>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>2. Prerequisites</h3>
                 <p>Computer basics, web basics, installations</p>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>3. Git Basics</h3>
                 <p>Version control fundamentals</p>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>4. HTML & CSS</h3>
                 <p>Building and styling web pages</p>
             </div>
-            <div class="phase-card">
+            <div class="card">
                 <h3>5. JavaScript</h3>
                 <p>Making websites interactive</p>
             </div>
@@ -395,7 +376,7 @@
             <div class="warning-box">
                 <strong>Due: Before Thursday's Class</strong>
             </div>
-            <div class="checklist-item">
+            <div class="card-accent">
                 <h3>Complete Introduction Section:</h3>
                 <ul>
                     <li>☐ How This Course Will Work</li>
@@ -405,7 +386,7 @@
                     <li>☐ Join the Odin Community</li>
                 </ul>
             </div>
-            <div class="checklist-item">
+            <div class="card-accent">
                 <h3>Setup Requirements:</h3>
                 <ul>
                     <li>☐ Complete all Discord setup</li>

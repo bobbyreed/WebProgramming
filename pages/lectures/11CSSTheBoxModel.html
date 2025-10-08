@@ -7,8 +7,9 @@
     <title>CSS Foundations - The Box Model - CSCI 3403</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <link rel="stylesheet" href="../../styles/presentation.css">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Custom styles for box model visualization */
+        /* Unique to this lecture - box model visualizations */
         .box-model-demo {
             width: 300px;
             margin: 30px auto;
@@ -67,13 +68,6 @@
             align-items: center;
             margin: 20px auto;
             transition: all 0.3s ease;
-        }
-        
-        .box-sizing-demo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
         }
         
         .demo-container {
@@ -381,7 +375,7 @@
         <!-- Slide 17: Box-Sizing Comparison -->
         <div class="slide">
             <h1>Content-Box vs Border-Box</h1>
-            <div class="box-sizing-demo">
+            <div class="grid-2">
                 <div class="demo-container">
                     <h3>content-box (default)</h3>
                     <div class="sizing-box">

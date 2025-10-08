@@ -7,8 +7,9 @@
     <title>Writing Good Commits & Recipe Project - CSCI 3403</title>
     <link rel="stylesheet" href="../../styles/presentation.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles (Minimal - most moved to presentation.css) -->
     <style>
-        /* Lecture-specific styles */
+        /* Unique to this lecture */
         .workflow-diagram {
             display: flex;
             align-items: center;
@@ -17,7 +18,7 @@
             margin: 30px 0;
             font-size: 1.3em;
         }
-        
+
         .workflow-step {
             background: var(--bg-accent);
             padding: 15px 25px;
@@ -25,17 +26,17 @@
             border: 2px solid var(--border-color);
             color: var(--text-primary);
         }
-        
+
         .arrow {
             font-size: 1.5em;
             color: var(--ocu-true-blue);
             margin: 0 10px;
         }
-        
+
         [data-theme="dark"] .arrow {
             color: var(--ocu-cyan);
         }
-        
+
         .recipe-requirements {
             background: var(--bg-secondary);
             border: 2px solid var(--border-color);
@@ -43,20 +44,13 @@
             padding: 25px;
             margin: 20px 0;
         }
-        
+
         .bad {
             color: #ff5555;
         }
-        
+
         .good {
             color: var(--ocu-green);
-        }
-        
-        .comparison-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
         }
     </style>
 </head>
@@ -173,7 +167,7 @@
         <!-- Slide 6: Comparison -->
         <div class="slide">
             <h1>Bad vs. Good: Side by Side</h1>
-            <div class="comparison-box">
+            <div class="grid-2">
                 <div class="comparison-card bad">
                     <h3>❌ Bad</h3>
                     <div class="code-example">
@@ -427,7 +421,71 @@
             </div>
         </div>
 
-        <!-- Slide 18: Common Issues -->
+        <!-- Slide 18: Human Git Exercise -->
+        <div class="slide">
+            <h1>Human Git: Physical Commit Exercise <span class="emoji">🚶</span></h1>
+            <div class="activity-box">
+                <h3>Let's Model Git with Movement!</h3>
+                <p><strong>Time:</strong> 10 minutes total</p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h3>Setup:</h3>
+                    <ul>
+                        <li>1 volunteer = "The Codebase"</li>
+                        <li>Starts in center of room</li>
+                        <li>Class = "Developers"</li>
+                        <li>Track commits on board</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Rules:</h3>
+                    <ul>
+                        <li>Each student calls one "commit"</li>
+                        <li>Must be a physical movement</li>
+                        <li>Write commit # and message</li>
+                        <li>Volunteer executes the move</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>Example Commits:</h3>
+            <ul>
+                <li><span class="good">✅ "Move 3 steps toward the door"</span></li>
+                <li><span class="good">✅ "Turn 90 degrees to the right"</span></li>
+                <li><span class="good">✅ "Raise right hand above head"</span></li>
+                <li><span class="bad">❌ "move" (Which direction? How far?)</span></li>
+            </ul>
+        </div>
+
+        <!-- Slide 19: Human Git Exercise - Part 2 -->
+        <div class="slide">
+            <h1>Human Git: Reverting Changes <span class="emoji">⏮️</span></h1>
+            <h2>Now Let's Undo Our Commits!</h2>
+            <div class="activity-box">
+                <h3>The Revert Process:</h3>
+                <ol style="font-size: 1.2em;">
+                    <li>Look at the commit history on the board</li>
+                    <li>Identify the LAST commit (most recent)</li>
+                    <li>Read the commit message</li>
+                    <li>Volunteer performs the OPPOSITE movement</li>
+                    <li>Erase that commit from the board</li>
+                    <li>Repeat for each commit in reverse order</li>
+                </ol>
+            </div>
+            <h3>Discussion Questions:</h3>
+            <ul>
+                <li>What happened when a commit message was unclear?</li>
+                <li>Could you "revert" if you didn't write down the commits?</li>
+                <li>Why do we revert in reverse order?</li>
+                <li>How does this relate to <code>git revert</code> in real projects?</li>
+            </ul>
+            <div class="tip-box">
+                <strong>Key Insight:</strong> Just like code, every change must be clear, documented, and reversible!
+            </div>
+            <button onclick="startTimer()" style="margin-top: 20px;">Start 10-Minute Timer</button>
+        </div>
+
+        <!-- Slide 20: Common Issues -->
         <div class="slide">
             <h1>Common Issues & Solutions <span class="emoji">🔧</span></h1>
             <div class="two-column">
@@ -455,7 +513,7 @@
             </div>
         </div>
 
-        <!-- Slide 19: Work Session -->
+        <!-- Slide 21: Work Session -->
         <div class="slide">
             <h1>Work Session Time! <span class="emoji">💪</span></h1>
             <h2>20 Minutes to Build</h2>
@@ -475,7 +533,7 @@
             <button onclick="startTimer()" style="margin-top: 20px;">Start 20-Minute Timer</button>
         </div>
 
-        <!-- Slide 20: Submission Checklist -->
+        <!-- Slide 22: Submission Checklist -->
         <div class="slide">
             <h1>Before You Submit <span class="emoji">✔️</span></h1>
             <div class="recipe-requirements">
@@ -496,7 +554,7 @@
             </div>
         </div>
 
-        <!-- Slide 21: Tips for Success -->
+        <!-- Slide 23: Tips for Success -->
         <div class="slide">
             <h1>Pro Tips for Success <span class="emoji">🌟</span></h1>
             <ul style="font-size: 1.3em;">
@@ -512,7 +570,7 @@
             </div>
         </div>
 
-        <!-- Slide 22: Next Class Preview -->
+        <!-- Slide 24: Next Class Preview -->
         <div class="slide">
             <h1>What's Next? <span class="emoji">🔮</span></h1>
             <h2>Thursday: Project Q&A + CSS Introduction</h2>
@@ -527,7 +585,7 @@
             </div>
         </div>
 
-        <!-- Slide 23: Summary -->
+        <!-- Slide 25: Summary -->
         <div class="slide">
             <h1>Today's Takeaways <span class="emoji">📚</span></h1>
             <h2>Git Commits:</h2>
@@ -546,7 +604,7 @@
             </ul>
         </div>
 
-        <!-- Slide 24: Closing -->
+        <!-- Slide 26: Closing -->
         <div class="slide">
             <h1>Let's Build! <span class="emoji">🚀</span></h1>
             <div class="demo-box">
@@ -566,7 +624,7 @@
         <div class="navigation">
             <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
             <span class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">24</span>
+                <span id="currentSlide">1</span> / <span id="totalSlides">26</span>
             </span>
             <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
