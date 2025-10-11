@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Attendance - Web Programming CSCI 3403</title>
+    <link rel="stylesheet" href="../styles/presentation.css">
+    <style>
+        body {
+            background: var(--bg-secondary, #f8f9fa);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--ocu-true-blue, #00447c), var(--ocu-dark-blue, #002d5c));
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 10px 0;
+            color: white;
+        }
+
+        .page-header p {
+            margin: 5px 0;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .controls-section {
+            background: var(--bg-primary, white);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px var(--shadow, rgba(0,0,0,0.1));
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .control-card {
+            background: var(--bg-secondary, #f8f9fa);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .control-card:hover {
+            border-color: var(--ocu-cyan, #00bfdf);
+        }
+
+        .control-card h3 {
+            margin-top: 0;
+            color: var(--ocu-true-blue, #00447c);
+            font-size: 1.1em;
+        }
+
+        .date-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .date-selector input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--ocu-cyan, #00bfdf);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .card-swipe-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--ocu-cyan, #00bfdf);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: var(--ocu-true-blue, #00447c);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ocu-dark-blue, #002d5c);
+        }
+
+        .btn-secondary {
+            background: var(--ocu-cyan, #00bfdf);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #009fc4;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .stats-bar {
+            background: linear-gradient(135deg, rgba(0, 68, 124, 0.1), rgba(0, 191, 223, 0.1));
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+            margin: 10px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--ocu-true-blue, #00447c);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary, #666);
+        }
+
+        .attendance-section {
+            background: var(--bg-primary, white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow, rgba(0,0,0,0.1));
+        }
+
+        .attendance-section h2 {
+            margin-top: 0;
+            color: var(--ocu-true-blue, #00447c);
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .student-card {
+            background: var(--bg-secondary, #f8f9fa);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .student-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow, rgba(0,0,0,0.2));
+        }
+
+        .student-card.present {
+            border-left-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .student-card.late {
+            border-left-color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        .student-name {
+            font-weight: bold;
+            color: var(--text-primary, #333);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .student-status {
+            font-size: 12px;
+            color: var(--text-secondary, #666);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status-badge.present {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-badge.late {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-badge.absent {
+            background: #6c757d;
+            color: white;
+        }
+
+        .late-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffc107;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+            display: none;
+        }
+
+        .student-card.present .late-toggle {
+            display: block;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--ocu-cyan, #00bfdf);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: var(--text-secondary, #666);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <div class="page-header">
+            <h1>✅ Daily Attendance Tracking</h1>
+            <p><strong>Course:</strong> Web Programming - CSCI 3403</p>
+            <p><strong>Instructor:</strong> bobby reed</p>
+            <p><strong>Semester:</strong> Fall 2025</p>
+        </div>
+
+        <div class="controls-section">
+            <h2>Attendance Controls</h2>
+
+            <div class="controls-grid">
+                <!-- Date Selection -->
+                <div class="control-card">
+                    <h3>📅 Select Date</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary, #666); margin-bottom: 10px;">
+                        Choose the date to track attendance
+                    </p>
+                    <div class="date-selector">
+                        <input type="date" id="attendance-date">
+                        <button onclick="loadAttendanceForDate()" class="btn btn-primary">Load</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <label style="font-size: 13px;">Or select past date:</label>
+                        <select id="historical-dates" onchange="selectHistoricalDate()">
+                            <option value="">Select a past date...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Card Swipe -->
+                <div class="control-card">
+                    <h3>🎴 Card Swipe Check-in</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary, #666); margin-bottom: 10px;">
+                        Students can swipe to mark attendance
+                    </p>
+                    <input type="text"
+                           id="card-swipe"
+                           class="card-swipe-input"
+                           placeholder="Swipe card here..."
+                           autocomplete="off">
+                    <label style="display: block; margin-top: 10px; font-size: 13px;">
+                        <input type="checkbox" id="mark-late-checkbox">
+                        Mark as late
+                    </label>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div class="control-card">
+                    <h3>⚡ Quick Actions</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary, #666); margin-bottom: 10px;">
+                        Bulk attendance operations
+                    </p>
+                    <button onclick="markAllPresent()" class="btn btn-success" style="width: 100%; margin-bottom: 10px;">
+                        ✅ Mark All Present
+                    </button>
+                    <button onclick="resetDay()" class="btn btn-danger" style="width: 100%;">
+                        🔄 Reset Day
+                    </button>
+                </div>
+
+                <!-- Export -->
+                <div class="control-card">
+                    <h3>📊 Export Data</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary, #666); margin-bottom: 10px;">
+                        Download attendance data
+                    </p>
+                    <button onclick="exportToCSV()" class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;">
+                        📥 Export Today's Attendance
+                    </button>
+                    <a href="./attendance-overview.html" class="btn btn-primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">
+                        📈 View Overview
+                    </a>
+                </div>
+            </div>
+
+            <div id="message"></div>
+        </div>
+
+        <div class="attendance-section">
+            <h2>Students - <span id="current-date-display"></span></h2>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-students">0</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="present-count">0</div>
+                    <div class="stat-label">Present</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="late-count">0</div>
+                    <div class="stat-label">Late</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="absent-count">0</div>
+                    <div class="stat-label">Absent</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="attendance-rate">0%</div>
+                    <div class="stat-label">Attendance Rate</div>
+                </div>
+            </div>
+
+            <div id="loading">Loading students...</div>
+            <div id="students-grid" class="students-grid" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="../js/classroom-auth.js"></script>
+    <script>
+        const API_BASE = '/.netlify/functions';
+        let allStudents = [];
+        let attendanceRecords = {};
+        let currentDate = '';
+
+        // ==================== INITIALIZATION ====================
+
+        ClassroomAuth.initAuthUI({
+            pageName: 'Daily Attendance',
+            onSuccess: initializePage
+        });
+
+        function initializePage() {
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('attendance-date').value = today;
+            currentDate = today;
+
+            loadStudents();
+            loadHistoricalDates();
+
+            // Card swipe handler
+            document.getElementById('card-swipe').addEventListener('change', handleCardSwipe);
+        }
+
+        // ==================== LOAD DATA ====================
+
+        async function loadStudents() {
+            try {
+                const response = await fetch(`${API_BASE}/get-students`);
+                const data = await response.json();
+
+                if (data.success) {
+                    allStudents = data.students;
+                    await loadAttendanceForDate();
+                } else {
+                    showMessage('Failed to load students', 'error');
+                }
+            } catch (error) {
+                console.error('Load students error:', error);
+                showMessage('Failed to load students', 'error');
+            }
+        }
+
+        async function loadAttendanceForDate() {
+            const dateInput = document.getElementById('attendance-date');
+            currentDate = dateInput.value;
+
+            if (!currentDate) {
+                showMessage('Please select a date', 'error');
+                return;
+            }
+
+            document.getElementById('current-date-display').textContent = new Date(currentDate + 'T00:00:00').toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            try {
+                const response = await fetch(`${API_BASE}/get-attendance?date=${currentDate}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    attendanceRecords = {};
+                    data.attendance.forEach(record => {
+                        attendanceRecords[record.student_id] = {
+                            present: true,
+                            late: record.is_late || false,
+                            timestamp: record.timestamp
+                        };
+                    });
+                    renderStudents();
+                    updateStats();
+                } else {
+                    showMessage('Failed to load attendance', 'error');
+                }
+            } catch (error) {
+                console.error('Load attendance error:', error);
+                showMessage('Failed to load attendance', 'error');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('students-grid').style.display = 'grid';
+            }
+        }
+
+        async function loadHistoricalDates() {
+            try {
+                const response = await fetch(`${API_BASE}/get-attendance-history`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const select = document.getElementById('historical-dates');
+                    select.innerHTML = '<option value="">Select a past date...</option>';
+
+                    data.dates.forEach(dateStr => {
+                        const option = document.createElement('option');
+                        option.value = dateStr;
+                        option.textContent = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Load historical dates error:', error);
+            }
+        }
+
+        function selectHistoricalDate() {
+            const select = document.getElementById('historical-dates');
+            const selectedDate = select.value;
+
+            if (selectedDate) {
+                document.getElementById('attendance-date').value = selectedDate;
+                loadAttendanceForDate();
+            }
+        }
+
+        // ==================== CARD SWIPE ====================
+
+        async function handleCardSwipe() {
+            const input = document.getElementById('card-swipe');
+            const rawData = input.value.trim();
+            const markLate = document.getElementById('mark-late-checkbox').checked;
+
+            if (!rawData) return;
+
+            const student = findStudentByCard(rawData);
+
+            if (student) {
+                await markAttendance(student.id, !attendanceRecords[student.id], markLate);
+                showMessage(`✅ ${student.full_name} marked ${attendanceRecords[student.id] ? 'present' : 'absent'}`, 'success');
+            } else {
+                showMessage('Student not found. Please register first.', 'error');
+            }
+
+            input.value = '';
+        }
+
+        function findStudentByCard(cardData) {
+            // Match by card_data or by parsing name from card
+            const parsed = parseCardData(cardData);
+
+            if (parsed) {
+                return allStudents.find(s =>
+                    s.last_name.toUpperCase() === parsed.lastName.toUpperCase() &&
+                    s.first_name.toUpperCase() === parsed.firstName.toUpperCase()
+                );
+            }
+
+            return null;
+        }
+
+        function parseCardData(rawData) {
+            const match = rawData.match(/\^([^\/]+)\/([^\^]+)\^/);
+            if (match) {
+                return {
+                    lastName: match[1].trim(),
+                    firstName: match[2].trim()
+                };
+            }
+            return null;
+        }
+
+        // ==================== ATTENDANCE MARKING ====================
+
+        async function markAttendance(studentId, markPresent, isLate = false) {
+            try {
+                if (markPresent) {
+                    // Mark present
+                    const response = await fetch(`${API_BASE}/mark-attendance`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            studentId,
+                            date: currentDate,
+                            isLate
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        attendanceRecords[studentId] = { present: true, late: isLate };
+                    }
+                } else {
+                    // Mark absent (delete record)
+                    const response = await fetch(`${API_BASE}/mark-attendance`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            studentId,
+                            date: currentDate
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        delete attendanceRecords[studentId];
+                    }
+                }
+
+                renderStudents();
+                updateStats();
+            } catch (error) {
+                console.error('Mark attendance error:', error);
+                showMessage('Failed to update attendance', 'error');
+            }
+        }
+
+        async function toggleLate(studentId) {
+            const record = attendanceRecords[studentId];
+            if (record) {
+                await markAttendance(studentId, true, !record.late);
+            }
+        }
+
+        // ==================== RENDER ====================
+
+        function renderStudents() {
+            const grid = document.getElementById('students-grid');
+
+            if (allStudents.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">No students registered.</p>';
+                return;
+            }
+
+            // Sort by last name, then first name
+            const sorted = [...allStudents].sort((a, b) => {
+                const lastCompare = a.last_name.localeCompare(b.last_name);
+                if (lastCompare !== 0) return lastCompare;
+                return a.first_name.localeCompare(b.first_name);
+            });
+
+            grid.innerHTML = sorted.map(student => {
+                const record = attendanceRecords[student.id];
+                const isPresent = record && record.present;
+                const isLate = record && record.late;
+
+                let statusClass = '';
+                let statusText = 'Absent';
+                let statusBadgeClass = 'absent';
+
+                if (isPresent) {
+                    if (isLate) {
+                        statusClass = 'late';
+                        statusText = 'Late';
+                        statusBadgeClass = 'late';
+                    } else {
+                        statusClass = 'present';
+                        statusText = 'Present';
+                        statusBadgeClass = 'present';
+                    }
+                }
+
+                return `
+                    <div class="student-card ${statusClass}" onclick="toggleAttendance(${student.id})">
+                        <button class="late-toggle" onclick="event.stopPropagation(); toggleLate(${student.id})" title="Toggle late status">
+                            ⏰
+                        </button>
+                        <div class="student-name">${student.full_name}</div>
+                        <div class="student-status">
+                            <span class="status-badge ${statusBadgeClass}">${statusText}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleAttendance(studentId) {
+            const isCurrentlyPresent = attendanceRecords[studentId];
+            markAttendance(studentId, !isCurrentlyPresent, false);
+        }
+
+        // ==================== BULK ACTIONS ====================
+
+        async function markAllPresent() {
+            if (!confirm(`Mark all ${allStudents.length} students as present for ${currentDate}?`)) {
+                return;
+            }
+
+            let successCount = 0;
+
+            for (const student of allStudents) {
+                try {
+                    await markAttendance(student.id, true, false);
+                    successCount++;
+                } catch (error) {
+                    console.error(`Failed to mark ${student.full_name}:`, error);
+                }
+            }
+
+            showMessage(`✅ Marked ${successCount} students present`, 'success');
+        }
+
+        async function resetDay() {
+            const presentCount = Object.keys(attendanceRecords).length;
+
+            if (presentCount === 0) {
+                showMessage('No attendance records for this date', 'error');
+                return;
+            }
+
+            if (!confirm(`Reset attendance for ${currentDate}? This will remove ${presentCount} records.`)) {
+                return;
+            }
+
+            let deletedCount = 0;
+
+            for (const studentId in attendanceRecords) {
+                try {
+                    await markAttendance(parseInt(studentId), false, false);
+                    deletedCount++;
+                } catch (error) {
+                    console.error('Delete error:', error);
+                }
+            }
+
+            showMessage(`✅ Reset ${deletedCount} attendance records`, 'success');
+        }
+
+        // ==================== CSV EXPORT ====================
+
+        function exportToCSV() {
+            if (allStudents.length === 0) {
+                showMessage('No students to export', 'error');
+                return;
+            }
+
+            const headers = ['Last Name', 'First Name', 'Status', 'Late', 'Timestamp'];
+            const rows = allStudents.map(s => {
+                const record = attendanceRecords[s.id];
+                const status = record ? 'Present' : 'Absent';
+                const late = record && record.late ? 'Yes' : 'No';
+                const timestamp = record ? new Date(record.timestamp).toLocaleString() : '';
+
+                return [s.last_name, s.first_name, status, late, timestamp];
+            });
+
+            const csv = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `attendance-${currentDate}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showMessage(`✅ Exported attendance for ${currentDate}`, 'success');
+        }
+
+        // ==================== STATS ====================
+
+        function updateStats() {
+            const total = allStudents.length;
+            const presentCount = Object.values(attendanceRecords).filter(r => r.present && !r.late).length;
+            const lateCount = Object.values(attendanceRecords).filter(r => r.present && r.late).length;
+            const absentCount = total - presentCount - lateCount;
+            const rate = total > 0 ? Math.round(((presentCount + lateCount) / total) * 100) : 0;
+
+            document.getElementById('total-students').textContent = total;
+            document.getElementById('present-count').textContent = presentCount;
+            document.getElementById('late-count').textContent = lateCount;
+            document.getElementById('absent-count').textContent = absentCount;
+            document.getElementById('attendance-rate').textContent = rate + '%';
+        }
+
+        // ==================== MESSAGES ====================
+
+        function showMessage(text, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.textContent = text;
+            msgDiv.className = `message message-${type}`;
+            msgDiv.style.display = 'block';
+
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

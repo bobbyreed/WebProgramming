@@ -7,8 +7,7 @@
     <meta name="description" content="CSCI 3403 Web Programming course at Oklahoma City University. Learn HTML, CSS, JavaScript, and modern web development.">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <link rel="stylesheet" href="./styles/presentation.css">
-    <link rel="stylesheet" href="./styles/auth.css">
-    
+
     <style>
         :root {
             --ocu-true-blue: #00447c;
@@ -342,26 +341,16 @@
         <span class="theme-toggle-label">Dark</span>
     </div>
     
-    <!-- Auth Section -->
-    <div id="auth-section" class="auth-container">
-        <div class="auth-form">
-            <input type="text" id="student-id" placeholder="Name" />
-            <input type="password" id="class-pin" placeholder="Class PIN" />
-            <button onclick="handleLogin()">Login</button>
-        </div>
-    </div>
-
-    <div id="user-info" style="display: none;"></div>
-
     <div class="container">
         <header>
             <h1>Web Programming</h1>
             <p class="subtitle">CSCI 3403 - Undergraduate Course</p>
             <p class="meta-info">Fall 2025 | Instructor: bobby reed</p>
-            
+
             <div class="nav-buttons">
-                <a href="./pages/leaderboard.html" class="nav-button">🏆 Leaderboard</a>
-                <a href="#" class="nav-button">🎖️ Achievements (Coming Soon)</a>
+                <a href="./pages/register-students.html" class="nav-button">📝 Register Students</a>
+                <a href="./pages/attendance.html" class="nav-button">✅ Daily Attendance</a>
+                <a href="./pages/attendance-overview.html" class="nav-button">📊 Attendance Overview</a>
             </div>
         </header>
         
@@ -522,63 +511,8 @@
         });
     }
     
-    // Authentication
-    async function handleLogin() {
-        const studentId = document.getElementById('student-id').value;
-        const classPin = document.getElementById('class-pin').value;
-        
-        if (!studentId || !classPin) {
-            alert('Please enter both your name and class PIN');
-            return;
-        }
-        
-        try {
-            if (window.authManager) {
-                const auth = await window.authManager.authenticate(studentId, classPin);
-                if (auth) {
-                    document.getElementById('auth-section').style.display = 'none';
-                }
-            } else {
-                // Fallback if auth.js isn't loaded
-                if (classPin === '2025' || classPin === 'test') {
-                    localStorage.setItem('csci3403_auth', JSON.stringify({
-                        authenticated: true,
-                        studentId: studentId,
-                        timestamp: Date.now()
-                    }));
-                    document.getElementById('auth-section').style.display = 'none';
-                } else {
-                    alert('Invalid PIN');
-                }
-            }
-        } catch (error) {
-            alert('Authentication failed. Please try again.');
-            console.error('Auth error:', error);
-        }
-    }
-    
-    // Check auth status
-    function checkAuthStatus() {
-        const authData = localStorage.getItem('csci3403_auth');
-        if (authData) {
-            try {
-                const auth = JSON.parse(authData);
-                if (auth.authenticated) {
-                    document.getElementById('auth-section').style.display = 'none';
-                    return true;
-                }
-            } catch (e) {
-                console.error('Invalid auth data');
-            }
-        }
-        return false;
-    }
-    
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
-        // Check authentication
-        checkAuthStatus();
-        
         // Render lectures
         renderLectures();
         
@@ -600,18 +534,7 @@
                 localStorage.setItem('theme', 'light');
             }
         });
-        
-        // Enter key for login
-        const inputs = document.querySelectorAll('#student-id, #class-pin');
-        inputs.forEach(input => {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-        });
     });
     </script>
-    <script src="./js/auth.js"></script>
 </body>
 </html>
