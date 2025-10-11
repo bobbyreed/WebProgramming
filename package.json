@@ -1,0 +1,24 @@
+{
+  "name": "web-programming-csci3403",
+  "version": "1.0.0",
+  "description": "Web Programming CSCI 3403 - Course website with attendance management system",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobbyreed/WebProgramming.git"
+  },
+  "keywords": [
+    "web-programming",
+    "education",
+    "attendance",
+    "netlify"
+  ],
+  "author": "bobby reed",
+  "license": "ISC",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.3"
+  }
+}
