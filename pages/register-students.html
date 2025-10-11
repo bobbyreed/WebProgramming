@@ -79,16 +79,18 @@
 
         .manual-input-group {
             display: flex;
+            flex-direction: column;
             gap: 10px;
             margin-bottom: 10px;
         }
 
         .manual-input-group input {
-            flex: 1;
+            width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
+            box-sizing: border-box;
         }
 
         .btn {
@@ -252,6 +254,32 @@
             text-decoration: underline;
         }
 
+        .page-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--ocu-cyan, #00bfdf);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .page-nav-link:hover {
+            background: var(--ocu-true-blue, #00447c);
+        }
+
+        .page-nav-link.current {
+            background: var(--ocu-true-blue, #00447c);
+        }
+
         #loading {
             text-align: center;
             padding: 40px;
@@ -263,6 +291,12 @@
 <body>
     <div class="container">
         <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <div class="page-nav">
+            <a href="./register-students.html" class="page-nav-link current">📝 Register Students</a>
+            <a href="./attendance.html" class="page-nav-link">✅ Daily Attendance</a>
+            <a href="./attendance-overview.html" class="page-nav-link">📊 Attendance Overview</a>
+        </div>
 
         <div class="page-header">
             <h1>📝 Student Registration</h1>

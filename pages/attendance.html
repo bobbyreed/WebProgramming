@@ -303,6 +303,32 @@
             text-decoration: underline;
         }
 
+        .page-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--ocu-cyan, #00bfdf);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .page-nav-link:hover {
+            background: var(--ocu-true-blue, #00447c);
+        }
+
+        .page-nav-link.current {
+            background: var(--ocu-true-blue, #00447c);
+        }
+
         #loading {
             text-align: center;
             padding: 40px;
@@ -314,6 +340,12 @@
 <body>
     <div class="container">
         <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <div class="page-nav">
+            <a href="./register-students.html" class="page-nav-link">📝 Register Students</a>
+            <a href="./attendance.html" class="page-nav-link current">✅ Daily Attendance</a>
+            <a href="./attendance-overview.html" class="page-nav-link">📊 Attendance Overview</a>
+        </div>
 
         <div class="page-header">
             <h1>✅ Daily Attendance Tracking</h1>
