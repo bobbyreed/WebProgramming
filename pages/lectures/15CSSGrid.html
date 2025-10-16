@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid - CSCI 3403</title>
+    <link rel="stylesheet" href="../../styles/presentation.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- Lecture-Specific Styles -->
+    <style>
+        .grid-demo-container {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .grid-visual {
+            display: grid;
+            gap: 10px;
+            background: rgba(0, 191, 223, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed var(--ocu-cyan);
+        }
+
+        .grid-item-demo {
+            background: var(--ocu-true-blue);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .grid-item-demo {
+            background: var(--ocu-cyan);
+            color: var(--ocu-dark-blue);
+        }
+
+        .apartment-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-template-rows: repeat(5, 60px);
+            gap: 2px;
+            background: #ccc;
+            padding: 2px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+
+        .room {
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            border: 1px solid var(--ocu-true-blue);
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .exercise-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .exercise-steps {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .exercise-steps ol {
+            margin-left: 20px;
+        }
+
+        .exercise-steps li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="timer" id="timer">
+            Class 15 - CSS Grid <button class="home"><a href="../../index.html">Home</a></button>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>CSS Grid</h1>
+            <h2>Powerful 2D Layouts Made Easy <span class="emoji">📐</span></h2>
+            <p style="font-size: 1.5em; margin-top: 40px;">CSCI 3403 - Web Programming</p>
+            <p style="font-size: 1.3em;">Week 8, Class 15</p>
+            <div class="tip-box" style="margin-top: 40px;">
+                <strong>Today:</strong> Learn Grid fundamentals and practice with hands-on exercises!
+            </div>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <h1>Today's Agenda <span class="emoji">📋</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>🔄 Quick look back at Flexbox</li>
+                <li>🎯 What is CSS Grid and when to use it</li>
+                <li>🏗️ Setting up a grid (containers, rows, columns)</li>
+                <li>📍 Positioning grid items</li>
+                <li>✨ Advanced grid properties</li>
+                <li>💻 In-class exercise: Recreate layouts with Grid</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: A Look Back at Flexbox -->
+        <div class="slide">
+            <h1>A Look Back at Flexbox <span class="emoji">🔙</span></h1>
+            <h2>What We Already Know</h2>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Flexbox Strengths</h3>
+                    <ul>
+                        <li>✅ One-dimensional layouts (row OR column)</li>
+                        <li>✅ Flexible sizing (grow, shrink)</li>
+                        <li>✅ Easy alignment along one axis</li>
+                        <li>✅ Great for navigation, cards in a row</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Flexbox Limitations</h3>
+                    <ul>
+                        <li>⚠️ Two-dimensional layouts get complex</li>
+                        <li>⚠️ Wrapping with flex-wrap can be tricky</li>
+                        <li>⚠️ Harder to control precise positioning</li>
+                        <li>⚠️ Not ideal for overall page layouts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Flexbox Row Example -->
+        <div class="slide">
+            <h1>Flexbox: One-Dimensional</h1>
+            <h3>Row Layout:</h3>
+            <div class="grid-visual" style="display: flex; gap: 10px;">
+                <div class="grid-item-demo">Item 1</div>
+                <div class="grid-item-demo">Item 2</div>
+                <div class="grid-item-demo">Item 3</div>
+            </div>
+
+            <h3>Column Layout:</h3>
+            <div class="grid-visual" style="display: flex; flex-direction: column; gap: 10px; height: 300px;">
+                <div class="grid-item-demo">Item 1</div>
+                <div class="grid-item-demo">Item 2</div>
+                <div class="grid-item-demo">Item 3</div>
+            </div>
+
+            <p style="margin-top: 20px;"><strong>Great for linear layouts!</strong> But what about complex two-dimensional layouts?</p>
+        </div>
+
+        <!-- Slide 5: The Problem with Flexbox for 2D -->
+        <div class="slide">
+            <h1>The Card Layout Challenge <span class="emoji">🤔</span></h1>
+            <p>Remember this frustrating Flexbox exercise?</p>
+            <div class="warning-box">
+                <h3>The Problem:</h3>
+                <p>Creating a grid of cards with flex-wrap where all cards match in size and align properly in both rows AND columns is difficult with Flexbox alone.</p>
+            </div>
+            <div class="tip-box">
+                <h3>The Solution:</h3>
+                <p><strong>CSS Grid!</strong> It's designed specifically for two-dimensional layouts.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: What is Grid? -->
+        <div class="slide">
+            <h1>What is CSS Grid? <span class="emoji">📐</span></h1>
+            <div class="js-concept">
+                CSS Grid is a powerful layout system for creating two-dimensional layouts with rows AND columns!
+            </div>
+            <h3>Fun Fact:</h3>
+            <ul style="font-size: 1.2em; line-height: 2;">
+                <li>📅 Started development in 1996 by CSS co-creator Dr. Bert Bos</li>
+                <li>📰 Inspired by grid layouts in newspapers and magazines</li>
+                <li>🚀 Finally introduced to all major browsers in 2017</li>
+                <li>✨ The gap property used to be Grid-only, now works with Flex too!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Grid vs Flexbox -->
+        <div class="slide">
+            <h1>Grid vs Flexbox <span class="emoji">⚔️</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card good">
+                    <h3>Use Grid When:</h3>
+                    <ul>
+                        <li>✅ You need 2D layout (rows AND columns)</li>
+                        <li>✅ Layout comes first (layout-first design)</li>
+                        <li>✅ You want precise control over positioning</li>
+                        <li>✅ Building page-level layouts</li>
+                        <li>✅ Creating complex, overlapping designs</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Use Flexbox When:</h3>
+                    <ul>
+                        <li>✅ You need 1D layout (row OR column)</li>
+                        <li>✅ Content comes first (content-first design)</li>
+                        <li>✅ Items should grow/shrink dynamically</li>
+                        <li>✅ Building component-level layouts</li>
+                        <li>✅ Simple alignment tasks</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Grid and Flexbox work great TOGETHER! Use Grid for the overall layout and Flexbox for components.
+            </div>
+        </div>
+
+        <!-- Slide 8: Setting Up a Grid -->
+        <div class="slide">
+            <h1>Setting Up a Grid <span class="emoji">🏗️</span></h1>
+            <h2>Step 1: Create a Grid Container</h2>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                }
+            </div>
+            <p style="margin: 20px 0;">That's it! All direct children automatically become grid items.</p>
+            <div class="warning-box">
+                <strong>Remember:</strong> Only DIRECT children become grid items, not nested elements.
+            </div>
+        </div>
+
+        <!-- Slide 9: Defining Columns and Rows -->
+        <div class="slide">
+            <h1>Defining Columns and Rows</h1>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;grid-template-columns: 50px 50px 50px;<br>
+                &nbsp;&nbsp;grid-template-rows: 50px 50px;<br>
+                }
+            </div>
+            <h3>This creates:</h3>
+            <div class="grid-visual" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: 50px 50px;">
+                <div class="grid-item-demo">1</div>
+                <div class="grid-item-demo">2</div>
+                <div class="grid-item-demo">3</div>
+                <div class="grid-item-demo">4</div>
+                <div class="grid-item-demo">5</div>
+                <div class="grid-item-demo">6</div>
+            </div>
+            <p>A 3x2 grid (3 columns, 2 rows)</p>
+        </div>
+
+        <!-- Slide 10: Shorthand Property -->
+        <div class="slide">
+            <h1>Grid Template Shorthand</h1>
+            <p>Instead of defining rows and columns separately:</p>
+            <div class="code-example">
+                /* Longhand */<br>
+                .container {<br>
+                &nbsp;&nbsp;grid-template-columns: 50px 50px 50px;<br>
+                &nbsp;&nbsp;grid-template-rows: 50px 50px;<br>
+                }<br><br>
+                /* Shorthand: rows / columns */<br>
+                .container {<br>
+                &nbsp;&nbsp;grid-template: 50px 50px / 50px 50px 50px;<br>
+                }
+            </div>
+            <div class="tip-box">
+                <strong>Remember:</strong> Rows before the slash, columns after!
+            </div>
+        </div>
+
+        <!-- Slide 11: Grid Lines and Tracks -->
+        <div class="slide">
+            <h1>Lines and Tracks <span class="emoji">📏</span></h1>
+            <div class="two-column">
+                <div>
+                    <h3>Grid Lines</h3>
+                    <ul>
+                        <li>Lines separate rows/columns</li>
+                        <li>Numbered starting at 1</li>
+                        <li>Created automatically</li>
+                        <li>Used for positioning</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Grid Tracks</h3>
+                    <ul>
+                        <li>Space between two lines</li>
+                        <li>Can be rows or columns</li>
+                        <li>Have a defined size</li>
+                        <li>Where content lives</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Use DevTools to visualize grid lines! Look for the "grid" badge in your browser inspector.
+            </div>
+        </div>
+
+        <!-- Slide 12: Grid Cells -->
+        <div class="slide">
+            <h1>Grid Cells <span class="emoji">📦</span></h1>
+            <div class="js-concept">
+                A grid cell is the space where a single row track and single column track intersect.
+            </div>
+            <p style="margin: 20px 0;">Think of it like a spreadsheet cell - defined by its row and column!</p>
+            <div class="grid-visual" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 60px);">
+                <div class="grid-item-demo">A</div>
+                <div class="grid-item-demo">B</div>
+                <div class="grid-item-demo">C</div>
+                <div class="grid-item-demo">D</div>
+                <div class="grid-item-demo">E</div>
+                <div class="grid-item-demo">F</div>
+                <div class="grid-item-demo">G</div>
+                <div class="grid-item-demo">H</div>
+                <div class="grid-item-demo">I</div>
+            </div>
+            <p>By default, each child element occupies one cell.</p>
+        </div>
+
+        <!-- Slide 13: Positioning Grid Items -->
+        <div class="slide">
+            <h1>Positioning Items <span class="emoji">📍</span></h1>
+            <p>Use grid lines to position items across multiple cells:</p>
+            <div class="code-example">
+                .item {<br>
+                &nbsp;&nbsp;grid-column-start: 1;<br>
+                &nbsp;&nbsp;grid-column-end: 3;<br>
+                &nbsp;&nbsp;grid-row-start: 1;<br>
+                &nbsp;&nbsp;grid-row-end: 2;<br>
+                }
+            </div>
+            <p>This item spans from column line 1 to 3 (2 columns wide)</p>
+            <div class="warning-box">
+                <strong>Remember:</strong> Grid lines, not cells! Line 1 to 3 = 2 cells.
+            </div>
+        </div>
+
+        <!-- Slide 14: Grid Positioning Shorthand -->
+        <div class="slide">
+            <h1>Positioning Shorthand</h1>
+            <div class="code-example">
+                /* Longhand */<br>
+                .item {<br>
+                &nbsp;&nbsp;grid-column-start: 1;<br>
+                &nbsp;&nbsp;grid-column-end: 3;<br>
+                &nbsp;&nbsp;grid-row-start: 1;<br>
+                &nbsp;&nbsp;grid-row-end: 3;<br>
+                }<br><br>
+                /* Shorthand: start / end */<br>
+                .item {<br>
+                &nbsp;&nbsp;grid-column: 1 / 3;<br>
+                &nbsp;&nbsp;grid-row: 1 / 3;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 15: Grid Area -->
+        <div class="slide">
+            <h1>Grid Area (Two Ways!) <span class="emoji">🗺️</span></h1>
+            <h3>Method 1: Even Shorter Shorthand</h3>
+            <div class="code-example">
+                /* row-start / col-start / row-end / col-end */<br>
+                .item {<br>
+                &nbsp;&nbsp;grid-area: 1 / 1 / 3 / 3;<br>
+                }
+            </div>
+            <h3>Method 2: Named Areas (Coming Up!)</h3>
+            <div class="code-example">
+                .item {<br>
+                &nbsp;&nbsp;grid-area: header;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 16: Apartment Floor Plan Example -->
+        <div class="slide">
+            <h1>Example: Apartment Floor Plan <span class="emoji">🏠</span></h1>
+            <p>Let's build a 5x5 grid for an apartment layout:</p>
+            <div class="code-example">
+                .apartment {<br>
+                &nbsp;&nbsp;display: inline-grid;<br>
+                &nbsp;&nbsp;grid-template-columns: repeat(5, 100px);<br>
+                &nbsp;&nbsp;grid-template-rows: repeat(5, 100px);<br>
+                &nbsp;&nbsp;gap: 10px;<br>
+                }<br><br>
+                #living-room {<br>
+                &nbsp;&nbsp;grid-column: 1 / 6; /* Full width */<br>
+                &nbsp;&nbsp;grid-row: 1 / 3;    /* 2 rows tall */<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 17: Named Grid Areas -->
+        <div class="slide">
+            <h1>Grid Template Areas <span class="emoji">🗺️</span></h1>
+            <p>The most visual way to define layouts!</p>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;grid-template-areas:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"header header header"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"sidebar content content"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"footer footer footer";<br>
+                }<br><br>
+                .header { grid-area: header; }<br>
+                .sidebar { grid-area: sidebar; }<br>
+                .content { grid-area: content; }<br>
+                .footer { grid-area: footer; }
+            </div>
+        </div>
+
+        <!-- Slide 18: Empty Cells with Dot -->
+        <div class="slide">
+            <h1>Empty Cells <span class="emoji">⚪</span></h1>
+            <p>Use a period (.) to indicate empty cells:</p>
+            <div class="code-example">
+                grid-template-areas:<br>
+                &nbsp;&nbsp;"header header header"<br>
+                &nbsp;&nbsp;"sidebar content ."<br>
+                &nbsp;&nbsp;"footer footer footer";
+            </div>
+            <p>The top-right cell will be empty!</p>
+        </div>
+
+        <!-- Slide 19: Explicit vs Implicit Grid -->
+        <div class="slide">
+            <h1>Explicit vs Implicit Grid <span class="emoji">🤔</span></h1>
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h3>Explicit Grid</h3>
+                    <ul>
+                        <li>Tracks YOU define</li>
+                        <li>Using grid-template properties</li>
+                        <li>Fixed number of rows/columns</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Implicit Grid</h3>
+                    <ul>
+                        <li>Tracks created AUTOMATICALLY</li>
+                        <li>When you have more items</li>
+                        <li>Browser adds rows/columns as needed</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;grid-template-columns: 100px 100px; /* 2 columns */<br>
+                &nbsp;&nbsp;grid-template-rows: 100px 100px;    /* 2 rows */<br>
+                &nbsp;&nbsp;grid-auto-rows: 100px; /* Size for auto rows */<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 20: The repeat() Function -->
+        <div class="slide">
+            <h1>The repeat() Function <span class="emoji">🔄</span></h1>
+            <p>Instead of typing the same size over and over:</p>
+            <div class="code-example">
+                /* Tedious way */<br>
+                grid-template-columns: 150px 150px 150px 150px 150px;<br><br>
+
+                /* Better way */<br>
+                grid-template-columns: repeat(5, 150px);<br><br>
+
+                /* Works for rows too */<br>
+                grid-template-rows: repeat(2, 150px);
+            </div>
+            <div class="tip-box">
+                Syntax: repeat(count, size)
+            </div>
+        </div>
+
+        <!-- Slide 21: Fractional Units (fr) -->
+        <div class="slide">
+            <h1>Fractional Units (fr) <span class="emoji">📏</span></h1>
+            <div class="js-concept">
+                The fr unit distributes remaining space proportionally!
+            </div>
+            <div class="code-example">
+                /* All columns equal width */<br>
+                grid-template-columns: repeat(3, 1fr);<br><br>
+
+                /* First column 2x wider than others */<br>
+                grid-template-columns: 2fr 1fr 1fr;<br><br>
+
+                /* Mix with fixed sizes */<br>
+                grid-template-columns: 200px 1fr 1fr;
+            </div>
+        </div>
+
+        <!-- Slide 22: The gap Property -->
+        <div class="slide">
+            <h1>The gap Property <span class="emoji">🌉</span></h1>
+            <p>Add space between grid items (gutters):</p>
+            <div class="code-example">
+                .container {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;gap: 20px; /* All gaps */<br>
+                }<br><br>
+                /* OR separate row/column gaps */<br>
+                .container {<br>
+                &nbsp;&nbsp;row-gap: 10px;<br>
+                &nbsp;&nbsp;column-gap: 20px;<br>
+                &nbsp;&nbsp;/* Shorthand: row column */<br>
+                &nbsp;&nbsp;gap: 10px 20px;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 23: minmax() Function -->
+        <div class="slide">
+            <h1>The minmax() Function <span class="emoji">📐</span></h1>
+            <p>Set minimum and maximum sizes for tracks:</p>
+            <div class="code-example">
+                /* Columns between 150px and 200px */<br>
+                grid-template-columns: repeat(3, minmax(150px, 200px));<br><br>
+
+                /* At least 200px, can grow to fill space */<br>
+                grid-template-columns: repeat(3, minmax(200px, 1fr));
+            </div>
+            <div class="tip-box">
+                <strong>Great for responsive designs!</strong> Content won't shrink too small or grow too large.
+            </div>
+        </div>
+
+        <!-- Slide 24: auto-fit and auto-fill -->
+        <div class="slide">
+            <h1>auto-fit and auto-fill <span class="emoji">🔮</span></h1>
+            <p>Create responsive grids that adjust automatically!</p>
+            <div class="code-example">
+                /* As many columns as will fit */<br>
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            </div>
+            <p style="margin: 20px 0;">This creates as many 200px+ columns as will fit, then stretches them to fill!</p>
+            <div class="warning-box">
+                <strong>auto-fit vs auto-fill:</strong> auto-fit collapses empty tracks, auto-fill keeps them. Subtle difference!
+            </div>
+        </div>
+
+        <!-- Slide 25: Combining Grid and Flexbox -->
+        <div class="slide">
+            <h1>Using Grid and Flexbox Together <span class="emoji">🤝</span></h1>
+            <div class="tip-box" style="font-size: 1.2em;">
+                <p><strong>Best Practice:</strong></p>
+                <ul>
+                    <li>Use Grid for page layout (2D structure)</li>
+                    <li>Use Flexbox for components (1D alignment)</li>
+                </ul>
+            </div>
+            <div class="code-example">
+                /* Grid for overall layout */<br>
+                .page {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;grid-template-columns: 200px 1fr;<br>
+                }<br><br>
+                /* Flex for navigation items */<br>
+                .nav {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;gap: 20px;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 26: In-Class Exercise Intro -->
+        <div class="slide">
+            <h1>In-Class Exercise <span class="emoji">💻</span></h1>
+            <div class="exercise-box">
+                <h3>Grid Layout Recreation Challenge</h3>
+                <p style="font-size: 1.2em;">You'll be given example layout images and your task is to recreate them using ONLY CSS Grid!</p>
+
+                <div class="exercise-steps">
+                    <strong>The Process:</strong>
+                    <ol>
+                        <li><strong>Analyze:</strong> Look at the example image and identify rows, columns, and grid areas</li>
+                        <li><strong>Plan on Paper:</strong> Sketch the grid and map out fr units, gaps, and positioning</li>
+                        <li><strong>Write HTML:</strong> Create a semantic structure with a container and items</li>
+                        <li><strong>Apply CSS Grid:</strong> Implement your plan with grid properties</li>
+                        <li><strong>Refine:</strong> Adjust and perfect the layout</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 27: Exercise Guidelines -->
+        <div class="slide">
+            <h1>Exercise Guidelines <span class="emoji">📝</span></h1>
+            <h3>What You Should Use:</h3>
+            <ul style="font-size: 1.2em; line-height: 2;">
+                <li>✅ display: grid</li>
+                <li>✅ grid-template-columns / grid-template-rows</li>
+                <li>✅ repeat() function</li>
+                <li>✅ fr units</li>
+                <li>✅ gap property</li>
+                <li>✅ grid-column / grid-row for positioning</li>
+            </ul>
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>Challenge:</strong> Try to use grid-template-areas for at least one layout!
+            </div>
+        </div>
+
+        <!-- Slide 28: Exercise Time Allocation -->
+        <div class="slide">
+            <h1>Time Management <span class="emoji">⏰</span></h1>
+            <div class="activity-box">
+                <h3>Class Time (~30 minutes):</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>Get started on layouts</li>
+                    <li>Ask questions</li>
+                    <li>Work through challenges</li>
+                    <li>Get feedback from instructor</li>
+                </ul>
+            </div>
+            <div class="activity-box" style="margin-top: 20px;">
+                <h3>Homework (Complete by next class):</h3>
+                <ul style="font-size: 1.2em;">
+                    <li>Finish any incomplete layouts</li>
+                    <li>Polish and perfect your grids</li>
+                    <li>Try bonus challenges if time permits</li>
+                </ul>
+            </div>
+            <div class="tip-box">
+                <strong>Next Class:</strong> We'll showcase completed layouts and discuss different approaches!
+            </div>
+        </div>
+
+        <!-- Slide 29: Common Grid Patterns -->
+        <div class="slide">
+            <h1>Common Grid Patterns <span class="emoji">🎨</span></h1>
+            <ul style="font-size: 1.2em; line-height: 2;">
+                <li>📱 <strong>Holy Grail Layout:</strong> Header, sidebar, content, footer</li>
+                <li>🖼️ <strong>Photo Gallery:</strong> Responsive image grid</li>
+                <li>📰 <strong>Magazine Layout:</strong> Complex article layouts</li>
+                <li>📊 <strong>Dashboard:</strong> Data visualization panels</li>
+                <li>🗂️ <strong>Card Grid:</strong> Uniform card layouts</li>
+                <li>📝 <strong>Form Layout:</strong> Label and input alignment</li>
+            </ul>
+        </div>
+
+        <!-- Slide 30: Debugging Grid -->
+        <div class="slide">
+            <h1>Debugging Grid <span class="emoji">🐛</span></h1>
+            <h3>Browser DevTools:</h3>
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open DevTools (F12)</li>
+                <li>Select your grid container</li>
+                <li>Look for the "grid" badge</li>
+                <li>Click it to show the grid overlay!</li>
+            </ol>
+            <div class="tip-box">
+                <p><strong>Firefox Grid Inspector is particularly good!</strong></p>
+                <p>Chrome and Edge also have excellent grid tools.</p>
+            </div>
+        </div>
+
+        <!-- Slide 31: Resources -->
+        <div class="slide">
+            <h1>Helpful Resources <span class="emoji">📚</span></h1>
+            <ul style="font-size: 1.2em; line-height: 2;">
+                <li>🎮 <strong>Grid Garden</strong> - Fun game to learn Grid</li>
+                <li>📖 <strong>CSS-Tricks Complete Guide to Grid</strong></li>
+                <li>🦊 <strong>MDN CSS Grid Layout</strong></li>
+                <li>🌐 <strong>Grid by Example</strong> - Rachel Andrew's site</li>
+                <li>📺 <strong>Layout Land</strong> - YouTube channel by Jen Simmons</li>
+            </ul>
+        </div>
+
+        <!-- Slide 32: Key Takeaways -->
+        <div class="slide">
+            <h1>Key Takeaways <span class="emoji">🎯</span></h1>
+            <ul style="font-size: 1.3em; line-height: 2;">
+                <li>✅ Grid is for 2D layouts, Flexbox is for 1D</li>
+                <li>✅ Use grid-template to define columns and rows</li>
+                <li>✅ fr units distribute remaining space</li>
+                <li>✅ repeat() saves typing repetitive values</li>
+                <li>✅ minmax() creates flexible, responsive tracks</li>
+                <li>✅ auto-fit/auto-fill enable responsive grids</li>
+                <li>✅ Grid and Flexbox work great together!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 33: Let's Practice! -->
+        <div class="slide">
+            <h1>Let's Get Started! <span class="emoji">🚀</span></h1>
+            <p style="font-size: 1.5em; margin: 40px 0;">Time to practice with Grid!</p>
+            <div class="activity-box">
+                <h3>Your Task:</h3>
+                <p>Look at the example layout images and start planning your grid.</p>
+                <p><strong>Remember:</strong></p>
+                <ul>
+                    <li>Map it out on paper first</li>
+                    <li>Start with HTML structure</li>
+                    <li>Add Grid CSS step by step</li>
+                    <li>Ask questions when stuck!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">33</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script src="../../js/presentation.js"></script>
+</body>
+</html>
